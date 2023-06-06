@@ -1,0 +1,99 @@
+<form dForm [layout]="layout" (dSubmit)="submitShipmentDetail($event)">
+  <d-form-item>
+    <d-form-label [required]="true">Purchase Order：</d-form-label>
+    <d-form-control>
+      <d-select
+        [appendToBody]="true"
+        [options]="poList"
+        [filterKey]="'poReference'"
+        name="poReference"
+        [(ngModel)]="shipmentDetailFormData.po"
+        [dValidateRules]="{
+          validators: [{ required: true }]
+        }"
+        (ngModelChange)="getPOById()"
+      ></d-select>
+    </d-form-control>
+  </d-form-item>
+  <d-form-item>
+    <d-form-label [required]="true">Purchase Order Detail：</d-form-label>
+    <d-form-control>
+      <d-select
+        [disabled]="poDetailList.length === 0"
+        [appendToBody]="true"
+        [options]="poDetailList"
+        name="poDetail"
+        [filterKey]="'productSku'"
+        [(ngModel)]="shipmentDetailFormData.poDetail"
+        [dValidateRules]="{
+          validators: [{ required: true }]
+        }"
+      ></d-select>
+    </d-form-control>
+  </d-form-item>
+  <d-form-item>
+    <d-form-label [required]="true">Purchase SKU</d-form-label>
+    <d-form-control>
+      <input
+        dTextInput
+        [disabled]="true"
+        name="productSku"
+        [(ngModel)]="shipmentDetailFormData.poDetail.productSku"
+        [dValidateRules]="{
+          validators: [{ required: true }]
+        }"
+      />
+    </d-form-control>
+  </d-form-item>
+  <d-form-item>
+    <d-form-label [required]="true">Vendor Price</d-form-label>
+    <d-form-control>
+      <input
+        dTextInput
+        [disabled]="true"
+        name="vendorPrice"
+        [(ngModel)]="shipmentDetailFormData.poDetail.vendorPrice"
+        [dValidateRules]="{
+          validators: [{ required: true }]
+        }"
+      />
+    </d-form-control>
+  </d-form-item>
+  <d-form-item>
+    <d-form-label [required]="true">Po Qty</d-form-label>
+    <d-form-control>
+      <input
+        dTextInput
+        [disabled]="true"
+        name="poQty"
+        [(ngModel)]="shipmentDetailFormData.poDetail.poQty"
+        [dValidateRules]="{
+          validators: [{ required: true }]
+        }"
+      />
+    </d-form-control>
+  </d-form-item>
+  <d-form-item>
+    <d-form-label [required]="true">Shipped Qty</d-form-label>
+    <d-form-control>
+      <input
+        dTextInput
+        [disabled]="true"
+        name="shippedQty"
+        [(ngModel)]="shipmentDetailFormData.poDetail.shippedQty"
+        [dValidateRules]="{
+          validators: [{ required: true }]
+        }"
+      />
+    </d-form-control>
+  </d-form-item>
+  <d-form-operation class="da-form-operation">
+    <d-button
+      style="margin-right: 5px"
+      dFormSubmit
+      [dFormSubmitData]="'submit-button'"
+      >Confirm</d-button
+    >
+    <d-button bsStyle="common" (click)="cancel()">Cancel</d-button>
+  </d-form-operation>
+</form>

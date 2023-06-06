@@ -1,0 +1,165 @@
+{
+  "/brands": {
+    "target": "http://localhost:8081/api/v1",
+    "secure": false,
+    "logLevel": "debug",
+    "changeOrigin": true
+  },
+  "/brand": {
+    "target": "http://localhost:8081/api/v1",
+    "secure": false,
+    "logLevel": "debug",
+    "changeOrigin": true
+  },
+  "/materials": {
+    "target": "http://localhost:8081/api/v1",
+    "secure": false,
+    "logLevel": "debug",
+    "changeOrigin": true
+  },
+  "/product": {
+    "target": "http://localhost:8081/api/v1",
+    "secure": false,
+    "logLevel": "debug",
+    "changeOrigin": true
+  },
+  "/products": {
+    "target": "http://localhost:8081/api/v1",
+    "secure": false,
+    "logLevel": "debug",
+    "changeOrigin": true
+  },
+  "/material": {
+    "target": "http://localhost:8081/api/v1",
+    "secure": false,
+    "logLevel": "debug",
+    "changeOrigin": true
+  },
+  "/units": {
+    "target": "http://localhost:8081/api/v1",
+    "secure": false,
+    "logLevel": "debug",
+    "changeOrigin": true
+  },
+  "/unit": {
+    "target": "http://localhost:8081/api/v1",
+    "secure": false,
+    "logLevel": "debug",
+    "changeOrigin": true
+  },
+  "/categories": {
+    "target": "http://localhost:8081/api/v1",
+    "secure": false,
+    "logLevel": "debug",
+    "changeOrigin": true
+  },
+  "/category": {
+    "target": "http://localhost:8081/api/v1",
+    "secure": false,
+    "logLevel": "debug",
+    "changeOrigin": true
+  },
+
+  "/styles": {
+    "target": "http://localhost:8081/api/v1",
+    "secure": false,
+    "logLevel": "debug",
+    "changeOrigin": true
+  },
+  "/style": {
+    "target": "http://localhost:8081/api/v1",
+    "secure": false,
+    "logLevel": "debug",
+    "changeOrigin": true
+  },
+  "/stylenproduct": {
+    "target": "http://localhost:8081/api/v1",
+    "secure": false,
+    "logLevel": "debug",
+    "changeOrigin": true
+  },
+  "/vendor": {
+    "target": "http://localhost:8082/api/v1",
+    "secure": false,
+    "logLevel": "debug",
+    "changeOrigin": true
+  },
+  "/vendors": {
+    "target": "http://localhost:8082/api/v1",
+    "secure": false,
+    "logLevel": "debug",
+    "changeOrigin": true
+  },
+  "/companies": {
+    "target": "http://localhost:8082/api/v1",
+    "secure": false,
+    "logLevel": "debug",
+    "changeOrigin": true
+  },
+  "/tradeterm": {
+    "target": "http://localhost:8082/api/v1",
+    "secure": false,
+    "logLevel": "debug",
+    "changeOrigin": true
+  },
+  "/tradeterms": {
+    "target": "http://localhost:8082/api/v1",
+    "secure": false,
+    "logLevel": "debug",
+    "changeOrigin": true
+  },
+  "/company": {
+    "target": "http://localhost:8082/api/v1",
+    "secure": false,
+    "logLevel": "debug",
+    "changeOrigin": true
+  },
+  "/department": {
+    "target": "http://localhost:8082/api/v1",
+    "secure": false,
+    "logLevel": "debug",
+    "changeOrigin": true
+  },
+  "/departments": {
+    "target": "http://localhost:8082/api/v1",
+    "secure": false,
+    "logLevel": "debug",
+    "changeOrigin": true
+  },
+  "/po-list": {
+    "target": "http://localhost:8082/api/v1",
+    "secure": false,
+    "logLevel": "debug",
+    "changeOrigin": true
+  },
+  "/po": {
+    "target": "http://localhost:8082/api/v1",
+    "secure": false,
+    "logLevel": "debug",
+    "changeOrigin": true
+  },
+  "/ship-list": {
+    "target": "http://localhost:8083/api/v1",
+    "secure": false,
+    "logLevel": "debug",
+    "changeOrigin": true
+  },
+  "/ship": {
+    "target": "http://localhost:8083/api/v1",
+    "secure": false,
+    "logLevel": "debug",
+    "changeOrigin": true
+  },
+  "/exchange-list": {
+    "target": "http://localhost:8084/api/v1",
+    "secure": false,
+    "logLevel": "debug",
+    "changeOrigin": true
+  },
+  "/exchange": {
+    "target": "http://localhost:8084/api/v1",
+    "secure": false,
+    "logLevel": "debug",
+    "changeOrigin": true
+  }
+}

@@ -1,0 +1,234 @@
+<form
+  dForm
+  ngForm
+  [dValidateRules]="{
+    message: 'The form verification failed, please check.'
+  }"
+  [layout]="verticalLayout"
+  #packageFrom="dValidateRules"
+  (dSubmit)="submitPackageForm($event)"
+  autocomplete="off"
+>
+  <div [ngStyle]="{ display: 'flex', justifyContent: 'space-between' }">
+    <div [ngStyle]="{ width: '46%' }">
+      <d-form-item>
+        <d-form-label [required]="true" [hasHelp]="true"
+          >CTN Code
+        </d-form-label>
+        <d-form-control>
+          <input
+            dTextInput
+            autocomplete="off"
+            name="ctnCode"
+            placeholder="CTN Code"
+            [(ngModel)]="packageFormData.ctnCode"
+            [dValidateRules]="{
+              validators: [{ required: true }]
+            }"
+          />
+        </d-form-control>
+      </d-form-item>
+
+      <d-form-item>
+        <d-form-label [required]="true" [hasHelp]="true">CTN No </d-form-label>
+        <d-form-control>
+          <input
+            dTextInput
+            autocomplete="off"
+            name="ctnNo"
+            placeholder="CTN Code"
+            [(ngModel)]="packageFormData.ctnNo"
+            [dValidateRules]="{
+              validators: [{ required: true }]
+            }"
+          />
+        </d-form-control>
+      </d-form-item>
+
+      <d-form-item>
+        <d-form-label [required]="true" [hasHelp]="true"
+          >Gross weight
+        </d-form-label>
+        <d-form-control>
+          <input
+            dTextInput
+            autocomplete="off"
+            name="grossWeightKg"
+            placeholder="Gross weight"
+            [(ngModel)]="packageFormData.grossWeightKg"
+            [dValidateRules]="{
+              validators: [{ required: true }]
+            }"
+          />
+        </d-form-control>
+      </d-form-item>
+
+      <d-form-item>
+        <d-form-label [required]="true" [hasHelp]="true"
+          >Net weight
+        </d-form-label>
+        <d-form-control>
+          <input
+            dTextInput
+            autocomplete="off"
+            name="netWeightKg"
+            placeholder="Gross weight"
+            [(ngModel)]="packageFormData.netWeightKg"
+            [dValidateRules]="{
+              validators: [{ required: true }]
+            }"
+          />
+        </d-form-control>
+      </d-form-item>
+    </div>
+
+    <div [ngStyle]="{ width: '46%' }">
+      <d-form-item>
+        <d-form-label [required]="true" [hasHelp]="true">Width </d-form-label>
+        <d-form-control>
+          <input
+            dTextInput
+            autocomplete="off"
+            name="widthCm"
+            placeholder="Width"
+            [(ngModel)]="packageFormData.widthCm"
+            [dValidateRules]="{
+              validators: [{ required: true }]
+            }"
+          />
+        </d-form-control>
+      </d-form-item>
+
+      <d-form-item>
+        <d-form-label [required]="true" [hasHelp]="true">Height </d-form-label>
+        <d-form-control>
+          <input
+            dTextInput
+            autocomplete="off"
+            name="heightCm"
+            placeholder="Height"
+            [(ngModel)]="packageFormData.heightCm"
+            [dValidateRules]="{
+              validators: [{ required: true }]
+            }"
+          />
+        </d-form-control>
+      </d-form-item>
+
+      <d-form-item>
+        <d-form-label [required]="true" [hasHelp]="true">Length </d-form-label>
+        <d-form-control>
+          <input
+            dTextInput
+            autocomplete="off"
+            name="lengthCm"
+            placeholder="length"
+            [(ngModel)]="packageFormData.lengthCm"
+            [dValidateRules]="{
+              validators: [{ required: true }]
+            }"
+          />
+        </d-form-control>
+      </d-form-item>
+
+      <d-form-item *ngIf="type === 'single'">
+        <d-form-label [required]="true" [hasHelp]="true">Box Size</d-form-label>
+        <d-form-control>
+          <input
+            dTextInput
+            autocomplete="off"
+            name="boxSize"
+            placeholder="boxSize"
+            [(ngModel)]="packageFormData.boxSize"
+          />
+        </d-form-control>
+      </d-form-item>
+    </div>
+  </div>
+
+  <div [ngStyle]="{ width: '98%' }">
+    <div [ngStyle]="{ display: 'flex', justifyContent: 'space-between' }">
+      <div>Package Detail</div>
+      <d-button
+        [ngStyle]="{ margin: '0px 21px 6px 0px' }"
+        (click)="addPackageDetailInput()"
+        *ngIf="
+          (packageDetailList.length < 1 && type === 'single') ||
+          type === 'multiple'
+        "
+        >Add Package Detail
+      </d-button>
+    </div>
+
+    <div *ngFor="let I of packageDetailList; let i = index">
+      <div [ngStyle]="{ display: 'flex', justifyContent: 'space-between' }">
+        <div [ngStyle]="{ width: '46%' }">
+          <d-form-item>
+            <d-form-label [required]="true" [hasHelp]="true"
+              >Product SKU
+            </d-form-label>
+            <d-form-control>
+              <d-select
+                [appendToBody]="true"
+                [options]="shipmentDetailList"
+                name="productSku"
+                [filterKey]="'productSku'"
+                [(ngModel)]="packageDetailList[i].productSku"
+                [dValidateRules]="{
+                  validators: [{ required: true }]
+                }"
+              ></d-select>
+            </d-form-control>
+          </d-form-item>
+        </div>
+
+        <div [ngStyle]="{ width: '46%' }">
+          <d-form-item>
+            <d-form-label [required]="true" [hasHelp]="true"
+              >Packaged Qty
+            </d-form-label>
+            <d-form-control>
+              <input
+                [ngStyle]="{
+                  marginBottom: '15px',
+                  width: '96%'
+                }"
+                isEnableProductbtn
+                dTextInput
+                autocomplete="off"
+                name="packageQty"
+                placeholder="Packaged Qty"
+                [(ngModel)]="packageDetailList[i].packageQty"
+                [dValidateRules]="setPackageQtyCheck()"
+              />
+              <button
+                [ngStyle]="{ marginLeft: '4px' }"
+                (click)="removePackageDetail(i)"
+              >
+                <i
+                  [ngStyle]="{ paddingRight: '0px' }"
+                  class="icon icon-close"
+                ></i>
+              </button>
+            </d-form-control>
+          </d-form-item>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <d-form-operation>
+    <d-button
+      dLoading
+      class="mr-element-spacing"
+      [title]="packageFrom.errorMessage || ''"
+      circled="true"
+      style="margin-right: 8px"
+      [showLoading]="packageFrom.pending"
+      dFormSubmit
+      [dFormSubmitData]="'submit-button'"
+    >
+      Create
+    </d-button>
+  </d-form-operation>
+</form>

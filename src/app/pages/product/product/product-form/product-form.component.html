@@ -1,0 +1,225 @@
+<div class="da-content-banner">
+  <div class="add-session-btn">
+    <d-breadcrumb>
+      <d-breadcrumb-item>
+        <a routerLink="/product/product">{{ "Product" | translate }}</a>
+      </d-breadcrumb-item>
+      <d-breadcrumb-item>
+        {{ mode | translate }}
+      </d-breadcrumb-item>
+      <!-- <d-button [ngStyle]="{ marginLeft: '900px' }" (click)="addSession()">Add Season</d-button> -->
+    </d-breadcrumb>
+  </div>
+</div>
+
+<div *ngIf="!paramId" class="da-content-wrapper" [ngStyle]="{ margin: '20px', backgroundColor: '#ffffff' }">
+  <div class="da-content-banner-title">Style Information</div>
+  <d-row>
+    <d-col [dSpan]="8">
+      <d-row>
+        <d-col [dSpan]="6"> <b>Style Name:</b> </d-col>
+        <d-col [dSpan]="6"> {{ styleData.styleName }} </d-col>
+      </d-row>
+      <br />
+      <d-row>
+        <d-col [dSpan]="6"> <b>Brand Name:</b> </d-col>
+        <d-col [dSpan]="6"> {{ styleData.brand.brandName }} </d-col>
+      </d-row>
+      <br />
+      <d-row>
+        <d-col [dSpan]="6"> <b>Category:</b> </d-col>
+        <d-col [dSpan]="6"> {{ styleData.category.categoryName }} </d-col>
+      </d-row>
+      <br />
+      <d-row>
+        <d-col [dSpan]="6"> <b> Material:</b> </d-col>
+        <d-col [dSpan]="6"> {{ materialToStr }} </d-col>
+      </d-row>
+    </d-col>
+    <d-col [dSpan]="4"></d-col>
+    <d-col [dSpan]="8">
+      <d-row>
+        <d-col [dSpan]="6"> <b>Style Code:</b> </d-col>
+        <d-col [dSpan]="6"> {{ styleData.styleCode }} </d-col>
+      </d-row>
+      <br />
+      <d-row>
+        <d-col [dSpan]="6"> <b>Season Name:</b> </d-col>
+        <d-col [dSpan]="6"> {{ styleData.season.seasonName }} </d-col>
+      </d-row>
+      <br />
+      <d-row>
+        <d-col [dSpan]="6"> <b> Sub Category:</b> </d-col>
+        <d-col [dSpan]="6"> {{ styleData.subCategory.subCategoryName }} </d-col>
+      </d-row>
+      <br />
+      <d-row>
+        <d-col [dSpan]="6"> <b> Unit:</b> </d-col>
+        <d-col [dSpan]="6"> {{ styleData.unit.unitName }} </d-col>
+      </d-row>
+    </d-col>
+  </d-row>
+</div>
+
+<div class="da-content-wrapper">
+  <da-layout-row [daGutter]="[24, 24]">
+    <da-col-item [daSpan]="24" [daXs]="24">
+      <div class="da-basic-form" [ngStyle]="{ display: 'flex', justifyContent: 'space-between' }">
+        <form style="padding-right: 20px" dForm ngForm [dValidateRules]="{
+            message: 'The form verification failed, please check.'
+          }" [layout]="verticalLayout" #projectForm="dValidateRules" (dSubmit)="submitAddProductForm($event)"
+          autocomplete="off">
+          <div class="da-content-banner-title">
+            {{ mode + " " + "Product" | translate }}
+          </div>
+          <div [ngStyle]="{ width: '98%' }" *ngIf="!paramId">
+            <d-form-item>
+              <d-form-label [required]="true" [hasHelp]="true" [helpTips]="'This is the product descruption.'">Product
+                description</d-form-label>
+              <d-form-control>
+                <input dTextInput autocomplete="off" name="productDesc" placeholder="Product Description"
+                  [(ngModel)]="productFormData.productDesc" [dValidateRules]="{
+                    validators: [{ required: true }]
+                  }" />
+              </d-form-control>
+            </d-form-item>
+          </div>
+          <div [ngStyle]="{ display: 'flex', justifyContent: 'space-between' }" *ngIf="!paramId">
+            <div [ngStyle]="{ width: '46%' }">
+              <d-form-item>
+                <d-form-label [required]="true" [hasHelp]="true" [helpTips]="'This is the currency.'">Currency
+                </d-form-label>
+                <d-form-control>
+                  <input dTextInput autocomplete="off" name="currency" placeholder="Currency"
+                    [(ngModel)]="productFormData.currency" [dValidateRules]="{
+                      validators: [{ required: true }]
+                    }" />
+                </d-form-control>
+              </d-form-item>
+              <div [ngStyle]="{}">
+                <d-form-item>
+                  <div [ngStyle]="{ display: 'flex', alignItems: 'space-between' }">
+                    <d-form-label *ngIf="colorArray.length > 0" [required]="true" [hasHelp]="true"
+                      [helpTips]="'This is the Color.'">Color</d-form-label>
+
+                    <d-button [ngStyle]="{ margin: '0px 21px 6px 0px' }" (click)="addColorInput()">Add Color</d-button>
+                  </div>
+                  <d-form-control *ngFor="let I of colorArray; let i = index">
+                    <input [ngStyle]="{
+                        marginBottom: '15px',
+                        width: '96%'
+                      }" isEnableProductbtn dTextInput autocomplete="off" [value]="I" placeholder="color"
+                      (input)="colorChangeHandler($event, i)"
+                      onkeydown="if(['Space'].includes(arguments[0].code)){return false;}" />
+                    <button [ngStyle]="{ marginLeft: '4px' }" (click)="removeColorInput(i)">
+                      <i [ngStyle]="{ paddingRight: '0px' }" class="icon icon-close"></i>
+                    </button>
+                  </d-form-control>
+                </d-form-item>
+              </div>
+            </div>
+
+            <div [ngStyle]="{ width: '46%' }">
+              <d-form-item>
+                <d-form-label [required]="true" [hasHelp]="true" [helpTips]="'This is the price'">Price</d-form-label>
+                <d-form-control>
+                  <input dTextInput autocomplete="off" name="price" placeholder="Price"
+                    [(ngModel)]="productFormData.price" [dValidateRules]="{
+                      validators: [{ required: true }]
+                    }" />
+                </d-form-control>
+              </d-form-item>
+
+              <div>
+                <d-form-item>
+                  <div [ngStyle]="{ display: 'flex', alignItems: 'space-between' }">
+                    <d-form-label *ngIf="sizeArray.length > 0" [required]="true" [hasHelp]="true"
+                      [helpTips]="'This isthe Color.'">Size</d-form-label>
+
+                    <d-button [ngStyle]="{ margin: '0px 21px 6px 0px' }" (click)="addSizeInput()">Add Size</d-button>
+                  </div>
+                  <d-form-control *ngFor="let I of sizeArray; let i = index">
+                    <input [ngStyle]="{ marginBottom: '15px', width: '96%' }" dTextInput [value]="I" placeholder="Size"
+                      (input)="sizeChangeHandler($event, i)"
+                      onkeydown="if(['Space'].includes(arguments[0].code)){return false;}" required="true" />
+                    <button [ngStyle]="{ marginLeft: '4px' }" (click)="removeSizeInput(i)">
+                      <i [ngStyle]="{ paddingRight: '0px' }" class="icon icon-close"></i>
+                    </button>
+                  </d-form-control>
+                </d-form-item>
+              </div>
+            </div>
+          </div>
+
+          <d-button *ngIf="!paramId" [ngStyle]="{
+              marginBottom: '15px',
+              display: 'flex',
+              justifyContent: 'end'
+            }" (click)="addProductHandler()" [disabled]="isEnableProductbtn">Add Product</d-button>
+
+          <div [ngStyle]="{ display: 'flex' }" *ngFor="let prod of productArray; let i = index">
+            <d-form-item [ngStyle]="{ margin: '20px 20px 20px 0px' }">
+              <d-form-label [required]="true" [hasHelp]="true" [helpTips]="'This is the Color.'">Color</d-form-label>
+              <d-form-control>
+                <input [ngStyle]="{ width: '200px' }" dTextInput autocomplete="off" name="productArray[i].color"
+                  placeholder="Color" [value]="productArray[i].color" disabled />
+              </d-form-control>
+            </d-form-item>
+
+            <d-form-item [ngStyle]="{ margin: '20px 20px 20px 0px' }">
+              <d-form-label [required]="true" [hasHelp]="true" [helpTips]="'This is the Size'">Size</d-form-label>
+              <d-form-control>
+                <input [ngStyle]="{ width: '200px' }" dTextInput autocomplete="off" name="productArray[i].size"
+                  placeholder="Size" [value]="productArray[i].size" disabled />
+              </d-form-control>
+            </d-form-item>
+
+            <d-form-item [ngStyle]="{ margin: '20px 20px 20px 0px' }">
+              <d-form-label [required]="true" [hasHelp]="true" [helpTips]="'This is the SKU'">Product SKU</d-form-label>
+              <d-form-control>
+                <input [ngStyle]="{ width: '200px' }" dTextInput autocomplete="off" name="productArray[i].productSku"
+                  placeholder="SKU" [(ngModel)]="productArray[i].productSku" />
+              </d-form-control>
+            </d-form-item>
+
+            <d-form-item [ngStyle]="{ margin: '20px 20px 20px 0px' }">
+              <d-form-label [required]="true" [hasHelp]="true" [helpTips]="'This is the product descruption.'">Product
+                description</d-form-label>
+              <d-form-control>
+                <input [ngStyle]="{ width: '200px' }" dTextInput autocomplete="off" name="productArray[i].productDesc"
+                  placeholder="Product Description" [(ngModel)]="productArray[i].productDesc" />
+              </d-form-control>
+            </d-form-item>
+
+            <d-form-item [ngStyle]="{ margin: '20px 20px 20px 0px' }">
+
+              <d-form-label [required]="true" [hasHelp]="true" [helpTips]="'This is the Pice'">Price</d-form-label>
+              <d-form-control>
+                <input dTextInput autocomplete="off" [ngStyle]="{ width: '200px' }" name="productArray[i].price"
+                  autocomplete="off" placeholder="Price" [(ngModel)]="productArray[i].price" />
+                <button *ngIf="!paramId" [ngStyle]="{ marginLeft: '4px' }" (click)="removeProduct(i)">
+                  <i [ngStyle]="{ paddingRight: '0px' }" class="icon icon-close"></i>
+                </button>
+              </d-form-control>
+
+
+            </d-form-item>
+
+          </div>
+          <d-form-operation>
+            <d-button dLoading class="mr-element-spacing" [title]="projectForm.errorMessage || ''" circled="true"
+              style="margin-right: 8px" [showLoading]="projectForm.pending" dFormSubmit
+              [dFormSubmitData]="'submit-button'">
+              Update
+            </d-button>
+          </d-form-operation>
+        </form>
+      </div>
+    </da-col-item>
+  </da-layout-row>
+</div>
+<ng-template #EditorTemplate>
+  <da-admin-form [formConfig]="formConfig" [formData]="formData" (submitted)="onSubmitted($event)"
+    (canceled)="onCanceled()">
+  </da-admin-form>
+</ng-template>

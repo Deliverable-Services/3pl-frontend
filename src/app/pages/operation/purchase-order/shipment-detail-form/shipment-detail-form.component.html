@@ -1,0 +1,164 @@
+<form dForm [layout]="verticalLayout" (dSubmit)="submitShipmentDetail($event)">
+  <d-form-item>
+    <d-form-label [required]="true">Shipment：</d-form-label>
+    <d-form-control>
+      <d-select
+        [appendToBody]="true"
+        [options]="shipmentList"
+        [filterKey]="'shipRef'"
+        name="shipRef"
+        [(ngModel)]="shipmentDetailFormData.selectedShipment"
+        [dValidateRules]="{
+          validators: [{ required: true }]
+        }"
+        (ngModelChange)="
+          getShipmentById(shipmentDetailFormData.selectedShipment.shipmentId)
+        "
+      ></d-select>
+    </d-form-control>
+  </d-form-item>
+
+  <d-form-item>
+    <d-form-label [required]="true">PO line </d-form-label>
+    <d-form-control>
+      <d-select
+        [appendToBody]="true"
+        [options]="poLineItemList"
+        [multiple]="true"
+        [filterKey]="'productSku'"
+        name="poLineItem"
+        [(ngModel)]="selectedPoLines"
+        [dValidateRules]="{
+          validators: [{ required: true }]
+        }"
+        (ngModelChange)="updatePoLinesArray()"
+      ></d-select>
+    </d-form-control>
+  </d-form-item>
+
+  <div *ngFor="let poLine of selectedPoLinesArray; let i = index">
+    <div [ngStyle]="{ display: 'flex', justifyContent: 'space-between' }">
+      <d-form-item>
+        <d-form-label
+          [required]="true"
+          [hasHelp]="true"
+          [helpTips]="'This is the Product SKU'"
+          >Product SKU</d-form-label
+        >
+        <d-form-control>
+          <input
+            dTextInput
+            autocomplete="off"
+            name="productSku"
+            placeholder="Product SKU"
+            [disabled]="true"
+            [(ngModel)]="selectedPoLinesArray[i].productSku"
+            [dValidateRules]="{
+              validators: [{ required: true }]
+            }"
+          />
+        </d-form-control>
+      </d-form-item>
+
+      <d-form-item>
+        <d-form-label
+          [required]="true"
+          [hasHelp]="true"
+          [helpTips]="'This is the Product Price'"
+          >Product Price</d-form-label
+        >
+        <d-form-control>
+          <input
+            dTextInput
+            autocomplete="off"
+            name="productPrice"
+            placeholder="Product Price"
+            [disabled]="true"
+            [(ngModel)]="selectedPoLinesArray[i].productPrice"
+            [dValidateRules]="{
+              validators: [{ required: true }]
+            }"
+          />
+        </d-form-control>
+      </d-form-item>
+
+      <d-form-item>
+        <d-form-label
+          [required]="true"
+          [hasHelp]="true"
+          [helpTips]="'This is the Unit'"
+          >Unit Name</d-form-label
+        >
+        <d-form-control>
+          <input
+            dTextInput
+            autocomplete="off"
+            name="unitName"
+            placeholder="Unit Name"
+            [disabled]="true"
+            [(ngModel)]="selectedPoLinesArray[i].unitName"
+            [dValidateRules]="{
+              validators: [{ required: true }]
+            }"
+          />
+        </d-form-control>
+      </d-form-item>
+
+      <d-form-item>
+        <d-form-label
+          [required]="true"
+          [hasHelp]="true"
+          [helpTips]="'This is the PO Qty'"
+          >PO Qty</d-form-label
+        >
+        <d-form-control>
+          <input
+            dTextInput
+            autocomplete="off"
+            name="poQty"
+            placeholder="PO Qty"
+            [disabled]="true"
+            [(ngModel)]="selectedPoLinesArray[i].poQty"
+            [dValidateRules]="{
+              validators: [{ required: true }]
+            }"
+          />
+        </d-form-control>
+      </d-form-item>
+
+      <d-form-item>
+        <d-form-label
+          [required]="true"
+          [hasHelp]="true"
+          [helpTips]="'This is the Shipped Qty'"
+          >Shipped Qty</d-form-label
+        >
+        <d-form-control>
+          <input
+            dTextInput
+            autocomplete="off"
+            name="shipQty"
+            placeholder="Shipped Qty"
+            [(ngModel)]="selectedPoLinesArray[i].shipQty"
+            [dValidateRules]="setShipQtyValidatory(i)"
+          />
+          <button
+            [ngStyle]="{ marginLeft: '4px' }"
+            (click)="removeSelectedPoLine(i)"
+          >
+            <i [ngStyle]="{ paddingRight: '0px' }" class="icon icon-close"></i>
+          </button>
+        </d-form-control>
+      </d-form-item>
+    </div>
+  </div>
+  <d-form-operation class="da-form-operation">
+    <d-button
+      style="margin-right: 5px"
+      dFormSubmit
+      [dFormSubmitData]="'submit-button'"
+      >Confirm</d-button
+    >
+    <d-button bsStyle="common" (click)="cancel()">Cancel</d-button>
+  </d-form-operation>
+</form>

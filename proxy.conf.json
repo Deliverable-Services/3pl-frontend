@@ -1,0 +1,8 @@
+{
+  "products/brandListData": {
+    "target": "http://localhost:8082/getBrand",
+    "secure": false,
+    "logLevel": "debug",
+    "changeOrigin": true
+  }
+}

@@ -1,0 +1,150 @@
+<div class="da-list-wrap">
+  <div class="da-content-banner">
+    <d-breadcrumb>
+      <d-breadcrumb-item
+        ><a routerLink="/">{{
+          "list.breadcrumb.home" | translate
+        }}</a></d-breadcrumb-item
+      >
+      <d-breadcrumb-item>{{ "Exchange Rate" | translate }}</d-breadcrumb-item>
+    </d-breadcrumb>
+    <div class="da-content-banner-title">
+      {{ "Exchange Rate" | translate }}
+    </div>
+  </div>
+  <div class="da-content-wrapper">
+    <da-layout-row [daGutter]="[24, 24]">
+      <da-col-item [daSpan]="24" [daXs]="24">
+        <div class="da-list-container">
+          <div class="da-list-header">
+            <div class="da-left">
+              <d-search
+                [size]="'sm'"
+                [(ngModel)]="searchWithFromCurrency.keyword"
+                (input)="search($event, searchWithFromCurrency)"
+                class="da-inline"
+                [placeholder]="'Search with From Currency'"
+              ></d-search>
+            </div>
+            <div [ngStyle]="{ display: 'flex', justifyContent: 'flex-end' }">
+              <d-button routerLink="add">Add Exchange Rate</d-button>
+            </div>
+          </div>
+
+          <div class="list-content" dLoading [loading]="busy">
+            <d-data-table
+              #datatable
+              [dataSource]="basicDataSource"
+              [scrollable]="true"
+              [onlyOneColumnSort]="true"
+              (multiSortChange)="multiSortChange($event)"
+            >
+              <d-column
+                field="fromCurrency"
+                header="From Currency"
+                [width]="columnSize.fromCurrency"
+                [sortable]="true"
+              >
+                <d-cell>
+                  <ng-template let-cellItem="cellItem">
+                    <span
+                      [title]="cellItem"
+                      class="over-flow-ellipsis"
+                      [style.width]="'100px'"
+                    >
+                      {{ cellItem }}
+                    </span>
+                  </ng-template>
+                </d-cell>
+              </d-column>
+
+              <d-column
+                field="toCurrency"
+                header="To Currency"
+                [width]="columnSize.toCurrency"
+                [sortable]="true"
+              >
+                <d-cell>
+                  <ng-template let-cellItem="cellItem">
+                    <span
+                      [title]="cellItem"
+                      class="over-flow-ellipsis"
+                      [style.width]="'100px'"
+                    >
+                      {{ cellItem }}
+                    </span>
+                  </ng-template>
+                </d-cell>
+              </d-column>
+
+              <d-column
+                field="rate"
+                header="Rate"
+                [width]="columnSize.rate"
+                [sortable]="true"
+              >
+                <d-cell>
+                  <ng-template let-cellItem="cellItem">
+                    <span
+                      [title]="cellItem"
+                      class="over-flow-ellipsis"
+                      [style.width]="'100px'"
+                    >
+                      {{ cellItem }}
+                    </span>
+                  </ng-template>
+                </d-cell>
+              </d-column>
+
+              <d-column
+                field="updatedAt"
+                header="Updated Date"
+                [width]="columnSize.updatedAt"
+                [sortable]="true"
+              >
+                <d-cell>
+                  <ng-template let-cellItem="cellItem">
+                    <span
+                      [title]="cellItem"
+                      class="over-flow-ellipsis"
+                    >
+                      {{ cellItem | mydatepipe }}
+                    </span>
+                  </ng-template>
+                </d-cell>
+              </d-column>
+
+              <d-column
+                field="action"
+                header="Actions"
+                [width]="columnSize.action"
+                [sortable]="true"
+              >
+                <d-cell>
+                  <ng-template let-rowItem="rowItem" let-rowIndex="rowIndex">
+                    <div class="btn-group over-flow-ellipsis">
+                      <d-button
+                        icon="icon-edit"
+                        bsStyle="text-dark"
+                        title="edit"
+                        (click)="
+                          editExchangeRate(rowItem.exchagneRateId, rowIndex)
+                        "
+                      ></d-button>
+                      <!-- <d-button
+                        icon="icon-delete"
+                        bsStyle="text-dark"
+                        title="delete"
+                        (click)="deleteExchangeRate(rowItem.exchagneRateId)"
+                      ></d-button> -->
+                    </div>
+                  </ng-template>
+                </d-cell>
+              </d-column>
+            </d-data-table>
+          </div>
+        </div>
+      </da-col-item>
+    </da-layout-row>
+  </div>
+</div>

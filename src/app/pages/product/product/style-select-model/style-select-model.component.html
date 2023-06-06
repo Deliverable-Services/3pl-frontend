@@ -1,0 +1,41 @@
+<div class="modal-test-component">
+  <div class="da-basic-form">
+    <form
+      dForm
+      ngForm
+      [dValidateRules]="{
+        message: 'The form verification failed, please check.'
+      }"
+      (dSubmit)="submitStyleForm($event)"
+      autocomplete="off"
+    >
+      <d-form-item>
+        <d-form-label
+          [required]="true"
+          [hasHelp]="true"
+          [helpTips]="'This is the Style type'"
+          >Select Style type</d-form-label
+        >
+        <d-form-control>
+          <d-select
+            [appendToBody]="true"
+            placeholder="Select a Style type"
+            [options]="['sd', 'sdf', 'sdv', 'scsd', 'we', 'wer', 'wf sdf']"
+            name="style_type"
+            [(ngModel)]="styleFormData.style_type"
+          ></d-select>
+        </d-form-control>
+      </d-form-item>
+      <d-button
+        dLoading
+        class="mr-element-spacing"
+        circled="true"
+        style="margin-right: 8px"
+        dFormSubmit
+        [dFormSubmitData]="'submit-button'"
+      >
+        Create
+      </d-button>
+    </form>
+  </div>
+</div>

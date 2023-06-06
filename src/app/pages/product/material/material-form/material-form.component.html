@@ -1,0 +1,85 @@
+<div class="da-content-banner">
+  <div class="add-session-btn">
+    <d-breadcrumb>
+      <d-breadcrumb-item>
+        <a routerLink="/product/material">{{ "Material" | translate }}</a>
+      </d-breadcrumb-item>
+      <d-breadcrumb-item>
+        {{ mode | translate }}
+      </d-breadcrumb-item>
+      <!-- <d-button [ngStyle]="{ marginLeft: '900px' }" (click)="addSession()">Add Season</d-button> -->
+    </d-breadcrumb>
+  </div>
+</div>
+
+<div class="da-content-wrapper">
+  <da-layout-row [daGutter]="[24, 24]">
+    <da-col-item [daSpan]="24" [daXs]="24">
+      <div class="da-basic-form" [ngStyle]="{ display: 'flex', justifyContent: 'space-between' }">
+        <form dForm ngForm [dValidateRules]="{
+            message: 'The form verification failed, please check.'
+          }" [layout]="verticalLayout" #projectForm="dValidateRules" (dSubmit)="submitProjectForm($event)"
+          autocomplete="off">
+          <div class="da-content-banner-title">
+            {{ mode + " " + "Material" | translate }}
+          </div>
+          <d-form-item [ngStyle]="{ width: '500px' }">
+            <d-form-label [required]="true" [hasHelp]="true" [helpTips]="'This is the Material name.'">Material Name
+            </d-form-label>
+            <d-form-control>
+              <input dTextInput autocomplete="off" name="materialName" placeholder="Material Name"
+                [(ngModel)]="projectFormData.materialName" [dValidateRules]="{
+                  validators: [{ required: true }]
+                }" />
+            </d-form-control>
+          </d-form-item>
+
+          <d-form-item>
+            <d-form-label [required]="true" [hasHelp]="true" [helpTips]="'Enter HS Code'">HS Code</d-form-label>
+            <d-form-control>
+              <input dTextInput autocomplete="off" name="hsCode" placeholder="HS Code"
+                onkeydown="if(['Space'].includes(arguments[0].code)){return false;}"
+                [(ngModel)]="projectFormData.hsCode" [dValidateRules]="{
+                  validators: [{ required: true }]
+                }" />
+            </d-form-control>
+          </d-form-item>
+          <d-form-item>
+            <d-form-label [required]="true" [hasHelp]="true" [helpTips]="'Select a country Of Origin'">Country Of Origin
+            </d-form-label>
+            <d-select [appendToBody]="true" placeholder="Select Country Of Origin" [options]="[
+                'dsvdfv',
+                'Shoess',
+                'sdfgdfsg',
+                'sfgdsfhg',
+                'sdfhgdfs',
+                'dsfhg',
+                'dfsghdsf',
+                ['dsfhgd']
+              ]" name="countryOfOrigin" [(ngModel)]="projectFormData.origin" [dValidateRules]="{
+                validators: [{ required: true }]
+              }"></d-select>
+          </d-form-item>
+
+          <d-form-operation>
+            <d-button dLoading class="mr-element-spacing" [title]="projectForm.errorMessage || ''" circled="true"
+              style="margin-right: 8px" [showLoading]="projectForm.pending" dFormSubmit
+              [dFormSubmitData]="'submit-button'">
+              {{ paramId ? "Update" : "Create" }}
+            </d-button>
+          </d-form-operation>
+        </form>
+        <div *ngIf="paramId">
+          <div class="dateWrapper">
+            {{ "Created At :" + " " }}
+            {{ selectedCategory.createdAt | mydatepipe }}
+          </div>
+          <div class="dateWrapper">
+            {{ "Updated At :" + " " }}
+            {{ selectedCategory.updatedAt | mydatepipe }}
+          </div>
+        </div>
+      </div>
+    </da-col-item>
+  </da-layout-row>
+</div>

@@ -1,0 +1,113 @@
+<div class="da-content-banner">
+  <d-breadcrumb>
+    <d-breadcrumb-item>
+      <a routerLink="/">{{ 'form.breadcrumb.home' | translate }}</a>
+    </d-breadcrumb-item>
+    <d-breadcrumb-item>
+      {{ 'form.breadcrumb.formPage' | translate }}
+    </d-breadcrumb-item>
+    <d-breadcrumb-item>
+      {{ 'form.breadcrumb.basicForm' | translate }}
+    </d-breadcrumb-item>
+  </d-breadcrumb>
+  <div class="da-content-banner-title">
+    {{ 'form.basicForm.title' | translate }}
+  </div>
+  <div>{{ 'form.basicForm.description' | translate }}</div>
+</div>
+<div class="da-content-wrapper">
+  <da-layout-row [daGutter]="[24, 24]">
+    <da-col-item [daSpan]="24" [daXs]="24">
+      <div class="da-basic-form">
+        <form
+          dForm
+          ngForm
+          [dValidateRules]="{
+            message: 'The form verification failed, please check.'
+          }"
+          [layout]="verticalLayout"
+          #projectForm="dValidateRules"
+          (dSubmit)="submitProjectForm($event)"
+          autocomplete="off"
+        >
+          <d-form-item>
+            <d-form-label [required]="true" [hasHelp]="true" [helpTips]="'This is the Brand name.'">Brand Name</d-form-label>
+            <d-form-control>
+              <input
+                dTextInput
+                autocomplete="off"
+                name="brandName"
+                placeholder="Brand Name"
+                [(ngModel)]="projectFormData.brandName"
+                [dValidateRules]="{
+                  validators: [{ required: true }]
+                }"
+              />
+            </d-form-control>
+          </d-form-item>
+
+          <d-form-item>
+            <d-form-label [required]="true" [hasHelp]="true" [helpTips]="'Enter Brand Code'">Brand Code</d-form-label>
+            <d-form-control>
+              <input
+                dTextInput
+                autocomplete="off"
+                name="brandCode"
+                placeholder="Brand Code"
+                [(ngModel)]="projectFormData.brandCode"
+                [dValidateRules]="{
+                  validators: [{ required: true }]
+                }"
+              />
+            </d-form-control>
+          </d-form-item>
+          <d-form-item>
+            <d-form-label [required]="true" [hasHelp]="true" [helpTips]="'Enter Brand Code'">Session Name</d-form-label>
+            <d-form-control>
+              <input
+                dTextInput
+                autocomplete="off"
+                name="sessionName"
+                placeholder="Session Name"
+                [(ngModel)]="projectFormData.sessionName"
+                [dValidateRules]="{
+                  validators: [{ required: true }]
+                }"
+              />
+            </d-form-control>
+          </d-form-item>
+          <d-form-item>
+            <d-form-label [required]="true" [hasHelp]="true" [helpTips]="'Enter Brand Code'">Session Code</d-form-label>
+            <d-form-control>
+              <input
+                dTextInput
+                autocomplete="off"
+                name="sessionCode"
+                placeholder="Session Code"
+                [(ngModel)]="projectFormData.sessionCode"
+                [dValidateRules]="{
+                  validators: [{ required: true }]
+                }"
+              />
+            </d-form-control>
+          </d-form-item>
+
+          <d-form-operation>
+            <d-button
+              dLoading
+              class="mr-element-spacing"
+              [title]="projectForm.errorMessage || ''"
+              circled="true"
+              style="margin-right: 8px"
+              [showLoading]="projectForm.pending"
+              dFormSubmit
+              [dFormSubmitData]="'submit-button'"
+            >
+              Submit
+            </d-button>
+          </d-form-operation>
+        </form>
+      </div>
+    </da-col-item>
+  </da-layout-row>
+</div>

@@ -1,0 +1,563 @@
+<div class="da-content-banner">
+  <div class="add-session-btn">
+    <d-breadcrumb>
+      <d-breadcrumb-item>
+        <a routerLink="/operation/shipment">{{ "Shipment" | translate }}</a>
+      </d-breadcrumb-item>
+      <d-breadcrumb-item>
+        {{ mode | translate }}
+      </d-breadcrumb-item>
+    </d-breadcrumb>
+  </div>
+</div>
+
+<div class="da-content-wrapper">
+  <da-layout-row [daGutter]="[24, 24]">
+    <da-col-item [daSpan]="24" [daXs]="24">
+      <div
+        class="da-basic-form"
+        [ngStyle]="{ display: 'flex', justifyContent: 'space-between' }"
+      >
+        <form
+          dForm
+          ngForm
+          [dValidateRules]="{
+            message: 'The form verification failed, please check.'
+          }"
+          [layout]="verticalLayout"
+          #shipmentFrom="dValidateRules"
+          (dSubmit)="submitShipmentForm($event)"
+          autocomplete="off"
+        >
+          <div
+            class="da-content-wrapper"
+            [ngStyle]="{ display: 'flex', justifyContent: 'space-between' }"
+          >
+            <div *ngIf="paramId">
+              <div style="display: flex; gap: 10px">
+                <div class="dateWrapper">
+                  {{ "Status :" + " " }}
+                  {{ status }}
+                </div>
+              </div>
+              <div style="display: flex; gap: 10px">
+                <div class="dateWrapper">
+                  {{ "Created At :" + " " }}
+                  {{ shipmentFormData.createdAt | mydatepipe }}
+                </div>
+              </div>
+              <div style="display: flex; gap: 10px">
+                <div class="dateWrapper">
+                  {{ "Updated At :" + " " }}
+                  {{ shipmentFormData.updatedAt | mydatepipe }}
+                </div>
+              </div>
+            </div>
+
+            <div style="display: flex">
+              <d-form-operation>
+                <d-button
+                  dLoading
+                  class="mr-element-spacing"
+                  [title]="shipmentFrom.errorMessage || ''"
+                  circled="true"
+                  style="margin-right: 8px"
+                  [showLoading]="shipmentFrom.pending"
+                  dFormSubmit
+                  [dFormSubmitData]="'submit-button'"
+                  *ngIf="paramId && status === 'Draft'"
+                >
+                  Save Draft
+                </d-button>
+              </d-form-operation>
+              <d-button
+                bsStyle="common"
+                class="mr-element-spacing"
+                style="margin-right: 8px"
+                (click)="changeShipmentToSubmit()"
+                *ngIf="status === 'Draft'"
+              >
+                Shipment Submit
+              </d-button>
+              <d-button
+                bsStyle="common"
+                class="mr-element-spacing"
+                style="margin-right: 8px"
+                *ngIf="status === 'Ready'"
+                (click)="changeShipmentToConfirm()"
+              >
+                Shipment Confirmed
+              </d-button>
+              <d-button
+                bsStyle="common"
+                class="mr-element-spacing"
+                style="margin-right: 8px"
+                *ngIf="status === 'Confrmed'"
+                (click)="changeShipmentToDispatched()"
+              >
+                Shipment Dispatched
+              </d-button>
+              <d-button
+                bsStyle="common"
+                class="mr-element-spacing"
+                style="margin-right: 8px"
+                *ngIf="status === 'Dispatching'"
+                (click)="changeShipmentToPartial()"
+              >
+                Recieved Partial
+              </d-button>
+              <d-button
+                bsStyle="common"
+                class="mr-element-spacing"
+                style="margin-right: 8px"
+                *ngIf="status === 'Dispatching' || status === 'ReceivedPartial'"
+                (click)="changeShipmentToFull()"
+              >
+                Recieved Full
+              </d-button>
+            </div>
+          </div>
+          <div [ngStyle]="{ display: 'flex', justifyContent: 'space-between' }">
+            <div class="da-content-banner-title">
+              {{ mode + " " + "Shipment Header" | translate }}
+            </div>
+
+            <div *ngIf="paramId">
+              <div class="dateWrapper">
+                {{ "Status :" + " " }}
+                {{ status }}
+              </div>
+            </div>
+          </div>
+          <div [ngStyle]="{ display: 'flex', justifyContent: 'space-between' }">
+            <div [ngStyle]="{ width: '46%' }">
+              <d-form-item>
+                <d-form-label
+                  [required]="true"
+                  [hasHelp]="true"
+                  [helpTips]="'This is the shipment Ref. no..'"
+                  >Shipment Reference no.
+                </d-form-label>
+                <d-form-control>
+                  <input
+                    dTextInput
+                    autocomplete="off"
+                    name="shipRef"
+                    placeholder="Shipment Ref. no."
+                    [(ngModel)]="shipmentFormData.shipRef"
+                    [disabled]="status && status !== 'Draft'"
+                    [dValidateRules]="{
+                      validators: [{ required: true }]
+                    }"
+                  />
+                </d-form-control>
+              </d-form-item>
+
+              <d-form-item>
+                <d-form-label
+                  [required]="true"
+                  [hasHelp]="true"
+                  [helpTips]="'This is the remarks'"
+                  >Remarks
+                </d-form-label>
+                <d-form-control>
+                  <input
+                    dTextInput
+                    autocomplete="off"
+                    name="remarks"
+                    [disabled]="status && status !== 'Draft'"
+                    placeholder="Remarks"
+                    [(ngModel)]="shipmentFormData.remarks"
+                  />
+                </d-form-control>
+              </d-form-item>
+            </div>
+          </div>
+          <d-form-operation>
+            <d-button
+              dLoading
+              class="mr-element-spacing"
+              [title]="shipmentFrom.errorMessage || ''"
+              circled="true"
+              style="margin-right: 8px"
+              [showLoading]="shipmentFrom.pending"
+              dFormSubmit
+              [dFormSubmitData]="'submit-button'"
+              *ngIf="!paramId"
+            >
+              Create
+            </d-button>
+          </d-form-operation>
+        </form>
+      </div>
+    </da-col-item>
+  </da-layout-row>
+</div>
+
+<ng-template #ShipmentCostDialog>
+  <da-admin-form
+    [formConfig]="formConfig"
+    [formData]="formData"
+    (submitted)="onSubmitted($event)"
+    (canceled)="onCanceled()"
+  >
+  </da-admin-form>
+</ng-template>
+
+<div
+  class="da-content-wrapper"
+  *ngIf="paramId && shipmentDetailList.length > 0"
+>
+  <da-layout-row [daGutter]="[24, 24]">
+    <da-col-item [daSpan]="24" [daXs]="24">
+      <div class="da-basic-form">
+        <div [ngStyle]="{ display: 'flex', justifyContent: 'space-between' }">
+          <div class="da-content-banner-title" [ngStyle]="{}">
+            {{ "Shipment Details" | translate }}
+          </div>
+        </div>
+        <div class="da-list-container">
+          <div class="list-content" dLoading [loading]="busy">
+            <d-data-table
+              #datatable
+              [dataSource]="shipmentDetailList"
+              [scrollable]="true"
+            >
+              <d-column field="lineNo" header="Line No" [width]="'100px'">
+                <d-cell>
+                  <ng-template let-cellItem="cellItem">
+                    <span
+                      [title]="cellItem"
+                      class="over-flow-ellipsis"
+                      [style.width]="'100px'"
+                    >
+                      {{ cellItem }}
+                    </span>
+                  </ng-template>
+                </d-cell>
+              </d-column>
+
+              <d-column
+                field="productSku"
+                header="product SKU"
+                [width]="'100px'"
+              >
+                <d-cell>
+                  <ng-template let-cellItem="cellItem">
+                    <span
+                      [title]="cellItem"
+                      class="over-flow-ellipsis"
+                      [style.width]="'100px'"
+                    >
+                      {{ cellItem }}
+                    </span>
+                  </ng-template>
+                </d-cell>
+              </d-column>
+
+              <d-column field="shipQty" header="Shipped Qty" [width]="'100px'">
+                <d-cell>
+                  <ng-template let-cellItem="cellItem">
+                    <span
+                      [title]="cellItem"
+                      class="over-flow-ellipsis"
+                      [style.width]="'100px'"
+                    >
+                      {{ cellItem }}
+                    </span>
+                  </ng-template>
+                </d-cell>
+              </d-column>
+
+              <d-column field="Actions" header="Actions" [width]="'100px'">
+                <d-cell>
+                  <ng-template let-rowItem="rowItem" let-rowIndex="rowIndex">
+                    <div class="btn-group over-flow-ellipsis">
+                      <d-button
+                        icon="icon-delete"
+                        bsStyle="text-dark"
+                        title="edit"
+                        (click)="deleteShipmentDetail(rowIndex)"
+                      ></d-button>
+                    </div>
+                  </ng-template>
+                </d-cell>
+              </d-column>
+            </d-data-table>
+          </div>
+        </div>
+      </div>
+    </da-col-item>
+  </da-layout-row>
+</div>
+
+<div class="da-content-wrapper" *ngIf="paramId">
+  <da-layout-row [daGutter]="[24, 24]">
+    <da-col-item [daSpan]="24" [daXs]="24">
+      <div class="da-basic-form">
+        <div [ngStyle]="{ display: 'flex', justifyContent: 'space-between' }">
+          <div class="da-content-banner-title" [ngStyle]="{}">
+            {{ "Shipment Cost items" | translate }}
+          </div>
+          <d-form-operation>
+            <d-button
+              (click)="addShipmentCost()"
+              circled="true"
+              style="margin-right: 8px"
+              *ngIf="status === 'Draft'"
+            >
+              Add Shipment Cost
+            </d-button>
+          </d-form-operation>
+        </div>
+
+        <div class="da-list-container">
+          <div class="list-content" dLoading [loading]="busy">
+            <d-data-table
+              #datatable
+              [dataSource]="shipmentCostList"
+              [scrollable]="true"
+            >
+              <d-column field="costType" header="Cost Type" [width]="'100px'">
+                <d-cell>
+                  <ng-template let-cellItem="cellItem">
+                    <span
+                      [title]="cellItem"
+                      class="over-flow-ellipsis"
+                      [style.width]="'100px'"
+                    >
+                      {{ cellItem }}
+                    </span>
+                  </ng-template>
+                </d-cell>
+              </d-column>
+
+              <d-column
+                field="description"
+                header="Description"
+                [width]="'100px'"
+              >
+                <d-cell>
+                  <ng-template let-cellItem="cellItem">
+                    <span
+                      [title]="cellItem"
+                      class="over-flow-ellipsis"
+                      [style.width]="'100px'"
+                    >
+                      {{ cellItem }}
+                    </span>
+                  </ng-template>
+                </d-cell>
+              </d-column>
+
+              <d-column field="costPrice" header="Cost Price" [width]="'100px'">
+                <d-cell>
+                  <ng-template let-cellItem="cellItem">
+                    <span
+                      [title]="cellItem"
+                      class="over-flow-ellipsis"
+                      [style.width]="'100px'"
+                    >
+                      {{ cellItem }}
+                    </span>
+                  </ng-template>
+                </d-cell>
+              </d-column>
+
+              <d-column field="currency" header="Currency" [width]="'100px'">
+                <d-cell>
+                  <ng-template let-cellItem="cellItem">
+                    <span
+                      [title]="cellItem"
+                      class="over-flow-ellipsis"
+                      [style.width]="'100px'"
+                    >
+                      {{ cellItem }}
+                    </span>
+                  </ng-template>
+                </d-cell>
+              </d-column>
+
+              <d-column field="terms" header="Terms" [width]="'100px'">
+                <d-cell>
+                  <ng-template let-cellItem="cellItem">
+                    <span
+                      [title]="cellItem"
+                      class="over-flow-ellipsis"
+                      [style.width]="'100px'"
+                    >
+                      {{ cellItem }}
+                    </span>
+                  </ng-template>
+                </d-cell>
+              </d-column>
+
+              <d-column field="Actions" header="Actions" [width]="'100px'">
+                <d-cell>
+                  <ng-template let-rowItem="rowItem" let-rowIndex="rowIndex">
+                    <div class="btn-group over-flow-ellipsis">
+                      <d-button
+                        icon="icon-delete"
+                        bsStyle="text-dark"
+                        title="edit"
+                        (click)="deleteShipmentCost(rowIndex)"
+                      ></d-button>
+                    </div>
+                  </ng-template>
+                </d-cell>
+              </d-column>
+            </d-data-table>
+          </div>
+        </div>
+      </div>
+    </da-col-item>
+  </da-layout-row>
+</div>
+
+<div class="da-content-wrapper" *ngIf="paramId">
+  <da-layout-row [daGutter]="[24, 24]">
+    <da-col-item [daSpan]="24" [daXs]="24">
+      <div class="da-basic-form">
+        <div [ngStyle]="{ display: 'flex', justifyContent: 'space-between' }">
+          <div class="da-content-banner-title" [ngStyle]="{}">
+            {{ "Package Detail" | translate }}
+          </div>
+          <d-form-operation>
+            <d-button
+              (click)="addPackage('single')"
+              circled="true"
+              style="margin-right: 8px"
+              *ngIf="status === 'Ready'"
+            >
+              Add Package (Single)
+            </d-button>
+            <d-button
+              (click)="addPackage('multiple')"
+              circled="true"
+              style="margin-right: 8px"
+              *ngIf="status === 'Ready'"
+            >
+              Add Package (Multiple)
+            </d-button>
+          </d-form-operation>
+        </div>
+
+        <div class="da-list-container">
+          <div class="list-content" dLoading [loading]="busy">
+            <d-data-table
+              #datatable
+              [dataSource]="packageHeaderList"
+              [scrollable]="true"
+            >
+              <d-column field="ctnCode" header="Ctn Code" [width]="'100px'">
+                <d-cell>
+                  <ng-template let-cellItem="cellItem">
+                    <span
+                      [title]="cellItem"
+                      class="over-flow-ellipsis"
+                      [style.width]="'100px'"
+                    >
+                      {{ cellItem }}
+                    </span>
+                  </ng-template>
+                </d-cell>
+              </d-column>
+
+              <d-column field="ctnNo" header="Ctn No," [width]="'100px'">
+                <d-cell>
+                  <ng-template let-cellItem="cellItem">
+                    <span
+                      [title]="cellItem"
+                      class="over-flow-ellipsis"
+                      [style.width]="'100px'"
+                    >
+                      {{ cellItem }}
+                    </span>
+                  </ng-template>
+                </d-cell>
+              </d-column>
+
+              <d-column field="heightCm" header="Height" [width]="'100px'">
+                <d-cell>
+                  <ng-template let-cellItem="cellItem">
+                    <span
+                      [title]="cellItem"
+                      class="over-flow-ellipsis"
+                      [style.width]="'100px'"
+                    >
+                      {{ cellItem }}
+                    </span>
+                  </ng-template>
+                </d-cell>
+              </d-column>
+
+              <d-column field="lengthCm" header="Length" [width]="'100px'">
+                <d-cell>
+                  <ng-template let-cellItem="cellItem">
+                    <span
+                      [title]="cellItem"
+                      class="over-flow-ellipsis"
+                      [style.width]="'100px'"
+                    >
+                      {{ cellItem }}
+                    </span>
+                  </ng-template>
+                </d-cell>
+              </d-column>
+
+              <d-column
+                field="grossWeightKg"
+                header="Gross Weight"
+                [width]="'100px'"
+              >
+                <d-cell>
+                  <ng-template let-cellItem="cellItem">
+                    <span
+                      [title]="cellItem"
+                      class="over-flow-ellipsis"
+                      [style.width]="'100px'"
+                    >
+                      {{ cellItem }}
+                    </span>
+                  </ng-template>
+                </d-cell>
+              </d-column>
+
+              <d-column
+                field="netWeightKg"
+                header="Net Weight"
+                [width]="'100px'"
+              >
+                <d-cell>
+                  <ng-template let-cellItem="cellItem">
+                    <span
+                      [title]="cellItem"
+                      class="over-flow-ellipsis"
+                      [style.width]="'100px'"
+                    >
+                      {{ cellItem }}
+                    </span>
+                  </ng-template>
+                </d-cell>
+              </d-column>
+
+              <d-column field="Actions" header="Actions" [width]="'100px'">
+                <d-cell>
+                  <ng-template let-rowItem="rowItem" let-rowIndex="rowIndex">
+                    <div class="btn-group over-flow-ellipsis">
+                      <d-button
+                        icon="icon-delete"
+                        bsStyle="text-dark"
+                        title="delete"
+                      ></d-button>
+                    </div>
+                  </ng-template>
+                </d-cell>
+              </d-column>
+            </d-data-table>
+          </div>
+        </div>
+      </div>
+    </da-col-item>
+  </da-layout-row>
+</div>

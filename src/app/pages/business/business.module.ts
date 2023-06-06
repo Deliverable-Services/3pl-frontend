@@ -1,0 +1,50 @@
+import { NgModule } from "@angular/core";
+import { CommonModule } from "@angular/common";
+
+import { ProductRoutingModule } from "./busines-routing.module";
+import { FormsModule } from "@angular/forms";
+import {
+  PaginationModule,
+  InputNumberModule,
+  DatepickerModule,
+  TooltipModule,
+} from "ng-devui";
+import { AdminFormModule } from "src/app/@shared/components/admin-form";
+import { SharedModule } from "src/app/@shared/shared.module";
+import { VendorFormComponent } from "./vendor/vendor-form/vendor-form.component";
+import { VendorListComponent } from "./vendor/vendorList/vendor-list.component";
+import { CompanyListComponent } from "./company/companyList/company-list.component";
+import { TradeTermListComponent } from "./trade-term/tradeTerm-List/tradeTerm-list.component";
+import { TradeTermFormComponent } from "./trade-term/tradeTerm-form/tradeTerm-form.component";
+import { DepartmentFormComponent } from './department/department-form/department-form.component';
+import { DepartmentListComponent } from './department/department-list/department-list.component';
+import { CompanyFormComponent } from './company/company-form/company-form.component';
+import { ExchangeRateFormComponent } from './exchange-rate/exchange-rate-form/exchange-rate-form.component';
+import { ExchangeRateListComponent } from './exchange-rate/exchange-rate-list/exchange-rate-list.component';
+
+@NgModule({
+  declarations: [
+    VendorFormComponent,
+    VendorListComponent,
+    CompanyListComponent,
+    TradeTermListComponent,
+    TradeTermFormComponent,
+    DepartmentFormComponent,
+    DepartmentListComponent,
+    CompanyFormComponent,
+    ExchangeRateFormComponent,
+    ExchangeRateListComponent,
+  ],
+  imports: [
+    CommonModule,
+    ProductRoutingModule,
+    SharedModule,
+    FormsModule,
+    PaginationModule,
+    AdminFormModule,
+    InputNumberModule,
+    DatepickerModule,
+    TooltipModule,
+  ],
+})
+export class BusinessModule {}

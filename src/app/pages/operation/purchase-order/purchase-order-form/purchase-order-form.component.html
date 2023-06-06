@@ -1,0 +1,363 @@
+<div class="da-content-banner">
+  <div class="add-session-btn">
+    <d-breadcrumb>
+      <d-breadcrumb-item>
+        <a routerLink="/operation/purchase-order">{{
+          "PO Header" | translate
+          }}</a>
+      </d-breadcrumb-item>
+      <d-breadcrumb-item>
+        {{ mode | translate }}
+      </d-breadcrumb-item>
+      <!-- <d-button [ngStyle]="{ marginLeft: '900px' }" (click)="addSession()">Add Season</d-button> -->
+    </d-breadcrumb>
+  </div>
+</div>
+
+<div class="da-content-wrapper">
+  <da-layout-row [daGutter]="[24, 24]">
+    <da-col-item [daSpan]="24" [daXs]="24">
+      <div class="da-basic-form" [ngStyle]="{ display: 'flex', justifyContent: 'space-between' }">
+        <form dForm ngForm [dValidateRules]="{
+            message: 'The form verification failed, please check.'
+          }" [layout]="verticalLayout" #poHeaderFrom="dValidateRules" (dSubmit)="submitPoHeaderForm($event)"
+          autocomplete="off">
+          <div class="da-content-wrapper" [ngStyle]="{ display: 'flex', justifyContent: 'space-between' }">
+            <div *ngIf="paramId">
+              <div style="display: flex; gap: 10px">
+                <div class="dateWrapper">
+                  {{ "Status :" + " " }}
+                  {{ status }}
+                </div>
+              </div>
+              <div style="display: flex; gap: 10px">
+                <div class="dateWrapper">
+                  {{ "Sample Status :" + " " }}
+                  {{ sampleStatus }}
+                </div>
+              </div>
+              <div style="display: flex; gap: 10px">
+                <div class="dateWrapper">
+                  {{ "Issue date :" + " " }}
+                  {{ issueDate | mydatepipe }}
+                </div>
+              </div>
+              <div style="display: flex; gap: 10px">
+                <div class="dateWrapper">
+                  {{ "Due date :" + " " }}
+                  {{ dueDate | mydatepipe }}
+                </div>
+              </div>
+              <div style="display: flex; gap: 10px">
+                <div class="dateWrapper">
+                  {{ "Created At :" + " " }}
+                  {{ poHeaderFormData.createdAt | mydatepipe }}
+                </div>
+              </div>
+              <div style="display: flex; gap: 10px">
+                <div class="dateWrapper">
+                  {{ "Updated At :" + " " }}
+                  {{ poHeaderFormData.updatedAt | mydatepipe }}
+                </div>
+              </div>
+            </div>
+            <div style="display: flex">
+              <d-form-operation>
+                <d-button dLoading class="mr-element-spacing" [title]="poHeaderFrom.errorMessage || ''" circled="true"
+                  style="margin-right: 8px" [showLoading]="poHeaderFrom.pending" dFormSubmit
+                  [dFormSubmitData]="'submit-button'" *ngIf="!formEditFlag && paramId">
+                  Save draft
+                </d-button>
+              </d-form-operation>
+              <d-button *ngIf="status === 'Draft'" class="mr-element-spacing" style="margin-right: 8px"
+                (click)="changePoToSubmit()">
+                Submit PO
+              </d-button>
+              <d-button class="mr-element-spacing" style="margin-right: 8px" (click)="changePoToReady()" *ngIf="
+                  (sampleStatus === 'Open' && status === 'Open') ||
+                  (sampleStatus === 'Rejected' && status === 'Open')
+                ">
+                Sample Ready
+              </d-button>
+              <d-button class="mr-element-spacing" style="margin-right: 8px" (click)="changePoToConfirm()"
+                *ngIf="sampleStatus === 'Ready' && status === 'Open'">
+                Confirm
+              </d-button>
+              <d-button bsStyle="danger" class="mr-element-spacing" style="margin-right: 8px"
+                (click)="changePoToReject()" *ngIf="sampleStatus === 'Ready' && status === 'Open'">
+                Reject
+              </d-button>
+              <d-button class="mr-element-spacing" style="margin-right: 8px" (click)="releasePo()"
+                *ngIf="sampleStatus === 'Confirmed' && status === 'Open'">
+                Release PO
+              </d-button>
+              <d-button class="mr-element-spacing" style="margin-right: 8px" (click)="closePo()"
+                *ngIf="sampleStatus === 'Confirmed' && status === 'Released'">
+                Close PO
+              </d-button>
+            </div>
+          </div>
+          <div [ngStyle]="{
+              display: 'flex',
+              justifyContent: 'space-between',
+              alignItems: 'center'
+            }">
+            <div class="da-content-banner-title">
+              {{ mode + " " + "PO Header" | translate }}
+            </div>
+          </div>
+          <div [ngStyle]="{ display: 'flex', justifyContent: 'space-between' }">
+            <div [ngStyle]="{ width: '46%' }">
+              <d-form-item>
+                <d-form-label [required]="true" [hasHelp]="true" [helpTips]="'This is the PO Ref. no..'">PO Reference
+                  no.</d-form-label>
+                <d-form-control>
+                  <input dTextInput autocomplete="off" name="poReference" [disabled]="formEditFlag"
+                    placeholder="PO Ref. no." [(ngModel)]="poHeaderFormData.poReference" [dValidateRules]="{
+                      validators: [{ required: true }]
+                    }" />
+                </d-form-control>
+              </d-form-item>
+
+              <d-form-item>
+                <d-form-label [required]="true" [hasHelp]="true" [helpTips]="'This is the Vendor'">Vendor</d-form-label>
+
+                <d-select [filterKey]="'vendorName'" [extraConfig]="{
+                    labelization: { enable: true, overflow: 'multiple-line' }
+                  }" [appendToBody]="true" placeholder="Select a Vendor" (ngModelChange)="
+                    poHeaderFormData.vendorContact = {
+                      vendorContactId: ''
+                    }
+                  " [options]="vendorList" [disabled]="formEditFlag" name="brand" [(ngModel)]="poHeaderFormData.vendor"
+                  [dValidateRules]="{
+                    validators: [{ required: true }]
+                  }"></d-select>
+              </d-form-item>
+
+              <d-form-item>
+                <d-form-label [required]="true" [hasHelp]="true" [helpTips]="'This is the Bill to address'">Bill to
+                  address
+                  <i class="icon-copy-to-new" dTooltip content="Copy Address from Department" (click)="
+                      poHeaderFormData.billToAddress =
+                        poHeaderFormData.shipToDepartment.address
+                    "></i>
+                  <i class="icon-copy-to-new" dTooltip content="Copy Address from Company"
+                    (click)="poHeaderFormData.billToAddress = company.address"></i>
+                </d-form-label>
+                <d-form-control>
+                  <input dTextInput autocomplete="off" name="billToAddress" placeholder="Bill to address"
+                    [disabled]="formEditFlag" [(ngModel)]="poHeaderFormData.billToAddress" [dValidateRules]="{
+                      validators: [{ required: true }]
+                    }" />
+                </d-form-control>
+              </d-form-item>
+              <d-form-item>
+                <d-form-label [required]="true" [hasHelp]="true" [helpTips]="'This is the Trade term'">Trade term
+                </d-form-label>
+
+                <d-select placeholder="Select a Trade term" [filterKey]="'tradeSubject'" [appendToBody]="true"
+                  [options]="tradeTermList" name="tradeTerm" [disabled]="formEditFlag"
+                  [(ngModel)]="poHeaderFormData.tradeTerm" [dValidateRules]="{
+                    validators: [{ required: true }]
+                  }"></d-select>
+              </d-form-item>
+            </div>
+
+            <div [ngStyle]="{ width: '46%' }">
+              <d-form-item>
+                <d-form-label [required]="true" [hasHelp]="true" [helpTips]="'This is the department'">Department
+                </d-form-label>
+
+                <d-select placeholder="Select a department" [filterKey]="'departmentName'" [appendToBody]="true"
+                  [options]="departmentList" name="shipToDepartment" [(ngModel)]="poHeaderFormData.shipToDepartment"
+                  [dValidateRules]="{
+                    validators: [{ required: true }]
+                  }" [disabled]="formEditFlag"></d-select>
+              </d-form-item>
+              <d-form-item>
+                <d-form-label [required]="true" [hasHelp]="true" [helpTips]="'This is the Vendor Contact'">Vendor
+                  Contact</d-form-label>
+
+                <d-select [filterKey]="'contactName'" [extraConfig]="{
+                    labelization: { enable: true, overflow: 'multiple-line' }
+                  }" [appendToBody]="true" placeholder="Select a Contact" [options]="getVendorContactList()"
+                  [disabled]="
+                    getVendorContactList().length == 0 || formEditFlag
+                  " name="vendorContact" [(ngModel)]="poHeaderFormData.vendorContact" [dValidateRules]="{
+                    validators: [{ required: true }]
+                  }"></d-select>
+              </d-form-item>
+
+              <d-form-item>
+                <d-form-label [required]="true" [hasHelp]="true" [helpTips]="'This is the Bill to address'">Ship to
+                  address
+                  <i class="icon-copy-to-new" dTooltip content="Copy Address from Department" (click)="
+                      poHeaderFormData.shipToAddress =
+                        poHeaderFormData.shipToDepartment.address
+                    "></i>
+                  <i class="icon-copy-to-new" dTooltip content="Copy Address from Company"
+                    (click)="poHeaderFormData.shipToAddress = company.address"></i>
+                </d-form-label>
+                <d-form-control>
+                  <input dTextInput autocomplete="off" name="shipToAddress" [disabled]="formEditFlag"
+                    placeholder="Ship to address" [(ngModel)]="poHeaderFormData.shipToAddress" [dValidateRules]="{
+                      validators: [{ required: true }]
+                    }" />
+                </d-form-control>
+              </d-form-item>
+              <d-form-item>
+                <d-form-label [required]="true" [hasHelp]="true" [helpTips]="'This is the Remarks'">Remarks
+                </d-form-label>
+                <d-form-control>
+                  <input dTextInput autocomplete="off" name="remarks" placeholder="Remarks" [disabled]="formEditFlag"
+                    [(ngModel)]="poHeaderFormData.remarks" />
+                </d-form-control>
+              </d-form-item>
+            </div>
+          </div>
+          <d-form-operation>
+            <d-button dLoading [disabled]="formEditFlag" class="mr-element-spacing"
+              [title]="poHeaderFrom.errorMessage || ''" circled="true" style="margin-right: 8px"
+              [showLoading]="poHeaderFrom.pending" dFormSubmit [dFormSubmitData]="'submit-button'" *ngIf="!paramId">
+              Create
+            </d-button>
+          </d-form-operation>
+        </form>
+      </div>
+    </da-col-item>
+  </da-layout-row>
+</div>
+<div class="da-content-wrapper" *ngIf="paramId">
+  <da-layout-row [daGutter]="[24, 24]">
+    <da-col-item [daSpan]="24" [daXs]="24">
+      <div class="da-basic-form">
+        <div [ngStyle]="{ display: 'flex', justifyContent: 'space-between' }">
+          <div class="da-content-banner-title" [ngStyle]="{}">
+            {{ "PO Line items" | translate }}
+          </div>
+          <d-button (click)="addPOLineItem()" *ngIf="!formEditFlag">Add PO Line</d-button>
+          <d-button class="mr-element-spacing" style="margin-right: 8px" (click)="addShipmentDetail()"
+            *ngIf="sampleStatus === 'Confirmed' && status === 'Release'">
+            Add Shipment Detail
+          </d-button>
+        </div>
+
+        <div class="da-list-container">
+          <div class="list-content" dLoading [loading]="busy">
+            <d-data-table #datatable [dataSource]="poLineItemList" [scrollable]="true">
+              <d-column field="lineNo" header="Line No" [width]="'100px'">
+                <d-cell>
+                  <ng-template let-cellItem="cellItem" let-rowIndex="rowIndex">
+                    <span [title]="cellItem" class="over-flow-ellipsis" [style.width]="'100px'">
+                      {{ rowIndex + 1 }}
+                    </span>
+                  </ng-template>
+                </d-cell>
+              </d-column>
+
+              <d-column field="productSku" header="Product SKU" [width]="'100px'">
+                <d-cell>
+                  <ng-template let-cellItem="cellItem">
+                    <span [title]="cellItem" class="over-flow-ellipsis" [style.width]="'100px'">
+                      {{ cellItem }}
+                    </span>
+                  </ng-template>
+                </d-cell>
+              </d-column>
+
+              <d-column field="productPrice" header="Product price" [width]="'100px'">
+                <d-cell>
+                  <ng-template let-cellItem="cellItem">
+                    <span [title]="cellItem" class="over-flow-ellipsis" [style.width]="'100px'">
+                      {{ cellItem }}
+                    </span>
+                  </ng-template>
+                </d-cell>
+              </d-column>
+
+              <d-column field="vendorPrice" header="Vendor price" [width]="'100px'">
+                <d-cell>
+                  <ng-template let-cellItem="cellItem">
+                    <span [title]="cellItem" class="over-flow-ellipsis" [style.width]="'100px'">
+                      {{ cellItem }}
+                    </span>
+                  </ng-template>
+                </d-cell>
+              </d-column>
+
+              <d-column field="plannedQty" header="Planned Qty" [width]="'100px'" *ngIf="status !== 'Draft'">
+                <d-cell>
+                  <ng-template let-cellItem="cellItem">
+                    <span [title]="cellItem" class="over-flow-ellipsis" [style.width]="'100px'">
+                      {{ cellItem }}
+                    </span>
+                  </ng-template>
+                </d-cell>
+              </d-column>
+
+              <d-column field="poQty" header="PO Qty" [width]="'100px'">
+                <d-cell>
+                  <ng-template let-cellItem="cellItem">
+                    <span [title]="cellItem" class="over-flow-ellipsis" [style.width]="'100px'">
+                      {{ cellItem }}
+                    </span>
+                  </ng-template>
+                </d-cell>
+              </d-column>
+
+              <d-column field="unitName" header="Unit name" [width]="'100px'">
+                <d-cell>
+                  <ng-template let-cellItem="cellItem">
+                    <span [title]="cellItem" class="over-flow-ellipsis" [style.width]="'100px'">
+                      {{ cellItem }}
+                    </span>
+                  </ng-template>
+                </d-cell>
+              </d-column>
+
+              <d-column field="shippedQty" header="Shipped Qty" [width]="'100px'" *ngIf="status !== 'Draft'">
+                <d-cell>
+                  <ng-template let-cellItem="cellItem">
+                    <span [title]="cellItem" class="over-flow-ellipsis" [style.width]="'100px'">
+                      {{ cellItem }}
+                    </span>
+                  </ng-template>
+                </d-cell>
+              </d-column>
+
+              <d-column field="updatedAt" header="Updated Date" [width]="'100px'">
+                <d-cell>
+                  <ng-template let-cellItem="cellItem">
+                    <span [title]="cellItem" class="over-flow-ellipsis">
+                      {{ cellItem | mydatepipe }}
+                    </span>
+                  </ng-template>
+                </d-cell>
+              </d-column>
+              <d-column field="Actions" header="Actions" [width]="'100px'">
+                <d-cell>
+                  <ng-template let-rowItem="rowItem" let-rowIndex="rowIndex">
+                    <div class="btn-group over-flow-ellipsis">
+                      <d-button icon="icon-delete" bsStyle="text-dark" title="edit" (click)="deletePOLine(rowIndex)"
+                        *ngIf="status === 'Draft'"></d-button>
+                    </div>
+                  </ng-template>
+                </d-cell>
+              </d-column>
+            </d-data-table>
+          </div>
+        </div>
+      </div>
+    </da-col-item>
+  </da-layout-row>
+</div>
+<div [ngStyle]="{
+    display: 'flex',
+    justifyContent: 'flex-start',
+    paddingLeft: '25px'
+  }">
+  <d-button bsStyle="danger" class="mr-element-spacing" style="margin-right: 8px" (click)="cancelPo()"
+    *ngIf="status === 'Open'">
+    Cancel PO
+  </d-button>
+</div>

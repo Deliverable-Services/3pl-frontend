@@ -1,0 +1,160 @@
+<form dForm [layout]="layout" (dSubmit)="submitPoLine($event)">
+  <div style="display: flex; gap: 10px">
+    <d-form-item style="width: 100%">
+      <d-form-label [required]="true">Style</d-form-label>
+      <d-form-control>
+        <d-select
+          [appendToBody]="true"
+          [options]="styleList"
+          [filterKey]="'styleName'"
+          name="styleName"
+          style="width: 100%"
+          [(ngModel)]="poLineFormData.style"
+          [dValidateRules]="{
+            validators: [{ required: true }]
+          }"
+          (ngModelChange)="getStyleById(poLineFormData.style.styleId)"
+        ></d-select>
+      </d-form-control>
+    </d-form-item>
+    <d-form-item style="width: 100%">
+      <d-form-label [required]="true">Products </d-form-label>
+      <d-form-control>
+        <d-select
+          [disabled]="productList.length === 0"
+          [appendToBody]="true"
+          [options]="productList"
+          style="width: 100%"
+          [filterKey]="'productSku'"
+          [multiple]="true"
+          name="productSku"
+          [(ngModel)]="poLineFormData.products"
+          (ngModelChange)="addPOItems()"
+          [dValidateRules]="{
+            validators: [{ required: true }]
+          }"
+        ></d-select>
+      </d-form-control>
+    </d-form-item>
+  </div>
+
+  <div
+    [ngStyle]="{ display: 'flex' }"
+    *ngFor="let po of poLineArray; let i = index"
+  >
+    <d-form-item [ngStyle]="{ margin: '20px 20px 20px 0px' }">
+      <d-form-label
+        [required]="true"
+        [hasHelp]="true"
+        [helpTips]="'This is the Product Sku.'"
+        >Product Sku
+      </d-form-label>
+      <d-form-control>
+        <input
+          [ngStyle]="{ width: '200px' }"
+          dTextInput
+          autocomplete="off"
+          name="poLineArray[i].productSku"
+          placeholder="Product Sku"
+          [value]="poLineArray[i].productSku"
+          disabled
+        />
+      </d-form-control>
+    </d-form-item>
+
+    <d-form-item [ngStyle]="{ margin: '20px 20px 20px 0px' }">
+      <d-form-label
+        [required]="true"
+        [hasHelp]="true"
+        [helpTips]="'This is the Product Price'"
+        >Product Price
+      </d-form-label>
+      <d-form-control>
+        <input
+          [ngStyle]="{ width: '200px' }"
+          dTextInput
+          autocomplete="off"
+          name="poLineArray[i].productPrice"
+          placeholder="Product Price"
+          [value]="poLineArray[i].productPrice"
+          disabled
+        />
+      </d-form-control>
+    </d-form-item>
+
+    <d-form-item [ngStyle]="{ margin: '20px 20px 20px 0px' }">
+      <d-form-label
+        [required]="true"
+        [hasHelp]="true"
+        [helpTips]="'This is the Vendor Price'"
+        >Vendor Price
+      </d-form-label>
+      <d-form-control>
+        <input
+          [ngStyle]="{ width: '200px' }"
+          dTextInput
+          autocomplete="off"
+          name="poLineArray[i].vendorPrice"
+          placeholder="SKU"
+          [(ngModel)]="poLineArray[i].vendorPrice"
+          disabled
+        />
+      </d-form-control>
+    </d-form-item>
+
+    <d-form-item [ngStyle]="{ margin: '20px 20px 20px 0px' }">
+      <d-form-label
+        [required]="true"
+        [hasHelp]="true"
+        [helpTips]="'This is the unit.'"
+        >Unit</d-form-label
+      >
+      <d-form-control>
+        <input
+          [ngStyle]="{ width: '200px' }"
+          dTextInput
+          autocomplete="off"
+          name="poLineArray[i].unitName"
+          placeholder="Unit name"
+          [(ngModel)]="poLineArray[i].unitName"
+          disabled
+        />
+      </d-form-control>
+    </d-form-item>
+
+    <d-form-item [ngStyle]="{ margin: '20px 20px 20px 0px' }">
+      <d-form-label
+        [required]="true"
+        [hasHelp]="true"
+        [helpTips]="'This is the Po Qty'"
+        >Po Qty</d-form-label
+      >
+      <d-form-control>
+        <input
+          dTextInput
+          autocomplete="off"
+          [ngStyle]="{ width: '200px' }"
+          name="poLineArray[i].poQty"
+          autocomplete="off"
+          placeholder="Po Qty"
+          [(ngModel)]="poLineArray[i].poQty"
+          [dValidateRules]="{
+            validators: [{ required: true }]
+          }"
+        />
+        <button [ngStyle]="{ marginLeft: '4px' }" (click)="removePoItem(i)">
+          <i [ngStyle]="{ paddingRight: '0px' }" class="icon icon-close"></i>
+        </button>
+      </d-form-control>
+    </d-form-item>
+  </div>
+  <d-form-operation class="da-form-operation">
+    <d-button
+      style="margin-right: 5px"
+      dFormSubmit
+      [dFormSubmitData]="'submit-button'"
+      >Confirm</d-button
+    >
+    <d-button bsStyle="common" (click)="cancel()">Cancel</d-button>
+  </d-form-operation>
+</form>

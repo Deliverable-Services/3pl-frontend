@@ -1,0 +1,123 @@
+<div class="da-list-wrap">
+  <div class="da-content-banner">
+    <d-breadcrumb>
+      <d-breadcrumb-item
+        ><a routerLink="/">{{
+          "list.breadcrumb.home" | translate
+        }}</a></d-breadcrumb-item
+      >
+      <d-breadcrumb-item>{{ "Company" | translate }}</d-breadcrumb-item>
+    </d-breadcrumb>
+    <div class="da-content-banner-title">
+      {{ "Company List" | translate }}
+    </div>
+  </div>
+  <div class="da-content-wrapper">
+    <da-layout-row [daGutter]="[24, 24]">
+      <da-col-item [daSpan]="24" [daXs]="24">
+        <div class="da-list-container">
+          <div class="da-list-header">
+            <div [ngStyle]="{ display: 'flex', justifyContent: 'flex-end' }">
+              <d-button routerLink="add" *ngIf="basicDataSource.length <= 0">Add Company</d-button>
+            </div>
+          </div>
+
+          <div class="list-content" dLoading [loading]="busy">
+            <d-data-table
+              #datatable
+              [dataSource]="basicDataSource"
+              [scrollable]="true"
+            >
+              <d-column
+                field="companyName"
+                header="Company Name"
+                [width]="'100px'"
+              >
+                <d-cell>
+                  <ng-template let-cellItem="cellItem">
+                    <span
+                      [title]="cellItem"
+                      class="over-flow-ellipsis"
+                      [style.width]="'100px'"
+                    >
+                      {{ cellItem }}
+                    </span>
+                  </ng-template>
+                </d-cell>
+              </d-column>
+
+              <d-column field="address" header="Address" [width]="'100px'">
+                <d-cell>
+                  <ng-template let-cellItem="cellItem">
+                    <span
+                      [title]="cellItem"
+                      class="over-flow-ellipsis"
+                      [style.width]="'100px'"
+                    >
+                      {{ cellItem }}
+                    </span>
+                  </ng-template>
+                </d-cell>
+              </d-column>
+
+              <d-column
+                field="createdAt"
+                header="Created Date"
+                [width]="'100px'"
+              >
+                <d-cell>
+                  <ng-template let-cellItem="cellItem">
+                    <span
+                      [title]="cellItem"
+                      class="over-flow-ellipsis"
+                    >
+                      {{ cellItem | mydatepipe }}
+                    </span>
+                  </ng-template>
+                </d-cell>
+              </d-column>
+
+              <d-column
+                field="updatedAt"
+                header="Updated Date"
+                [width]="'100px'"
+              >
+                <d-cell>
+                  <ng-template let-cellItem="cellItem">
+                    <span
+                      [title]="cellItem"
+                      class="over-flow-ellipsis"
+                    >
+                      {{ cellItem | mydatepipe }}
+                    </span>
+                  </ng-template>
+                </d-cell>
+              </d-column>
+
+              <d-column field="Actions" header="Actions" [width]="'100px'">
+                <d-cell>
+                  <ng-template let-rowItem="rowItem" let-rowIndex="rowIndex">
+                    <div class="btn-group over-flow-ellipsis">
+                      <d-button
+                        icon="icon-edit"
+                        bsStyle="text-dark"
+                        title="edit"
+                        (click)="editCompany(rowItem.companyId, rowIndex)"
+                      ></d-button>
+                      <d-button
+                        icon="icon-delete"
+                        bsStyle="text-dark"
+                        title="delete"
+                        (click)="deleteCompany(rowIndex)"
+                      ></d-button>
+                    </div>
+                  </ng-template>
+                </d-cell>
+              </d-column>
+            </d-data-table>
+          </div>
+        </div>
+      </da-col-item>
+    </da-layout-row>
+  </div>
+</div>

@@ -1,0 +1,100 @@
+<div class="da-content-banner">
+  <div class="add-session-btn">
+    <d-breadcrumb>
+      <d-breadcrumb-item>
+        <a routerLink="/business/department">{{ "Department" | translate }}</a>
+      </d-breadcrumb-item>
+      <d-breadcrumb-item>
+        {{ mode | translate }}
+      </d-breadcrumb-item>
+    </d-breadcrumb>
+  </div>
+</div>
+
+<div class="da-content-wrapper">
+  <da-layout-row [daGutter]="[24, 24]">
+    <da-col-item [daSpan]="24" [daXs]="24">
+      <div class="da-basic-form">
+        <form dForm ngForm [dValidateRules]="{
+            message: 'The form verification failed, please check.'
+          }" [layout]="verticalLayout" #projectForm="dValidateRules" (dSubmit)="submitDepartmentForm($event)"
+          autocomplete="off">
+          <div class="da-content-banner-title">
+            {{ mode + " " + "Department" | translate }}
+          </div>
+
+          <div [ngStyle]="{ display: 'flex', justifyContent: 'space-between' }">
+            <div [ngStyle]="{ width: '46%' }">
+              <d-form-item>
+                <d-form-label [required]="true" [hasHelp]="true" [helpTips]="'This is the Department name.'">Department
+                  Name</d-form-label>
+                <d-form-control>
+                  <input dTextInput autocomplete="off" name="department_name" placeholder="Department Name"
+                    [(ngModel)]="departmentFormData.departmentName" [dValidateRules]="{
+                      validators: [{ required: true }]
+                    }" />
+                </d-form-control>
+              </d-form-item>
+
+              <d-form-item>
+                <d-form-label [required]="true" [hasHelp]="true" [helpTips]="'This is the Department address.'">Address
+                </d-form-label>
+                <d-form-control>
+                  <input dTextInput autocomplete="off" name="address" placeholder="Address"
+                    [(ngModel)]="departmentFormData.address" [dValidateRules]="{
+                      validators: [{ required: true }]
+                    }" />
+                </d-form-control>
+              </d-form-item>
+            </div>
+
+            <div [ngStyle]="{ width: '46%' }">
+              <d-form-item>
+                <d-form-label [required]="true" [hasHelp]="true" [helpTips]="'This is the Contact persion'">Contact
+                  Person</d-form-label>
+                <d-form-control>
+                  <input dTextInput autocomplete="off" name="contactPerson" placeholder="Contact Person"
+                    [(ngModel)]="departmentFormData.contactPerson" [dValidateRules]="{
+                      validators: [{ required: true }]
+                    }" />
+                </d-form-control>
+              </d-form-item>
+
+              <d-form-item>
+                <d-form-label [required]="true" [hasHelp]="true" [helpTips]="'This is the Contact Number.'">Contact
+                  Number</d-form-label>
+                <d-form-control>
+                  <input dTextInput autocomplete="off" name="contactNo" placeholder="Contact no"
+                    [(ngModel)]="departmentFormData.contactNo" [dValidateRules]="{
+                      validators: [{ required: true }]
+                    }" />
+                </d-form-control>
+              </d-form-item>
+            </div>
+          </div>
+
+          <div [ngStyle]="{ width: '100%' }">
+            <d-form-item>
+              <d-form-label [required]="true" [hasHelp]="true" [helpTips]="'This is the Contact email.'">Contact email
+              </d-form-label>
+              <d-form-control>
+                <input dTextInput autocomplete="off" name="contactEmail" placeholder="Contact mail"
+                  [(ngModel)]="departmentFormData.contactEmail" [dValidateRules]="{
+                    validators: [{ required: true }]
+                  }" />
+              </d-form-control>
+            </d-form-item>
+          </div>
+
+          <d-form-operation>
+            <d-button dLoading class="mr-element-spacing" [title]="projectForm.errorMessage || ''" circled="true"
+              style="margin-right: 8px" [showLoading]="projectForm.pending" dFormSubmit
+              [dFormSubmitData]="'submit-button'">
+              {{ paramId ? "Update" : "Create" }}
+            </d-button>
+          </d-form-operation>
+        </form>
+      </div>
+    </da-col-item>
+  </da-layout-row>
+</div>

@@ -1,0 +1,295 @@
+<div class="da-content-banner">
+  <div class="add-session-btn">
+    <d-breadcrumb>
+      <d-breadcrumb-item>
+        <a routerLink="../">{{ "Vendor" | translate }}</a>
+      </d-breadcrumb-item>
+      <d-breadcrumb-item>
+        {{ mode | translate }}
+      </d-breadcrumb-item>
+      <!-- <d-button [ngStyle]="{ marginLeft: '900px' }" (click)="addSession()">Add Season</d-button> -->
+    </d-breadcrumb>
+  </div>
+</div>
+
+<div class="da-content-wrapper">
+  <da-layout-row [daGutter]="[24, 24]">
+    <da-col-item [daSpan]="24" [daXs]="24">
+      <div
+        class="da-basic-form"
+        [ngStyle]="{ display: 'flex', justifyContent: 'space-between' }"
+      >
+        <form
+          dForm
+          ngForm
+          [dValidateRules]="{
+            message: 'The form verification failed, please check.'
+          }"
+          [layout]="verticalLayout"
+          #projectForm="dValidateRules"
+          (dSubmit)="submitProjectForm($event)"
+          autocomplete="off"
+        >
+          <div class="da-content-banner-title">
+            {{ mode + " " + "Vendor" | translate }}
+          </div>
+          <d-form-item [ngStyle]="{ width: '500px' }">
+            <d-form-label
+              [required]="true"
+              [hasHelp]="true"
+              [helpTips]="'This is the Vendor name.'"
+              >Vendor Name</d-form-label
+            >
+            <d-form-control>
+              <input
+                dTextInput
+                autocomplete="off"
+                name="vendorName"
+                placeholder="Vendor Name"
+                [(ngModel)]="projectFormData.vendorName"
+                [dValidateRules]="{
+                  validators: [{ required: true }]
+                }"
+              />
+            </d-form-control>
+          </d-form-item>
+
+          <d-form-item>
+            <d-form-label
+              [required]="true"
+              [hasHelp]="true"
+              [helpTips]="'Enter Vendor Code'"
+              >Vendor Code</d-form-label
+            >
+            <d-form-control>
+              <input
+                dTextInput
+                autocomplete="off"
+                name="vendorCode"
+                placeholder="Vendor Code"
+                onkeydown="if(['Space'].includes(arguments[0].code)){return false;}"
+                [(ngModel)]="projectFormData.vendorCode"
+                [dValidateRules]="{
+                  validators: [{ required: true }]
+                }"
+              />
+            </d-form-control>
+          </d-form-item>
+          <d-form-item>
+            <d-form-label
+              [required]="true"
+              [hasHelp]="true"
+              [helpTips]="'Enter Phone Number'"
+              >Phone</d-form-label
+            >
+            <d-form-control>
+              <input
+                dTextInput
+                autocomplete="off"
+                name="phoneNo"
+                placeholder="Phone"
+                onkeydown="if(['Space'].includes(arguments[0].code)){return false;}"
+                [(ngModel)]="projectFormData.phoneNo"
+                [dValidateRules]="{
+                  validators: [{ required: true }]
+                }"
+              />
+            </d-form-control>
+          </d-form-item>
+          <d-form-item>
+            <d-form-label [hasHelp]="true" [helpTips]="'Enter Fax No. '"
+              >Fax No.</d-form-label
+            >
+            <d-form-control>
+              <input
+                dTextInput
+                autocomplete="off"
+                name="faxNo"
+                placeholder="Fax No"
+                onkeydown="if(['Space'].includes(arguments[0].code)){return false;}"
+                [(ngModel)]="projectFormData.faxNo"
+              />
+            </d-form-control>
+          </d-form-item>
+          <d-form-item>
+            <d-form-label [hasHelp]="true" [helpTips]="'Enter Website'"
+              >Website</d-form-label
+            >
+            <d-form-control>
+              <input
+                dTextInput
+                autocomplete="off"
+                name="website"
+                placeholder="Website"
+                onkeydown="if(['Space'].includes(arguments[0].code)){return false;}"
+                [(ngModel)]="projectFormData.website"
+              />
+            </d-form-control>
+          </d-form-item>
+          <d-form-item>
+            <d-form-label [hasHelp]="true" [helpTips]="'Enter Address'"
+              >Address</d-form-label
+            >
+            <d-form-control>
+              <input
+                dTextInput
+                autocomplete="off"
+                name="address"
+                placeholder="Enter Address"
+                onkeydown="if(['Space'].includes(arguments[0].code)){return false;}"
+                [(ngModel)]="projectFormData.address"
+              />
+            </d-form-control>
+          </d-form-item>
+          <d-form-item>
+            <d-form-label
+              [required]="true"
+              [hasHelp]="true"
+              [helpTips]="'This is the Currency'"
+              >Currency</d-form-label
+            >
+
+            <d-select
+              [readonly]="true"
+              [filterKey]="'currency'"
+              [extraConfig]="{
+                labelization: { enable: true, overflow: 'multiple-line' }
+              }"
+              [appendToBody]="true"
+              placeholder="Select a Brand"
+              [options]="['sdf', 'sdg', 'etre', 'ere', 'qwe', 'werweqr']"
+              name="currency"
+              [(ngModel)]="projectFormData.currency"
+              [dValidateRules]="{
+                validators: [{ required: true }]
+              }"
+            ></d-select>
+          </d-form-item>
+
+          <ng-template #EditorTemplate>
+            <da-admin-form
+              [formConfig]="formConfig"
+              [formData]="formData"
+              (submitted)="onSubmitted($event)"
+              (canceled)="onCanceled()"
+            >
+            </da-admin-form>
+          </ng-template>
+
+          <d-form-operation>
+            <d-button
+              dLoading
+              class="mr-element-spacing"
+              [title]="projectForm.errorMessage || ''"
+              circled="true"
+              style="margin-right: 8px"
+              [showLoading]="projectForm.pending"
+              dFormSubmit
+              [dFormSubmitData]="'submit-button'"
+            >
+              {{ paramId ? "Update" : "Create" }}
+            </d-button>
+          </d-form-operation>
+        </form>
+        <div *ngIf="paramId">
+          <div class="dateWrapper">
+            {{ "Created Date  :" + "  " }}
+            {{ selectedVendor.createdAt | mydatepipe }}
+          </div>
+          <div class="dateWrapper">
+            {{ "Updated Date  :" + "  " }}
+            {{ selectedVendor.updatedAt | mydatepipe }}
+          </div>
+        </div>
+      </div>
+    </da-col-item>
+  </da-layout-row>
+</div>
+<div class="da-content-wrapper" *ngIf="false">
+  <da-layout-row [daGutter]="[24, 24]">
+    <da-col-item [daSpan]="24" [daXs]="24">
+      <div class="da-basic-form">
+        <div [ngStyle]="{ display: 'flex', justifyContent: 'space-between' }">
+          <div class="da-content-banner-title" [ngStyle]="{}">
+            {{ "Contact" | translate }}
+          </div>
+          <d-button (click)="addSession()">Add Contact</d-button>
+        </div>
+        <div class="da-list-container" *ngIf="paramId">
+          <div class="list-content" dLoading [loading]="busy">
+            <d-data-table
+              #datatable
+              [dataSource]="seasonList"
+              [scrollable]="true"
+            >
+              <d-column
+                field="seasonName"
+                header="Season Name"
+                [width]="'100px'"
+              >
+                <d-cell>
+                  <ng-template let-cellItem="cellItem">
+                    <span
+                      [title]="cellItem"
+                      class="over-flow-ellipsis"
+                      [style.width]="'100px'"
+                    >
+                      {{ cellItem }}
+                    </span>
+                  </ng-template>
+                </d-cell>
+              </d-column>
+              <d-column
+                field="seasonCode"
+                header="Season Code"
+                [width]="'100px'"
+              >
+                <d-cell>
+                  <ng-template let-cellItem="cellItem">
+                    <span
+                      [title]="cellItem"
+                      class="over-flow-ellipsis"
+                      [style.width]="'100px'"
+                    >
+                      {{ cellItem }}
+                    </span>
+                  </ng-template>
+                </d-cell>
+              </d-column>
+              <d-column
+                field="updatedAt"
+                header="Updated Date"
+                [width]="'100px'"
+              >
+                <d-cell>
+                  <ng-template let-cellItem="cellItem">
+                    <span
+                      [title]="cellItem"
+                      class="over-flow-ellipsis"
+                    >
+                      {{ cellItem | mydatepipe }}
+                    </span>
+                  </ng-template>
+                </d-cell>
+              </d-column>
+              <d-column field="Actions" header="Actions" [width]="'100px'">
+                <d-cell>
+                  <ng-template let-rowItem="rowItem" let-rowIndex="rowIndex">
+                    <div class="btn-group over-flow-ellipsis">
+                      <d-button
+                        icon="icon-edit"
+                        bsStyle="text-dark"
+                        title="edit"
+                        (click)="editSeason(rowItem.seasonId, rowIndex)"
+                      ></d-button>
+                    </div>
+                  </ng-template>
+                </d-cell>
+              </d-column>
+            </d-data-table>
+          </div>
+        </div>
+      </div>
+    </da-col-item>
+  </da-layout-row>
+</div>
