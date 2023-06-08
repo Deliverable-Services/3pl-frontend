@@ -24,28 +24,44 @@ import { FormConfig } from "src/app/@shared/components/admin-form";
 export class StyleFormComponent implements OnInit {
   styleFormData = {
     styleName: "",
-    styleCode: "",
-    brand: {
-      brandId: "",
-      seasons: [],
-    },
-    season: {
-      seasonId: "",
-    },
-    category: {
-      categoryId: "",
-      subCategories: [],
-    },
-    subCategory: {
-      subcategoryId: "",
-    },
-    materials: [],
-    unit: {
-      unitId: "",
-    },
-    styleDesc: "",
-    products: [],
-  };
+    logisticsDesc: "",
+    collection: "",
+    fabricComposition: "",
+    fabicSwatch: "",
+    unitWeight: "",
+    productCategoryId: "7eee1f7e-7ad6-40c5-b3aa-fa215d5b770f",
+    image: "",
+    varients: []
+  }
+  // {
+  //   styleName: "",
+  //   // styleCode: "",
+  //   collection: "",
+  //   fabricComposition: "",
+  //   fabricSwatch: "",
+  //   // brand: {
+  //   //   brandId: "",
+  //   //   seasons: [],
+  //   // },
+  //   // season: {
+  //   //   seasonId: "",
+  //   // },
+  //   category: {
+  //     categoryId: "",
+  //     subCategories: [],
+  //   },
+  //   // subCategory: {
+  //   //   subcategoryId: "",
+  //   // },
+  //   // materials: [],
+  //   // unit: {
+  //   //   unitId: "",
+  //   // },
+  //   unitWeight: "",
+  //   logisticDescription: "",
+  //   image: "",
+  //   products: [],
+  // };
 
   mode: string = "Add";
   paramId: string = "";
@@ -89,9 +105,9 @@ export class StyleFormComponent implements OnInit {
   getStyleById(id: string) {
     this.styleListDataService.getStyleById(id).subscribe((res) => {
       this.styleFormData = res;
-      this.styleFormData.materials = res.materials.map((material: any) => {
-        return material.material;
-      });
+      // this.styleFormData.materials = res.materials.map((material: any) => {
+      //   return material.material;
+      // });
       console.log(this.styleFormData);
     });
   }
@@ -103,9 +119,9 @@ export class StyleFormComponent implements OnInit {
   }
 
   getSeasonList() {
-    return this.styleFormData.brand.seasons.filter(
-      (season: any) => season.active === true
-    );
+    // return this.styleFormData.brand.seasons.filter(
+    //   (season: any) => season.active === true
+    // );
   }
 
   getCategoryListActive() {
@@ -116,11 +132,11 @@ export class StyleFormComponent implements OnInit {
       });
   }
 
-  getSubCategoryList() {
-    return this.styleFormData.category.subCategories.filter(
-      (subCategory: any) => subCategory.active === true
-    );
-  }
+  // getSubCategoryList() {
+  //   return this.styleFormData.category.subCategories.filter(
+  //     (subCategory: any) => subCategory.active === true
+  //   );
+  // }
 
   getMaterialListActive() {
     this.materialListDataService
@@ -148,32 +164,33 @@ export class StyleFormComponent implements OnInit {
     console.log(this.styleFormData);
 
     const finaldata = {
-      brandId: this.styleFormData.brand.brandId,
-      categoryId: this.styleFormData.category.categoryId,
-      seasonId: this.styleFormData.season.seasonId,
-      subCategoryId: this.styleFormData.subCategory.subcategoryId,
-      materialIds: this.styleFormData.materials.map((mt: any) => {
-        return mt.materialId;
-      }),
-      unitId: this.styleFormData.unit.unitId,
       styleName: this.styleFormData.styleName,
-      styleCode: this.styleFormData.styleCode,
-      styleDesc: this.styleFormData.styleDesc,
+      logisticsDesc: this.styleFormData.logisticsDesc,
+      collection: this.styleFormData.collection,
+      fabricComposition: this.styleFormData.fabricComposition,
+      fabicSwatch: this.styleFormData.fabicSwatch,
+      unitWeight: this.styleFormData.unitWeight,
+      productCategoryId: this.styleFormData.productCategoryId,
+      varients: []
     };
 
-    console.log(finaldata);
+    console.log(finaldata, valid);
 
     if (valid) {
+      console.log(':: :: 1')
       if (this.mode === "Add") {
+        console.log(':: :: 2')
         this.styleListDataService.addStyle(finaldata).subscribe((res) => {
           this.router.navigate(["/product/style"]);
         });
       } else {
+        console.log(':: :: 3')
         this.styleListDataService
           .updateStyle(this.paramId, finaldata)
           .subscribe((res) => this.router.navigate(["/product/style"]));
       }
     } else {
+      console.log(':: :: 4')
       // error tip
     }
   }

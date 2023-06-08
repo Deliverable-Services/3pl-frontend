@@ -7,7 +7,8 @@ import { Season } from "../data/season";
 import { environment } from "src/environments/environment";
 import { HttpClient, HttpHeaders, HttpParams } from "@angular/common/http";
 import { StyleListData } from "../data/styleList";
-import { Category } from "../data/categoryList";
+// import { Category } from "../data/categoryList";
+import { Products } from "../data/productList";
 import { PageParam, SearchParam } from "../data/searchFormData";
 
 const baseUrl = environment.baseUrl;
@@ -103,17 +104,17 @@ export class StyleListDataService extends StyleListData {
     );
   }
 
-  addStyle(data: Category) {
+  addStyle(data: Products) {
     const httpOptionsToken = {
       headers: new HttpHeaders({
         "Content-Type": "application/json",
       }),
     };
 
-    return this.http.post(`${this.baseApiUrl}/style`, data);
+    return this.http.post(`${this.baseApiUrl}/product`, data);
   }
 
-  updateStyle(id: string, data: Category): Observable<any> {
+  updateStyle(id: string, data: Products): Observable<any> {
     const httpOptionsToken = {
       headers: new HttpHeaders({
         "Content-Type": "application/json",

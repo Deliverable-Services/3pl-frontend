@@ -40,53 +40,53 @@
               </d-form-item>
 
               <d-form-item>
-                <d-form-label [required]="true" [hasHelp]="true" [helpTips]="'This is the Style code'">Style Code
+                <d-form-label [required]="true" [hasHelp]="true" [helpTips]="'This is the Collection'">Collection
                 </d-form-label>
                 <d-form-control>
-                  <input dTextInput autocomplete="off" name="styleCode" placeholder="Style Code"
-                    [(ngModel)]="styleFormData.styleCode"
+                  <input dTextInput autocomplete="off" name="collection" placeholder="Collection"
+                    [(ngModel)]="styleFormData.collection"
                     onkeydown="if(['Space'].includes(arguments[0].code)){return false;}" [dValidateRules]="{
                       validators: [{ required: true }]
                     }" />
                 </d-form-control>
               </d-form-item>
               <d-form-item>
-                <d-form-label [required]="true" [hasHelp]="true" [helpTips]="'This is the Brand'">Brand</d-form-label>
+                <d-form-label [required]="true" [hasHelp]="true" [helpTips]="'This is the Fabric Composition'">Fabric
+                  Composition</d-form-label>
 
-                <d-select [filterKey]="'brandName'" [extraConfig]="{
+                <!-- <d-select [filterKey]="'brandName'" [extraConfig]="{
                     labelization: { enable: true, overflow: 'multiple-line' }
                   }" [appendToBody]="true" placeholder="Select a Brand" [options]="brandList" name="brand"
                   [(ngModel)]="styleFormData.brand" (ngModelChange)="styleFormData.season = { seasonId: '' }"
                   [dValidateRules]="{
                     validators: [{ required: true }]
-                  }"></d-select>
+                  }"></d-select> -->
+                <input dTextInput autocomplete="off" name="fabricComposition" placeholder="Fabric Composition"
+                  [(ngModel)]="styleFormData.fabricComposition"
+                  onkeydown="if(['Space'].includes(arguments[0].code)){return false;}" [dValidateRules]="{
+                      validators: [{ required: true }]
+                    }" />
               </d-form-item>
 
               <d-form-item>
-                <d-form-label [required]="true" [hasHelp]="true" [helpTips]="'This is the Season'">Season</d-form-label>
+                <d-form-label [required]="true" [hasHelp]="true" [helpTips]="'This is the Fabric Swatch'">Fabric
+                  Swatch</d-form-label>
 
-                <d-select [appendToBody]="true" [filterKey]="'seasonName'" placeholder="Select a Season"
+                <!-- <d-select [appendToBody]="true" [filterKey]="'seasonName'" placeholder="Select a Season"
                   [options]="getSeasonList()" [disabled]="getSeasonList().length == 0" name="season"
                   [(ngModel)]="styleFormData.season" [dValidateRules]="{
                     validators: [{ required: true }]
-                  }"></d-select>
+                  }"></d-select> -->
+                <input dTextInput autocomplete="off" name="fabicSwatch" placeholder="Fabric Swatch"
+                  [(ngModel)]="styleFormData.fabicSwatch"
+                  onkeydown="if(['Space'].includes(arguments[0].code)){return false;}" [dValidateRules]="{
+                      validators: [{ required: true }]
+                    }" />
               </d-form-item>
             </div>
 
             <div [ngStyle]="{ width: '46%' }">
-              <d-form-item>
-                <d-form-label [required]="true" [hasHelp]="true" [helpTips]="'This is the Category'">Category
-                </d-form-label>
-
-                <d-select placeholder="Select a Category" [filterKey]="'categoryName'" [appendToBody]="true"
-                  (ngModelChange)="
-                    styleFormData.subCategory = { subcategoryId: '' }
-                  " [options]="categoryList" name="category" [(ngModel)]="styleFormData.category" [dValidateRules]="{
-                    validators: [{ required: true }]
-                  }"></d-select>
-              </d-form-item>
-
-              <d-form-item>
+              <!-- <d-form-item>
                 <d-form-label [required]="true" [hasHelp]="true" [helpTips]="'This is the Sub Category'">Sub Category
                 </d-form-label>
                 <d-select placeholder="Select a Sub Category" [appendToBody]="true" [filterKey]="'subCategoryName'"
@@ -94,9 +94,9 @@
                   [(ngModel)]="styleFormData.subCategory" [dValidateRules]="{
                     validators: [{ required: true }]
                   }"></d-select>
-              </d-form-item>
+              </d-form-item> -->
 
-              <d-form-item>
+              <!-- <d-form-item>
                 <d-form-label [required]="true" [hasHelp]="true" [helpTips]="'This is the Material'">Material
                 </d-form-label>
                 <d-form-control>
@@ -106,25 +106,47 @@
                       validators: [{ required: true }]
                     }"></d-select>
                 </d-form-control>
-              </d-form-item>
+              </d-form-item> -->
 
               <d-form-item>
-                <d-form-label [required]="true" [hasHelp]="true" [helpTips]="'This is the Unit'">Unit</d-form-label>
+                <d-form-label [required]="true" [hasHelp]="true" [helpTips]="'This is the Unit Weight'">Unit
+                  Weight</d-form-label>
 
-                <d-select [filterKey]="'unitName'" [appendToBody]="true" placeholder="Select a Unit"
+                <!-- <d-select [filterKey]="'unitName'" [appendToBody]="true" placeholder="Select a Unit"
                   [options]="unitList" name="unit" [(ngModel)]="styleFormData.unit" [dValidateRules]="{
                     validators: [{ required: true }]
+                  }"></d-select> -->
+                <input dTextInput autocomplete="off" name="unitWeight" placeholder="Unit Weight"
+                  [(ngModel)]="styleFormData.unitWeight"
+                  onkeydown="if(['Space'].includes(arguments[0].code)){return false;}" [dValidateRules]="{
+                      validators: [{ required: true }]
+                    }" />
+              </d-form-item>
+              <d-form-item>
+                <d-form-label [required]="true" [hasHelp]="true" [helpTips]="'This is the Category'">Category
+                </d-form-label>
+
+                <d-select placeholder="Select a Category" [filterKey]="'productCategoryId'" [appendToBody]="true"
+                  [options]="categoryList" name="category" [(ngModel)]="styleFormData.productCategoryId" [dValidateRules]="{
+                    validators: [{ required: true }]
                   }"></d-select>
+              </d-form-item>
+              <d-form-item>
+                <d-form-label [required]="true" [hasHelp]="true"
+                  [helpTips]="'This is Product Image'">Image</d-form-label>
+                <input type="file" autocomplete="off" name="image" placeholder="Image" [(ngModel)]="styleFormData.image"
+                  [dValidateRules]="{
+                      validators: [{ required: true }]
+                    }" />
               </d-form-item>
             </div>
           </div>
           <div [ngStyle]="{ width: '100%' }">
             <d-form-item>
-              <d-form-label [required]="true" [hasHelp]="true" [helpTips]="'This is the Style Description'">Style
-                Description</d-form-label>
+              <d-form-label [required]="true" [hasHelp]="true" [helpTips]="'This is the Logistic Description'">Logistic Description</d-form-label>
               <d-form-control>
                 <textarea [ngStyle]="{ height: '104px' }" dTextarea resize="vertical" autocomplete="off"
-                  name="styleDesc" placeholder="Style Description" [(ngModel)]="styleFormData.styleDesc"
+                  name="logisticsDesc" placeholder="Logistic Description" [(ngModel)]="styleFormData.logisticsDesc"
                   [dValidateRules]="{
                     validators: [{ required: true }]
                   }"></textarea>
@@ -145,7 +167,7 @@
   </da-layout-row>
 </div>
 
-<div class="da-content-wrapper" *ngIf="styleFormData.products.length > 0">
+<!-- <div class="da-content-wrapper" *ngIf="styleFormData.products.length > 0">
   <da-layout-row [daGutter]="[24, 24]">
     <da-col-item [daSpan]="24" [daXs]="24">
       <div class="da-content-banner-title">Product List</div>
@@ -229,4 +251,4 @@
       </div>
     </da-col-item>
   </da-layout-row>
-</div>
+</div> -->

@@ -11,21 +11,21 @@ export default function (values: any) {
           title: "Category",
           link: "/product/category",
         },
+        // {
+        //   title: "Material",
+        //   link: "/product/material",
+        // },
+        // {
+        //   title: "Unit",
+        //   link: "/product/unit",
+        // },
         {
-          title: "Material",
-          link: "/product/material",
-        },
-        {
-          title: "Unit",
-          link: "/product/unit",
-        },
-        {
-          title: "Style",
+          title: "Product",
           link: "/product/style",
         },
 
         {
-          title: "Product",
+          title: "Product Variant",
           link: "/product/product",
         },
       ],
@@ -60,20 +60,20 @@ export default function (values: any) {
       link: "/",
       menuIcon: "icon icon-console",
     },
-    {
-      title: "Operation",
-      children: [
-        {
-          title: "Purchase Order",
-          link: "/operation/purchase-order",
-        },
-        {
-          title: "Shipment",
-          link: "/operation/shipment",
-        },
-      ],
-      link: "/",
-      menuIcon: "icon icon-console",
-    },
+    // {
+    //   title: "Operation",
+    //   children: [
+    //     {
+    //       title: "Purchase Order",
+    //       link: "/operation/purchase-order",
+    //     },
+    //     {
+    //       title: "Shipment",
+    //       link: "/operation/shipment",
+    //     },
+    //   ],
+    //   link: "/",
+    //   menuIcon: "icon icon-console",
+    // },
   ];
 }
