@@ -47,7 +47,6 @@
                 [field]="'categoryName'"
                 header="Category Name"
                 [sortable]="true"
-                [width]="columnSize.categoryName"
               >
                 <d-cell>
                   <ng-template let-cellItem="cellItem">
@@ -59,15 +58,30 @@
               </d-column>
 
               <d-column
-                [field]="'updatedAt'"
-                header="Last Updated Date"
+                [field]="'lastModifiedDate'"
+                header="Last Updated Date Time"
                 [sortable]="true"
-                [width]="columnSize.updatedAt"
+                [width]="columnSize.lastModifiedDate"
               >
                 <d-cell>
                   <ng-template let-cellItem="cellItem">
                     <span [title]="cellItem" class="over-flow-ellipsis">
-                      {{ cellItem | mydatepipe }}
+                      {{ cellItem | date: 'dd/MM/yyyy hh:mm' }}
+                    </span>
+                  </ng-template>
+                </d-cell>
+              </d-column>
+
+              <d-column
+                [field]="'lastModifiedBy'"
+                header="Last Updated By"
+                [sortable]="true"
+                [width]="columnSize.lastModifiedBy"
+              >
+                <d-cell>
+                  <ng-template let-cellItem="cellItem">
+                    <span [title]="cellItem" class="over-flow-ellipsis">
+                      {{ cellItem }}
                     </span>
                   </ng-template>
                 </d-cell>

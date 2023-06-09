@@ -52,11 +52,11 @@
         <div *ngIf="paramId">
           <div class="dateWrapper">
             {{ "Created At :" + " " }}
-            {{ selectedCategory.createdAt | mydatepipe }}
+            {{ selectedCategory?.createdDate | date }}
           </div>
           <div class="dateWrapper">
             {{ "Updated At :" + " " }}
-            {{ selectedCategory.updatedAt | mydatepipe }}
+            {{ selectedCategory?.lastModifiedDate | date }}
           </div>
         </div>
       </div>

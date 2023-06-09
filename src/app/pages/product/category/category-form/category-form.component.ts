@@ -34,7 +34,7 @@ export class CategoryFormComponent implements OnInit {
     layout: FormLayout.Horizontal,
     items: [
       {
-        label: "Sub Categorey ",
+        label: "Sub Category ",
         prop: "subCategoryName",
         type: "input",
 

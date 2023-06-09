@@ -2,7 +2,7 @@
   <div class="add-session-btn">
     <d-breadcrumb>
       <d-breadcrumb-item>
-        <a routerLink="/product/style">{{ "Style" | translate }}</a>
+        <a routerLink="/product/style">{{ "Product" | translate }}</a>
       </d-breadcrumb-item>
       <d-breadcrumb-item>
         {{ mode | translate }}
@@ -24,7 +24,7 @@
           }" [layout]="verticalLayout" #styleForm="dValidateRules" (dSubmit)="submitStyleForm($event)"
           autocomplete="off">
           <div class="da-content-banner-title">
-            {{ mode + " " + "Style" | translate }}
+            {{ mode + " " + "Product" | translate }}
           </div>
           <div [ngStyle]="{ display: 'flex', justifyContent: 'space-between' }">
             <div [ngStyle]="{ width: '46%' }">
@@ -126,17 +126,17 @@
                 <d-form-label [required]="true" [hasHelp]="true" [helpTips]="'This is the Category'">Category
                 </d-form-label>
 
-                <d-select placeholder="Select a Category" [filterKey]="'productCategoryId'" [appendToBody]="true"
-                  [options]="categoryList" name="category" [(ngModel)]="styleFormData.productCategoryId" [dValidateRules]="{
+                <d-select placeholder="Select a Category" [scrollHight]="'300px'" [filterKey]="'categoryName'" [appendToBody]="true"
+                  [options]="categoryList" name="category" [isSearch]="true" [(ngModel)]="styleFormData.slectedCat" [dValidateRules]="{
                     validators: [{ required: true }]
                   }"></d-select>
               </d-form-item>
               <d-form-item>
-                <d-form-label [required]="true" [hasHelp]="true"
+                <d-form-label [hasHelp]="true"
                   [helpTips]="'This is Product Image'">Image</d-form-label>
                 <input type="file" autocomplete="off" name="image" placeholder="Image" [(ngModel)]="styleFormData.image"
                   [dValidateRules]="{
-                      validators: [{ required: true }]
+                      validators: [{ required: false }]
                     }" />
               </d-form-item>
             </div>

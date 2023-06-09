@@ -27,11 +27,11 @@ export class StyleListDataService extends StyleListData {
         operator: "match",
         value: "",
       },
-      {
-        field: "styleCode",
-        operator: "match",
-        value: "",
-      },
+      // {
+      //   field: "styleCode",
+      //   operator: "match",
+      //   value: "",
+      // },
     ],
   };
 
@@ -62,16 +62,13 @@ export class StyleListDataService extends StyleListData {
 
   getStyleList(): Observable<any> {
     const httpOptionsToken = {
-      headers: new HttpHeaders({
-        "Content-Type": "application/json",
-      }),
       params: new HttpParams({
         fromObject: this.pageParams,
       }),
     };
 
     return this.http.post(
-      `${this.baseApiUrl}/styles`,
+      `${this.baseApiUrl}/product/list`,
       this.searchParams,
       httpOptionsToken
     );
@@ -105,37 +102,18 @@ export class StyleListDataService extends StyleListData {
   }
 
   addStyle(data: Products) {
-    const httpOptionsToken = {
-      headers: new HttpHeaders({
-        "Content-Type": "application/json",
-      }),
-    };
-
     return this.http.post(`${this.baseApiUrl}/product`, data);
   }
 
   updateStyle(id: string, data: Products): Observable<any> {
-    const httpOptionsToken = {
-      headers: new HttpHeaders({
-        "Content-Type": "application/json",
-      }),
-    };
-    console.log(`${this.baseApiUrl}/style/${id}`);
     return this.http.put(
-      `${this.baseApiUrl}/style/${id}`,
-      data,
-      httpOptionsToken
+      `${this.baseApiUrl}/product/${id}`,
+      data
     );
   }
 
   getStyleById(id: string): Observable<any> {
-    const httpOptionsToken = {
-      headers: new HttpHeaders({
-        "Content-Type": "application/json",
-      }),
-    };
-
-    return this.http.get(`/style/${id}`, httpOptionsToken);
+    return this.http.get(`${this.baseApiUrl}/product/${id}`);
   }
   statusToggle(data: any) {
     return this.http.put(

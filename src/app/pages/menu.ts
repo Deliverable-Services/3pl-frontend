@@ -3,10 +3,10 @@ export default function (values: any) {
     {
       title: "Product",
       children: [
-        {
-          title: "Brand",
-          link: "/product/brand",
-        },
+        // {
+        //   title: "Brand",
+        //   link: "/product/brand",
+        // },
         {
           title: "Category",
           link: "/product/category",

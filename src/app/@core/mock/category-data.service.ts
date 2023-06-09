@@ -71,42 +71,50 @@ export class CategoryListDataService extends CategoryListData {
 
   getCategoryList(): Observable<any> {
     const httpOptionsToken = {
-      headers: new HttpHeaders({
-        "Content-Type": "application/json",
-      }),
       params: new HttpParams({
         fromObject: this.pageParams,
       }),
     };
 
     return this.http.post(
-      `${this.baseApiUrl}/categories`,
+      `${this.baseApiUrl}/category/list`,
       this.searchParams,
       httpOptionsToken
     );
   }
 
-  getCategoryListActive() {
-    const httpOptionsToken = {
-      headers: new HttpHeaders({
-        "Content-Type": "application/json",
-      }),
-    };
+  getCategoryListActive(data?: any) {
+
+    // const searchParams = {
+    //   filters: [
+    //     {
+    //       field: "isActive",
+    //       operator: "equal",
+    //       value: true,
+    //     },
+    //   ],
+    // };
 
     const searchParams = {
       filters: [
-        {
-          field: "isActive",
-          operator: "equal",
-          value: true,
-        },
-      ],
-    };
+          {
+              field: "categoryName",
+              operator: "match",
+              value: ""
+          }
+      ]
+    }
+
+    let catUri;
+    if(data) {
+      catUri = `${this.baseApiUrl}/category/list?pageSize=${data.perPage}`;
+    } else {
+      catUri = `${this.baseApiUrl}/category/list`;
+    }
 
     return this.http.post(
-      `${this.baseApiUrl}/categories`,
-      searchParams,
-      httpOptionsToken
+      catUri,
+      searchParams
     );
   }
 
@@ -135,16 +143,15 @@ export class CategoryListDataService extends CategoryListData {
   }
 
   addSubCategory(id: string, data: any): Observable<any> {
-    const httpOptionsToken = {
-      headers: new HttpHeaders({
-        // "Content-Type": "application/json",
-      }),
-    };
+    // const httpOptionsToken = {
+    //   headers: new HttpHeaders({
+    //     // "Content-Type": "application/json",
+    //   }),
+    // };
 
     return this.http.post(
       `${this.baseApiUrl}/category/${id}/subcategory`,
-      data,
-      httpOptionsToken
+      data
     );
   }
 

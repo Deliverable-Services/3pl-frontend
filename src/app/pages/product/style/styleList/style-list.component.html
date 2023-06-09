@@ -75,8 +75,8 @@
               </d-column>
 
               <d-column
-                field="styleCode"
-                header="Style Code"
+                field="collection"
+                header="Collection"
                 [width]="columnSize.styleCode"
                 [sortable]="true"
               >
@@ -94,9 +94,9 @@
               </d-column>
 
               <d-column
-                field="createdAt"
-                header="Created Date"
-                [width]="columnSize.createdAt"
+                field="logisticsDesc"
+                header="Logistic Description"
+                [width]="columnSize.logisticsDesc"
                 [sortable]="true"
               >
                 <d-cell>
@@ -104,17 +104,18 @@
                     <span
                       [title]="cellItem"
                       class="over-flow-ellipsis"
+                      [style.width]="'100px'"
                     >
-                      {{ cellItem | mydatepipe }}
+                      {{ cellItem }}
                     </span>
                   </ng-template>
                 </d-cell>
               </d-column>
 
               <d-column
-                field="updatedAt"
+                field="lastModifiedDate"
                 header="Updated Date"
-                [width]="columnSize.updatedAt"
+                [width]="columnSize.lastModifiedDate"
                 [sortable]="true"
               >
                 <d-cell>
@@ -123,7 +124,26 @@
                       [title]="cellItem"
                       class="over-flow-ellipsis"
                     >
-                      {{ cellItem | mydatepipe }}
+                      {{ cellItem | date: 'dd/MM/yyyy hh:mm' }}
+                    </span>
+                  </ng-template>
+                </d-cell>
+              </d-column>
+
+              <d-column
+                field="lastModifiedBy"
+                header="Last Updated By"
+                [width]="columnSize.lastModifiedBy"
+                [sortable]="true"
+              >
+                <d-cell>
+                  <ng-template let-cellItem="cellItem">
+                    <span
+                      [title]="cellItem"
+                      class="over-flow-ellipsis"
+                      [style.width]="'100px'"
+                    >
+                      {{ cellItem }}
                     </span>
                   </ng-template>
                 </d-cell>
@@ -131,16 +151,24 @@
 
               <d-column
                 [sortable]="true"
-                field="active"
+                field="status"
                 header="Active Status"
                 [width]="columnSize.active"
               >
                 <d-cell>
-                  <ng-template let-rowItem="rowItem" let-rowIndex="rowIndex">
+                  <!-- <ng-template let-rowItem="rowItem" let-rowIndex="rowIndex">
                     <d-toggle
                       (change)="toggleCheck($event, rowItem)"
                       [(ngModel)]="rowItem.active"
                     ></d-toggle>
+                  </ng-template> -->
+                  <ng-template let-cellItem="cellItem">
+                    <span
+                      [title]="cellItem"
+                      class="over-flow-ellipsis"
+                    >
+                      {{ cellItem }}
+                    </span>
                   </ng-template>
                 </d-cell>
               </d-column>
@@ -157,7 +185,7 @@
                         icon="icon-edit"
                         bsStyle="text-dark"
                         title="edit"
-                        (click)="editStyle(rowItem.styleId, rowIndex)"
+                        (click)="editStyle(rowItem.productId, rowIndex)"
                       ></d-button>
                     </div>
                   </ng-template>

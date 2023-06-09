@@ -29,7 +29,8 @@ export class StyleFormComponent implements OnInit {
     fabricComposition: "",
     fabicSwatch: "",
     unitWeight: "",
-    productCategoryId: "7eee1f7e-7ad6-40c5-b3aa-fa215d5b770f",
+    slectedCat: {categoryId: ""},
+    productCategoryId: "",
     image: "",
     varients: []
   }
@@ -88,10 +89,10 @@ export class StyleFormComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.getBrandListActive();
+    // this.getBrandListActive();
     this.getCategoryListActive();
-    this.getMaterialListActive();
-    this.getUnitListActive();
+    // this.getMaterialListActive();
+    // this.getUnitListActive();
 
     this.paramId = this.route.snapshot.params["id"];
     this.mode = this.route.snapshot.params["id"] ? "Edit" : "Add";
@@ -105,10 +106,8 @@ export class StyleFormComponent implements OnInit {
   getStyleById(id: string) {
     this.styleListDataService.getStyleById(id).subscribe((res) => {
       this.styleFormData = res;
-      // this.styleFormData.materials = res.materials.map((material: any) => {
-      //   return material.material;
-      // });
-      console.log(this.styleFormData);
+      this.styleFormData.slectedCat = res?.productCategory;
+      this.styleFormData.productCategoryId = res?.productCategory?.categoryId;
     });
   }
 
@@ -126,7 +125,7 @@ export class StyleFormComponent implements OnInit {
 
   getCategoryListActive() {
     this.categoryListDataService
-      .getCategoryListActive()
+      .getCategoryListActive({perPage: 100})
       .subscribe((res: any) => {
         this.categoryList = res.content;
       });
@@ -153,7 +152,7 @@ export class StyleFormComponent implements OnInit {
   }
 
   getValue(value: object) {
-    console.log(value);
+    // console.log(value);
   }
 
   everyRange(range: any) {
@@ -161,8 +160,6 @@ export class StyleFormComponent implements OnInit {
   }
 
   submitStyleForm({ valid, directive, data, errors }: any) {
-    console.log(this.styleFormData);
-
     const finaldata = {
       styleName: this.styleFormData.styleName,
       logisticsDesc: this.styleFormData.logisticsDesc,
@@ -170,27 +167,21 @@ export class StyleFormComponent implements OnInit {
       fabricComposition: this.styleFormData.fabricComposition,
       fabicSwatch: this.styleFormData.fabicSwatch,
       unitWeight: this.styleFormData.unitWeight,
-      productCategoryId: this.styleFormData.productCategoryId,
+      productCategoryId: this.styleFormData?.slectedCat?.categoryId,
       varients: []
     };
 
-    console.log(finaldata, valid);
-
     if (valid) {
-      console.log(':: :: 1')
       if (this.mode === "Add") {
-        console.log(':: :: 2')
         this.styleListDataService.addStyle(finaldata).subscribe((res) => {
           this.router.navigate(["/product/style"]);
         });
       } else {
-        console.log(':: :: 3')
         this.styleListDataService
           .updateStyle(this.paramId, finaldata)
           .subscribe((res) => this.router.navigate(["/product/style"]));
       }
     } else {
-      console.log(':: :: 4')
       // error tip
     }
   }
