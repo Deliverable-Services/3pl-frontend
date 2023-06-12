@@ -34,6 +34,7 @@ export class StyleFormComponent implements OnInit {
     image: "",
     varients: []
   }
+  productVariants: any[] = [];
   // {
   //   styleName: "",
   //   // styleCode: "",
@@ -108,6 +109,12 @@ export class StyleFormComponent implements OnInit {
       this.styleFormData = res;
       this.styleFormData.slectedCat = res?.productCategory;
       this.styleFormData.productCategoryId = res?.productCategory?.categoryId;
+      if(!res?.varients?.length) {
+        this.addMoreVariant();
+      } else {
+        this.productVariants = res?.varients || [];
+        this.styleFormData.varients = res?.varients || [];
+      }
     });
   }
 
@@ -168,7 +175,7 @@ export class StyleFormComponent implements OnInit {
       fabicSwatch: this.styleFormData.fabicSwatch,
       unitWeight: this.styleFormData.unitWeight,
       productCategoryId: this.styleFormData?.slectedCat?.categoryId,
-      varients: []
+      varients: this.productVariants
     };
 
     if (valid) {
@@ -196,5 +203,27 @@ export class StyleFormComponent implements OnInit {
       productId: rowId.productId,
     };
     this.productListDataService.statusToggle(data).subscribe((res: any) => {});
+  }
+
+  removeProduct(index: number) {
+    this.productVariants.splice(index, 1);
+  }
+
+  addMoreVariant() {
+    this.productVariants.push({
+      sku: "",
+      color: "",
+      size: "",
+      label: "",
+      hastagColor: "",
+      productDesc: "",
+      localCurrency: "",
+      localExwPrice: "",
+      companyExwPrice: ""
+    });
+  }
+
+  updateValue(event: any, keyName: string, index: number) {
+    this.productVariants[index][keyName] = event.target.value;
   }
 }

@@ -126,14 +126,14 @@
                 <d-form-label [required]="true" [hasHelp]="true" [helpTips]="'This is the Category'">Category
                 </d-form-label>
 
-                <d-select placeholder="Select a Category" [scrollHight]="'300px'" [filterKey]="'categoryName'" [appendToBody]="true"
-                  [options]="categoryList" name="category" [isSearch]="true" [(ngModel)]="styleFormData.slectedCat" [dValidateRules]="{
+                <d-select placeholder="Select a Category" [scrollHight]="'300px'" [filterKey]="'categoryName'"
+                  [appendToBody]="true" [options]="categoryList" name="category" [isSearch]="true"
+                  [(ngModel)]="styleFormData.slectedCat" [dValidateRules]="{
                     validators: [{ required: true }]
                   }"></d-select>
               </d-form-item>
               <d-form-item>
-                <d-form-label [hasHelp]="true"
-                  [helpTips]="'This is Product Image'">Image</d-form-label>
+                <d-form-label [hasHelp]="true" [helpTips]="'This is Product Image'">Image</d-form-label>
                 <input type="file" autocomplete="off" name="image" placeholder="Image" [(ngModel)]="styleFormData.image"
                   [dValidateRules]="{
                       validators: [{ required: false }]
@@ -143,7 +143,8 @@
           </div>
           <div [ngStyle]="{ width: '100%' }">
             <d-form-item>
-              <d-form-label [required]="true" [hasHelp]="true" [helpTips]="'This is the Logistic Description'">Logistic Description</d-form-label>
+              <d-form-label [required]="true" [hasHelp]="true" [helpTips]="'This is the Logistic Description'">Logistic
+                Description</d-form-label>
               <d-form-control>
                 <textarea [ngStyle]="{ height: '104px' }" dTextarea resize="vertical" autocomplete="off"
                   name="logisticsDesc" placeholder="Logistic Description" [(ngModel)]="styleFormData.logisticsDesc"
@@ -152,6 +153,91 @@
                   }"></textarea>
               </d-form-control>
             </d-form-item>
+
+            <d-form-operation *ngIf="paramId">
+              <d-button dLoading class="mr-element-spacing" [title]="styleForm.errorMessage || ''" circled="true"
+                style="margin-right: 8px" [showLoading]="styleForm.pending" (click)="addMoreVariant()">
+                Add More
+              </d-button>
+            </d-form-operation>
+
+            <!-- variant section -->
+            <ng-container *ngFor="let prod of productVariants; let i = index">
+              <div class="manage-variants">
+                <div [ngStyle]="{ display: 'flex' }">
+                  <d-form-item [ngStyle]="{ margin: '20px 20px 20px 0px' }">
+                    <d-form-label [required]="true" [hasHelp]="true" [helpTips]="'This is the SKU'">Product SKU</d-form-label>
+                    <d-form-control>
+                      <input [ngStyle]="{ width: '200px' }" dTextInput autocomplete="off" name="productVariants[i].sku"
+                        placeholder="SKU" [value]="productVariants[i].sku" (input)="updateValue($event, 'sku', i)"/>
+                    </d-form-control>
+                  </d-form-item>
+
+                  <d-form-item [ngStyle]="{ margin: '20px 20px 20px 0px' }">
+                    <d-form-label [required]="true" [hasHelp]="true" [helpTips]="'This is the Color.'">Color</d-form-label>
+                    <d-form-control>
+                      <input [ngStyle]="{ width: '200px' }" dTextInput autocomplete="off" name="productVariants[i].color"
+                        placeholder="Color" [value]="productVariants[i].color" (input)="updateValue($event, 'color', i)"/>
+                    </d-form-control>
+                  </d-form-item>
+                
+                  <d-form-item [ngStyle]="{ margin: '20px 20px 20px 0px' }">
+                    <d-form-label [required]="true" [hasHelp]="true" [helpTips]="'This is the Size'">Size</d-form-label>
+                    <d-form-control>
+                      <input [ngStyle]="{ width: '200px' }" dTextInput autocomplete="off" name="productVariants[i].size" placeholder="Size"
+                        [value]="productVariants[i].size" (input)="updateValue($event, 'size', i)"/>
+                    </d-form-control>
+                  </d-form-item>
+                
+                  <d-form-item [ngStyle]="{ margin: '20px 20px 20px 0px' }">
+                    <d-form-label [required]="true" [hasHelp]="true" [helpTips]="'This is the Label'">Label</d-form-label>
+                    <d-form-control>
+                      <input [ngStyle]="{ width: '200px' }" dTextInput autocomplete="off" name="productVariants[i].label" placeholder="Label"
+                        [value]="productVariants[i].label" (input)="updateValue($event, 'label', i)"/>
+                    </d-form-control>
+                  </d-form-item>
+                
+                  <d-form-item [ngStyle]="{ margin: '20px 20px 20px 0px' }">
+                    <d-form-label [required]="true" [hasHelp]="true" [helpTips]="'This is the Hashtag Color'">Hastag Color</d-form-label>
+                    <d-form-control>
+                      <input [ngStyle]="{ width: '200px' }" dTextInput autocomplete="off" name="productVariants[i].hastagColor" placeholder="Hastag Color"
+                        [value]="productVariants[i].hastagColor" (input)="updateValue($event, 'hastagColor', i)"/>
+                    </d-form-control>
+                  </d-form-item>
+
+                  <d-form-item [ngStyle]="{ margin: '20px 20px 20px 0px' }">
+                    <d-form-label [required]="true" [hasHelp]="true" [helpTips]="'This is the Local Currency'">Local Currency</d-form-label>
+                    <d-form-control>
+                      <input [ngStyle]="{ width: '200px' }" dTextInput autocomplete="off" name="productVariants[i].localCurrency" placeholder="Local Currency"
+                        [value]="productVariants[i].localCurrency" (input)="updateValue($event, 'localCurrency', i)"/>
+                    </d-form-control>
+                  </d-form-item>
+                
+                </div>
+
+                <div [ngStyle]="{ display: 'flex' }">
+                  <d-form-item [ngStyle]="{ margin: '20px 20px 20px 0px' }">
+                    <d-form-label [required]="true" [hasHelp]="true" [helpTips]="'This is the Local Exw Price'">Local Exw Price</d-form-label>
+                    <d-form-control>
+                      <input [ngStyle]="{ width: '200px' }" dTextInput autocomplete="off" name="productVariants[i].localExwPrice" placeholder="Local Exw Price"
+                        [value]="productVariants[i].localExwPrice" (input)="updateValue($event, 'localExwPrice', i)"/>
+                    </d-form-control>
+                  </d-form-item>
+
+                  <d-form-item [ngStyle]="{ margin: '20px 20px 20px 0px' }">
+                    <d-form-label [required]="true" [hasHelp]="true" [helpTips]="'This is the Company Exw Price'">Company Exw Price</d-form-label>
+                    <d-form-control>
+                      <input [ngStyle]="{ width: '200px' }" dTextInput autocomplete="off" name="productVariants[i].companyExwPrice" placeholder="Company Exw Price"
+                        [value]="productVariants[i].companyExwPrice" (input)="updateValue($event, 'companyExwPrice', i)"/>
+                        <button *ngIf="i != 0" [ngStyle]="{ marginLeft: '4px' }" (click)="removeProduct(i)">
+                          <i [ngStyle]="{ paddingRight: '0px' }" class="icon icon-close"></i>
+                        </button>
+                    </d-form-control>
+                  </d-form-item>
+                </div>
+              </div>
+            </ng-container>
+            <!-- variant section -->
 
             <d-form-operation>
               <d-button dLoading class="mr-element-spacing" [title]="styleForm.errorMessage || ''" circled="true"
