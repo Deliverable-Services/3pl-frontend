@@ -25,7 +25,7 @@ export default function (values: any) {
         },
 
         {
-          title: "Product Variant",
+          title: "Variant",
           link: "/product/product",
         },
       ],
@@ -60,11 +60,17 @@ export default function (values: any) {
       link: "/",
       menuIcon: "icon icon-console",
     },
+    {
+      title: "Credit Terms",
+      link: "/credit-terms",
+      // children: [],
+      menuIcon: "icon icon-console",
+    },
     // {
     //   title: "Operation",
     //   children: [
     //     {
-    //       title: "Purchase Order",
+    //       title: "Purchase Order",menuIcon
     //       link: "/operation/purchase-order",
     //     },
     //     {

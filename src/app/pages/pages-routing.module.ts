@@ -31,6 +31,11 @@ const routes: Routes = [
           import("./operation/operation.module").then((m) => m.OperationModule),
       },
       {
+        path: "credit-terms",
+        loadChildren: () =>
+          import("./credit-terms/credit-terms.module").then((m) => m.CreditTermsModule),
+      },
+      {
         path: "",
         redirectTo: "",
         pathMatch: "full",

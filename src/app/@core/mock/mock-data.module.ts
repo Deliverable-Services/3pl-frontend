@@ -17,6 +17,7 @@ import { TradeListDataService } from "./Trade-data.service";
 import { CompanyDataService } from "./company-data.service";
 import { DepartmentDataService } from "./department-data.service";
 import { PoDataService } from "./po-data.service";
+import { CreditTermsService } from "./credit-terms.service";
 
 
 const SERVICES = [
@@ -37,6 +38,7 @@ const SERVICES = [
   CompanyDataService,
   DepartmentDataService,
   PoDataService,
+  CreditTermsService
 ];
 
 @NgModule({

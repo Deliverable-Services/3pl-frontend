@@ -1,0 +1,80 @@
+<div class="da-content-banner">
+    <div class="add-session-btn">
+      <d-breadcrumb>
+        <d-breadcrumb-item>
+          <a routerLink="/product/category">{{ "Credit Terms" | translate }}</a>
+        </d-breadcrumb-item>
+        <d-breadcrumb-item>
+          {{ mode | translate }}
+        </d-breadcrumb-item>
+        <!-- <d-button [ngStyle]="{ marginLeft: '900px' }" (click)="addSession()">Add Season</d-button> -->
+      </d-breadcrumb>
+    </div>
+  </div>
+  
+  <div class="da-content-wrapper">
+    <da-layout-row [daGutter]="[24, 24]">
+      <da-col-item [daSpan]="24" [daXs]="24">
+        <div class="da-basic-form" [ngStyle]="{ display: 'flex', justifyContent: 'space-between' }">
+          <form dForm ngForm [dValidateRules]="{
+              message: 'The form verification failed, please check.'
+            }" [layout]="verticalLayout" #projectForm="dValidateRules" (dSubmit)="submitProjectForm($event)"
+            autocomplete="off">
+            <div class="da-content-banner-title">
+              {{ mode + " " + "Trade Terms" | translate }}
+            </div>
+            <d-form-item [ngStyle]="{ width: '500px' }">
+              <d-form-label [required]="true" [hasHelp]="true" [helpTips]="'This is Terms Subject.'">Terms Subject
+              </d-form-label>
+              <d-form-control>
+                <input dTextInput autocomplete="off" name="tradeSubject" placeholder="Terms Subject Name"
+                  [(ngModel)]="projectFormData.creditTermsSubject" [dValidateRules]="{
+                    validators: [{ required: true }]
+                  }" />
+              </d-form-control>
+            </d-form-item>
+
+            <d-form-item [ngStyle]="{ width: '500px' }">
+                <d-form-label [required]="true" [hasHelp]="true" [helpTips]="'This is the Credit Day.'">Credit Day
+                </d-form-label>
+                <d-form-control>
+                  <input dTextInput autocomplete="off" name="tradeSubject" placeholder="Credit Day"
+                    [(ngModel)]="projectFormData.creditDay" [dValidateRules]="{
+                      validators: [{ required: true }]
+                    }" />
+                </d-form-control>
+            </d-form-item>
+  
+            <d-form-item>
+              <d-form-label [required]="true" [hasHelp]="true" [helpTips]="'Add Terms Code'">Terms Description
+              </d-form-label>
+              <d-form-control>
+                <textarea [ngStyle]="{ height: '104px' }" dTextarea resize="vertical" autocomplete="off" name="tradeDesc"
+                  placeholder="Terms Description" [(ngModel)]="projectFormData.creditTermsDetails" [dValidateRules]="{
+                    validators: [{ required: true }]
+                  }"></textarea>
+              </d-form-control>
+            </d-form-item>
+  
+            <d-form-operation>
+              <d-button dLoading class="mr-element-spacing" [title]="projectForm.errorMessage || ''" circled="true"
+                style="margin-right: 8px" [showLoading]="projectForm.pending" dFormSubmit
+                [dFormSubmitData]="'submit-button'">
+                {{ paramId ? "Update" : "Create" }}
+              </d-button>
+            </d-form-operation>
+          </form>
+          <div *ngIf="paramId">
+            <div class="dateWrapper">
+              {{ "Created Date :" + " " }}
+              {{ selectedCreditTerms.createdAt | mydatepipe }}
+            </div>
+            <div class="dateWrapper">
+              {{ "Updated Date :" + " " }}
+              {{ selectedCreditTerms.updatedAt | mydatepipe }}
+            </div>
+          </div>
+        </div>
+      </da-col-item>
+    </da-layout-row>
+  </div>
