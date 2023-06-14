@@ -4,19 +4,23 @@ import { ActivatedRoute, Router } from "@angular/router";
 import { CreditTermsService } from 'src/app/@core/mock/credit-terms.service';
 
 @Component({
-  selector: 'app-credit-terms-form',
-  templateUrl: './credit-terms-form.component.html',
-  styleUrls: ['./credit-terms-form.component.scss']
+  selector: 'app-connection-location-form',
+  templateUrl: './connection-location-form.component.html',
+  styleUrls: ['./connection-location-form.component.scss']
 })
-export class CreditTermsFormComponent implements OnInit {
+export class ConnectionLocationFormComponent implements OnInit {
 
   mode: string = "Add";
   verticalLayout: FormLayout = FormLayout.Vertical;
   projectFormData = {
-    creditTermsSubject: "",
-    creditTermsDetails: "",
-    creditDay: "",
-    status: "active"
+    nodeId: "",
+    nodeName: "",
+    nodeDesc: "",
+    nodeType: "",
+    lgStoreOwnerId: "",
+    shopifyLocationId: "",
+    physicalAddress: "",
+    remarks: ""
   };
   paramId: string = "";
   selectedCreditTerms: any = {};

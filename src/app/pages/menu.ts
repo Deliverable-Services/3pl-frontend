@@ -66,6 +66,12 @@ export default function (values: any) {
       // children: [],
       menuIcon: "icon icon-console",
     },
+    {
+      title: "Connection Location",
+      link: "/connection-location",
+      // children: [],
+      menuIcon: "icon icon-console",
+    },
     // {
     //   title: "Operation",
     //   children: [

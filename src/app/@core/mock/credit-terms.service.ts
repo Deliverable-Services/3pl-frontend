@@ -22,7 +22,7 @@ export class CreditTermsService {
   private searchParams = {
     filters: [
       {
-        field: "styleName",
+        field: "creditTermsSubject",
         operator: "match",
         value: "",
       },
@@ -114,9 +114,10 @@ export class CreditTermsService {
   getCreditTermsById(id: string): Observable<any> {
     return this.http.get(`${this.baseApiUrl}/credit-terms/${id}`);
   }
+
   statusToggle(data: any) {
     return this.http.put(
-      `${this.baseApiUrl}/style/${data.styleId}/${data.active}`,
+      `${this.baseApiUrl}/credit-terms/${data.id}/${data.active}`,
       ""
     );
   }

@@ -27,7 +27,7 @@
               <d-form-label [required]="true" [hasHelp]="true" [helpTips]="'This is Terms Subject.'">Terms Subject
               </d-form-label>
               <d-form-control>
-                <input dTextInput autocomplete="off" name="tradeSubject" placeholder="Terms Subject Name"
+                <input dTextInput autocomplete="off" name="creditTermsSubject" placeholder="Terms Subject Name"
                   [(ngModel)]="projectFormData.creditTermsSubject" [dValidateRules]="{
                     validators: [{ required: true }]
                   }" />
@@ -38,7 +38,7 @@
                 <d-form-label [required]="true" [hasHelp]="true" [helpTips]="'This is the Credit Day.'">Credit Day
                 </d-form-label>
                 <d-form-control>
-                  <input dTextInput autocomplete="off" name="tradeSubject" placeholder="Credit Day"
+                  <input dTextInput autocomplete="off" name="creditDay" placeholder="Credit Day"
                     [(ngModel)]="projectFormData.creditDay" [dValidateRules]="{
                       validators: [{ required: true }]
                     }" />

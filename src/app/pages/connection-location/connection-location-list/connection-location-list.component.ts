@@ -8,11 +8,11 @@ import {
 import { PageParam, SearchParam } from "src/app/@core/data/searchFormData";
 
 @Component({
-  selector: 'app-credit-terms-list',
-  templateUrl: './credit-terms-list.component.html',
-  styleUrls: ['./credit-terms-list.component.scss']
+  selector: 'app-connection-location-list',
+  templateUrl: './connection-location-list.component.html',
+  styleUrls: ['./connection-location-list.component.scss']
 })
-export class CreditTermsListComponent implements OnInit {
+export class ConnectionLocationListComponent implements OnInit {
 
   pageParam: any = {
     pageNo: "",

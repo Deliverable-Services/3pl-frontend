@@ -36,6 +36,11 @@ const routes: Routes = [
           import("./credit-terms/credit-terms.module").then((m) => m.CreditTermsModule),
       },
       {
+        path: "connection-location",
+        loadChildren: () =>
+          import("./connection-location/connection-location.module").then((m) => m.ConnectionLocationModule),
+      },
+      {
         path: "",
         redirectTo: "",
         pathMatch: "full",

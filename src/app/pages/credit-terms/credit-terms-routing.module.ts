@@ -12,6 +12,10 @@ const routes: Routes = [
     path: "add",
     component: CreditTermsFormComponent,
   },
+  {
+    path: "edit/:id",
+    component: CreditTermsFormComponent,
+  },
 ];
 
 @NgModule({
