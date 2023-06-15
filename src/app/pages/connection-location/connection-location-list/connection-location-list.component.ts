@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { Router } from "@angular/router";
-import { CreditTermsService } from 'src/app/@core/mock/credit-terms.service';
+// import { CreditTermsService } from 'src/app/@core/mock/credit-terms.service';
+import { ConnectionLocationService } from 'src/app/@core/mock/connection-location.service';
 import {
   SortEventArg
 } from "ng-devui";
@@ -36,7 +37,7 @@ export class ConnectionLocationListComponent implements OnInit {
   };
 
   constructor(
-    private creditTermsService: CreditTermsService,
+    private connectionLocationService: ConnectionLocationService,
     private router: Router
   ) { }
 
@@ -45,9 +46,10 @@ export class ConnectionLocationListComponent implements OnInit {
   }
 
   getCreditTermsList() {
-    this.busy = this.creditTermsService
+    this.busy = this.connectionLocationService
       .getList()
       .subscribe((res) => {
+        console.log(':: res ', res)
         this.basicDataSource = res.content;
         this.pager.total = res.totalItems;
         // Object.keys(res.listSize).map((key) => {
@@ -61,13 +63,13 @@ export class ConnectionLocationListComponent implements OnInit {
     if (e.length === 1) {
       this.pageParam.sortBy = e[0].field;
       this.pageParam.sortDir = e[0].direction.toLowerCase();
-      this.creditTermsService.setPageParams(this.pageParam);
+      this.connectionLocationService.setPageParams(this.pageParam);
       this.getCreditTermsList();
     }
   }
 
   setPageParams(pageParam: PageParam) {
-    this.creditTermsService.setPageParams(pageParam);
+    this.connectionLocationService.setPageParams(pageParam);
     this.getCreditTermsList();
   }
 
@@ -86,14 +88,7 @@ export class ConnectionLocationListComponent implements OnInit {
   }
 
   editRow(rowId: any, index: number) {
-    this.router.navigate([`/credit-terms/edit/${rowId}`]);
-  }
-
-  updateStatus(event: any, row: any) {
-    let sVal =  event ? 'active':'inactive';
-    console.log(':: ', row, sVal)
-
-    // statusToggle
+    this.router.navigate([`/connection-location/edit/${rowId}`]);
   }
 
 }

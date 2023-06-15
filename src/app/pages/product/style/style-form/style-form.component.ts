@@ -2,7 +2,7 @@ import { style } from "@angular/animations";
 import { Component, TemplateRef, ViewChild, OnInit } from "@angular/core";
 import { AbstractControlDirective } from "@angular/forms";
 import { ActivatedRoute, Params, Route, Router } from "@angular/router";
-import { DFormGroupRuleDirective, DialogService, FormLayout } from "ng-devui";
+import { DFormGroupRuleDirective, DialogService, FormLayout, ToastService } from "ng-devui";
 import { Observable, Subscription, of } from "rxjs";
 import { delay } from "rxjs/operators";
 import { Brand } from "src/app/@core/data/brandList";
@@ -15,6 +15,7 @@ import { ProductListDataService } from "src/app/@core/mock/product-data.service"
 import { StyleListDataService } from "src/app/@core/mock/style-data.service";
 import { UnitListDataService } from "src/app/@core/mock/unit-data.service";
 import { FormConfig } from "src/app/@shared/components/admin-form";
+import { MSG } from "src/config/global-var";
 
 @Component({
   selector: "app-style-form",
@@ -86,7 +87,8 @@ export class StyleFormComponent implements OnInit {
     private unitListDataService: UnitListDataService,
     private dialogService: DialogService,
     private router: Router,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private toastService: ToastService
   ) {}
 
   ngOnInit() {
@@ -180,13 +182,11 @@ export class StyleFormComponent implements OnInit {
 
     if (valid) {
       if (this.mode === "Add") {
-        this.styleListDataService.addStyle(finaldata).subscribe((res) => {
-          this.router.navigate(["/product/style"]);
-        });
+        this.styleListDataService.addStyle(finaldata).subscribe((res) => this._showToast(res));
       } else {
         this.styleListDataService
           .updateStyle(this.paramId, finaldata)
-          .subscribe((res) => this.router.navigate(["/product/style"]));
+          .subscribe((res) => this._showToast(res));
       }
     } else {
       // error tip
@@ -225,5 +225,23 @@ export class StyleFormComponent implements OnInit {
 
   updateValue(event: any, keyName: string, index: number) {
     this.productVariants[index][keyName] = event.target.value;
+  }
+
+  _showToast(resp: any) {
+    let type, msg;
+    if(resp) {
+      type = 'success';
+      msg = this.mode === 'Add' ? MSG.create:MSG.update;
+      this.router.navigate(["/product/style"]);
+    } else {
+      type = 'error';
+      msg = MSG.error;
+    }
+    this.toastService.open({
+      value: [
+        { severity: type, content: msg},
+      ],
+      life: 2000,
+    });
   }
 }

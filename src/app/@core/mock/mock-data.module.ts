@@ -18,6 +18,7 @@ import { CompanyDataService } from "./company-data.service";
 import { DepartmentDataService } from "./department-data.service";
 import { PoDataService } from "./po-data.service";
 import { CreditTermsService } from "./credit-terms.service";
+import { ConnectionLocationService } from "./connection-location.service";
 
 
 const SERVICES = [
@@ -38,7 +39,8 @@ const SERVICES = [
   CompanyDataService,
   DepartmentDataService,
   PoDataService,
-  CreditTermsService
+  CreditTermsService,
+  ConnectionLocationService
 ];
 
 @NgModule({

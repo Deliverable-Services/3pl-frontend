@@ -21,7 +21,7 @@
         <form dForm ngForm [dValidateRules]="{
             message: 'The form verification failed, please check.'
           }" [layout]="verticalLayout" #styleForm="dValidateRules"
-          autocomplete="off">
+          autocomplete="off" (dSubmit)="submitProjectForm($event)">
           <div class="da-content-banner-title">
             {{ mode + " " + "Connection Location" | translate }}
           </div>
@@ -40,14 +40,19 @@
               </d-form-item>
 
               <d-form-item>
-                <d-form-label [required]="true" [hasHelp]="true" [helpTips]="'This is the Node Type'">nodeType
+                <d-form-label [required]="true" [hasHelp]="true" [helpTips]="'This is the Node Type'">Node Type
                 </d-form-label>
                 <d-form-control>
-                  <input dTextInput autocomplete="off" name="nodeType" placeholder="Node Type"
+                  <!-- <input dTextInput autocomplete="off" name="nodeType" placeholder="Node Type"
                   [(ngModel)]="projectFormData.nodeType"
                   [dValidateRules]="{
                     validators: [{ required: true }]
-                  }" />
+                  }" /> -->
+                  <d-select [ngStyle]="{ width: '100%' }" placeholder="Select a Material" [appendToBody]="true"
+                    [multiple]="false" [options]="nodeList" name="nodeType" [(ngModel)]="projectFormData.nodeType"
+                    [dValidateRules]="{
+                      validators: [{ required: true }]
+                    }"></d-select>
                 </d-form-control>
               </d-form-item>
               <d-form-item>

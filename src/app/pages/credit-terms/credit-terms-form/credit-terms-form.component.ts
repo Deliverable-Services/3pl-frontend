@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { FormLayout } from "ng-devui";
+import { FormLayout, ToastService } from "ng-devui";
 import { ActivatedRoute, Router } from "@angular/router";
 import { CreditTermsService } from 'src/app/@core/mock/credit-terms.service';
+import { MSG } from 'src/config/global-var';
 
 @Component({
   selector: 'app-credit-terms-form',
@@ -16,14 +17,15 @@ export class CreditTermsFormComponent implements OnInit {
     creditTermsSubject: "",
     creditTermsDetails: "",
     creditDay: "",
-    status: "active"
+    status: "Active"
   };
   paramId: string = "";
   selectedCreditTerms: any = {};
   constructor(
     private creditTermsService: CreditTermsService,
     private route: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    private toastService: ToastService
   ) { }
 
   ngOnInit(): void {
@@ -44,18 +46,37 @@ export class CreditTermsFormComponent implements OnInit {
   }
 
   submitProjectForm(event: any) {
-    console.log(':: :: ', event, this.projectFormData);
     if (event?.valid) {
       if (this.mode === "Add") {
         this.creditTermsService.addCreditTerms(this.projectFormData).subscribe((res) => {
-          this.router.navigate(["/credit-terms"]);
+          this._showToast(res);
         });
       } else {
         this.creditTermsService
           .updateCreditTerms(this.paramId, this.projectFormData)
-          .subscribe((res) => this.router.navigate(["/credit-terms"]));
+          .subscribe((res) => {
+            this._showToast(res);
+          });
       }
     }
+  }
+
+  _showToast(resp: any) {
+    let type, msg;
+    if(resp) {
+      type = 'success';
+      msg = this.mode === 'Add' ? MSG.create:MSG.update;
+      this.router.navigate(["/credit-terms"]);
+    } else {
+      type = 'error';
+      msg = MSG.error;
+    }
+    this.toastService.open({
+      value: [
+        { severity: type, content: msg},
+      ],
+      life: 2000,
+    });
   }
 
 }

@@ -3,9 +3,11 @@ import { Subscription } from 'rxjs';
 import { Router } from "@angular/router";
 import { CreditTermsService } from 'src/app/@core/mock/credit-terms.service';
 import {
-  SortEventArg
+  SortEventArg,
+  ToastService
 } from "ng-devui";
 import { PageParam, SearchParam } from "src/app/@core/data/searchFormData";
+import { MSG } from 'src/config/global-var';
 
 @Component({
   selector: 'app-credit-terms-list',
@@ -37,7 +39,8 @@ export class CreditTermsListComponent implements OnInit {
 
   constructor(
     private creditTermsService: CreditTermsService,
-    private router: Router
+    private router: Router,
+    private toastService: ToastService,
   ) { }
 
   ngOnInit(): void {
@@ -91,9 +94,26 @@ export class CreditTermsListComponent implements OnInit {
 
   updateStatus(event: any, row: any) {
     let sVal =  event ? 'active':'inactive';
-    console.log(':: ', row, sVal)
+    console.log(':: ', row, row?.rowItem?.creditTermsId, sVal);
 
-    // statusToggle
+    this.creditTermsService
+    .statusToggle({id: row?.rowItem?.creditTermsId, active: sVal})
+    .subscribe((res: any) => {
+      let type, msg;
+      if(res) {
+        type = 'success';
+        msg = MSG.status.success;
+      } else {
+        type = 'error';
+        msg = MSG.error;
+      }
+      this.toastService.open({
+        value: [
+          { severity: type, content: msg},
+        ],
+        life: 2000,
+      });
+    });
   }
 
 }

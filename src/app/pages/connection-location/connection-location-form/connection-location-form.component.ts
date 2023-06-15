@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { FormLayout } from "ng-devui";
+import { FormLayout, ToastService } from "ng-devui";
+import { MSG } from 'src/config/global-var';
 import { ActivatedRoute, Router } from "@angular/router";
-import { CreditTermsService } from 'src/app/@core/mock/credit-terms.service';
+import { ConnectionLocationService } from 'src/app/@core/mock/connection-location.service';
 
 @Component({
   selector: 'app-connection-location-form',
@@ -22,12 +23,14 @@ export class ConnectionLocationFormComponent implements OnInit {
     physicalAddress: "",
     remarks: ""
   };
+  nodeList: any[] = ['DC', 'Online', 'Store'];
   paramId: string = "";
   selectedCreditTerms: any = {};
   constructor(
-    private creditTermsService: CreditTermsService,
+    private connectionLocationService: ConnectionLocationService,
     private route: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    private toastService: ToastService
   ) { }
 
   ngOnInit(): void {
@@ -40,7 +43,7 @@ export class ConnectionLocationFormComponent implements OnInit {
   }
 
   getCreditTermsById(id: string) {
-    this.creditTermsService.getCreditTermsById(id).subscribe((res) => {
+    this.connectionLocationService.getCreditTermsById(id).subscribe((res) => {
       console.log({ res });
       this.selectedCreditTerms = res;
       this.projectFormData = res;
@@ -48,18 +51,34 @@ export class ConnectionLocationFormComponent implements OnInit {
   }
 
   submitProjectForm(event: any) {
-    console.log(':: :: ', event, this.projectFormData);
+    console.log(event);
     if (event?.valid) {
       if (this.mode === "Add") {
-        this.creditTermsService.addCreditTerms(this.projectFormData).subscribe((res) => {
-          this.router.navigate(["/credit-terms"]);
-        });
+        this.connectionLocationService.add(this.projectFormData).subscribe((res) => this._showToast(res));
       } else {
-        this.creditTermsService
-          .updateCreditTerms(this.paramId, this.projectFormData)
-          .subscribe((res) => this.router.navigate(["/credit-terms"]));
+        this.connectionLocationService
+          .update(this.paramId, this.projectFormData)
+          .subscribe((res) => this._showToast(res));
       }
     }
+  }
+
+  _showToast(resp: any) {
+    let type, msg;
+    if(resp) {
+      type = 'success';
+      msg = this.mode === 'Add' ? MSG.create:MSG.update;
+      this.router.navigate(["/connection-location"]);
+    } else {
+      type = 'error';
+      msg = MSG.error;
+    }
+    this.toastService.open({
+      value: [
+        { severity: type, content: msg},
+      ],
+      life: 2000,
+    });
   }
 
 }

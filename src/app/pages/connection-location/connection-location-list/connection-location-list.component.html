@@ -44,8 +44,8 @@
                 (multiSortChange)="multiSortChange($event)"
               >
                 <d-column
-                  [field]="'creditTermsSubject'"
-                  header="Subject"
+                  [field]="'nodeName'"
+                  header="Node Name"
                   [sortable]="true"
                 >
                   <d-cell>
@@ -58,8 +58,50 @@
                 </d-column>
 
                 <d-column
-                  [field]="'creditTermsDetails'"
-                  header="Details"
+                  [field]="'nodeType'"
+                  header="Node Type"
+                  [sortable]="true"
+                >
+                  <d-cell>
+                    <ng-template let-cellItem="cellItem">
+                      <span [title]="cellItem" class="over-flow-ellipsis">
+                        {{ cellItem }}
+                      </span>
+                    </ng-template>
+                  </d-cell>
+                </d-column>
+
+                <d-column
+                  [field]="'connectionLocationId'"
+                  header="Connection Location Id"
+                  [sortable]="true"
+                >
+                  <d-cell>
+                    <ng-template let-cellItem="cellItem">
+                      <span [title]="cellItem" class="over-flow-ellipsis">
+                        {{ cellItem }}
+                      </span>
+                    </ng-template>
+                  </d-cell>
+                </d-column>
+
+                <d-column
+                  [field]="'lgStoreOwnerId'"
+                  header="LG Store Owner Id"
+                  [sortable]="true"
+                >
+                  <d-cell>
+                    <ng-template let-cellItem="cellItem">
+                      <span [title]="cellItem" class="over-flow-ellipsis">
+                        {{ cellItem }}
+                      </span>
+                    </ng-template>
+                  </d-cell>
+                </d-column>
+
+                <d-column
+                  [field]="'shopifyLocationId'"
+                  header="Shopify Location Id"
                   [sortable]="true"
                 >
                   <d-cell>
@@ -102,21 +144,6 @@
                 </d-column>
 
                 <d-column
-                  [field]="'status'"
-                  header="Status"
-                  [sortable]="false"
-                  [width]="columnSize.lastModifiedBy"
-                >
-                  <d-cell>
-                    <ng-template let-cellItem="cellItem" let-row="row">
-                      <span [title]="cellItem" class="over-flow-ellipsis">
-                        <d-toggle [checked]="cellItem === 'Active'" (change)="updateStatus($event, row)" [size]="'sm'"></d-toggle>
-                      </span>
-                    </ng-template>
-                  </d-cell>
-                </d-column>
-  
-                <d-column
                   [field]="'action'"
                   header="Actions"
                   [width]="columnSize.action"
@@ -128,7 +155,7 @@
                           icon="icon-edit"
                           bsStyle="text-dark"
                           title="edit"
-                          (click)="editRow(rowItem.creditTermsId, rowIndex)"
+                          (click)="editRow(rowItem.connectionLocationId, rowIndex)"
                         ></d-button>
                         <!-- <d-button
                           icon="icon-delete"
