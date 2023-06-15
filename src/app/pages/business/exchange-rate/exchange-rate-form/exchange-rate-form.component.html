@@ -2,7 +2,7 @@
   <div class="add-session-btn">
     <d-breadcrumb>
       <d-breadcrumb-item>
-        <a routerLink="/business/exchange-rate">{{ "Exchange Rate" | translate }}</a>
+        <a routerLink="/business/exchange-rate">{{ "Currency" | translate }}</a>
       </d-breadcrumb-item>
       <d-breadcrumb-item>
         {{ mode | translate }}
@@ -20,25 +20,25 @@
           }" [layout]="verticalLayout" #companyForm="dValidateRules" (dSubmit)="submitExchangeRateForm($event)"
           autocomplete="off">
           <div class="da-content-banner-title">
-            {{ mode + " " + "Exchange Rate" | translate }}
+            {{ mode + " " + "Currency" | translate }}
           </div>
           <d-form-item>
-            <d-form-label [required]="true" [hasHelp]="true" [helpTips]="'This is the From Currency.'">From Currency
+            <d-form-label [required]="true" [hasHelp]="true" [helpTips]="'This is the From Currency.'">Currency Name
             </d-form-label>
             <d-form-control>
-              <input dTextInput autocomplete="off" name="fromCurrency" placeholder="From Currency"
-                [(ngModel)]="exchangeRateFormData.fromCurrency" [dValidateRules]="{
+              <input dTextInput autocomplete="off" name="currencyName" placeholder="Currency Name"
+                [(ngModel)]="exchangeRateFormData.currencyName" [dValidateRules]="{
                   validators: [{ required: true }]
                 }" />
             </d-form-control>
           </d-form-item>
 
           <d-form-item>
-            <d-form-label [required]="true" [hasHelp]="true" [helpTips]="'This is the to Currency.'">To Currency
+            <d-form-label [required]="true" [hasHelp]="true" [helpTips]="'This is the to Currency.'">Currency Code
             </d-form-label>
             <d-form-control>
-              <input dTextInput autocomplete="off" [disabled]="true" name="toCurrency" placeholder="To Currency"
-                [(ngModel)]="exchangeRateFormData.toCurrency" [dValidateRules]="{
+              <input dTextInput autocomplete="off" name="currencyCode" placeholder="Currency Code"
+                [(ngModel)]="exchangeRateFormData.currencyCode" [dValidateRules]="{
                   validators: [{ required: true }]
                 }" />
             </d-form-control>
@@ -50,6 +50,17 @@
             <d-form-control>
               <input dTextInput autocomplete="off" name="rate" placeholder="Exchange Rate"
                 [(ngModel)]="exchangeRateFormData.rate" [dValidateRules]="{
+                  validators: [{ required: true }]
+                }" />
+            </d-form-control>
+          </d-form-item>
+
+          <d-form-item>
+            <d-form-label [required]="true" [hasHelp]="true" [helpTips]="'This is the exchange rate.'">Remarks
+            </d-form-label>
+            <d-form-control>
+              <input dTextInput autocomplete="off" name="remarks" placeholder="Remarks"
+                [(ngModel)]="exchangeRateFormData.remarks" [dValidateRules]="{
                   validators: [{ required: true }]
                 }" />
             </d-form-control>

@@ -13,9 +13,10 @@ import { FormConfig } from "src/app/@shared/components/admin-form";
 })
 export class ExchangeRateFormComponent implements OnInit {
   exchangeRateFormData = {
-    fromCurrency: "",
-    toCurrency: "",
+    currencyName: "",
+    currencyCode: "",
     rate: 1,
+    remarks:""
   };
   
   mode: string = "Add";
@@ -39,7 +40,6 @@ export class ExchangeRateFormComponent implements OnInit {
     if (this.mode === "Edit") {
       this.getExchangeRateById(this.paramId);
     }
-    this.getCompanyList();
   }
 
   verticalLayout: FormLayout = FormLayout.Vertical;
@@ -75,14 +75,6 @@ export class ExchangeRateFormComponent implements OnInit {
       // error tip
       console.log("errors", errors);
     }
-  }
-
-  getCompanyList() {
-    this.busy = this.companyDataService
-      .getCompanyList(undefined, undefined)
-      .subscribe((res: any) => {
-        this.exchangeRateFormData.toCurrency = res.primaryCurrency;
-      });
   }
 }
 

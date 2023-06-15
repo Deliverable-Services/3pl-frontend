@@ -65,7 +65,7 @@ export class ExchangeRateDataService extends ExchangeRateListData {
     };
 
     return this.http.post(
-      `${this.baseApiUrl}/exchange-list`,
+      `${this.baseApiUrl}/currency/list`,
       this.searchParams,
       httpOptionsToken
     );
@@ -78,7 +78,7 @@ export class ExchangeRateDataService extends ExchangeRateListData {
       }),
     };
     // console.log("data=============", data);
-    return this.http.post(`${this.baseApiUrl}/exchange`, data);
+    return this.http.post(`${this.baseApiUrl}/currency`, data);
   }
 
   updateExchangeRate(id: string, data: ExchangeRate): Observable<any> {
@@ -88,7 +88,7 @@ export class ExchangeRateDataService extends ExchangeRateListData {
       }),
     };
 
-    return this.http.put(`${this.baseApiUrl}/exchange/${id}`, data, httpOptionsToken);
+    return this.http.put(`${this.baseApiUrl}/currency/${id}`, data, httpOptionsToken);
   }
 
   getExchangeRateById(id: string): Observable<any> {
@@ -98,6 +98,6 @@ export class ExchangeRateDataService extends ExchangeRateListData {
       }),
     };
 
-    return this.http.get(`${this.baseApiUrl}/exchange/${id}`, httpOptionsToken);
+    return this.http.get(`${this.baseApiUrl}/currency/${id}`, httpOptionsToken);
   }
 }

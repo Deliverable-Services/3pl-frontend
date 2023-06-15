@@ -24,54 +24,62 @@ export default function (values: any) {
           link: "/product/style",
         },
 
-        {
-          title: "Variant",
-          link: "/product/product",
-        },
+        // {
+        //   title: "Variant",
+        //   link: "/product/product",
+        // },
       ],
       link: "/",
       menuIcon: "icon icon-console",
     },
 
     {
-      title: "Business",
+      title: "Resources",
       children: [
         {
           title: "Company",
           link: "/business/company",
         },
+        // {
+        //   title: "Department",
+        //   link: "/business/department",
+        // },
+        // {
+        //   title: "Vendor",
+        //   link: "/business/vendor",
+        // },
+        // {
+        //   title: "Trade Terms",
+        //   link: "/business/trade-terms",
+        // },
         {
-          title: "Department",
-          link: "/business/department",
-        },
-        {
-          title: "Vendor",
-          link: "/business/vendor",
-        },
-        {
-          title: "Trade Terms",
-          link: "/business/trade-terms",
-        },
-        {
-          title: "Exchange Rate",
+          title: "Currencies",
           link: "/business/exchange-rate",
+        },
+        {
+          title: "Credit Terms",
+          link: "/credit-terms",
+        },
+        {
+          title: "Connection Location",
+          link: "/connection-location",
         },
       ],
       link: "/",
       menuIcon: "icon icon-console",
     },
-    {
-      title: "Credit Terms",
-      link: "/credit-terms",
-      // children: [],
-      menuIcon: "icon icon-console",
-    },
-    {
-      title: "Connection Location",
-      link: "/connection-location",
-      // children: [],
-      menuIcon: "icon icon-console",
-    },
+    // {
+    //   title: "Credit Terms",
+    //   link: "/credit-terms",
+    //   // children: [],
+    //   menuIcon: "icon icon-console",
+    // },
+    // {
+    //   title: "Connection Location",
+    //   link: "/connection-location",
+    //   // children: [],
+    //   menuIcon: "icon icon-console",
+    // },
     // {
     //   title: "Operation",
     //   children: [
