@@ -17,7 +17,7 @@
       <div class="da-basic-form">
         <form dForm ngForm [dValidateRules]="{
             message: 'The form verification failed, please check.'
-          }" [layout]="verticalLayout" #companyForm="dValidateRules" (dSubmit)="submitExchangeRateForm($event)"
+          }" [layout]="verticalLayout" #companyForm="dValidateRules" (dSubmit)="submitCurrencyForm($event)"
           autocomplete="off">
           <div class="da-content-banner-title">
             {{ mode + " " + "Currency" | translate }}
@@ -27,7 +27,7 @@
             </d-form-label>
             <d-form-control>
               <input dTextInput autocomplete="off" name="currencyName" placeholder="Currency Name"
-                [(ngModel)]="exchangeRateFormData.currencyName" [dValidateRules]="{
+                [(ngModel)]="currencyFormData.currencyName" [dValidateRules]="{
                   validators: [{ required: true }]
                 }" />
             </d-form-control>
@@ -38,7 +38,7 @@
             </d-form-label>
             <d-form-control>
               <input dTextInput autocomplete="off" name="currencyCode" placeholder="Currency Code"
-                [(ngModel)]="exchangeRateFormData.currencyCode" [dValidateRules]="{
+                [(ngModel)]="currencyFormData.currencyCode" [dValidateRules]="{
                   validators: [{ required: true }]
                 }" />
             </d-form-control>
@@ -49,7 +49,7 @@
             </d-form-label>
             <d-form-control>
               <input dTextInput autocomplete="off" name="rate" placeholder="Exchange Rate"
-                [(ngModel)]="exchangeRateFormData.rate" [dValidateRules]="{
+                [(ngModel)]="currencyFormData.rate" [dValidateRules]="{
                   validators: [{ required: true }]
                 }" />
             </d-form-control>
@@ -60,7 +60,7 @@
             </d-form-label>
             <d-form-control>
               <input dTextInput autocomplete="off" name="remarks" placeholder="Remarks"
-                [(ngModel)]="exchangeRateFormData.remarks" [dValidateRules]="{
+                [(ngModel)]="currencyFormData.remarks" [dValidateRules]="{
                   validators: [{ required: true }]
                 }" />
             </d-form-control>

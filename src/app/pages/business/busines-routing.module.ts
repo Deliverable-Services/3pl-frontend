@@ -8,8 +8,8 @@ import { TradeTermFormComponent } from "./trade-term/tradeTerm-form/tradeTerm-fo
 import { CompanyFormComponent } from "./company/company-form/company-form.component";
 import { DepartmentListComponent } from "./department/department-list/department-list.component";
 import { DepartmentFormComponent } from "./department/department-form/department-form.component";
-import { ExchangeRateListComponent } from "./exchange-rate/exchange-rate-list/exchange-rate-list.component";
-import { ExchangeRateFormComponent } from "./exchange-rate/exchange-rate-form/exchange-rate-form.component";
+import { CurrencyListComponent } from "./currency/currency-list/currency-list.component";
+import { CurrencyFormComponent } from "./currency/currency-form/currency-form.component";
 
 const routes: Routes = [
   {
@@ -55,16 +55,16 @@ const routes: Routes = [
     component: TradeTermFormComponent,
   },
   {
-    path: "exchange-rate",
-    component: ExchangeRateListComponent,
+    path: "currency",
+    component: CurrencyListComponent,
   },
   {
-    path: "exchange-rate/add",
-    component: ExchangeRateFormComponent,
+    path: "currency/add",
+    component: CurrencyFormComponent,
   },
   {
-    path: "exchange-rate/edit/:id",
-    component: ExchangeRateFormComponent,
+    path: "currency/edit/:id",
+    component: CurrencyFormComponent,
   },
 ];
 

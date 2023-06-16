@@ -58,20 +58,24 @@
               <d-form-item>
                 <d-form-label [required]="true" [hasHelp]="true" [helpTips]="'This is the Shopify Location Id'">Shopify Location Id</d-form-label>
 
-                <input dTextInput autocomplete="off" name="shopifyLocationId" placeholder="Shopify Location Id"
-                [(ngModel)]="projectFormData.shopifyLocationId"
-                [dValidateRules]="{
-                  validators: [{ required: true }]
-                }" />
+                <d-form-control>
+                  <input dTextInput autocomplete="off" name="shopifyLocationId" placeholder="Shopify Location Id"
+                  [(ngModel)]="projectFormData.shopifyLocationId"
+                  [dValidateRules]="{
+                    validators: [{ required: true }]
+                  }" />
+                </d-form-control>
               </d-form-item>
               <d-form-item>
                 <d-form-label [required]="true" [hasHelp]="true" [helpTips]="'This is the Remarks'">Remarks</d-form-label>
 
-                <input dTextInput autocomplete="off" name="remarks" placeholder="Remarks"
-                [(ngModel)]="projectFormData.remarks"
-                [dValidateRules]="{
-                  validators: [{ required: true }]
-                }" />
+                <d-form-control>
+                  <input dTextInput autocomplete="off" name="remarks" placeholder="Remarks"
+                  [(ngModel)]="projectFormData.remarks"
+                  [dValidateRules]="{
+                    validators: [{ required: true }]
+                  }" />
+                </d-form-control>
               </d-form-item>
             </div>
 
@@ -79,29 +83,35 @@
               <d-form-item>
                 <d-form-label [required]="true" [hasHelp]="true" [helpTips]="'This is the Node Name'">Node Name</d-form-label>
 
-                <input dTextInput autocomplete="off" name="nodeName" placeholder="Node Name"
-                [(ngModel)]="projectFormData.nodeName"
-                [dValidateRules]="{
-                  validators: [{ required: true }]
-                }" />
+                <d-form-control>
+                  <input dTextInput autocomplete="off" name="nodeName" placeholder="Node Name"
+                  [(ngModel)]="projectFormData.nodeName"
+                  [dValidateRules]="{
+                    validators: [{ required: true }]
+                  }" />
+                </d-form-control>
               </d-form-item>
               <d-form-item>
                 <d-form-label [required]="true" [hasHelp]="true" [helpTips]="'This is the LG Store Owner Id'">LG Store Owner Id</d-form-label>
 
-                <input dTextInput autocomplete="off" name="lgStoreOwnerId" placeholder="LG Store Owner Id"
-                [(ngModel)]="projectFormData.lgStoreOwnerId"
-                [dValidateRules]="{
-                  validators: [{ required: true }]
-                }" />
+                <d-form-control>
+                  <input dTextInput autocomplete="off" name="lgStoreOwnerId" placeholder="LG Store Owner Id"
+                  [(ngModel)]="projectFormData.lgStoreOwnerId"
+                  [dValidateRules]="{
+                    validators: [{ required: true }]
+                  }" />
+                </d-form-control>
               </d-form-item>
               <d-form-item>
                 <d-form-label [required]="true" [hasHelp]="true" [helpTips]="'This is the Physical Address'">Physical Address</d-form-label>
 
-                <input dTextInput autocomplete="off" name="physicalAddress" placeholder="Physical Address"
-                [(ngModel)]="projectFormData.physicalAddress"
-                [dValidateRules]="{
-                  validators: [{ required: true }]
-                }" />
+                <d-form-control>
+                  <input dTextInput autocomplete="off" name="physicalAddress" placeholder="Physical Address"
+                  [(ngModel)]="projectFormData.physicalAddress"
+                  [dValidateRules]="{
+                    validators: [{ required: true }]
+                  }" />
+                </d-form-control>
               </d-form-item>
             </div>
           </div>

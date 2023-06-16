@@ -54,7 +54,7 @@ export default function (values: any) {
         // },
         {
           title: "Currencies",
-          link: "/business/exchange-rate",
+          link: "/business/currency",
         },
         {
           title: "Credit Terms",

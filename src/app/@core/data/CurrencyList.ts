@@ -1,6 +1,6 @@
 import { Observable } from "rxjs";
 
-export interface ExchangeRate {
+export interface CurrencyRate {
   exchagneRateId?: string;
   fromCurrency?: string;
   toCurrency?: string;
@@ -33,7 +33,7 @@ export interface Card {
   actions?: CardAction[];
 }
 
-export abstract class ExchangeRateListData {
+export abstract class CurrencyListData {
   // abstract getBrandList(pager: ListPager): Observable<Brand[]>;
   // abstract getOriginSource(pager: ListPager): Observable<Brand[]>;
   // abstract getTreeSource(pager: ListPager): Observable<Brand[]>;

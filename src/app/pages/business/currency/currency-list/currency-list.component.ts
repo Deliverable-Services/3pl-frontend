@@ -19,19 +19,19 @@ import {
 import { MSG } from 'src/config/global-var';
 import { Subscription } from "rxjs";
 import { Company } from "src/app/@core/data/companyList";
-import { ExchangeRateListData } from "src/app/@core/data/exchangeRateList";
+import { CurrencyListData } from "src/app/@core/data/CurrencyList";
 import { PageParam, SearchParam } from "src/app/@core/data/searchFormData";
 import { CompanyDataService } from "src/app/@core/mock/company-data.service";
-import { ExchangeRateDataService } from "src/app/@core/mock/exchange-rate-data.service";
+import { CurrencyDataService } from "src/app/@core/mock/currency-data.service";
 
 import { FormConfig } from "src/app/@shared/components/admin-form";
 
 @Component({
-  selector: "app-exchange-rate-list",
-  templateUrl: "./exchange-rate-list.component.html",
-  styleUrls: ["./exchange-rate-list.component.scss"],
+  selector: "app-currency-list",
+  templateUrl: "./currency-list.component.html",
+  styleUrls: ["./currency-list.component.scss"],
 })
-export class ExchangeRateListComponent implements OnInit {
+export class CurrencyListComponent implements OnInit {
   pageParam: any = {
     pageNo: "",
     pageSize: "",
@@ -67,7 +67,7 @@ export class ExchangeRateListComponent implements OnInit {
   busy: Subscription | undefined;
 
   constructor(
-    private exchangeRateDataService: ExchangeRateDataService,
+    private currencyDataService: CurrencyDataService,
     private dialogService: DialogService,
     private router: Router,
     private toastService: ToastService,
@@ -78,30 +78,30 @@ export class ExchangeRateListComponent implements OnInit {
   }
 
   getExchangeRateList() {
-    this.busy = this.exchangeRateDataService
-      .getExchangeRateList()
+    this.busy = this.currencyDataService
+      .getCurrencyList()
       .subscribe((res: any) => {
         console.log(res);
         this.basicDataSource = res.content;
         this.pager.total = res.totalItems;
-        Object.keys(res.listSize).map((key: string) => {
-          let widthValue = res.listSize[key] + "%";
-          this.columnSize[key] = widthValue;
-        });
+        // Object.keys(res.listSize).map((key: string) => {
+        //   let widthValue = res.listSize[key] + "%";
+        //   this.columnSize[key] = widthValue;
+        // });
       });
   }
 
-  editExchangeRate(rowId: any, index: number) {
-    this.router.navigate([`/business/exchange-rate/edit/${rowId}`]);
+  editCurrency(rowId: any, index: number) {
+    this.router.navigate([`/business/currency/edit/${rowId}`]);
   }
 
   setSearchParams(searchParam: SearchParam) {
-    this.exchangeRateDataService.setSearchParams(searchParam);
+    this.currencyDataService.setSearchParams(searchParam);
     this.getExchangeRateList();
   }
 
   setPageParams(pageParam: PageParam) {
-    this.exchangeRateDataService.setPageParams(pageParam);
+    this.currencyDataService.setPageParams(pageParam);
     this.getExchangeRateList();
   }
 
@@ -129,7 +129,7 @@ export class ExchangeRateListComponent implements OnInit {
     if (e.length === 1) {
       this.pageParam.sortBy = e[0].field;
       this.pageParam.sortDir = e[0].direction.toLowerCase();
-      this.exchangeRateDataService.setPageParams(this.pageParam);
+      this.currencyDataService.setPageParams(this.pageParam);
       this.getExchangeRateList();
     }
   }
@@ -138,7 +138,7 @@ export class ExchangeRateListComponent implements OnInit {
     let sVal =  event ? 'active':'inactive';
     console.log(':: ', row, row?.rowItem?.currencyId, sVal);
 
-    this.exchangeRateDataService
+    this.currencyDataService
     .statusToggle({id: row?.rowItem?.currencyId, active: sVal})
     .subscribe((res: any) => {
       let type, msg;

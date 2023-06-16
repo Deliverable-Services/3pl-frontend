@@ -19,8 +19,8 @@ import { TradeTermFormComponent } from "./trade-term/tradeTerm-form/tradeTerm-fo
 import { DepartmentFormComponent } from './department/department-form/department-form.component';
 import { DepartmentListComponent } from './department/department-list/department-list.component';
 import { CompanyFormComponent } from './company/company-form/company-form.component';
-import { ExchangeRateFormComponent } from './exchange-rate/exchange-rate-form/exchange-rate-form.component';
-import { ExchangeRateListComponent } from './exchange-rate/exchange-rate-list/exchange-rate-list.component';
+import { CurrencyFormComponent } from './currency/currency-form/currency-form.component';
+import { CurrencyListComponent } from './currency/currency-list/currency-list.component';
 
 @NgModule({
   declarations: [
@@ -32,8 +32,8 @@ import { ExchangeRateListComponent } from './exchange-rate/exchange-rate-list/ex
     DepartmentFormComponent,
     DepartmentListComponent,
     CompanyFormComponent,
-    ExchangeRateFormComponent,
-    ExchangeRateListComponent,
+    CurrencyFormComponent,
+    CurrencyListComponent,
   ],
   imports: [
     CommonModule,

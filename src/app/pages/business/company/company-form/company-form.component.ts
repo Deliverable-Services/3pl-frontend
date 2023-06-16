@@ -1,11 +1,12 @@
 import { Component, OnInit, TemplateRef, ViewChild } from "@angular/core";
 import { ActivatedRoute, Params, Route, Router } from "@angular/router";
-import { DFormGroupRuleDirective, DialogService, FormLayout } from "ng-devui";
+import { DFormGroupRuleDirective, DialogService, FormLayout, ToastService } from "ng-devui";
 import { Observable, Subscription, of } from "rxjs";
 import { Brand } from "src/app/@core/data/brandList";
 import { Season } from "src/app/@core/data/season";
 import { CompanyDataService } from "src/app/@core/mock/company-data.service";
 import { FormConfig } from "src/app/@shared/components/admin-form";
+import { MSG } from "src/config/global-var";
 
 @Component({
   selector: "app-company-form",
@@ -42,7 +43,8 @@ export class CompanyFormComponent implements OnInit {
     private companyDataService: CompanyDataService,
     private dialogService: DialogService,
     private router: Router,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private toastService: ToastService
   ) {}
 
   ngOnInit() {
@@ -92,7 +94,21 @@ export class CompanyFormComponent implements OnInit {
         this.companyDataService
           .updateCompany(this.paramId, this.companyFormData)
           .subscribe((data: any) => {
-            this.router.navigate(["/business/company"]);
+            // this.router.navigate(["/business/company"]);
+            let type, msg;
+            if(data) {
+              type = 'success';
+              msg = MSG.update;
+            } else {
+              type = 'error';
+              msg = MSG.error;
+            }
+            this.toastService.open({
+              value: [
+                { severity: type, content: msg},
+              ],
+              life: 2000,
+            });
           });
       }
     } else {

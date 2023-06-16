@@ -5,13 +5,13 @@ import { Company, CompanyListData, Card, ListPager } from "../data/companyList";
 // import { ListDataService } from './brand-data.service';
 import { environment } from "src/environments/environment";
 import { HttpClient, HttpHeaders, HttpParams } from "@angular/common/http";
-import { ExchangeRate, ExchangeRateListData } from "../data/exchangeRateList";
+import { CurrencyRate, CurrencyListData } from "../data/CurrencyList";
 import { PageParam, SearchParam } from "../data/searchFormData";
 
 @Injectable({
   providedIn: "root",
 })
-export class ExchangeRateDataService extends ExchangeRateListData {
+export class CurrencyDataService extends CurrencyListData {
   baseApiUrl: string;
   constructor(private http: HttpClient) {
     super();
@@ -52,9 +52,9 @@ export class ExchangeRateDataService extends ExchangeRateListData {
     console.log(this.pageParams);
   }
 
-  private exchangeRateListData: ExchangeRate[] = [];
+  private CurrencyListData: CurrencyRate[] = [];
 
-  getExchangeRateList() {
+  getCurrencyList() {
     const httpOptionsToken = {
       headers: new HttpHeaders({
         // "Content-Type": "application/json",
@@ -71,7 +71,7 @@ export class ExchangeRateDataService extends ExchangeRateListData {
     );
   }
 
-  addExchangeRate(data: ExchangeRate) {
+  addCurrency(data: CurrencyRate) {
     const httpOptionsToken = {
       headers: new HttpHeaders({
         // "Content-Type": "application/json",
@@ -81,7 +81,7 @@ export class ExchangeRateDataService extends ExchangeRateListData {
     return this.http.post(`${this.baseApiUrl}/currency`, data);
   }
 
-  updateExchangeRate(id: string, data: ExchangeRate): Observable<any> {
+  updateCurrency(id: string, data: CurrencyRate): Observable<any> {
     const httpOptionsToken = {
       headers: new HttpHeaders({
         "Content-Type": "application/json",
@@ -91,7 +91,7 @@ export class ExchangeRateDataService extends ExchangeRateListData {
     return this.http.put(`${this.baseApiUrl}/currency/${id}`, data, httpOptionsToken);
   }
 
-  getExchangeRateById(id: string): Observable<any> {
+  getCurrencyById(id: string): Observable<any> {
     const httpOptionsToken = {
       headers: new HttpHeaders({
         "Content-Type": "application/json",
