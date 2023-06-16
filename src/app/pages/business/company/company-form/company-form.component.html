@@ -37,8 +37,8 @@
             <d-form-label [required]="true" [hasHelp]="true" [helpTips]="'Enter Company address'">Company address
             </d-form-label>
             <d-form-control>
-              <input dTextInput autocomplete="off" name="address" placeholder="Company address"
-                [(ngModel)]="companyFormData.address" [dValidateRules]="{
+              <input dTextInput autocomplete="off" name="businessAddress" placeholder="Company address"
+                [(ngModel)]="companyFormData.businessAddress" [dValidateRules]="{
                   validators: [{ required: true }]
                 }" />
             </d-form-control>
@@ -48,8 +48,52 @@
             <d-form-label [required]="true" [hasHelp]="true" [helpTips]="'Enter Primary Currency'">Primary Currency
             </d-form-label>
             <d-form-control>
-              <input dTextInput autocomplete="off" name="primaryCurrency" placeholder="Primary currency"
-                [(ngModel)]="companyFormData.primaryCurrency" [dValidateRules]="{
+              <input dTextInput autocomplete="off" name="primaryCurrencyName" placeholder="Primary currency"
+                [(ngModel)]="companyFormData.primaryCurrencyName" [dValidateRules]="{
+                  validators: [{ required: true }]
+                }" />
+            </d-form-control>
+          </d-form-item>
+
+          <d-form-item>
+            <d-form-label [required]="true" [hasHelp]="true" [helpTips]="'Enter Primary Currency'">Primary Currency Code
+            </d-form-label>
+            <d-form-control>
+              <input dTextInput autocomplete="off" name="primaryCurrencyCode" placeholder="Primary currency Code"
+                [(ngModel)]="companyFormData.primaryCurrencyCode" [dValidateRules]="{
+                  validators: [{ required: true }]
+                }" />
+            </d-form-control>
+          </d-form-item>
+
+          <d-form-item>
+            <d-form-label [required]="true" [hasHelp]="true" [helpTips]="'Enter Primary Currency'">Contact Person
+            </d-form-label>
+            <d-form-control>
+              <input dTextInput autocomplete="off" name="contactPerson" placeholder="Contact Person"
+                [(ngModel)]="companyFormData.contactPerson" [dValidateRules]="{
+                  validators: [{ required: true }]
+                }" />
+            </d-form-control>
+          </d-form-item>
+
+          <d-form-item>
+            <d-form-label [required]="true" [hasHelp]="true" [helpTips]="'Enter Primary Currency'">Contact Phone
+            </d-form-label>
+            <d-form-control>
+              <input dTextInput autocomplete="off" name="contactPhone" placeholder="Contact Phone"
+                [(ngModel)]="companyFormData.contactPhone" [dValidateRules]="{
+                  validators: [{ required: true }]
+                }" />
+            </d-form-control>
+          </d-form-item>
+
+          <d-form-item>
+            <d-form-label [required]="true" [hasHelp]="true" [helpTips]="'Enter Primary Currency'">Contact Email
+            </d-form-label>
+            <d-form-control>
+              <input dTextInput autocomplete="off" name="contactEmail" placeholder="Contact Email"
+                [(ngModel)]="companyFormData.contactEmail" [dValidateRules]="{
                   validators: [{ required: true }]
                 }" />
             </d-form-control>
@@ -58,16 +102,16 @@
           <d-form-item>
             <d-form-label>Created At</d-form-label>
             <d-form-control>
-              <input dTextInput disabled autocomplete="off" name="createdAt" placeholder="Created At"
-                [(ngModel)]="companyFormData.createdAt" />
+              <input dTextInput disabled autocomplete="off" name="createdDate" placeholder="Created Date"
+                [(ngModel)]="companyFormData.createdDate" />
             </d-form-control>
           </d-form-item>
 
           <d-form-item>
             <d-form-label>Updated At</d-form-label>
             <d-form-control>
-              <input dTextInput disabled name="updatedAt" placeholder="Updated At"
-                [(ngModel)]="companyFormData.updatedAt" />
+              <input dTextInput disabled name="lastModifiedDate" placeholder="Updated Date"
+                [(ngModel)]="companyFormData.lastModifiedDate" />
             </d-form-control>
           </d-form-item>
 

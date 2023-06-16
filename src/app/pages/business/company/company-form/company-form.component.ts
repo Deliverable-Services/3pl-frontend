@@ -17,10 +17,14 @@ export class CompanyFormComponent implements OnInit {
   EditorTemplate: TemplateRef<any> | undefined;
   companyFormData = {
     companyName: "",
-    address: "",
-    primaryCurrency: "",
-    createdAt: "",
-    updatedAt: "",
+    businessAddress: "",
+    primaryCurrencyName: "",
+    primaryCurrencyCode:"",
+    contactPhone:"",
+    contactEmail:"",
+    contactPerson: "",
+    createdDate: "",
+    lastModifiedDate: "",
   };
 
   mode: string = "Add";
@@ -58,10 +62,14 @@ export class CompanyFormComponent implements OnInit {
 
         this.companyFormData = {
           companyName: res.companyName ?? "",
-          address: res.address ?? "",
-          createdAt: res.createdAt ?? "",
-          updatedAt: res.updatedAt ?? "",
-          primaryCurrency: res.primaryCurrency ?? "",
+          businessAddress: res.businessAddress ?? "",
+          createdDate: res.createdDate ?? "",
+          lastModifiedDate: res.lastModifiedDate ?? "",
+          contactEmail: res.contactEmail ?? "",
+          primaryCurrencyCode: res.primaryCurrencyCode ?? "",
+          primaryCurrencyName: res.primaryCurrencyName ?? "",
+          contactPerson: res.contactPerson ?? "",
+          contactPhone: res.contactPhone ?? "",
         };
       });
   }
