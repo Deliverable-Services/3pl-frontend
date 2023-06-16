@@ -6,10 +6,10 @@
           "list.breadcrumb.home" | translate
         }}</a></d-breadcrumb-item
       >
-      <d-breadcrumb-item>{{ "Exchange Rate" | translate }}</d-breadcrumb-item>
+      <d-breadcrumb-item>{{ "Currency" | translate }}</d-breadcrumb-item>
     </d-breadcrumb>
     <div class="da-content-banner-title">
-      {{ "Exchange Rate" | translate }}
+      {{ "Currency" | translate }}
     </div>
   </div>
   <div class="da-content-wrapper">
@@ -27,7 +27,7 @@
               ></d-search>
             </div>
             <div [ngStyle]="{ display: 'flex', justifyContent: 'flex-end' }">
-              <d-button routerLink="add">Add Exchange Rate</d-button>
+              <d-button routerLink="add">Add Currency</d-button>
             </div>
           </div>
 
@@ -40,9 +40,9 @@
               (multiSortChange)="multiSortChange($event)"
             >
               <d-column
-                field="fromCurrency"
-                header="From Currency"
-                [width]="columnSize.fromCurrency"
+                field="currencyName"
+                header="Currency Name"
+                [width]="columnSize.currencyName"
                 [sortable]="true"
               >
                 <d-cell>
@@ -59,8 +59,8 @@
               </d-column>
 
               <d-column
-                field="toCurrency"
-                header="To Currency"
+                field="currencyCode"
+                header="Currency Code"
                 [width]="columnSize.toCurrency"
                 [sortable]="true"
               >
@@ -97,9 +97,9 @@
               </d-column>
 
               <d-column
-                field="updatedAt"
-                header="Updated Date"
-                [width]="columnSize.updatedAt"
+                field="createdDate"
+                header="Created Date"
+                [width]="columnSize.createdDate"
                 [sortable]="true"
               >
                 <d-cell>
@@ -115,6 +115,21 @@
               </d-column>
 
               <d-column
+                  [field]="'status'"
+                  header="Status"
+                  [sortable]="false"
+                  [width]="columnSize.lastModifiedBy"
+                >
+                  <d-cell>
+                    <ng-template let-cellItem="cellItem" let-row="row">
+                      <span [title]="cellItem" class="over-flow-ellipsis">
+                        <d-toggle [checked]="cellItem === 'Active'" (change)="updateStatus($event, row)"  [size]="'sm'"></d-toggle>
+                      </span>
+                    </ng-template>
+                  </d-cell>
+                </d-column>
+
+              <d-column
                 field="action"
                 header="Actions"
                 [width]="columnSize.action"
@@ -128,7 +143,7 @@
                         bsStyle="text-dark"
                         title="edit"
                         (click)="
-                          editExchangeRate(rowItem.exchagneRateId, rowIndex)
+                          editExchangeRate(rowItem.currencyId, rowIndex)
                         "
                       ></d-button>
                       <!-- <d-button

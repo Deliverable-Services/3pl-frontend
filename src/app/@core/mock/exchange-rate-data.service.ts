@@ -100,4 +100,11 @@ export class ExchangeRateDataService extends ExchangeRateListData {
 
     return this.http.get(`${this.baseApiUrl}/currency/${id}`, httpOptionsToken);
   }
+
+  statusToggle(data: any) {
+    return this.http.put(
+      `${this.baseApiUrl}/currency/${data.id}/${data.active}`,
+      ""
+    );
+  }
 }

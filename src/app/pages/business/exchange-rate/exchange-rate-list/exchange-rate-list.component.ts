@@ -12,6 +12,11 @@ import {
   SortEventArg,
   TableWidthConfig,
 } from "ng-devui";
+
+import {
+  ToastService
+} from "ng-devui";
+import { MSG } from 'src/config/global-var';
 import { Subscription } from "rxjs";
 import { Company } from "src/app/@core/data/companyList";
 import { ExchangeRateListData } from "src/app/@core/data/exchangeRateList";
@@ -51,10 +56,10 @@ export class ExchangeRateListComponent implements OnInit {
   };
 
   columnSize: any = {
-    fromCurrency: "",
-    toCurrency: "",
-    rate: "",
-    updatedAt: "",
+    currencyName: "",
+    currencyCode: "",
+    rate: 1,
+    createdDate: "",
     action: "",
     active: "",
   };
@@ -64,7 +69,8 @@ export class ExchangeRateListComponent implements OnInit {
   constructor(
     private exchangeRateDataService: ExchangeRateDataService,
     private dialogService: DialogService,
-    private router: Router
+    private router: Router,
+    private toastService: ToastService,
   ) {}
 
   ngOnInit() {
@@ -126,5 +132,29 @@ export class ExchangeRateListComponent implements OnInit {
       this.exchangeRateDataService.setPageParams(this.pageParam);
       this.getExchangeRateList();
     }
+  }
+
+  updateStatus(event: any, row: any) {
+    let sVal =  event ? 'active':'inactive';
+    console.log(':: ', row, row?.rowItem?.currencyId, sVal);
+
+    this.exchangeRateDataService
+    .statusToggle({id: row?.rowItem?.currencyId, active: sVal})
+    .subscribe((res: any) => {
+      let type, msg;
+      if(res) {
+        type = 'success';
+        msg = MSG.status.success;
+      } else {
+        type = 'error';
+        msg = MSG.error;
+      }
+      this.toastService.open({
+        value: [
+          { severity: type, content: msg},
+        ],
+        life: 2000,
+      });
+    });
   }
 }

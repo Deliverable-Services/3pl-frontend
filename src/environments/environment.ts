@@ -5,9 +5,9 @@
 export const environment = {
   production: false,
   baseUrl: "http://btv-private-module-backend-logicloud-qa.apps.nonprod2-openshift-cluster.internal.logi-cloud.com/test",
-  baseUrl2: "http://localhost:8082/api/v1",
-  baseUrl3: "http://localhost:8083/api/v1",
-  baseUrl4: "http://localhost:8084/api/v1",
+  baseUrl2: "http://btv-private-module-backend-logicloud-qa.apps.nonprod2-openshift-cluster.internal.logi-cloud.com/test",
+  baseUrl3: "http://btv-private-module-backend-logicloud-qa.apps.nonprod2-openshift-cluster.internal.logi-cloud.com/test",
+  baseUrl4: "http://btv-private-module-backend-logicloud-qa.apps.nonprod2-openshift-cluster.internal.logi-cloud.com/test",
 };
 
 /*
