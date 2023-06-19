@@ -8,13 +8,18 @@ export const LANGUAGES = [
     prefix: 'CN',
   },
   {
+    code: 'zh-tw',
+    lang: '繁體中文',
+    prefix: 'TW',
+  },
+  {
     code: 'en-us',
     lang: 'English',
     prefix: 'US',
   },
 ];
 
-export const I18N_LANGUAGES = ['zh-cn', 'en-us'];
+export const I18N_LANGUAGES = ['zh-cn', 'zh-tw', 'en-us'];
 export const DEFAULT_LANG = 'zh-cn';
 
 export const I18N = {

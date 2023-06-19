@@ -244,4 +244,13 @@ export class StyleFormComponent implements OnInit {
       life: 2000,
     });
   }
+
+  _checkForBtn() {
+    let getVal = this.productVariants.filter((pv: any) => {
+      let getBlank = Object.keys(pv)?.filter((k: any) => pv[k] !== '');
+      return !getBlank?.length; 
+    });
+
+    return !getVal?.length;
+  }
 }
