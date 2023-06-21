@@ -1,33 +1,33 @@
 export default {
   page: {
     dashboard: {
-      title: 'Dashboard',
-      analysis: 'Analysis',
-      monitor: 'Monitor',
-      workspace: 'Work Space',
+      title: '儀表板',
+      analysis: '分析',
+      monitor: '監視器',
+      workspace: '工作空間',
     },
     form: {
-      title: 'Form',
-      basicForm: 'Basic Form',
-      formLayout: 'Form Layout',
-      advancedForm: 'Advanced Form',
-      dynamicForm: 'Dynamic Form'
+      title: '形式',
+      basicForm: '基本形式',
+      formLayout: '表單佈局',
+      advancedForm: '高級表格',
+      dynamicForm: '動態表格'
     },
     list: {
-      title: 'List',
-      basicList: 'Basic List',
-      cardList: 'Card List',
-      editableList: 'Editable List',
-      advanceList: 'Advance List',
-      treeList: 'Tree List',
+      title: '列表',
+      basicList: '基本清單',
+      cardList: '卡片列表',
+      editableList: '可編輯列表',
+      advanceList: '預先清單',
+      treeList: '樹列表',
     },
     abnormal: {
-      title: 'Abnormal',
+      title: '樹列表',
     },
     user: {
-      title: 'User',
-      center: 'User Center',
-      settings: 'User Settings',
+      title: '用戶',
+      center: '用戶中心',
+      settings: '用戶設置',
     },
   },
 };

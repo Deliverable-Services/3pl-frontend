@@ -1,5 +1,6 @@
 import zhCN from '../assets/i18n/zh-CN';
 import enUS from '../assets/i18n/en-US';
+import zhTW from '../assets/i18n/zh-TW';
 
 export const LANGUAGES = [
   {
@@ -25,4 +26,5 @@ export const DEFAULT_LANG = 'zh-cn';
 export const I18N = {
   'zh-cn': zhCN,
   'en-us': enUS,
+  'zh-tw': zhTW
 };

@@ -8,6 +8,29 @@ export default {
       'advancedForm': '高级表单',
       'dynamicForm': '动态表单'
     },
+    common: {
+      create: '创造',
+      update: '更新'
+    },
+    category: {
+      add_category: '添加类别',
+      edit_category: '编辑类别',
+      fields: {category_name: '分类名称'}
+    },
+    product: {
+      edit_product: '编辑产品',
+      addMore: '添加更多',
+      fields: {styleName: '样式名称', collection: '收藏', fabricComposition: '面料成分', fabricSwatch: '面料样本',
+      logisticDescription: '物流说明', unitWeight: '单位重量', category: '类别', image: '图像', productSKU: '产品库存单位',
+      color: '颜色', size: '尺寸', label: '标签', hastagColor: '标签颜色', localCurrency: '当地货币', localExwPrice: '本地出厂价',
+      companyExwPrice: '公司出厂价'}
+    },
+    company: {
+      title: '公司',
+      edit_company: '编辑公司',
+      fields: {companyName: '公司名称', companyAddress: '公司地址', primaryCurrency: '主要货币', primaryCurrencyCode: '主要货币代码',
+      contactPerson: '联络人', contactPhone: '联系电话', contactEmail: '联系电子邮件', createdAt: '创建于', updatedAt: '更新于'}
+    },
     'basicForm':{
       'title': '基础表单',
       'description': '表单页用于对用户信息进行收集或校验。基础表单具备数据收集、校验和提交功能。'

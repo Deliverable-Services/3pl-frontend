@@ -7,7 +7,17 @@ export default {
       cardList: '卡片列表',
       editableList: '编辑列表',
       advanceList: '高级列表',
-      treeList: '树状列表',
+      treeList: '树状列表'
+    },
+    category: {
+      title: '类别',
+      categoryList: '类别列表',
+      buttonTitle: '添加类别'
+    },
+    product: {
+      title: '产品',
+      list: '产品列表',
+      buttonTitle: '添加产品'
     },
     basicList: {
       title: '基础列表',

@@ -13,7 +13,7 @@ import { SetHeadersInterceptor } from "./@core/interceptor/SetHeaders.intercepto
 import { MyDatePipe } from "./@shared/pipe/date-pipe.pipe";
 
 class I18NLoader implements TranslateLoader {
-  getTranslation(lang: "zh-cn" | "en-us"): Observable<Object> {
+  getTranslation(lang: "zh-cn" | "en-us" | "zh-tw"): Observable<Object> {
     return of(I18N[lang]);
   }
 }

@@ -7,7 +7,17 @@ export default {
       cardList: 'Card List',
       editableList: 'Editable List',
       advanceList: 'Advance List',
-      treeList: 'Tree List',
+      treeList: 'Tree List'
+    },
+    category: {
+      title: 'Category',
+      categoryList: 'Category List',
+      buttonTitle: 'Add Category'
+    },
+    product: {
+      title: 'Product',
+      list: 'Product List',
+      buttonTitle: 'Add Product'
     },
     basicList: {
       title: 'Basic List',
