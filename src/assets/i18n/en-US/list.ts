@@ -9,6 +9,12 @@ export default {
       advanceList: 'Advance List',
       treeList: 'Tree List'
     },
+    resources: {
+      title: 'Resources',
+    },
+    company: {
+      title: 'Company',
+    },
     category: {
       title: 'Category',
       categoryList: 'Category List',
@@ -18,6 +24,21 @@ export default {
       title: 'Product',
       list: 'Product List',
       buttonTitle: 'Add Product'
+    },
+    currency: {
+      title: 'Currency',
+      list: 'Currency List',
+      buttonTitle: 'Add Currency'
+    },
+    creditTerms: {
+      title: 'Credit Terms',
+      list: 'Credit Terms List',
+      buttonTitle: 'Add Credit Terms'
+    },
+    connectionLocationList: {
+      title: 'Connection Location',
+      list: 'Connection Location List',
+      buttonTitle: 'Add Connection Location'
     },
     basicList: {
       title: 'Basic List',

@@ -1,14 +1,14 @@
 export default function (values: any) {
   return [
     {
-      title: "Product",
+      title: "product",
       children: [
         // {
         //   title: "Brand",
         //   link: "/product/brand",
         // },
         {
-          title: "Category",
+          title: "category",
           link: "/product/category",
         },
         // {
@@ -20,7 +20,7 @@ export default function (values: any) {
         //   link: "/product/unit",
         // },
         {
-          title: "Product",
+          title: "product",
           link: "/product/style",
         },
 
@@ -34,10 +34,10 @@ export default function (values: any) {
     },
 
     {
-      title: "Resources",
+      title: "resources",
       children: [
         {
-          title: "Company",
+          title: "company",
           link: "/business/company",
         },
         // {
@@ -53,15 +53,15 @@ export default function (values: any) {
         //   link: "/business/trade-terms",
         // },
         {
-          title: "Currencies",
+          title: "currency",
           link: "/business/currency",
         },
         {
-          title: "Credit Terms",
+          title: "creditTerms",
           link: "/credit-terms",
         },
         {
-          title: "Connection Location",
+          title: "connectionLocationList",
           link: "/connection-location",
         },
       ],

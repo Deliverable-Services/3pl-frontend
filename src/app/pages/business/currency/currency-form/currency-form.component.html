@@ -2,10 +2,10 @@
   <div class="add-session-btn">
     <d-breadcrumb>
       <d-breadcrumb-item>
-        <a routerLink="/business/exchange-rate">{{ "Currency" | translate }}</a>
+        <a routerLink="/business/exchange-rate">{{ "list.currency.title" | translate }}</a>
       </d-breadcrumb-item>
       <d-breadcrumb-item>
-        {{ mode | translate }}
+        {{ (mode === 'Add' ? "list.currency.buttonTitle" : "form.currency.edit_currency") | translate }}
       </d-breadcrumb-item>
     </d-breadcrumb>
   </div>
@@ -20,13 +20,14 @@
           }" [layout]="verticalLayout" #companyForm="dValidateRules" (dSubmit)="submitCurrencyForm($event)"
           autocomplete="off">
           <div class="da-content-banner-title">
-            {{ mode + " " + "Currency" | translate }}
+            {{ (mode === 'Add' ? "list.currency.buttonTitle" : "form.currency.edit_currency") | translate }}
           </div>
           <d-form-item>
-            <d-form-label [required]="true" [hasHelp]="true" [helpTips]="'This is the From Currency.'">Currency Name
+            <d-form-label [required]="true" [hasHelp]="true" [helpTips]="'This is the From Currency.'">
+              {{"form.currency.fields.currencyName" | translate}}
             </d-form-label>
             <d-form-control>
-              <input dTextInput autocomplete="off" name="currencyName" placeholder="Currency Name"
+              <input dTextInput autocomplete="off" name="currencyName" [placeholder]="'form.currency.fields.currencyName' | translate"
                 [(ngModel)]="currencyFormData.currencyName" [dValidateRules]="{
                   validators: [{ required: true }]
                 }" />
@@ -34,10 +35,11 @@
           </d-form-item>
 
           <d-form-item>
-            <d-form-label [required]="true" [hasHelp]="true" [helpTips]="'This is the to Currency.'">Currency Code
+            <d-form-label [required]="true" [hasHelp]="true" [helpTips]="'This is the to Currency.'">
+              {{'form.currency.fields.currencyCode' | translate}}
             </d-form-label>
             <d-form-control>
-              <input dTextInput autocomplete="off" name="currencyCode" placeholder="Currency Code"
+              <input dTextInput autocomplete="off" name="currencyCode" [placeholder]="'form.currency.fields.currencyCode' | translate"
                 [(ngModel)]="currencyFormData.currencyCode" [dValidateRules]="{
                   validators: [{ required: true }]
                 }" />
@@ -45,10 +47,11 @@
           </d-form-item>
 
           <d-form-item>
-            <d-form-label [required]="true" [hasHelp]="true" [helpTips]="'This is the exchange rate.'">Exchange Rate
+            <d-form-label [required]="true" [hasHelp]="true" [helpTips]="'This is the exchange rate.'">
+              {{'form.currency.fields.exchangeRate' | translate}}
             </d-form-label>
             <d-form-control>
-              <input dTextInput autocomplete="off" name="rate" placeholder="Exchange Rate"
+              <input dTextInput autocomplete="off" name="rate" [placeholder]="'form.currency.fields.exchangeRate' | translate"
                 [(ngModel)]="currencyFormData.rate" [dValidateRules]="{
                   validators: [{ required: true }]
                 }" />
@@ -56,10 +59,11 @@
           </d-form-item>
 
           <d-form-item>
-            <d-form-label [required]="true" [hasHelp]="true" [helpTips]="'This is the exchange rate.'">Remarks
+            <d-form-label [required]="true" [hasHelp]="true" [helpTips]="'This is the exchange rate.'">
+              {{'form.currency.fields.remarks' | translate}}
             </d-form-label>
             <d-form-control>
-              <input dTextInput autocomplete="off" name="remarks" placeholder="Remarks"
+              <input dTextInput autocomplete="off" name="remarks" [placeholder]="'form.currency.fields.remarks' | translate"
                 [(ngModel)]="currencyFormData.remarks" [dValidateRules]="{
                   validators: [{ required: true }]
                 }" />
@@ -70,7 +74,7 @@
             <d-button dLoading class="mr-element-spacing" [title]="companyForm.errorMessage || ''" circled="true"
               style="margin-right: 8px" [showLoading]="companyForm.pending" dFormSubmit
               [dFormSubmitData]="'submit-button'">
-              {{ paramId ? "Update" : "Create" }}
+              {{ (paramId ? "form.common.update" : "form.common.create") | translate}}
             </d-button>
           </d-form-operation>
         </form>

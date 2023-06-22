@@ -31,6 +31,19 @@ export default {
       fields: {companyName: '公司名称', companyAddress: '公司地址', primaryCurrency: '主要货币', primaryCurrencyCode: '主要货币代码',
       contactPerson: '联络人', contactPhone: '联系电话', contactEmail: '联系电子邮件', createdAt: '创建于', updatedAt: '更新于'}
     },
+    currency: {
+      edit_currency: '编辑货币',
+      fields: {currencyName: '货币名称', currencyCode: '货币代码', exchangeRate: '汇率', remarks: '评论'}
+    },
+    creditTerms: {
+      edit_currency: '编辑信用条款',
+      fields: {termsSubject: '条款主题', creditDay: '信用日', termsDescription: '条款说明'}
+    },
+    connectionLocationList: {
+      edit_location: '编辑连接位置',
+      fields: {nodeId: '节点编号', nodeType: '节点类型', shopifyLocationId: 'Shopify 位置 ID', remarks: '评论',
+      nodeDescription: '节点说明', nodeName: '节点名称', lGStoreOwnerId: 'LG 店主 ID', physicalAddress: '实际地址'}
+    },
     'basicForm':{
       'title': '基础表单',
       'description': '表单页用于对用户信息进行收集或校验。基础表单具备数据收集、校验和提交功能。'

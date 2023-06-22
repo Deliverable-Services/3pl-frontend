@@ -2,10 +2,10 @@
     <div class="add-session-btn">
       <d-breadcrumb>
         <d-breadcrumb-item>
-          <a routerLink="/product/category">{{ "Credit Terms" | translate }}</a>
+          <a routerLink="/product/category">{{ 'list.creditTerms.title' | translate }}</a>
         </d-breadcrumb-item>
         <d-breadcrumb-item>
-          {{ mode | translate }}
+          {{ (mode === 'Add' ? "list.creditTerms.buttonTitle" : "form.creditTerms.edit_currency") | translate }}
         </d-breadcrumb-item>
         <!-- <d-button [ngStyle]="{ marginLeft: '900px' }" (click)="addSession()">Add Season</d-button> -->
       </d-breadcrumb>
@@ -21,13 +21,14 @@
             }" [layout]="verticalLayout" #projectForm="dValidateRules" (dSubmit)="submitProjectForm($event)"
             autocomplete="off">
             <div class="da-content-banner-title">
-              {{ mode + " " + "Trade Terms" | translate }}
+              {{ (mode === 'Add' ? "list.creditTerms.buttonTitle" : "form.creditTerms.edit_currency") | translate }}
             </div>
             <d-form-item [ngStyle]="{ width: '500px' }">
-              <d-form-label [required]="true" [hasHelp]="true" [helpTips]="'This is Terms Subject.'">Terms Subject
+              <d-form-label [required]="true" [hasHelp]="true" [helpTips]="'This is Terms Subject.'">
+                {{'form.creditTerms.fields.termsSubject' | translate}}
               </d-form-label>
               <d-form-control>
-                <input dTextInput autocomplete="off" name="creditTermsSubject" placeholder="Terms Subject Name"
+                <input dTextInput autocomplete="off" name="creditTermsSubject" [placeholder]="'form.creditTerms.fields.termsSubject' | translate"
                   [(ngModel)]="projectFormData.creditTermsSubject" [dValidateRules]="{
                     validators: [{ required: true }]
                   }" />
@@ -35,10 +36,11 @@
             </d-form-item>
 
             <d-form-item [ngStyle]="{ width: '500px' }">
-                <d-form-label [required]="true" [hasHelp]="true" [helpTips]="'This is the Credit Day.'">Credit Day
+                <d-form-label [required]="true" [hasHelp]="true" [helpTips]="'This is the Credit Day.'">
+                  {{'form.creditTerms.fields.creditDay' | translate}}
                 </d-form-label>
                 <d-form-control>
-                  <input dTextInput autocomplete="off" name="creditDay" placeholder="Credit Day"
+                  <input dTextInput autocomplete="off" name="creditDay" [placeholder]="'form.creditTerms.fields.creditDay' | translate"
                     [(ngModel)]="projectFormData.creditDay" [dValidateRules]="{
                       validators: [{ required: true }]
                     }" />
@@ -46,11 +48,12 @@
             </d-form-item>
   
             <d-form-item>
-              <d-form-label [required]="true" [hasHelp]="true" [helpTips]="'Add Terms Code'">Terms Description
+              <d-form-label [required]="true" [hasHelp]="true" [helpTips]="'Add Terms Code'">
+                {{'form.creditTerms.fields.termsDescription' | translate}}
               </d-form-label>
               <d-form-control>
                 <textarea [ngStyle]="{ height: '104px' }" dTextarea resize="vertical" autocomplete="off" name="tradeDesc"
-                  placeholder="Terms Description" [(ngModel)]="projectFormData.creditTermsDetails" [dValidateRules]="{
+                  [placeholder]="'form.creditTerms.fields.termsDescription' | translate" [(ngModel)]="projectFormData.creditTermsDetails" [dValidateRules]="{
                     validators: [{ required: true }]
                   }"></textarea>
               </d-form-control>
@@ -60,11 +63,11 @@
               <d-button dLoading class="mr-element-spacing" [title]="projectForm.errorMessage || ''" circled="true"
                 style="margin-right: 8px" [showLoading]="projectForm.pending" dFormSubmit
                 [dFormSubmitData]="'submit-button'">
-                {{ paramId ? "Update" : "Create" }}
+                {{ (paramId ? "form.common.update" : "form.common.create") | translate}}
               </d-button>
             </d-form-operation>
           </form>
-          <div *ngIf="paramId">
+          <!-- <div *ngIf="paramId">
             <div class="dateWrapper">
               {{ "Created Date :" + " " }}
               {{ selectedCreditTerms.createdAt | mydatepipe }}
@@ -73,7 +76,7 @@
               {{ "Updated Date :" + " " }}
               {{ selectedCreditTerms.updatedAt | mydatepipe }}
             </div>
-          </div>
+          </div> -->
         </div>
       </da-col-item>
     </da-layout-row>

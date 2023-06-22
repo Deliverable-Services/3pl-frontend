@@ -6,10 +6,10 @@
           "list.breadcrumb.home" | translate
         }}</a></d-breadcrumb-item
       >
-      <d-breadcrumb-item>{{ "Currency" | translate }}</d-breadcrumb-item>
+      <d-breadcrumb-item>{{ "list.currency.title" | translate }}</d-breadcrumb-item>
     </d-breadcrumb>
     <div class="da-content-banner-title">
-      {{ "Currency" | translate }}
+      {{ "list.currency.title" | translate }}
     </div>
   </div>
   <div class="da-content-wrapper">
@@ -27,7 +27,7 @@
               ></d-search>
             </div>
             <div [ngStyle]="{ display: 'flex', justifyContent: 'flex-end' }">
-              <d-button routerLink="add">Add Currency</d-button>
+              <d-button routerLink="add">{{"list.currency.buttonTitle" | translate}}</d-button>
             </div>
           </div>
 

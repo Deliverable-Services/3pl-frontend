@@ -9,6 +9,12 @@ export default {
       advanceList: '高级列表',
       treeList: '树状列表'
     },
+    resources: {
+      title: '资源',
+    },
+    company: {
+      title: '公司',
+    },
     category: {
       title: '类别',
       categoryList: '类别列表',
@@ -18,6 +24,21 @@ export default {
       title: '产品',
       list: '产品列表',
       buttonTitle: '添加产品'
+    },
+    currency: {
+      title: '货币',
+      list: '货币列表',
+      buttonTitle: '添加货币'
+    },
+    creditTerms: {
+      title: '信贷条款',
+      list: '信用条款清单',
+      buttonTitle: '添加信用条款'
+    },
+    connectionLocationList: {
+      title: '连接位置',
+      list: '连接位置列表',
+      buttonTitle: '添加连接位置'
     },
     basicList: {
       title: '基础列表',

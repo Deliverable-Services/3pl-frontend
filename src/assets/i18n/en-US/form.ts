@@ -31,6 +31,19 @@ export default {
       fields: {companyName: 'Company Name', companyAddress: 'Company address', primaryCurrency: 'Primary Currency', primaryCurrencyCode: 'Primary Currency Code',
       contactPerson: 'Contact Person', contactPhone: 'Contact Phone', contactEmail: 'Contact Email', createdAt: 'Created At', updatedAt: 'Updated At'}
     },
+    currency: {
+      edit_currency: 'Edit Currency',
+      fields: {currencyName: 'Currency Name', currencyCode: 'Currency Code', exchangeRate: 'Exchange Rate', remarks: 'Remarks'}
+    },
+    creditTerms: {
+      edit_currency: 'Edit Credit Terms',
+      fields: {termsSubject: 'Terms Subject', creditDay: 'Credit Day', termsDescription: 'Terms Description'}
+    },
+    connectionLocationList: {
+      edit_location: 'Edit Connection Location',
+      fields: {nodeId: 'Node Id', nodeType: 'Node Type', shopifyLocationId: 'Shopify Location Id', remarks: 'Remarks',
+      nodeDescription: 'Node Description', nodeName: 'Node Name', lGStoreOwnerId: 'LG Store Owner Id', physicalAddress: 'Physical Address'}
+    },
     'basicForm':{
       'title': 'Basic Form',
       'description': 'The form page is used to collect or verify user information. Basic forms can be used to collect, verify, and submit data.'

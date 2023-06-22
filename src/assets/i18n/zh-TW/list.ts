@@ -9,6 +9,12 @@ export default {
       advanceList: '預先清單',
       treeList: '樹列表'
     },
+    resources: {
+      title: '資源',
+    },
+    company: {
+      title: '公司',
+    },
     category: {
       title: '類別',
       categoryList: '類別列表',
@@ -18,6 +24,21 @@ export default {
       title: '產品',
       list: '產品列表',
       buttonTitle: '添加產品'
+    },
+    currency: {
+      title: '貨幣',
+      list: '貨幣列表',
+      buttonTitle: '添加貨幣'
+    },
+    creditTerms: {
+      title: '信貸條款',
+      list: '信用條款清單',
+      buttonTitle: '添加信用條款'
+    },
+    connectionLocationList: {
+      title: '連接位置',
+      list: '連接位置列表',
+      buttonTitle: '添加連接位置'
     },
     basicList: {
       title: '基本清單',

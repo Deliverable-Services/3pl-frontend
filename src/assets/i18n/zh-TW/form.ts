@@ -31,6 +31,19 @@ export default {
       fields: {companyName: '公司名稱', companyAddress: '公司地址', primaryCurrency: '主要貨幣', primaryCurrencyCode: '主要貨幣代碼',
       contactPerson: '聯絡人', contactPhone: '聯繫電話', contactEmail: '聯繫電子郵件', createdAt: '創建於', updatedAt: '更新於'}
     },
+    currency: {
+      edit_currency: '編輯貨幣',
+      fields: {currencyName: '貨幣名稱', currencyCode: '貨幣代碼', exchangeRate: '匯率', remarks: '評論'}
+    },
+    creditTerms: {
+      edit_currency: '編輯信用條款',
+      fields: {termsSubject: '條款主題', creditDay: '信用日', termsDescription: '術語 說明'}
+    },
+    connectionLocationList: {
+      edit_location: '編輯連接位置',
+      fields: {nodeId: '節點號', nodeType: '節點類型', shopifyLocationId: 'Shopify 位置 ID', remarks: '評論',
+      nodeDescription: '節點說明', nodeName: '節點名稱', lGStoreOwnerId: 'LG 店主 ID', physicalAddress: '實際地址'}
+    },
     'basicForm':{
       'title': '基本形式',
       'description': '表單頁面用於收集或驗證用戶信息。 基本表單可用於收集、驗證和提交數據。'
