@@ -44,6 +44,10 @@ export default {
       fields: {nodeId: 'Node Id', nodeType: 'Node Type', shopifyLocationId: 'Shopify Location Id', remarks: 'Remarks',
       nodeDescription: 'Node Description', nodeName: 'Node Name', lGStoreOwnerId: 'LG Store Owner Id', physicalAddress: 'Physical Address'}
     },
+    shopifyConnector: {
+      edit: 'Edit Shopify Connector',
+      fields: {connectorName: 'Connector Name', baseUrl: 'Base URL', token: 'Token'}
+    },
     'basicForm':{
       'title': 'Basic Form',
       'description': 'The form page is used to collect or verify user information. Basic forms can be used to collect, verify, and submit data.'

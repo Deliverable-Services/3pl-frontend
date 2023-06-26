@@ -10,6 +10,8 @@ import { DepartmentListComponent } from "./department/department-list/department
 import { DepartmentFormComponent } from "./department/department-form/department-form.component";
 import { CurrencyListComponent } from "./currency/currency-list/currency-list.component";
 import { CurrencyFormComponent } from "./currency/currency-form/currency-form.component";
+import { ShopifyConnectorListComponent } from "./shopify-connector/shopify-connector-list/shopify-connector-list.component";
+import { ShopifyConnectorFormComponent } from "./shopify-connector/shopify-connector-form/shopify-connector-form.component";
 
 const routes: Routes = [
   {
@@ -65,6 +67,18 @@ const routes: Routes = [
   {
     path: "currency/edit/:id",
     component: CurrencyFormComponent,
+  },
+  {
+    path: "shopify-connector",
+    component: ShopifyConnectorListComponent,
+  },
+  {
+    path: "shopify-connector/add",
+    component: ShopifyConnectorFormComponent,
+  },
+  {
+    path: "shopify-connector/edit/:id",
+    component: ShopifyConnectorFormComponent,
   },
 ];
 

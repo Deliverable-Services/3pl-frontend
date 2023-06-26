@@ -44,6 +44,10 @@ export default {
       fields: {nodeId: '節點號', nodeType: '節點類型', shopifyLocationId: 'Shopify 位置 ID', remarks: '評論',
       nodeDescription: '節點說明', nodeName: '節點名稱', lGStoreOwnerId: 'LG 店主 ID', physicalAddress: '實際地址'}
     },
+    shopifyConnector: {
+      edit: '編輯 Shopify 連接器',
+      fields: {connectorName: '連接器名稱', baseUrl: '基本網址', token: '代幣'}
+    },
     'basicForm':{
       'title': '基本形式',
       'description': '表單頁面用於收集或驗證用戶信息。 基本表單可用於收集、驗證和提交數據。'

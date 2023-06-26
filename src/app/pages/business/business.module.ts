@@ -21,6 +21,8 @@ import { DepartmentListComponent } from './department/department-list/department
 import { CompanyFormComponent } from './company/company-form/company-form.component';
 import { CurrencyFormComponent } from './currency/currency-form/currency-form.component';
 import { CurrencyListComponent } from './currency/currency-list/currency-list.component';
+import { ShopifyConnectorListComponent } from "./shopify-connector/shopify-connector-list/shopify-connector-list.component";
+import { ShopifyConnectorFormComponent } from "./shopify-connector/shopify-connector-form/shopify-connector-form.component";
 
 @NgModule({
   declarations: [
@@ -34,6 +36,8 @@ import { CurrencyListComponent } from './currency/currency-list/currency-list.co
     CompanyFormComponent,
     CurrencyFormComponent,
     CurrencyListComponent,
+    ShopifyConnectorListComponent,
+    ShopifyConnectorFormComponent
   ],
   imports: [
     CommonModule,

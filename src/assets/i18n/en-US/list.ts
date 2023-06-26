@@ -40,6 +40,11 @@ export default {
       list: 'Connection Location List',
       buttonTitle: 'Add Connection Location'
     },
+    shopifyConnector: {
+      title: 'Shopify Connector',
+      list: 'Shopify Connector List',
+      buttonTitle: 'Add Shopify Connector'
+    },
     basicList: {
       title: 'Basic List',
       description: 'Allows users to adjust the list size and spacing.'

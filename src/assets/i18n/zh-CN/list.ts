@@ -40,6 +40,11 @@ export default {
       list: '连接位置列表',
       buttonTitle: '添加连接位置'
     },
+    shopifyConnector: {
+      title: 'Shopify 连接器',
+      list: 'Shopify 连接器列表',
+      buttonTitle: '添加 Shopify 连接器'
+    },
     basicList: {
       title: '基础列表',
       description: '支持调整列表尺寸，间距等。'

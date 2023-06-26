@@ -44,6 +44,10 @@ export default {
       fields: {nodeId: '节点编号', nodeType: '节点类型', shopifyLocationId: 'Shopify 位置 ID', remarks: '评论',
       nodeDescription: '节点说明', nodeName: '节点名称', lGStoreOwnerId: 'LG 店主 ID', physicalAddress: '实际地址'}
     },
+    shopifyConnector: {
+      edit: '编辑 Shopify 连接器',
+      fields: {connectorName: '连接器名称', baseUrl: '基本网址', token: '代币'}
+    },
     'basicForm':{
       'title': '基础表单',
       'description': '表单页用于对用户信息进行收集或校验。基础表单具备数据收集、校验和提交功能。'

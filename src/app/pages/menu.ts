@@ -64,6 +64,10 @@ export default function (values: any) {
           title: "connectionLocationList",
           link: "/connection-location",
         },
+        {
+          title: "shopifyConnector",
+          link: "/business/shopify-connector",
+        },
       ],
       link: "/",
       menuIcon: "icon icon-console",
