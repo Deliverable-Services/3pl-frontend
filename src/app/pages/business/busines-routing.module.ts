@@ -12,6 +12,7 @@ import { CurrencyListComponent } from "./currency/currency-list/currency-list.co
 import { CurrencyFormComponent } from "./currency/currency-form/currency-form.component";
 import { ShopifyConnectorListComponent } from "./shopify-connector/shopify-connector-list/shopify-connector-list.component";
 import { ShopifyConnectorFormComponent } from "./shopify-connector/shopify-connector-form/shopify-connector-form.component";
+import { InventoryListComponent } from "./inventory/inventory-list/inventory-list.component";
 
 const routes: Routes = [
   {
@@ -79,6 +80,10 @@ const routes: Routes = [
   {
     path: "shopify-connector/edit/:id",
     component: ShopifyConnectorFormComponent,
+  },
+  {
+    path: "inventory",
+    component: InventoryListComponent,
   },
 ];
 

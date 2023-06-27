@@ -23,6 +23,7 @@ import { CurrencyFormComponent } from './currency/currency-form/currency-form.co
 import { CurrencyListComponent } from './currency/currency-list/currency-list.component';
 import { ShopifyConnectorListComponent } from "./shopify-connector/shopify-connector-list/shopify-connector-list.component";
 import { ShopifyConnectorFormComponent } from "./shopify-connector/shopify-connector-form/shopify-connector-form.component";
+import { InventoryListComponent } from "./inventory/inventory-list/inventory-list.component";
 
 @NgModule({
   declarations: [
@@ -37,7 +38,8 @@ import { ShopifyConnectorFormComponent } from "./shopify-connector/shopify-conne
     CurrencyFormComponent,
     CurrencyListComponent,
     ShopifyConnectorListComponent,
-    ShopifyConnectorFormComponent
+    ShopifyConnectorFormComponent,
+    InventoryListComponent
   ],
   imports: [
     CommonModule,

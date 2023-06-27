@@ -65,7 +65,7 @@ export class ShopifyConnectorFormComponent implements OnInit {
     if(resp) {
       type = 'success';
       msg = this.mode === 'Add' ? MSG.create:MSG.update;
-      this.router.navigate(["/shopify-connector"]);
+      this.router.navigate(["/business/shopify-connector"]);
     } else {
       type = 'error';
       msg = MSG.error;

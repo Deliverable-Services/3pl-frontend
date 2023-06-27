@@ -28,8 +28,8 @@
               {{'form.shopifyConnector.fields.connectorName' | translate}}
             </d-form-label>
             <d-form-control>
-              <input dTextInput autocomplete="off" name="token" [placeholder]="'form.shopifyConnector.fields.connectorName' | translate"
-                [(ngModel)]="projectFormData.token" [dValidateRules]="{
+              <input dTextInput autocomplete="off" name="connectorName" [placeholder]="'form.shopifyConnector.fields.connectorName' | translate"
+                [(ngModel)]="projectFormData.connectorName" [dValidateRules]="{
                   validators: [{ required: true }]
                 }" />
             </d-form-control>

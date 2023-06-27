@@ -68,6 +68,10 @@ export default function (values: any) {
           title: "shopifyConnector",
           link: "/business/shopify-connector",
         },
+        {
+          title: "inventory",
+          link: "/business/inventory",
+        },
       ],
       link: "/",
       menuIcon: "icon icon-console",

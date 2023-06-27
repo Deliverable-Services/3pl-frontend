@@ -45,6 +45,10 @@ export default {
       list: 'Shopify 連接器列表',
       buttonTitle: '添加 Shopify 連接器'
     },
+    inventory: {
+      title: '存貨',
+      list: '庫存清單'
+    },
     basicList: {
       title: '基本清單',
       description: '允許用戶調整列表大小和間距。'

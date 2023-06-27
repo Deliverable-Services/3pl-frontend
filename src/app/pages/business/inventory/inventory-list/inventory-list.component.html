@@ -6,10 +6,10 @@
           "list.breadcrumb.home" | translate
         }}</a></d-breadcrumb-item
       >
-      <d-breadcrumb-item>{{ "list.shopifyConnector.title" | translate }}</d-breadcrumb-item>
+      <d-breadcrumb-item>{{ "list.inventory.title" | translate }}</d-breadcrumb-item>
     </d-breadcrumb>
     <div class="da-content-banner-title">
-      {{ "list.shopifyConnector.list" | translate }}
+      {{ "list.inventory.list" | translate }}
     </div>
   </div>
   <div class="da-content-wrapper">
@@ -28,9 +28,6 @@
                     [placeholder]="'Search with Category Name'"
                   ></d-search> -->
                 </div>
-                <div class="header-right">
-                  <d-button routerLink="add">{{"list.shopifyConnector.buttonTitle" | translate}}</d-button>
-                </div>
               </div>
             </div>
           </div>
@@ -44,8 +41,9 @@
               (multiSortChange)="multiSortChange($event)"
             >
               <d-column
-                [field]="'connectorName'"
-                header="Connector Name"
+                [field]="'connectionLocationId'"
+                header="Connection Location Id"
+                [width]="columnSize.connectionLocationId"
                 [sortable]="true"
               >
                 <d-cell>
@@ -58,9 +56,10 @@
               </d-column>
 
               <d-column
-                [field]="'baseUrl'"
-                header="Base URL"
+                [field]="'totalQty'"
+                header="Total Qty"
                 [sortable]="true"
+                [width]="columnSize.totalQty"
               >
                 <d-cell>
                   <ng-template let-cellItem="cellItem">
@@ -72,39 +71,10 @@
               </d-column>
 
               <d-column
-                [field]="'token'"
-                header="Token"
+                [field]="'unavailableQty'"
+                header="Unavailable Qty"
                 [sortable]="true"
-              >
-                <d-cell>
-                  <ng-template let-cellItem="cellItem">
-                    <span [title]="cellItem" class="over-flow-ellipsis">
-                      {{ cellItem }}
-                    </span>
-                  </ng-template>
-                </d-cell>
-              </d-column>
-
-              <d-column
-                [field]="'lastModifiedDate'"
-                header="Last Updated Date Time"
-                [sortable]="true"
-                [width]="columnSize.lastModifiedDate"
-              >
-                <d-cell>
-                  <ng-template let-cellItem="cellItem">
-                    <span [title]="cellItem" class="over-flow-ellipsis">
-                      {{ cellItem | date: 'dd/MM/yyyy hh:mm' }}
-                    </span>
-                  </ng-template>
-                </d-cell>
-              </d-column>
-
-              <d-column
-                [field]="'lastModifiedBy'"
-                header="Last Updated By"
-                [sortable]="true"
-                [width]="columnSize.lastModifiedBy"
+                [width]="columnSize.unavailableQty"
               >
                 <d-cell>
                   <ng-template let-cellItem="cellItem">
@@ -117,28 +87,64 @@
 
               <d-column
                 [field]="'action'"
-                header="Actions"
+                header="Action"
+                [sortable]="true"
                 [width]="columnSize.action"
               >
                 <d-cell>
-                  <ng-template let-rowItem="rowItem" let-rowIndex="rowIndex">
-                    <div class="btn-group over-flow-ellipsis">
-                      <d-button
-                        icon="icon-edit"
-                        bsStyle="text-dark"
-                        title="edit"
-                        (click)="editRow(rowItem.shopifyConnectorId, rowIndex)"
-                      ></d-button>
-                      <!-- <d-button
-                        icon="icon-delete"
-                        bsStyle="text-dark"
-                        title="delete"
-                        (click)="deleteRow(rowIndex)"
-                      ></d-button> -->
-                    </div>
+                  <ng-template let-cellItem="cellItem">
+                    <span [title]="cellItem" class="over-flow-ellipsis">
+                      {{ cellItem }}
+                    </span>
                   </ng-template>
                 </d-cell>
               </d-column>
+
+              <d-column
+                [field]="'styleName'"
+                header="Style Name"
+                [sortable]="true"
+                [width]="columnSize.styleName"
+              >
+                <d-cell>
+                  <ng-template let-cellItem="cellItem">
+                    <span [title]="cellItem" class="over-flow-ellipsis">
+                      {{ cellItem }}
+                    </span>
+                  </ng-template>
+                </d-cell>
+              </d-column>
+
+              <d-column
+                [field]="'sku'"
+                header="SKU"
+                [sortable]="true"
+                [width]="columnSize.sku"
+              >
+                <d-cell>
+                  <ng-template let-cellItem="cellItem">
+                    <span [title]="cellItem" class="over-flow-ellipsis">
+                      {{ cellItem }}
+                    </span>
+                  </ng-template>
+                </d-cell>
+              </d-column>
+
+              <d-column
+                [field]="'avaiableQty'"
+                header="Avaiable Qty"
+                [sortable]="true"
+                [width]="columnSize.avaiableQty"
+              >
+                <d-cell>
+                  <ng-template let-cellItem="cellItem">
+                    <span [title]="cellItem" class="over-flow-ellipsis">
+                      {{ cellItem }}
+                    </span>
+                  </ng-template>
+                </d-cell>
+              </d-column>
+
             </d-data-table>
           </div>
           <div class="da-list-footer">

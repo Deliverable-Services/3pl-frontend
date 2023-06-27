@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { Router } from "@angular/router";
-import { ShopifyConnectorService } from 'src/app/@core/mock/shopify-connector.service';
+import { InventoryService } from 'src/app/@core/mock/inventory.service';
 import {
   SortEventArg,
   ToastService
@@ -10,11 +10,11 @@ import { PageParam, SearchParam } from "src/app/@core/data/searchFormData";
 import { MSG } from 'src/config/global-var';
 
 @Component({
-  selector: "app-shopify-connector-list",
-  templateUrl: "./shopify-connector-list.component.html",
-  styleUrls: ["./shopify-connector-list.component.scss"],
+  selector: "app-inventory-list",
+  templateUrl: "./inventory-list.component.html",
+  styleUrls: ["./inventory-list.component.scss"],
 })
-export class ShopifyConnectorListComponent implements OnInit {
+export class InventoryListComponent implements OnInit {
 
   pageParam: any = {
     pageNo: "",
@@ -31,14 +31,17 @@ export class ShopifyConnectorListComponent implements OnInit {
   };
 
   columnSize: any = {
-    termsName: "",
-    updatedAt: "",
+    connectionLocationId: "",
+    totalQty: "",
+    unavailableQty: "",
     action: "",
-    active: "",
+    styleName: "",
+    sku: "",
+    avaiableQty: ""
   };
 
   constructor(
-    private shopifyConnectorService: ShopifyConnectorService,
+    private inventoryService: InventoryService,
     private router: Router,
     private toastService: ToastService,
   ) { }
@@ -48,11 +51,13 @@ export class ShopifyConnectorListComponent implements OnInit {
   }
 
   getList() {
-    this.busy = this.shopifyConnectorService
+    this.busy = this.inventoryService
       .getList()
       .subscribe((res) => {
-        this.basicDataSource = res;
-        // this.pager.total = res.totalItems;
+        this.basicDataSource = res.content;
+        this.columnSize = res.listSize;
+        console.log(':: :: ', this.columnSize)
+        this.pager.total = res.totalItems;
         // Object.keys(res.listSize).map((key) => {
         //   let widthValue = res.listSize[key] + "%";
         //   this.columnSize[key] = widthValue;
@@ -64,13 +69,13 @@ export class ShopifyConnectorListComponent implements OnInit {
     if (e.length === 1) {
       this.pageParam.sortBy = e[0].field;
       this.pageParam.sortDir = e[0].direction.toLowerCase();
-      this.shopifyConnectorService.setPageParams(this.pageParam);
+      this.inventoryService.setPageParams(this.pageParam);
       this.getList();
     }
   }
 
   setPageParams(pageParam: PageParam) {
-    this.shopifyConnectorService.setPageParams(pageParam);
+    this.inventoryService.setPageParams(pageParam);
     this.getList();
   }
 
@@ -86,34 +91,6 @@ export class ShopifyConnectorListComponent implements OnInit {
     this.pageParam.pageSize = e;
     this.setPageParams(this.pageParam);
     this.getList();
-  }
-
-  editRow(rowId: any, index: number) {
-    this.router.navigate([`/business/shopify-connector/edit/${rowId}`]);
-  }
-
-  updateStatus(event: any, row: any) {
-    let sVal =  event ? 'active':'inactive';
-    console.log(':: ', row, row?.rowItem?.creditTermsId, sVal);
-
-    this.shopifyConnectorService
-    .statusToggle({id: row?.rowItem?.creditTermsId, active: sVal})
-    .subscribe((res: any) => {
-      let type, msg;
-      if(res) {
-        type = 'success';
-        msg = MSG.status.success;
-      } else {
-        type = 'error';
-        msg = MSG.error;
-      }
-      this.toastService.open({
-        value: [
-          { severity: type, content: msg},
-        ],
-        life: 2000,
-      });
-    });
   }
 
 }

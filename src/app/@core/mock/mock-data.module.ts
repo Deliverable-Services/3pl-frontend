@@ -20,6 +20,7 @@ import { PoDataService } from "./po-data.service";
 import { CreditTermsService } from "./credit-terms.service";
 import { ConnectionLocationService } from "./connection-location.service";
 import { ShopifyConnectorService } from "./shopify-connector.service";
+import { InventoryService } from "./inventory.service";
 
 
 const SERVICES = [
@@ -42,7 +43,8 @@ const SERVICES = [
   PoDataService,
   CreditTermsService,
   ConnectionLocationService,
-  ShopifyConnectorService
+  ShopifyConnectorService,
+  InventoryService
 ];
 
 @NgModule({

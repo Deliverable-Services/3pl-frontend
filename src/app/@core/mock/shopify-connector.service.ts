@@ -55,7 +55,7 @@ export class ShopifyConnectorService {
     };
 
     return this.http.post(
-      `${this.baseApiUrl}/credit-terms/list`,
+      `${this.baseApiUrl}/shopify-connector/list`,
       this.searchParams,
       httpOptionsToken
     );

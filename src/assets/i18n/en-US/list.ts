@@ -45,6 +45,10 @@ export default {
       list: 'Shopify Connector List',
       buttonTitle: 'Add Shopify Connector'
     },
+    inventory: {
+      title: 'Inventory',
+      list: 'Inventory List'
+    },
     basicList: {
       title: 'Basic List',
       description: 'Allows users to adjust the list size and spacing.'
