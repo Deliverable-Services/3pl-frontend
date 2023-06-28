@@ -21,9 +21,9 @@ export default {
       edit_product: 'Edit Product',
       addMore: 'Add More',
       fields: {styleName: 'Style Name', collection: 'Collection', fabricComposition: 'Fabric Composition', fabricSwatch: 'Fabric Swatch',
-      logisticDescription: 'Logistic Description', unitWeight: 'Unit Weight', category: 'Category', image: 'Image', productSKU: 'Product SKU',
+      logisticDescription: 'Logistic Description', unitWeight: 'Unit Weight', category: 'Category', optionType: 'Option Type', image: 'Image', productSKU: 'Product SKU',
       color: 'Color', size: 'Size', label: 'Label', hastagColor: 'Hastag Color', localCurrency: 'Local Currency', localExwPrice: 'Local Exw Price',
-      companyExwPrice: 'Company Exw Price'}
+      companyExwPrice: 'Company Exw Price', retailPrice: 'Retail Price', barcode: 'Barcode'}
     },
     company: {
       title: 'Company',

@@ -31,6 +31,11 @@ export class StyleFormComponent implements OnInit {
     fabicSwatch: "",
     unitWeight: "",
     slectedCat: {categoryId: ""},
+    optionType: "",
+    retailPrice: "",
+    exwLocalCurrency: "",
+    exwLocalCost: "",
+    exwSgdCost: "",
     productCategoryId: "",
     image: "",
     varients: []
@@ -71,6 +76,7 @@ export class StyleFormComponent implements OnInit {
   busy: Subscription | undefined;
 
   categoryList: Category[] = [];
+  optionTypeList: any[] = ['NONE', 'COLOR', 'SIZE', 'COLOR_SIZE'];
   brandList: Brand[] = [];
   seasonList: Season[] = [];
   subCategoryList: any = [];
@@ -212,14 +218,15 @@ export class StyleFormComponent implements OnInit {
   addMoreVariant() {
     this.productVariants.push({
       sku: "",
+      barcode: "",
       color: "",
       size: "",
       label: "",
       hastagColor: "",
       productDesc: "",
-      localCurrency: "",
-      localExwPrice: "",
-      companyExwPrice: ""
+      // localCurrency: "",
+      // localExwPrice: "",
+      // companyExwPrice: ""
     });
   }
 
@@ -246,11 +253,29 @@ export class StyleFormComponent implements OnInit {
   }
 
   _checkForBtn() {
-    let getVal = this.productVariants.filter((pv: any) => {
-      let getBlank = Object.keys(pv)?.filter((k: any) => pv[k] !== '');
-      return !getBlank?.length; 
+    let allowed = true;
+    this.productVariants.forEach((pv: any) => {
+      allowed = true;
+      if(pv['sku'] === '') {
+        allowed = false;return;} 
+      if(pv['color'] === '' && (this.styleFormData.optionType === 'COLOR_SIZE' || this.styleFormData.optionType === 'COLOR')){
+        allowed = false;return; }
+      if(pv['size'] === '' && (this.styleFormData.optionType === 'COLOR_SIZE' || this.styleFormData.optionType === 'SIZE')){
+        allowed = false;return; }
+      if(pv['label'] === ''){
+        allowed = false;return;} 
+      if(pv['hastagColor'] === ''){
+        allowed = false;return;    }     
     });
 
-    return !getVal?.length;
+    return allowed;
+  }
+
+  checkVIsibility(type: string) {
+    if(this.styleFormData.optionType === type 
+    || this.styleFormData.optionType === 'COLOR_SIZE')
+      return true;
+
+    return false;  
   }
 }

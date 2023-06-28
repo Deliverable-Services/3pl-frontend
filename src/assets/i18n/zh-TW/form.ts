@@ -21,9 +21,9 @@ export default {
       edit_product: '編輯產品',
       addMore: '添加更多',
       fields: {styleName: '款式名稱', collection: '收藏', fabricComposition: '面料成分', fabricSwatch: '面料樣本',
-      logisticDescription: '物流說明', unitWeight: '單位重量', category: '類別', image: '圖像', productSKU: '產品SKU',
+      logisticDescription: '物流說明', unitWeight: '單位重量', category: '類別', optionType: '選項類型', image: '圖像', productSKU: '產品SKU',
       color: '顏色', size: '尺寸', label: '標籤', hastagColor: '標籤顏色', localCurrency: '當地貨幣', localExwPrice: '本地出廠價',
-      companyExwPrice: '公司出廠價'}
+      companyExwPrice: '公司出廠價', retailPrice: '零售價', barcode: '條碼'}
     },
     company: {
       title: '公司',
