@@ -22,7 +22,7 @@ export default {
       addMore: 'Add More',
       fields: {styleName: 'Style Name', collection: 'Collection', fabricComposition: 'Fabric Composition', fabricSwatch: 'Fabric Swatch',
       logisticDescription: 'Logistic Description', unitWeight: 'Unit Weight', category: 'Category', optionType: 'Option Type', image: 'Image', productSKU: 'Product SKU',
-      color: 'Color', size: 'Size', label: 'Label', hastagColor: 'Hastag Color', localCurrency: 'Local Currency', localExwPrice: 'Local Exw Price',
+      color: 'Color', size: 'Size', label: 'Label', hangtagColor: 'Hangtag Color', localCurrency: 'Local Currency', localExwPrice: 'Local Exw Price',
       companyExwPrice: 'Company Exw Price', retailPrice: 'Retail Price', barcode: 'Barcode'}
     },
     company: {
@@ -41,8 +41,8 @@ export default {
     },
     connectionLocationList: {
       edit_location: 'Edit Connection Location',
-      fields: {nodeId: 'Node Id', nodeType: 'Node Type', shopifyLocationId: 'Shopify Location Id', remarks: 'Remarks',
-      nodeDescription: 'Node Description', nodeName: 'Node Name', lGStoreOwnerId: 'LG Store Owner Id', physicalAddress: 'Physical Address'}
+      fields: {nodeId: 'Node Id', nodeType: 'Node Type', shopifyLocationId: 'Shopify Location Id', shopifyConnectorId: 'Shopify Connector Id', remarks: 'Remarks',
+      nodeDescription: 'Node Description', nodeName: 'Node Name', lGStoreOwnerId: 'LG Store Owner Id', lgStoreWhsId: 'LG Store WHS Id', physicalAddress: 'Physical Address'}
     },
     shopifyConnector: {
       edit: 'Edit Shopify Connector',

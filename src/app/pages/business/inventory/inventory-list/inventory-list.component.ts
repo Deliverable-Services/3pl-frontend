@@ -27,11 +27,19 @@ export class InventoryListComponent implements OnInit {
   connectionLocation: Subscription | undefined;
   basicDataSource: any[] = [];
   basicDataSourceConnection: any[] = [];
+  dropdownSearch: any;
+  setSearch: any = {
+    connectionLocationId: "",
+    sku: "",
+    styleName: ""
+  }
   pager = {
     total: 0,
     pageIndex: 1,
     pageSize: 10,
   };
+
+  connectionLocations: any[] = [];
 
   columnSize: any = {
     connectionLocationId: "",
@@ -57,9 +65,9 @@ export class InventoryListComponent implements OnInit {
     },1000)
   }
 
-  getList() {
+  getList(filterVal?: any) {
     this.busy = this.inventoryService
-      .getList()
+      .getList(filterVal || null)
       .subscribe((res) => {
         res.content.forEach((item:any) => {
           item.nodeName = this.basicDataSourceConnection[item.connectionLocationId]
@@ -67,7 +75,6 @@ export class InventoryListComponent implements OnInit {
         this.basicDataSource = res.content;
         
         this.columnSize = res.listSize;
-        console.log(':: :: ', res.content)
         this.pager.total = res.totalItems;
         // Object.keys(res.listSize).map((key) => {
         //   let widthValue = res.listSize[key] + "%";
@@ -101,9 +108,14 @@ export class InventoryListComponent implements OnInit {
     this.connectionLocation = this.connectionLocationService
       .getList()
       .subscribe((res) => {
-        console.log(':: res ', res)
-       res.map((data:any) => {
+        this.connectionLocations = [];
+        // console.log(':: res ', res)
+       res.forEach((data:any) => {
           this.basicDataSourceConnection[data.connectionLocationId] = data.nodeName;
+          this.connectionLocations.push({
+            connectionLocationId: data?.connectionLocationId || '',
+            nodeName: data?.nodeName || ''
+          })
         });
         
         this.pager.total = res.totalItems;
@@ -119,6 +131,30 @@ export class InventoryListComponent implements OnInit {
     this.pageParam.pageSize = e;
     this.setPageParams(this.pageParam);
     this.getList();
+  }
+
+  //set delay for next process
+  delay(ms: number) {
+    return new Promise( resolve => setTimeout(resolve, ms) );
+  }
+
+  setValue() {
+    this.setSearch.connectionLocationId = this.dropdownSearch.connectionLocationId;
+  }
+
+  async startSearch(event: any) {
+    await this.delay(500);
+    let filterVal: any[] = [];
+    Object.keys(this.setSearch)?.forEach((k: any) => {
+      if(this.setSearch[k] !== '') {
+        filterVal.push({
+          field: k,
+          operator: "match",
+          value: this.setSearch[k],
+        })
+      }
+    });
+    this.getList(filterVal);
   }
 
 }

@@ -6,7 +6,9 @@
           "list.breadcrumb.home" | translate
         }}</a></d-breadcrumb-item
       >
-      <d-breadcrumb-item>{{ "list.inventory.title" | translate }}</d-breadcrumb-item>
+      <d-breadcrumb-item>{{
+        "list.inventory.title" | translate
+      }}</d-breadcrumb-item>
     </d-breadcrumb>
     <div class="da-content-banner-title">
       {{ "list.inventory.list" | translate }}
@@ -16,17 +18,41 @@
     <da-layout-row [daGutter]="[24, 24]">
       <da-col-item [daSpan]="24" [daXs]="24">
         <div class="da-list-container">
-            <div class="da-header-left">
-                <div class="da-list-header">
+          <div class="da-header-left">
+            <div class="da-list-header">
               <div class="da-common-search">
                 <div class="da-left">
-                  <!-- <d-search
-                    [size]="'sm'"
-                    [(ngModel)]="searchWithCategoryName.keyword"
-                    (input)="search($event, searchWithCategoryName)"
-                    class="da-inline"
-                    [placeholder]="'Search with Category Name'"
-                  ></d-search> -->
+                  <div [ngStyle]="{
+                    display: 'inline-block',
+                    marginRight: '10px'
+                  }">
+                    <d-select
+                      placeholder="Select a Connection Location"
+                      [scrollHight]="'300px'"
+                      [filterKey]="'nodeName'"
+                      [appendToBody]="true"
+                      [options]="connectionLocations"
+                      [isSearch]="true"
+                      [(ngModel)]="dropdownSearch"
+                      (valueChange)="setValue();startSearch($event)"
+                    ></d-select>
+                  </div>
+                  <div [ngStyle]="{ display: 'inline-block' }">
+                    <d-search
+                      [size]="'sm'"
+                      [(ngModel)]="setSearch.styleName"
+                      (input)="startSearch($event)"
+                      class="da-inline"
+                      [placeholder]="'Search with Style Name'"
+                    ></d-search>
+                    <d-search
+                      [size]="'sm'"
+                      [(ngModel)]="setSearch.sku"
+                      (input)="startSearch($event)"
+                      class="da-inline"
+                      [placeholder]="'Search with SKU'"
+                    ></d-search>
+                  </div>
                 </div>
               </div>
             </div>
@@ -84,8 +110,6 @@
                   </ng-template>
                 </d-cell>
               </d-column>
-
-              
 
               <d-column
                 [field]="'styleName'"
@@ -146,7 +170,6 @@
                   </ng-template>
                 </d-cell>
               </d-column>
-
             </d-data-table>
           </div>
           <div class="da-list-footer">

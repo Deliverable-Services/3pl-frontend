@@ -84,6 +84,34 @@
                     </ng-template>
                   </d-cell>
                 </d-column>
+
+                <d-column
+                [field]="'createdDate'"
+                header="Created At"
+                [sortable]="true"
+              >
+                <d-cell>
+                  <ng-template let-cellItem="cellItem">
+                    <span [title]="cellItem" class="over-flow-ellipsis">
+                      {{ cellItem | date: 'dd/MM/yyyy hh:mm' }}
+                    </span>
+                  </ng-template>
+                </d-cell>
+              </d-column>
+
+              <d-column
+                [field]="'createdBy'"
+                header="Created By"
+                [sortable]="true"
+             >
+                <d-cell>
+                  <ng-template let-cellItem="cellItem">
+                    <span [title]="cellItem" class="over-flow-ellipsis">
+                      {{ cellItem }}
+                    </span>
+                  </ng-template>
+                </d-cell>
+              </d-column>
   
                 <d-column
                   [field]="'lastModifiedDate'"

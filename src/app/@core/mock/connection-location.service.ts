@@ -56,10 +56,12 @@ export class ConnectionLocationService {
   }
 
   setPageParams(pageParams: PageParam) {
+    console.log('::::: pageParams ', pageParams)
     this.pageParams = pageParams;
   }
 
   getList(): Observable<any> {
+    console.log(':: this.pageParams :: ', this.pageParams)
     const httpOptionsToken = {
       params: new HttpParams({
         fromObject: this.pageParams,

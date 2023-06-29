@@ -3,6 +3,7 @@ import { FormLayout, ToastService } from "ng-devui";
 import { MSG } from 'src/config/global-var';
 import { ActivatedRoute, Router } from "@angular/router";
 import { ConnectionLocationService } from 'src/app/@core/mock/connection-location.service';
+import { ShopifyConnectorService } from 'src/app/@core/mock/shopify-connector.service';
 
 @Component({
   selector: 'app-connection-location-form',
@@ -13,21 +14,26 @@ export class ConnectionLocationFormComponent implements OnInit {
 
   mode: string = "Add";
   verticalLayout: FormLayout = FormLayout.Vertical;
+  shopifyListData: any[] = [];
+  selectedShopifyList: any;
   projectFormData = {
     nodeId: "",
     nodeName: "",
     nodeDesc: "",
     nodeType: "",
-    lgStoreOwnerId: "",
+    lgStoreOwnerId: null,
     shopifyLocationId: "",
+    shopifyConnectorId: "",
     physicalAddress: "",
-    remarks: ""
+    remarks: null,
+    lgStoreWhsId: null
   };
   nodeList: any[] = ['DC', 'Online', 'Store'];
   paramId: string = "";
   selectedCreditTerms: any = {};
   constructor(
     private connectionLocationService: ConnectionLocationService,
+    private shopifyConnectorService: ShopifyConnectorService,
     private route: ActivatedRoute,
     private router: Router,
     private toastService: ToastService
@@ -36,10 +42,19 @@ export class ConnectionLocationFormComponent implements OnInit {
   ngOnInit(): void {
     this.paramId = this.route.snapshot.params["id"];
     this.mode = this.route.snapshot.params["id"] ? "Edit" : "Add";
+    this._getShopifyList();
 
     if (this.mode === "Edit") {
       this.getCreditTermsById(this.paramId);
     }
+  }
+
+  _getShopifyList() {
+    this.shopifyConnectorService
+      .getList()
+      .subscribe((res) => {
+        this.shopifyListData = res;
+      });
   }
 
   getCreditTermsById(id: string) {
@@ -79,6 +94,11 @@ export class ConnectionLocationFormComponent implements OnInit {
       ],
       life: 2000,
     });
+  }
+
+  setListId() {
+    console.log(':: ', this.selectedShopifyList)
+    this.projectFormData.shopifyConnectorId = this.selectedShopifyList.shopifyConnectorId;
   }
 
 }

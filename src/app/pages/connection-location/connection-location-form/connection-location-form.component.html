@@ -57,6 +57,19 @@
                     }"></d-select>
                 </d-form-control>
               </d-form-item>
+              <d-form-item *ngIf="projectFormData.nodeType === 'Store'">
+                <d-form-label [required]="true" [hasHelp]="true" [helpTips]="'This is the Shopify Connector Id'">
+                  {{'form.connectionLocationList.fields.shopifyConnectorId' | translate}}
+                </d-form-label>
+                <d-form-control>
+                  <d-select [ngStyle]="{ width: '100%' }" [appendToBody]="true" [filterKey]="'connectorName'"
+                    [multiple]="false" [options]="shopifyListData" name="selectedShopifyList" [(ngModel)]="selectedShopifyList"
+                    (valueChange)="setListId()"
+                    [dValidateRules]="{
+                      validators: [{ required: true }]
+                    }"></d-select>
+                </d-form-control>
+              </d-form-item>
               <d-form-item>
                 <d-form-label [required]="true" [hasHelp]="true" [helpTips]="'This is the Shopify Location Id'">
                   {{'form.connectionLocationList.fields.shopifyLocationId' | translate}}
@@ -113,6 +126,19 @@
                 </d-form-control>
               </d-form-item>
               <d-form-item>
+                <d-form-label [required]="true" [hasHelp]="true" [helpTips]="'This is the LG Store WHS Id'">
+                  {{'form.connectionLocationList.fields.lgStoreWhsId' | translate}}
+                </d-form-label>
+
+                <d-form-control>
+                  <input dTextInput autocomplete="off" name="lgStoreWhsId" [placeholder]="'form.connectionLocationList.fields.lgStoreWhsId' | translate"
+                  [(ngModel)]="projectFormData.lgStoreWhsId"
+                  [dValidateRules]="{
+                    validators: [{ required: true }]
+                  }" />
+                </d-form-control>
+              </d-form-item>
+              <d-form-item>
                 <d-form-label [required]="true" [hasHelp]="true" [helpTips]="'This is the Physical Address'">
                   {{'form.connectionLocationList.fields.physicalAddress' | translate}}
                 </d-form-label>
@@ -145,7 +171,7 @@
               <d-button dLoading class="mr-element-spacing" [title]="styleForm.errorMessage || ''" circled="true"
                 style="margin-right: 8px" [showLoading]="styleForm.pending" dFormSubmit
                 [dFormSubmitData]="'submit-button'">
-                {{ (paramId ? "form.common.update" : "form.common.create") | translate}}
+              {{ (paramId ? "form.common.update" : "form.common.create") | translate}}
               </d-button>
             </d-form-operation>
           </div>

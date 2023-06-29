@@ -22,7 +22,7 @@ export default {
       addMore: '添加更多',
       fields: {styleName: '款式名稱', collection: '收藏', fabricComposition: '面料成分', fabricSwatch: '面料樣本',
       logisticDescription: '物流說明', unitWeight: '單位重量', category: '類別', optionType: '選項類型', image: '圖像', productSKU: '產品SKU',
-      color: '顏色', size: '尺寸', label: '標籤', hastagColor: '標籤顏色', localCurrency: '當地貨幣', localExwPrice: '本地出廠價',
+      color: '顏色', size: '尺寸', label: '標籤', hangtagColor: '吊牌顏色', localCurrency: '當地貨幣', localExwPrice: '本地出廠價',
       companyExwPrice: '公司出廠價', retailPrice: '零售價', barcode: '條碼'}
     },
     company: {
@@ -41,8 +41,8 @@ export default {
     },
     connectionLocationList: {
       edit_location: '編輯連接位置',
-      fields: {nodeId: '節點號', nodeType: '節點類型', shopifyLocationId: 'Shopify 位置 ID', remarks: '評論',
-      nodeDescription: '節點說明', nodeName: '節點名稱', lGStoreOwnerId: 'LG 店主 ID', physicalAddress: '實際地址'}
+      fields: {nodeId: '節點號', nodeType: '節點類型', shopifyLocationId: 'Shopify 位置 ID', shopifyConnectorId: 'Shopify 連接器 ID', remarks: '評論',
+      nodeDescription: '節點說明', nodeName: '節點名稱', lGStoreOwnerId: 'LG 店主 ID', lgStoreWhsId: 'LG 商店 WHS ID', physicalAddress: '實際地址'}
     },
     shopifyConnector: {
       edit: '編輯 Shopify 連接器',

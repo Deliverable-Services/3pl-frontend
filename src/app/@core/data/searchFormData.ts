@@ -8,8 +8,8 @@ export interface SearchParam {
 }
 
 export interface PageParam {
-  pageNo: "";
-  pageSize: "";
-  sortBy: "";
-  sortDir: "";
+  pageNo: string;
+  pageSize: string;
+  sortBy: string;
+  sortDir: string;
 }

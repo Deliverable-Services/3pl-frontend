@@ -13,7 +13,7 @@ export class InventoryService {
   }
 
   private searchParams = {
-    filters: [],
+    filters: []
   };
 
   private pageParams = {
@@ -23,30 +23,20 @@ export class InventoryService {
     sortDir: "",
   };
 
-  // setSearchParams(searchParams: SearchParam) {
-  //   this.searchParams.filters = this.searchParams.filters.map((param: any) => {
-  //     if (param.field === searchParams.columnName) {
-  //       return {
-  //         field: searchParams.columnName,
-  //         operator: searchParams.searchType,
-  //         value: searchParams.keyword,
-  //       };
-  //     } else {
-  //       return param;
-  //     }
-  //   });
-  // }
-
   setPageParams(pageParams: PageParam) {
     this.pageParams = pageParams;
   }
 
-  getList(): Observable<any> {
+  getList(searchVal?: any): Observable<any> {
     const httpOptionsToken = {
       params: new HttpParams({
         fromObject: this.pageParams,
       }),
     };
+
+    if(searchVal) {
+      this.searchParams.filters = searchVal;
+    }
 
     return this.http.post(
       `${this.baseApiUrl}/inventory/list`,
