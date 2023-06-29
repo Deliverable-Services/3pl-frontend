@@ -8,6 +8,7 @@ import {
 } from "ng-devui";
 import { PageParam, SearchParam } from "src/app/@core/data/searchFormData";
 import { MSG } from 'src/config/global-var';
+import { ConnectionLocationService } from 'src/app/@core/mock/connection-location.service';
 
 @Component({
   selector: "app-inventory-list",
@@ -23,7 +24,9 @@ export class InventoryListComponent implements OnInit {
     sortDir: "",
   };
   busy: Subscription | undefined;
+  connectionLocation: Subscription | undefined;
   basicDataSource: any[] = [];
+  basicDataSourceConnection: any[] = [];
   pager = {
     total: 0,
     pageIndex: 1,
@@ -42,21 +45,29 @@ export class InventoryListComponent implements OnInit {
 
   constructor(
     private inventoryService: InventoryService,
+    private connectionLocationService: ConnectionLocationService,
     private router: Router,
     private toastService: ToastService,
   ) { }
 
   ngOnInit(): void {
-    this.getList();
+    this.getConnectionLocations();
+    setTimeout(() => {
+      this.getList();
+    },1000)
   }
 
   getList() {
     this.busy = this.inventoryService
       .getList()
       .subscribe((res) => {
+        res.content.forEach((item:any) => {
+          item.nodeName = this.basicDataSourceConnection[item.connectionLocationId]
+        });
         this.basicDataSource = res.content;
+        
         this.columnSize = res.listSize;
-        console.log(':: :: ', this.columnSize)
+        console.log(':: :: ', res.content)
         this.pager.total = res.totalItems;
         // Object.keys(res.listSize).map((key) => {
         //   let widthValue = res.listSize[key] + "%";
@@ -84,6 +95,23 @@ export class InventoryListComponent implements OnInit {
     this.pageParam.pageNo = this.pager.pageIndex - 1;
     this.setPageParams(this.pageParam);
     this.getList();
+  }
+
+  getConnectionLocations() {
+    this.connectionLocation = this.connectionLocationService
+      .getList()
+      .subscribe((res) => {
+        console.log(':: res ', res)
+       res.map((data:any) => {
+          this.basicDataSourceConnection[data.connectionLocationId] = data.nodeName;
+        });
+        
+        this.pager.total = res.totalItems;
+        // Object.keys(res.listSize).map((key) => {
+        //   let widthValue = res.listSize[key] + "%";
+        //   this.columnSize[key] = widthValue;
+        // });
+      });
   }
 
   onSizeChange(e: number) {

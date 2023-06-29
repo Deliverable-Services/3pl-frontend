@@ -41,9 +41,9 @@
               (multiSortChange)="multiSortChange($event)"
             >
               <d-column
-                [field]="'connectionLocationId'"
-                header="Connection Location Id"
-                [width]="columnSize.connectionLocationId"
+                [field]="'nodeName'"
+                header="Connection Location"
+                [width]="columnSize.nodeName"
                 [sortable]="true"
               >
                 <d-cell>
@@ -85,20 +85,7 @@
                 </d-cell>
               </d-column>
 
-              <d-column
-                [field]="'action'"
-                header="Action"
-                [sortable]="true"
-                [width]="columnSize.action"
-              >
-                <d-cell>
-                  <ng-template let-cellItem="cellItem">
-                    <span [title]="cellItem" class="over-flow-ellipsis">
-                      {{ cellItem }}
-                    </span>
-                  </ng-template>
-                </d-cell>
-              </d-column>
+              
 
               <d-column
                 [field]="'styleName'"
@@ -135,6 +122,21 @@
                 header="Avaiable Qty"
                 [sortable]="true"
                 [width]="columnSize.avaiableQty"
+              >
+                <d-cell>
+                  <ng-template let-cellItem="cellItem">
+                    <span [title]="cellItem" class="over-flow-ellipsis">
+                      {{ cellItem }}
+                    </span>
+                  </ng-template>
+                </d-cell>
+              </d-column>
+
+              <d-column
+                [field]="'action'"
+                header="Action"
+                [sortable]="true"
+                [width]="columnSize.action"
               >
                 <d-cell>
                   <ng-template let-cellItem="cellItem">

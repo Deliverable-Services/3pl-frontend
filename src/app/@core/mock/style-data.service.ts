@@ -1,5 +1,6 @@
 import { Injectable } from "@angular/core";
 import { Observable, of as observableOf } from "rxjs";
+
 import { delay } from "rxjs/operators";
 import { Brand, BrandListData, Card, ListPager } from "../data/brandList";
 import { Season } from "../data/season";
@@ -109,6 +110,30 @@ export class StyleListDataService extends StyleListData {
     return this.http.put(
       `${this.baseApiUrl}/product/${id}`,
       data
+    );
+  }
+
+  setPublish(id: string, data: Products): Observable<any> {
+    const token = 'eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJPd25lclByaW5jaXBhbHtlbnRlcnByaXNlSUQ9J0JUVicsIGNvbXBhbnlJRD0nbnVsbCcsIG93bmVySUQ9J251bGwnLCB3bXNDb21wYW55SUQ9J251bGwnLCB1c2VySUQ9J2FwcHN1cHBvcnQnfSIsImF1dGgiOiJST0xFX1VTRVIiLCJvd25lciI6IntcImVudGVycHJpc2VJRFwiOlwiQlRWXCIsXCJjb21wYW55SURcIjpudWxsLFwib3duZXJJRFwiOm51bGwsXCJ3bXNDb21wYW55SURcIjpudWxsLFwidXNlcklEXCI6XCJhcHBzdXBwb3J0XCJ9IiwiZXhwIjoxNjg4MDI5MzA0fQ.TFu6cQ5yUwr2bKuAV-IvFDtWoJECSDvd9_va3rPnBX7V2LNFnx8mjGwgOVRZvOvFMVRANMu5A8agOV6-QN1SRg'; // Replace with your actual bearer token
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+    return this.http.put(
+      `${this.baseApiUrl}/product/${id}/publish`,
+      data,
+      { headers }
+    );
+  }  
+
+  setActive(id: string): Observable<any> {
+    return this.http.put(
+      `${this.baseApiUrl}/product/${id}/active`,
+      []
+    );
+  }
+
+  setInactive(id: string): Observable<any> {
+    return this.http.put(
+      `${this.baseApiUrl}/product/${id}/inactive`,
+      []
     );
   }
 

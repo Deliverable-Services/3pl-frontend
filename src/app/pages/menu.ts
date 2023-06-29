@@ -68,20 +68,15 @@ export default function (values: any) {
           title: "shopifyConnector",
           link: "/business/shopify-connector",
         },
-        {
-          title: "inventory",
-          link: "/business/inventory",
-        },
       ],
       link: "/",
       menuIcon: "icon icon-console",
     },
-    // {
-    //   title: "Credit Terms",
-    //   link: "/credit-terms",
-    //   // children: [],
-    //   menuIcon: "icon icon-console",
-    // },
+    {
+      title: "inventory",
+      link: "/business/inventory",
+      menuIcon: "icon icon-console",
+    },
     // {
     //   title: "Connection Location",
     //   link: "/connection-location",

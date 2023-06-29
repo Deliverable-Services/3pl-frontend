@@ -38,6 +38,7 @@ export class StyleFormComponent implements OnInit {
     exwSgdCost: "",
     productCategoryId: "",
     image: "",
+    status: "",
     varients: []
   }
   productVariants: any[] = [];
@@ -114,14 +115,15 @@ export class StyleFormComponent implements OnInit {
 
   getStyleById(id: string) {
     this.styleListDataService.getStyleById(id).subscribe((res) => {
-      this.styleFormData = res;
+      this.styleFormData = res;      
       this.styleFormData.slectedCat = res?.productCategory;
       this.styleFormData.productCategoryId = res?.productCategory?.categoryId;
-      if(!res?.varients?.length) {
+      if(!res?.variants?.length) {        
         this.addMoreVariant();
       } else {
-        this.productVariants = res?.varients || [];
-        this.styleFormData.varients = res?.varients || [];
+        const modifiedItems = res?.variants.map(({ createdDate, createdBy, lastModifiedBy, lastModifiedDate, ...rest }: { createdDate: string, createdBy: string, lastModifiedBy: string, lastModifiedDate: string }) => rest);
+        this.productVariants = modifiedItems || [];
+        this.styleFormData.varients = modifiedItems || [];
       }
     });
   }
@@ -166,6 +168,45 @@ export class StyleFormComponent implements OnInit {
     });
   }
 
+  confirmPublish(): void {
+    const finaldata = {
+      styleName: this.styleFormData.styleName,
+      logisticsDesc: this.styleFormData.logisticsDesc,
+      collection: this.styleFormData.collection,
+      fabricComposition: this.styleFormData.fabricComposition,
+      fabicSwatch: this.styleFormData.fabicSwatch,
+      unitWeight: this.styleFormData.unitWeight,
+      productCategoryId: this.styleFormData?.slectedCat?.categoryId,
+      exwLocalCurrency: this.styleFormData?.exwLocalCurrency,
+      exwLocalCost:this.styleFormData.exwLocalCost,
+      exwSgdCost: this.styleFormData?.exwSgdCost,
+      retailPrice: this.styleFormData?.retailPrice,
+      optionType: this.styleFormData?.optionType,
+      variants: this.productVariants,
+    };
+    if (window.confirm('Are you sure you want to publish?')) {
+      this.styleListDataService
+          .setPublish(this.paramId, finaldata)
+          .subscribe((res) => this._showToast(res));
+    }
+  }
+
+  confirmInactive(): void {
+    if (window.confirm('Are you sure you want to publish?')) {
+      this.styleListDataService
+          .setInactive(this.paramId)
+          .subscribe((res) => this._showToast(res));
+    }
+  }
+
+  confirmActive(): void {
+    if (window.confirm('Are you sure you want to publish?')) {
+      this.styleListDataService
+          .setActive(this.paramId)
+          .subscribe((res) => this._showToast(res));
+    }
+  }
+
   getValue(value: object) {
     // console.log(value);
   }
@@ -183,7 +224,12 @@ export class StyleFormComponent implements OnInit {
       fabicSwatch: this.styleFormData.fabicSwatch,
       unitWeight: this.styleFormData.unitWeight,
       productCategoryId: this.styleFormData?.slectedCat?.categoryId,
-      varients: this.productVariants
+      exwLocalCurrency: this.styleFormData?.exwLocalCurrency,
+      exwLocalCost:this.styleFormData.exwLocalCost,
+      exwSgdCost: this.styleFormData?.exwSgdCost,
+      retailPrice: this.styleFormData?.retailPrice,
+      optionType: this.styleFormData?.optionType,
+      variants: this.productVariants,
     };
 
     if (valid) {
@@ -222,7 +268,7 @@ export class StyleFormComponent implements OnInit {
       color: "",
       size: "",
       label: "",
-      hastagColor: "",
+      hangtagColor: "",
       productDesc: "",
       // localCurrency: "",
       // localExwPrice: "",
@@ -264,7 +310,7 @@ export class StyleFormComponent implements OnInit {
         allowed = false;return; }
       if(pv['label'] === ''){
         allowed = false;return;} 
-      if(pv['hastagColor'] === ''){
+      if(pv['hangtagColor'] === ''){
         allowed = false;return;    }     
     });
 

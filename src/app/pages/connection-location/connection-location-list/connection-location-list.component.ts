@@ -50,7 +50,7 @@ export class ConnectionLocationListComponent implements OnInit {
       .getList()
       .subscribe((res) => {
         console.log(':: res ', res)
-        this.basicDataSource = res.content;
+        this.basicDataSource = res;
         this.pager.total = res.totalItems;
         // Object.keys(res.listSize).map((key) => {
         //   let widthValue = res.listSize[key] + "%";
