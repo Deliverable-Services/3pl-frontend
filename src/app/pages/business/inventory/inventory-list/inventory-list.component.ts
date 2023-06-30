@@ -144,14 +144,23 @@ export class InventoryListComponent implements OnInit {
 
   async startSearch(event: any) {
     await this.delay(500);
+    const pattern = /^[0-9a-f]{8}-?[0-9a-f]{4}-?[0-9a-f]{4}-?[0-9a-f]{4}-?[0-9a-f]{12}$/;
     let filterVal: any[] = [];
     Object.keys(this.setSearch)?.forEach((k: any) => {
       if(this.setSearch[k] !== '') {
-        filterVal.push({
-          field: k,
-          operator: "match",
-          value: this.setSearch[k],
-        })
+        if (pattern.test(this.setSearch[k])) {
+          filterVal.push({
+            field: k,
+            operator: "in",
+            value: this.setSearch[k],
+          })
+        } else {
+          filterVal.push({
+            field: k,
+            operator: "match",
+            value: this.setSearch[k],
+          }) 
+        }
       }
     });
     this.getList(filterVal);

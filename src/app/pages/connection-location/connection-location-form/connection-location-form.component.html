@@ -27,19 +27,7 @@
           </div>
           <div [ngStyle]="{ display: 'flex', justifyContent: 'space-between' }">
             <div [ngStyle]="{ width: '46%' }">
-              <d-form-item>
-                <d-form-label [required]="true" [hasHelp]="true" [helpTips]="'This is the Node Id.'">
-                  {{'form.connectionLocationList.fields.nodeId' | translate}}
-                </d-form-label>
-                <d-form-control>
-                  <input dTextInput autocomplete="off" name="nodeId" [placeholder]="'form.connectionLocationList.fields.nodeId' | translate"
-                  [(ngModel)]="projectFormData.nodeId"
-                  [dValidateRules]="{
-                    validators: [{ required: true }]
-                  }" />
-                </d-form-control>
-              </d-form-item>
-
+            
               <d-form-item>
                 <d-form-label [required]="true" [hasHelp]="true" [helpTips]="'This is the Node Type'">
                   {{'form.connectionLocationList.fields.nodeType' | translate}}
@@ -68,6 +56,18 @@
                     [dValidateRules]="{
                       validators: [{ required: true }]
                     }"></d-select>
+                </d-form-control>
+              </d-form-item>
+              <d-form-item>
+                <d-form-label [required]="true" [hasHelp]="true" [helpTips]="'This is the Node Id.'">
+                  {{'form.connectionLocationList.fields.nodeId' | translate}}
+                </d-form-label>
+                <d-form-control>
+                  <input dTextInput autocomplete="off" name="nodeId" [placeholder]="'form.connectionLocationList.fields.nodeId' | translate"
+                  [(ngModel)]="projectFormData.nodeId"
+                  [dValidateRules]="{
+                    validators: [{ required: true }]
+                  }" />
                 </d-form-control>
               </d-form-item>
               <d-form-item>
@@ -179,11 +179,11 @@
         <div *ngIf="paramId">
           <div class="dateWrapper">
             {{ "Created Date :" + " " }}
-            {{ selectedCreditTerms.createdAt | mydatepipe }}
+            {{ selectedConnectionLocation.createdAt | mydatepipe }}
           </div>
           <div class="dateWrapper">
             {{ "Updated Date :" + " " }}
-            {{ selectedCreditTerms.updatedAt | mydatepipe }}
+            {{ selectedConnectionLocation.updatedAt | mydatepipe }}
           </div>
         </div>
       </div>

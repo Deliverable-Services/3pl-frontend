@@ -30,7 +30,7 @@ export class ConnectionLocationFormComponent implements OnInit {
   };
   nodeList: any[] = ['DC', 'Online', 'Store'];
   paramId: string = "";
-  selectedCreditTerms: any = {};
+  selectedConnectionLocation: any = {};
   constructor(
     private connectionLocationService: ConnectionLocationService,
     private shopifyConnectorService: ShopifyConnectorService,
@@ -45,7 +45,7 @@ export class ConnectionLocationFormComponent implements OnInit {
     this._getShopifyList();
 
     if (this.mode === "Edit") {
-      this.getCreditTermsById(this.paramId);
+      this.getConnectionLocationById(this.paramId);
     }
   }
 
@@ -57,10 +57,11 @@ export class ConnectionLocationFormComponent implements OnInit {
       });
   }
 
-  getCreditTermsById(id: string) {
-    this.connectionLocationService.getCreditTermsById(id).subscribe((res) => {
-      console.log({ res });
-      this.selectedCreditTerms = res;
+  getConnectionLocationById(id: string) {
+    this.connectionLocationService.getConnectionLocationById(id).subscribe((res) => {
+      console.log('connectionLocation',res);
+      
+      this.selectedConnectionLocation = res;
       this.projectFormData = res;
     });
   }

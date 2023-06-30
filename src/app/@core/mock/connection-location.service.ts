@@ -22,7 +22,7 @@ export class ConnectionLocationService {
   private searchParams = {
     filters: [
       {
-        field: "creditTermsSubject",
+        field: "connectionLocationSubject",
         operator: "match",
         value: "",
       },
@@ -113,7 +113,7 @@ export class ConnectionLocationService {
     );
   }
 
-  getCreditTermsById(id: string): Observable<any> {
+  getConnectionLocationById(id: string): Observable<any> {
     return this.http.get(`${this.baseApiUrl}/connection-location/${id}`);
   }
 
