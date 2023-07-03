@@ -17,7 +17,7 @@ export class ConnectionLocationFormComponent implements OnInit {
   shopifyListData: any[] = [];
   selectedShopifyList: any;
   projectFormData = {
-    nodeId: "",
+    // nodeId: "",
     nodeName: "",
     nodeDesc: "",
     nodeType: "",
@@ -25,7 +25,7 @@ export class ConnectionLocationFormComponent implements OnInit {
     shopifyLocationId: "",
     shopifyConnectorId: "",
     physicalAddress: "",
-    remarks: null,
+    // remarks: null,
     lgStoreWhsId: null
   };
   nodeList: any[] = ['DC', 'Online', 'Store'];
@@ -42,27 +42,30 @@ export class ConnectionLocationFormComponent implements OnInit {
   ngOnInit(): void {
     this.paramId = this.route.snapshot.params["id"];
     this.mode = this.route.snapshot.params["id"] ? "Edit" : "Add";
-    this._getShopifyList();
-
     if (this.mode === "Edit") {
       this.getConnectionLocationById(this.paramId);
     }
+    this._getShopifyList();
   }
 
   _getShopifyList() {
     this.shopifyConnectorService
       .getList()
       .subscribe((res) => {
-        this.shopifyListData = res;
+        setTimeout(() => {
+          this.shopifyListData = res;
+          this.selectedShopifyList = this.shopifyListData?.find((d: any) => d.shopifyConnectorId === this.projectFormData?.shopifyConnectorId)
+        }, 0);
       });
   }
 
   getConnectionLocationById(id: string) {
     this.connectionLocationService.getConnectionLocationById(id).subscribe((res) => {
-      console.log('connectionLocation',res);
-      
       this.selectedConnectionLocation = res;
       this.projectFormData = res;
+      
+      if(!this.selectedShopifyList)
+        this._getShopifyList();      
     });
   }
 

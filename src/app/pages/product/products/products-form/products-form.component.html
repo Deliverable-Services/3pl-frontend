@@ -26,19 +26,19 @@
           <div class="da-content-banner-title">
             {{ (mode === 'Add' ? "list.product.buttonTitle" : "form.product.edit_product") | translate }}
             <div style="float: right;">
-              <d-button dLoading *ngIf="styleFormData.status === 'Draft'" class="mr-element-spacing"
+              <d-button dLoading *ngIf="productsFormData.status === 'Draft'" class="mr-element-spacing"
                 [title]="styleForm.errorMessage || ''" circled="true" style="margin-right: 8px"
                 [showLoading]="styleForm.pending" (click)="confirmPublish()">
                 Publish
               </d-button>
 
-              <d-button dLoading *ngIf="styleFormData.status === 'Publish' || styleFormData.status === 'Inactive'" class="mr-element-spacing"
+              <d-button dLoading *ngIf="productsFormData.status === 'Publish' || productsFormData.status === 'Inactive'" class="mr-element-spacing"
                 [title]="styleForm.errorMessage || ''" circled="true" style="margin-right: 8px"
                 [showLoading]="styleForm.pending" (click)="confirmActive()">
                 Active
               </d-button>
 
-              <d-button dLoading *ngIf="styleFormData.status === 'Publish' || styleFormData.status === 'Active'" class="mr-element-spacing"
+              <d-button dLoading *ngIf="productsFormData.status === 'Publish' || productsFormData.status === 'Active'" class="mr-element-spacing"
                 [title]="styleForm.errorMessage || ''" circled="true" style="margin-right: 8px"
                 [showLoading]="styleForm.pending" (click)="confirmInactive()">
                 Inactive
@@ -54,7 +54,7 @@
                 </d-form-label>
                 <d-form-control>
                   <input dTextInput autocomplete="off" name="styleName"
-                    [placeholder]="'form.product.fields.styleName' | translate" [(ngModel)]="styleFormData.styleName"
+                    [placeholder]="'form.product.fields.styleName' | translate" [(ngModel)]="productsFormData.styleName"
                     [dValidateRules]="{
                       validators: [{ required: true }]
                     }" />
@@ -67,7 +67,7 @@
                 </d-form-label>
                 <d-form-control>
                   <input dTextInput autocomplete="off" name="collection"
-                    [placeholder]="'form.product.fields.collection' | translate" [(ngModel)]="styleFormData.collection"
+                    [placeholder]="'form.product.fields.collection' | translate" [(ngModel)]="productsFormData.collection"
                     onkeydown="if(['Space'].includes(arguments[0].code)){return false;}" [dValidateRules]="{
                       validators: [{ required: true }]
                     }" />
@@ -80,7 +80,7 @@
                 <d-form-control>
                   <input dTextInput autocomplete="off" name="fabricComposition"
                     [placeholder]="'form.product.fields.fabricComposition' | translate"
-                    [(ngModel)]="styleFormData.fabricComposition"
+                    [(ngModel)]="productsFormData.fabricComposition"
                     onkeydown="if(['Space'].includes(arguments[0].code)){return false;}" [dValidateRules]="{
                         validators: [{ required: true }]
                       }" />
@@ -94,7 +94,7 @@
                 <d-form-control>
                   <input dTextInput autocomplete="off" name="fabicSwatch"
                     [placeholder]="'form.product.fields.fabricSwatch' | translate"
-                    [(ngModel)]="styleFormData.fabicSwatch"
+                    [(ngModel)]="productsFormData.fabicSwatch"
                     onkeydown="if(['Space'].includes(arguments[0].code)){return false;}" [dValidateRules]="{
                         validators: [{ required: true }]
                       }" />
@@ -108,7 +108,7 @@
                 <d-form-control>
                   <input dTextInput autocomplete="off" name="exwLocalCurrency"
                     [placeholder]="'form.product.fields.localCurrency' | translate"
-                    [(ngModel)]="styleFormData.exwLocalCurrency" [dValidateRules]="{
+                    [(ngModel)]="productsFormData.exwLocalCurrency" [dValidateRules]="{
                         validators: [{ required: true }]
                       }" />
                 </d-form-control>
@@ -121,7 +121,7 @@
                 <d-form-control>
                   <input dTextInput autocomplete="off" name="exwLocalCost"
                     [placeholder]="'form.product.fields.localExwPrice' | translate"
-                    [(ngModel)]="styleFormData.exwLocalCost" [dValidateRules]="{
+                    [(ngModel)]="productsFormData.exwLocalCost" [dValidateRules]="{
                         validators: [{ required: true }]
                       }" />
                 </d-form-control>
@@ -135,7 +135,7 @@
                 </d-form-label>
                 <d-form-control>
                   <input dTextInput autocomplete="off" name="unitWeight"
-                    [placeholder]="'form.product.fields.unitWeight' | translate" [(ngModel)]="styleFormData.unitWeight"
+                    [placeholder]="'form.product.fields.unitWeight' | translate" [(ngModel)]="productsFormData.unitWeight"
                     onkeydown="if(['Space'].includes(arguments[0].code)){return false;}" [dValidateRules]="{
                         validators: [{ required: true }]
                       }" />
@@ -149,7 +149,7 @@
                 <d-form-control>
                   <d-select [ngStyle]="{ width: '100%' }" placeholder="Select a Category" [scrollHight]="'300px'"
                     [filterKey]="'categoryName'" [appendToBody]="true" [options]="categoryList" name="category"
-                    [isSearch]="true" [(ngModel)]="styleFormData.slectedCat" [dValidateRules]="{
+                    [isSearch]="true" [(ngModel)]="productsFormData.slectedCat" [dValidateRules]="{
                       validators: [{ required: true }]
                     }"></d-select>
                 </d-form-control>
@@ -162,7 +162,7 @@
                 <d-form-control>
                   <d-select [ngStyle]="{ width: '100%' }" [scrollHight]="'300px'" [appendToBody]="true"
                     [options]="optionTypeList" name="optionType" [isSearch]="true"
-                    [(ngModel)]="styleFormData.optionType" [dValidateRules]="{
+                    [(ngModel)]="productsFormData.optionType" [dValidateRules]="{
                       validators: [{ required: true }]
                     }"></d-select>
                 </d-form-control>
@@ -175,7 +175,7 @@
                 <d-form-control>
                   <input dTextInput autocomplete="off" name="exwSgdCost"
                     [placeholder]="'form.product.fields.companyExwPrice' | translate"
-                    [(ngModel)]="styleFormData.exwSgdCost" [dValidateRules]="{
+                    [(ngModel)]="productsFormData.exwSgdCost" [dValidateRules]="{
                         validators: [{ required: true }]
                       }" />
                 </d-form-control>
@@ -188,7 +188,7 @@
                 <d-form-control>
                   <input dTextInput autocomplete="off" name="retailPrice"
                     [placeholder]="'form.product.fields.retailPrice' | translate"
-                    [(ngModel)]="styleFormData.retailPrice" [dValidateRules]="{
+                    [(ngModel)]="productsFormData.retailPrice" [dValidateRules]="{
                         validators: [{ required: true }]
                       }" />
                 </d-form-control>
@@ -199,7 +199,7 @@
                   translate}}</d-form-label>
                 <d-form-control>
                   <input type="file" autocomplete="off" name="image"
-                    [placeholder]="'form.product.fields.image' | translate" [(ngModel)]="styleFormData.image"
+                    [placeholder]="'form.product.fields.image' | translate" [(ngModel)]="productsFormData.image"
                     [dValidateRules]="{
                         validators: [{ required: false }]
                       }" />
@@ -215,7 +215,7 @@
               <d-form-control>
                 <textarea [ngStyle]="{ height: '104px' }" dTextarea resize="vertical" autocomplete="off"
                   name="logisticsDesc" [placeholder]="'form.product.fields.logisticDescription' | translate"
-                  [(ngModel)]="styleFormData.logisticsDesc" [dValidateRules]="{
+                  [(ngModel)]="productsFormData.logisticsDesc" [dValidateRules]="{
                     validators: [{ required: true }]
                   }"></textarea>
               </d-form-control>
@@ -349,12 +349,12 @@
   </da-layout-row>
 </div>
 
-<!-- <div class="da-content-wrapper" *ngIf="styleFormData.products.length > 0">
+<!-- <div class="da-content-wrapper" *ngIf="productsFormData.products.length > 0">
   <da-layout-row [daGutter]="[24, 24]">
     <da-col-item [daSpan]="24" [daXs]="24">
       <div class="da-content-banner-title">Product List</div>
       <div class="list-content" dLoading [loading]="busy">
-        <d-data-table #datatable [dataSource]="styleFormData.products" [scrollable]="true">
+        <d-data-table #datatable [dataSource]="productsFormData.products" [scrollable]="true">
           <d-column field="productSku" header="Product SKU" [width]="'100px'" [sortable]="true">
             <d-cell>
               <ng-template let-cellItem="cellItem">

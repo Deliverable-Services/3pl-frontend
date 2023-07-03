@@ -35,7 +35,7 @@ export interface Card {
   actions?: CardAction[];
 }
 
-export abstract class StyleListData {
+export abstract class ProductsListData {
   // abstract getBrandList(pager: ListPager): Observable<Brand[]>;
   // abstract getOriginSource(pager: ListPager): Observable<Brand[]>;
   // abstract getTreeSource(pager: ListPager): Observable<Brand[]>;

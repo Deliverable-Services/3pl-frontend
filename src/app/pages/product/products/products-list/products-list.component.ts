@@ -2,29 +2,25 @@ import {
   ChangeDetectorRef,
   Component,
   EventEmitter,
-  OnChanges,
   OnInit,
   Output,
-  SimpleChanges,
 } from "@angular/core";
 import { Router } from "@angular/router";
 import {
   DialogService,
-  FormLayout,
   SortEventArg,
-  TableWidthConfig,
 } from "ng-devui";
 import { Subscription } from "rxjs";
 import { Brand } from "src/app/@core/data/brandList";
 import { PageParam, SearchParam } from "src/app/@core/data/searchFormData";
-import { StyleListDataService } from "src/app/@core/mock/style-data.service";
+import { ProductsListDataService } from "src/app/@core/mock/products-data.service";
 
 @Component({
-  selector: "da-style-list",
-  templateUrl: "./style-list.component.html",
-  styleUrls: ["./style-list.component.scss"],
+  selector: "app-products-list",
+  templateUrl: "./products-list.component.html",
+  styleUrls: ["./products-list.component.scss"],
 })
-export class StyleListComponent implements OnInit {
+export class ProductsListComponent implements OnInit {
   filterAreaShow = false;
 
   pageParam: any = {
@@ -78,18 +74,16 @@ export class StyleListComponent implements OnInit {
   mode: string | undefined;
 
   constructor(
-    private styleListDataService: StyleListDataService,
-    private dialogService: DialogService,
-    private cdr: ChangeDetectorRef,
+    private productsListDataService: ProductsListDataService,
     private router: Router
   ) {}
 
   ngOnInit() {
-    this.getStyleList();
+    this.getProductsList();
   }
 
-  getStyleList() {
-    this.busy = this.styleListDataService.getStyleList().subscribe((res) => {
+  getProductsList() {
+    this.busy = this.productsListDataService.getList().subscribe((res) => {
       this.pager.total = res.totalItems;
       this.basicDataSource = res.content;
       Object.keys(res.listSize).map((key) => {
@@ -104,41 +98,41 @@ export class StyleListComponent implements OnInit {
   }
 
   setSearchParams(searchParam: SearchParam) {
-    this.styleListDataService.setSearchParams(searchParam);
-    this.getStyleList();
+    this.productsListDataService.setSearchParams(searchParam);
+    this.getProductsList();
   }
 
   setPageParams(pageParam: PageParam) {
-    this.styleListDataService.setPageParams(pageParam);
-    this.getStyleList();
+    this.productsListDataService.setPageParams(pageParam);
+    this.getProductsList();
   }
 
   onPageChange(e: number) {
     this.pager.pageIndex = e;
     this.pageParam.pageNo = this.pager.pageIndex - 1;
     this.setPageParams(this.pageParam);
-    this.getStyleList();
+    this.getProductsList();
   }
 
   onSizeChange(e: number) {
     this.pager.pageSize = e;
     this.pageParam.pageSize = e;
     this.setPageParams(this.pageParam);
-    this.getStyleList();
+    this.getProductsList();
   }
 
   search(e: any, searchParam: SearchParam) {
     searchParam.keyword = e.target.value;
     this.setSearchParams(searchParam);
-    this.getStyleList();
+    this.getProductsList();
   }
 
   multiSortChange(e: SortEventArg[]) {
     if (e.length === 1) {
       this.pageParam.sortBy = e[0].field;
       this.pageParam.sortDir = e[0].direction.toLowerCase();
-      this.styleListDataService.setPageParams(this.pageParam);
-      this.getStyleList();
+      this.productsListDataService.setPageParams(this.pageParam);
+      this.getProductsList();
     }
   }
 
@@ -147,6 +141,6 @@ export class StyleListComponent implements OnInit {
       active: activeCheck == false ? "inactive" : "active",
       styleId: rowId.styleId,
     };
-    this.styleListDataService.statusToggle(data).subscribe((res: any) => {});
+    this.productsListDataService.statusToggle(data).subscribe((res: any) => {});
   }
 }

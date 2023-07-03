@@ -109,6 +109,10 @@ export class InventoryListComponent implements OnInit {
       .getList()
       .subscribe((res) => {
         this.connectionLocations = [];
+        this.connectionLocations.push({
+          connectionLocationId: 'All',
+          nodeName: 'All'
+        })
         // console.log(':: res ', res)
        res.forEach((data:any) => {
           this.basicDataSourceConnection[data.connectionLocationId] = data.nodeName;
@@ -139,7 +143,11 @@ export class InventoryListComponent implements OnInit {
   }
 
   setValue() {
-    this.setSearch.connectionLocationId = this.dropdownSearch.connectionLocationId;
+    if(this.dropdownSearch.connectionLocationId === 'All') {
+      this.setSearch.connectionLocationId = '';
+    } else {
+      this.setSearch.connectionLocationId = this.dropdownSearch.connectionLocationId;
+    }
   }
 
   async startSearch(event: any) {

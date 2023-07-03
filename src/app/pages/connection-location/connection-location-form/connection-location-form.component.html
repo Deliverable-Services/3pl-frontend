@@ -27,6 +27,20 @@
           </div>
           <div [ngStyle]="{ display: 'flex', justifyContent: 'space-between' }">
             <div [ngStyle]="{ width: '46%' }">
+
+              <d-form-item>
+                <d-form-label [required]="true" [hasHelp]="true" [helpTips]="'This is the Node Name'">
+                  {{'form.connectionLocationList.fields.nodeName' | translate}}
+                </d-form-label>
+
+                <d-form-control>
+                  <input dTextInput autocomplete="off" name="nodeName" [placeholder]="'form.connectionLocationList.fields.nodeName' | translate"
+                  [(ngModel)]="projectFormData.nodeName"
+                  [dValidateRules]="{
+                    validators: [{ required: true }]
+                  }" />
+                </d-form-control>
+              </d-form-item>
             
               <d-form-item>
                 <d-form-label [required]="true" [hasHelp]="true" [helpTips]="'This is the Node Type'">
@@ -58,7 +72,7 @@
                     }"></d-select>
                 </d-form-control>
               </d-form-item>
-              <d-form-item>
+              <!-- <d-form-item>
                 <d-form-label [required]="true" [hasHelp]="true" [helpTips]="'This is the Node Id.'">
                   {{'form.connectionLocationList.fields.nodeId' | translate}}
                 </d-form-label>
@@ -69,7 +83,7 @@
                     validators: [{ required: true }]
                   }" />
                 </d-form-control>
-              </d-form-item>
+              </d-form-item> -->
               <d-form-item>
                 <d-form-label [required]="true" [hasHelp]="true" [helpTips]="'This is the Shopify Location Id'">
                   {{'form.connectionLocationList.fields.shopifyLocationId' | translate}}
@@ -83,7 +97,7 @@
                   }" />
                 </d-form-control>
               </d-form-item>
-              <d-form-item>
+              <!-- <d-form-item>
                 <d-form-label [required]="true" [hasHelp]="true" [helpTips]="'This is the Remarks'">
                   {{'form.connectionLocationList.fields.remarks' | translate}}
                 </d-form-label>
@@ -95,23 +109,10 @@
                     validators: [{ required: true }]
                   }" />
                 </d-form-control>
-              </d-form-item>
+              </d-form-item> -->
             </div>
 
             <div [ngStyle]="{ width: '46%' }">
-              <d-form-item>
-                <d-form-label [required]="true" [hasHelp]="true" [helpTips]="'This is the Node Name'">
-                  {{'form.connectionLocationList.fields.nodeName' | translate}}
-                </d-form-label>
-
-                <d-form-control>
-                  <input dTextInput autocomplete="off" name="nodeName" [placeholder]="'form.connectionLocationList.fields.nodeName' | translate"
-                  [(ngModel)]="projectFormData.nodeName"
-                  [dValidateRules]="{
-                    validators: [{ required: true }]
-                  }" />
-                </d-form-control>
-              </d-form-item>
               <d-form-item>
                 <d-form-label [required]="true" [hasHelp]="true" [helpTips]="'This is the LG Store Owner Id'">
                   {{'form.connectionLocationList.fields.lGStoreOwnerId' | translate}}
@@ -176,7 +177,7 @@
             </d-form-operation>
           </div>
         </form>
-        <div *ngIf="paramId">
+        <!-- <div *ngIf="paramId">
           <div class="dateWrapper">
             {{ "Created Date :" + " " }}
             {{ selectedConnectionLocation.createdAt | mydatepipe }}
@@ -185,7 +186,7 @@
             {{ "Updated Date :" + " " }}
             {{ selectedConnectionLocation.updatedAt | mydatepipe }}
           </div>
-        </div>
+        </div> -->
       </div>
     </da-col-item>
   </da-layout-row>

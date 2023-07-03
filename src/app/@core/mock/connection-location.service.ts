@@ -1,14 +1,7 @@
 import { Injectable } from "@angular/core";
 import { Observable, of as observableOf } from "rxjs";
-import { delay } from "rxjs/operators";
-import { Brand, BrandListData, Card, ListPager } from "../data/brandList";
-import { Season } from "../data/season";
-// import { ListDataService } from './brand-data.service';
 import { environment } from "src/environments/environment";
 import { HttpClient, HttpHeaders, HttpParams } from "@angular/common/http";
-import { StyleListData } from "../data/styleList";
-// import { Category } from "../data/categoryList";
-import { Products } from "../data/productList";
 import { PageParam, SearchParam } from "../data/searchFormData";
 
 const baseUrl = environment.baseUrl;
@@ -56,12 +49,10 @@ export class ConnectionLocationService {
   }
 
   setPageParams(pageParams: PageParam) {
-    console.log('::::: pageParams ', pageParams)
     this.pageParams = pageParams;
   }
 
   getList(): Observable<any> {
-    console.log(':: this.pageParams :: ', this.pageParams)
     const httpOptionsToken = {
       params: new HttpParams({
         fromObject: this.pageParams,

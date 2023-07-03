@@ -24,7 +24,7 @@
                 <div class="da-left">
                   <div [ngStyle]="{
                     display: 'inline-block',
-                    marginRight: '10px'
+                    marginRight: '20px'
                   }">
                     <d-select
                       placeholder="Select a Connection Location"
@@ -39,6 +39,9 @@
                   </div>
                   <div [ngStyle]="{ display: 'inline-block' }">
                     <d-search
+                      [ngStyle]="{
+                        marginRight: '20px'
+                      }"
                       [size]="'sm'"
                       [(ngModel)]="setSearch.styleName"
                       (input)="startSearch($event)"

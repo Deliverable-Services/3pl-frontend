@@ -1,21 +1,14 @@
 import { Injectable } from "@angular/core";
 import { Observable, of as observableOf } from "rxjs";
 
-import { delay } from "rxjs/operators";
-import { Brand, BrandListData, Card, ListPager } from "../data/brandList";
-import { Season } from "../data/season";
-// import { ListDataService } from './brand-data.service';
 import { environment } from "src/environments/environment";
 import { HttpClient, HttpHeaders, HttpParams } from "@angular/common/http";
-import { StyleListData } from "../data/styleList";
-// import { Category } from "../data/categoryList";
+import { ProductsListData } from "../data/styleList";
 import { Products } from "../data/productList";
 import { PageParam, SearchParam } from "../data/searchFormData";
 
-const baseUrl = environment.baseUrl;
-
 @Injectable()
-export class StyleListDataService extends StyleListData {
+export class ProductsListDataService extends ProductsListData {
   baseApiUrl: string = environment.baseUrl;
   constructor(private http: HttpClient) {
     super();
@@ -61,7 +54,7 @@ export class StyleListDataService extends StyleListData {
     this.pageParams = pageParams;
   }
 
-  getStyleList(): Observable<any> {
+  getList(): Observable<any> {
     const httpOptionsToken = {
       params: new HttpParams({
         fromObject: this.pageParams,
@@ -75,7 +68,7 @@ export class StyleListDataService extends StyleListData {
     );
   }
 
-  getStyleListActive(): Observable<any> {
+  getListActive(): Observable<any> {
     const httpOptionsToken = {
       headers: new HttpHeaders({
         "Content-Type": "application/json",
@@ -102,11 +95,11 @@ export class StyleListDataService extends StyleListData {
     );
   }
 
-  addStyle(data: Products) {
+  add(data: Products) {
     return this.http.post(`${this.baseApiUrl}/product`, data);
   }
 
-  updateStyle(id: string, data: Products): Observable<any> {
+  update(id: string, data: Products): Observable<any> {
     return this.http.put(
       `${this.baseApiUrl}/product/${id}`,
       data
@@ -137,7 +130,7 @@ export class StyleListDataService extends StyleListData {
     );
   }
 
-  getStyleById(id: string): Observable<any> {
+  getById(id: string): Observable<any> {
     return this.http.get(`${this.baseApiUrl}/product/${id}`);
   }
   statusToggle(data: any) {

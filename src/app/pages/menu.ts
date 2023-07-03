@@ -21,7 +21,7 @@ export default function (values: any) {
         // },
         {
           title: "product",
-          link: "/product/style",
+          link: "/product/products",
         },
 
         // {

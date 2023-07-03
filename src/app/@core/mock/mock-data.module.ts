@@ -11,7 +11,7 @@ import { CategoryListDataService } from "./category-data.service";
 import { MaterialListDataService } from "./material-data.service";
 import { ProductListDataService } from "./product-data.service";
 import { UnitListDataService } from "./unit-data.service";
-import { StyleListDataService } from "./style-data.service";
+import { ProductsListDataService } from "./products-data.service";
 import { VendorListDataService } from "./vendor-data.service";
 import { TradeListDataService } from "./Trade-data.service";
 import { CompanyDataService } from "./company-data.service";
@@ -31,7 +31,7 @@ const SERVICES = [
   TradeListDataService,
   ProductListDataService,
   UnitListDataService,
-  StyleListDataService,
+  ProductsListDataService,
   MaterialListDataService,
   CategoryListDataService,
   WorkItemService,

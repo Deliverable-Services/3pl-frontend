@@ -1,10 +1,7 @@
-import { style } from "@angular/animations";
-import { Component, TemplateRef, ViewChild, OnInit } from "@angular/core";
-import { AbstractControlDirective } from "@angular/forms";
-import { ActivatedRoute, Params, Route, Router } from "@angular/router";
-import { DFormGroupRuleDirective, DialogService, FormLayout, ToastService } from "ng-devui";
-import { Observable, Subscription, of } from "rxjs";
-import { delay } from "rxjs/operators";
+import { Component, OnInit } from "@angular/core";
+import { ActivatedRoute, Router } from "@angular/router";
+import { DialogService, FormLayout, ToastService } from "ng-devui";
+import { Subscription } from "rxjs";
 import { Brand } from "src/app/@core/data/brandList";
 import { Category } from "src/app/@core/data/categoryList";
 import { Season } from "src/app/@core/data/season";
@@ -12,18 +9,17 @@ import { BrandListDataService } from "src/app/@core/mock/brand-data.service";
 import { CategoryListDataService } from "src/app/@core/mock/category-data.service";
 import { MaterialListDataService } from "src/app/@core/mock/material-data.service";
 import { ProductListDataService } from "src/app/@core/mock/product-data.service";
-import { StyleListDataService } from "src/app/@core/mock/style-data.service";
+import { ProductsListDataService } from "src/app/@core/mock/products-data.service";
 import { UnitListDataService } from "src/app/@core/mock/unit-data.service";
-import { FormConfig } from "src/app/@shared/components/admin-form";
 import { MSG } from "src/config/global-var";
 
 @Component({
-  selector: "app-style-form",
-  templateUrl: "./style-form.component.html",
-  styleUrls: ["./stytle-form.component.scss"],
+  selector: "app-products-form",
+  templateUrl: "./products-form.component.html",
+  styleUrls: ["./products-form.component.scss"],
 })
-export class StyleFormComponent implements OnInit {
-  styleFormData = {
+export class ProductsFormComponent implements OnInit {
+  productsFormData = {
     styleName: "",
     logisticsDesc: "",
     collection: "",
@@ -87,7 +83,7 @@ export class StyleFormComponent implements OnInit {
 
   constructor(
     private productListDataService: ProductListDataService,
-    private styleListDataService: StyleListDataService,
+    private productsListDataService: ProductsListDataService,
     private brandListDataService: BrandListDataService,
     private categoryListDataService: CategoryListDataService,
     private materialListDataService: MaterialListDataService,
@@ -114,16 +110,16 @@ export class StyleFormComponent implements OnInit {
   verticalLayout: FormLayout = FormLayout.Vertical;
 
   getStyleById(id: string) {
-    this.styleListDataService.getStyleById(id).subscribe((res) => {
-      this.styleFormData = res;      
-      this.styleFormData.slectedCat = res?.productCategory;
-      this.styleFormData.productCategoryId = res?.productCategory?.categoryId;
+    this.productsListDataService.getById(id).subscribe((res) => {
+      this.productsFormData = res;      
+      this.productsFormData.slectedCat = res?.productCategory;
+      this.productsFormData.productCategoryId = res?.productCategory?.categoryId;
       if(!res?.variants?.length) {        
         this.addMoreVariant();
       } else {
         const modifiedItems = res?.variants.map(({ createdDate, createdBy, lastModifiedBy, lastModifiedDate, ...rest }: { createdDate: string, createdBy: string, lastModifiedBy: string, lastModifiedDate: string }) => rest);
         this.productVariants = modifiedItems || [];
-        this.styleFormData.varients = modifiedItems || [];
+        this.productsFormData.varients = modifiedItems || [];
       }
     });
   }
@@ -135,7 +131,7 @@ export class StyleFormComponent implements OnInit {
   }
 
   getSeasonList() {
-    // return this.styleFormData.brand.seasons.filter(
+    // return this.productsFormData.brand.seasons.filter(
     //   (season: any) => season.active === true
     // );
   }
@@ -149,7 +145,7 @@ export class StyleFormComponent implements OnInit {
   }
 
   // getSubCategoryList() {
-  //   return this.styleFormData.category.subCategories.filter(
+  //   return this.productsFormData.category.subCategories.filter(
   //     (subCategory: any) => subCategory.active === true
   //   );
   // }
@@ -170,22 +166,22 @@ export class StyleFormComponent implements OnInit {
 
   confirmPublish(): void {
     const finaldata = {
-      styleName: this.styleFormData.styleName,
-      logisticsDesc: this.styleFormData.logisticsDesc,
-      collection: this.styleFormData.collection,
-      fabricComposition: this.styleFormData.fabricComposition,
-      fabicSwatch: this.styleFormData.fabicSwatch,
-      unitWeight: this.styleFormData.unitWeight,
-      productCategoryId: this.styleFormData?.slectedCat?.categoryId,
-      exwLocalCurrency: this.styleFormData?.exwLocalCurrency,
-      exwLocalCost:this.styleFormData.exwLocalCost,
-      exwSgdCost: this.styleFormData?.exwSgdCost,
-      retailPrice: this.styleFormData?.retailPrice,
-      optionType: this.styleFormData?.optionType,
+      styleName: this.productsFormData.styleName,
+      logisticsDesc: this.productsFormData.logisticsDesc,
+      collection: this.productsFormData.collection,
+      fabricComposition: this.productsFormData.fabricComposition,
+      fabicSwatch: this.productsFormData.fabicSwatch,
+      unitWeight: this.productsFormData.unitWeight,
+      productCategoryId: this.productsFormData?.slectedCat?.categoryId,
+      exwLocalCurrency: this.productsFormData?.exwLocalCurrency,
+      exwLocalCost:this.productsFormData.exwLocalCost,
+      exwSgdCost: this.productsFormData?.exwSgdCost,
+      retailPrice: this.productsFormData?.retailPrice,
+      optionType: this.productsFormData?.optionType,
       variants: this.productVariants,
     };
     if (window.confirm('Are you sure you want to publish?')) {
-      this.styleListDataService
+      this.productsListDataService
           .setPublish(this.paramId, finaldata)
           .subscribe((res) => this._showToast(res));
     }
@@ -193,7 +189,7 @@ export class StyleFormComponent implements OnInit {
 
   confirmInactive(): void {
     if (window.confirm('Are you sure you want to publish?')) {
-      this.styleListDataService
+      this.productsListDataService
           .setInactive(this.paramId)
           .subscribe((res) => this._showToast(res));
     }
@@ -201,7 +197,7 @@ export class StyleFormComponent implements OnInit {
 
   confirmActive(): void {
     if (window.confirm('Are you sure you want to publish?')) {
-      this.styleListDataService
+      this.productsListDataService
           .setActive(this.paramId)
           .subscribe((res) => this._showToast(res));
     }
@@ -217,27 +213,27 @@ export class StyleFormComponent implements OnInit {
 
   submitStyleForm({ valid, directive, data, errors }: any) {
     const finaldata = {
-      styleName: this.styleFormData.styleName,
-      logisticsDesc: this.styleFormData.logisticsDesc,
-      collection: this.styleFormData.collection,
-      fabricComposition: this.styleFormData.fabricComposition,
-      fabicSwatch: this.styleFormData.fabicSwatch,
-      unitWeight: this.styleFormData.unitWeight,
-      productCategoryId: this.styleFormData?.slectedCat?.categoryId,
-      exwLocalCurrency: this.styleFormData?.exwLocalCurrency,
-      exwLocalCost:this.styleFormData.exwLocalCost,
-      exwSgdCost: this.styleFormData?.exwSgdCost,
-      retailPrice: this.styleFormData?.retailPrice,
-      optionType: this.styleFormData?.optionType,
+      styleName: this.productsFormData.styleName,
+      logisticsDesc: this.productsFormData.logisticsDesc,
+      collection: this.productsFormData.collection,
+      fabricComposition: this.productsFormData.fabricComposition,
+      fabicSwatch: this.productsFormData.fabicSwatch,
+      unitWeight: this.productsFormData.unitWeight,
+      productCategoryId: this.productsFormData?.slectedCat?.categoryId,
+      exwLocalCurrency: this.productsFormData?.exwLocalCurrency,
+      exwLocalCost:this.productsFormData.exwLocalCost,
+      exwSgdCost: this.productsFormData?.exwSgdCost,
+      retailPrice: this.productsFormData?.retailPrice,
+      optionType: this.productsFormData?.optionType,
       variants: this.productVariants,
     };
 
     if (valid) {
       if (this.mode === "Add") {
-        this.styleListDataService.addStyle(finaldata).subscribe((res) => this._showToast(res));
+        this.productsListDataService.add(finaldata).subscribe((res) => this._showToast(res));
       } else {
-        this.styleListDataService
-          .updateStyle(this.paramId, finaldata)
+        this.productsListDataService
+          .update(this.paramId, finaldata)
           .subscribe((res) => this._showToast(res));
       }
     } else {
@@ -304,9 +300,9 @@ export class StyleFormComponent implements OnInit {
       allowed = true;
       if(pv['sku'] === '') {
         allowed = false;return;} 
-      if(pv['color'] === '' && (this.styleFormData.optionType === 'COLOR_SIZE' || this.styleFormData.optionType === 'COLOR')){
+      if(pv['color'] === '' && (this.productsFormData.optionType === 'COLOR_SIZE' || this.productsFormData.optionType === 'COLOR')){
         allowed = false;return; }
-      if(pv['size'] === '' && (this.styleFormData.optionType === 'COLOR_SIZE' || this.styleFormData.optionType === 'SIZE')){
+      if(pv['size'] === '' && (this.productsFormData.optionType === 'COLOR_SIZE' || this.productsFormData.optionType === 'SIZE')){
         allowed = false;return; }
       if(pv['label'] === ''){
         allowed = false;return;} 
@@ -318,8 +314,8 @@ export class StyleFormComponent implements OnInit {
   }
 
   checkVIsibility(type: string) {
-    if(this.styleFormData.optionType === type 
-    || this.styleFormData.optionType === 'COLOR_SIZE')
+    if(this.productsFormData.optionType === type 
+    || this.productsFormData.optionType === 'COLOR_SIZE')
       return true;
 
     return false;  

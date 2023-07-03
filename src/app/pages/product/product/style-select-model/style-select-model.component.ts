@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from "@angular/core";
 import { Subscription } from "rxjs";
-import { StyleListDataService } from "src/app/@core/mock/style-data.service";
+import { ProductsListDataService } from "src/app/@core/mock/products-data.service";
 
 @Component({
   selector: "app-style-select-model",
@@ -32,7 +32,7 @@ export class StyleSelectModelComponent implements OnInit {
     this.getStyleList();
   }
 
-  constructor(private styleListDataService: StyleListDataService) {}
+  constructor(private productsListDataService: ProductsListDataService) {}
 
   submitStyleForm(event: any) {
     this.data.getDataFromModel({
@@ -41,7 +41,7 @@ export class StyleSelectModelComponent implements OnInit {
   }
 
   getStyleList() {
-    this.busy = this.styleListDataService.getStyleList().subscribe((res) => {
+    this.busy = this.productsListDataService.getList().subscribe((res) => {
       this.pager.total = res.totalItems;
 
       this.basicDataSource = res.content.map((res1: any) => {

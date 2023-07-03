@@ -1,9 +1,9 @@
 import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
 import { FormLayout } from "ng-devui";
 import { Product } from "src/app/@core/data/productList";
-import { StyleListData } from "src/app/@core/data/styleList";
+import { ProductsListData } from "src/app/@core/data/styleList";
 import { PoDataService } from "src/app/@core/mock/po-data.service";
-import { StyleListDataService } from "src/app/@core/mock/style-data.service";
+import { ProductsListDataService } from "src/app/@core/mock/products-data.service";
 
 @Component({
   selector: "app-purchase-order-line-form",
@@ -36,7 +36,7 @@ export class PurchaseOrderLineFormComponent implements OnInit {
 
   constructor(
     private poDataService: PoDataService,
-    private styleListDataService: StyleListDataService
+    private productsListDataService: ProductsListDataService
   ) {}
 
   ngOnInit(): void {
@@ -58,13 +58,13 @@ export class PurchaseOrderLineFormComponent implements OnInit {
   }
 
   getStyleList() {
-    this.styleListDataService.getStyleList().subscribe((res) => {
+    this.productsListDataService.getList().subscribe((res) => {
       this.styleList = res.content;
     });
   }
 
   getStyleById(id: string) {
-    this.styleListDataService.getStyleById(id).subscribe((res) => {
+    this.productsListDataService.getById(id).subscribe((res) => {
       this.poLineFormData.style = res;
       this.productList = this.poLineFormData.style.products;
     });

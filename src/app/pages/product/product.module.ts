@@ -19,8 +19,8 @@ import { MaterialFormComponent } from "./material/material-form/material-form.co
 import { UnitListComponent } from "./unit/unitList/unit-list.component";
 import { ProductListComponent } from "./product/productList/product-list.component";
 import { ProductFormComponent } from "./product/product-form/product-form.component";
-import { StyleListComponent } from "./style/styleList/style-list.component";
-import { StyleFormComponent } from "./style/style-form/style-form.component";
+import { ProductsListComponent } from "./products/products-list/products-list.component";
+import { ProductsFormComponent } from "./products/products-form/products-form.component";
 import { MyDatePipe } from "src/app/@shared/pipe/date-pipe.pipe";
 import { UnitFormComponent } from "./unit/unit-form/unit-form.component";
 import { ToggleModule } from 'ng-devui/toggle';
@@ -39,8 +39,8 @@ import { CurrencyExchangeComponent } from './currency-exchange/currency-exchange
     UnitFormComponent,
     ProductListComponent,
     ProductFormComponent,
-    StyleListComponent,
-    StyleFormComponent,
+    ProductsListComponent,
+    ProductsFormComponent,
     StyleSelectModelComponent,
     CurrencyExchangeComponent,
   ],
