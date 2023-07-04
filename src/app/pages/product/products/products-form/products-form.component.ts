@@ -181,6 +181,7 @@ export class ProductsFormComponent implements OnInit {
       variants: this.productVariants,
     };
     if (window.confirm('Are you sure you want to publish?')) {
+      this.mode = 'edit';
       this.productsListDataService
           .setPublish(this.paramId, finaldata)
           .subscribe((res) => this._showToast(res));
@@ -189,6 +190,7 @@ export class ProductsFormComponent implements OnInit {
 
   confirmInactive(): void {
     if (window.confirm('Are you sure you want to publish?')) {
+      this.mode = 'edit';
       this.productsListDataService
           .setInactive(this.paramId)
           .subscribe((res) => this._showToast(res));
@@ -197,6 +199,7 @@ export class ProductsFormComponent implements OnInit {
 
   confirmActive(): void {
     if (window.confirm('Are you sure you want to publish?')) {
+      this.mode = 'edit';
       this.productsListDataService
           .setActive(this.paramId)
           .subscribe((res) => this._showToast(res));
@@ -281,7 +284,7 @@ export class ProductsFormComponent implements OnInit {
     if(resp) {
       type = 'success';
       msg = this.mode === 'Add' ? MSG.create:MSG.update;
-      this.router.navigate(["/product/style"]);
+      this.router.navigate(["/product/products"]);
     } else {
       type = 'error';
       msg = MSG.error;

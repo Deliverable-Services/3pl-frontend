@@ -94,7 +94,7 @@ export class ProductsListComponent implements OnInit {
   }
 
   editStyle(rowId: any, index: number) {
-    this.router.navigate([`/product/style/edit/${rowId}`]);
+    this.router.navigate([`/product/products/edit/${rowId}`]);
   }
 
   setSearchParams(searchParam: SearchParam) {

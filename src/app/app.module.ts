@@ -12,6 +12,7 @@ import { I18N } from "../config/language-config";
 import { SetHeadersInterceptor } from "./@core/interceptor/SetHeaders.interceptor"; 
 import { MyDatePipe } from "./@shared/pipe/date-pipe.pipe";
 import { AuthInterceptor } from "./auth.interceptor";
+import { CheckRequestInterceptor } from "./@core/interceptor/check-request.interceptor";
 
 class I18NLoader implements TranslateLoader {
   getTranslation(lang: "zh-cn" | "en-us" | "zh-tw"): Observable<Object> {
@@ -42,6 +43,7 @@ class I18NLoader implements TranslateLoader {
       useClass: AuthInterceptor,
       multi: true,
     },
+    { provide: HTTP_INTERCEPTORS, useClass: CheckRequestInterceptor, multi: true },
   ],
   bootstrap: [AppComponent],
 })
