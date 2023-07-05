@@ -53,6 +53,15 @@ body {
     height: 28px;
     border-radius: 4px 4px;
 }
+.mr-element-spacing {
+  // background: #53ba75 !important;
+  button {
+    background: #53ba75 !important;
+    span {
+      color: #fff !important;
+    }
+  }
+}
 .devui-form-control-container button i{
   border-right: 0 !important;
 }

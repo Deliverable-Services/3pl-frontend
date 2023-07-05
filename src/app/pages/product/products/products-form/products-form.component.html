@@ -335,7 +335,7 @@
             <!-- variant section -->
 
             <d-form-operation>
-              <d-button [disabled]="!_checkForBtn()" dTooltip
+              <d-button class="mr-element-spacing" [disabled]="!_checkForBtn()" dTooltip
                 [content]="!_checkForBtn() ? 'Please add all variant values!':''" dLoading class="mr-element-spacing"
                 [title]="styleForm.errorMessage || ''" circled="true" style="margin-right: 8px"
                 [showLoading]="styleForm.pending" dFormSubmit [dFormSubmitData]="'submit-button'">

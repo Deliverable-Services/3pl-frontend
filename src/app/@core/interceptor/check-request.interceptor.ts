@@ -33,8 +33,8 @@ export class CheckRequestInterceptor implements HttpInterceptor {
           ],
           life: 2000,
         });
-        this.auth.logout();
-        this.route.navigate(['/', 'login']);
+        // this.auth.logout();
+        // this.route.navigate(['/', 'login']);
       }
       return throwError(error);
     })).pipe(map<HttpEvent<any>, any>((evt: HttpEvent<any>) => {
