@@ -55,6 +55,11 @@
                       class="da-inline"
                       [placeholder]="'Search with SKU'"
                     ></d-search>
+
+                    <div style="float: right;">
+                      <button class="btn btn-primary">Sync Shopify</button>
+                    </div>
+
                   </div>
                 </div>
               </div>
@@ -83,6 +88,36 @@
                   </ng-template>
                 </d-cell>
               </d-column>
+
+              <d-column
+              [field]="'styleName'"
+              header="Style Name"
+              [sortable]="true"
+              [width]="columnSize.styleName"
+            >
+              <d-cell>
+                <ng-template let-cellItem="cellItem">
+                  <span [title]="cellItem" class="over-flow-ellipsis">
+                    {{ cellItem }}
+                  </span>
+                </ng-template>
+              </d-cell>
+            </d-column>
+
+            <d-column
+              [field]="'sku'"
+              header="SKU"
+              [sortable]="true"
+              [width]="columnSize.sku"
+            >
+              <d-cell>
+                <ng-template let-cellItem="cellItem">
+                  <span [title]="cellItem" class="over-flow-ellipsis">
+                    {{ cellItem }}
+                  </span>
+                </ng-template>
+              </d-cell>
+            </d-column>
 
               <d-column
                 [field]="'totalQty'"
@@ -114,35 +149,7 @@
                 </d-cell>
               </d-column>
 
-              <d-column
-                [field]="'styleName'"
-                header="Style Name"
-                [sortable]="true"
-                [width]="columnSize.styleName"
-              >
-                <d-cell>
-                  <ng-template let-cellItem="cellItem">
-                    <span [title]="cellItem" class="over-flow-ellipsis">
-                      {{ cellItem }}
-                    </span>
-                  </ng-template>
-                </d-cell>
-              </d-column>
-
-              <d-column
-                [field]="'sku'"
-                header="SKU"
-                [sortable]="true"
-                [width]="columnSize.sku"
-              >
-                <d-cell>
-                  <ng-template let-cellItem="cellItem">
-                    <span [title]="cellItem" class="over-flow-ellipsis">
-                      {{ cellItem }}
-                    </span>
-                  </ng-template>
-                </d-cell>
-              </d-column>
+             
 
               <d-column
                 [field]="'avaiableQty'"

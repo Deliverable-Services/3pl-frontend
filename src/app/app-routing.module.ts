@@ -9,20 +9,10 @@ const routes: Routes = [
     path: "",
     loadChildren: () =>
       import("./pages/pages.module").then((m) => m.PagesModule),
-    canActivate: [AuthGuardService],
   },
-  {
-    path: "login",
-    component: LoginComponent,
-  },
-  {
-    path: "register",
-    component: RegisterComponent,
-  },
-
   {
     path: "",
-    redirectTo: "pages",
+    redirectTo: "/product/category",
     pathMatch: "full",
   },
   {

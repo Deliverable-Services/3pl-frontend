@@ -59,7 +59,7 @@
                     }"></d-select>
                 </d-form-control>
               </d-form-item>
-              <d-form-item *ngIf="projectFormData.nodeType === 'Store'">
+              <d-form-item *ngIf="projectFormData.nodeType === 'Store' || projectFormData.nodeType === 'Online'">
                 <d-form-label [required]="true" [hasHelp]="true" [helpTips]="'This is the Shopify Connector Id'">
                   {{'form.connectionLocationList.fields.shopifyConnectorId' | translate}}
                 </d-form-label>
@@ -84,7 +84,7 @@
                   }" />
                 </d-form-control>
               </d-form-item> -->
-              <d-form-item>
+              <d-form-item *ngIf="projectFormData.nodeType === 'Store' || projectFormData.nodeType === 'Online'">
                 <d-form-label [required]="true" [hasHelp]="true" [helpTips]="'This is the Shopify Location Id'">
                   {{'form.connectionLocationList.fields.shopifyLocationId' | translate}}
                 </d-form-label>
@@ -112,8 +112,21 @@
               </d-form-item> -->
             </div>
 
-            <div [ngStyle]="{ width: '46%' }">
+            <div [ngStyle]="{ width: '46%' }">              
               <d-form-item>
+                <d-form-label [required]="true" [hasHelp]="true" [helpTips]="'This is the Physical Address'">
+                  {{'form.connectionLocationList.fields.physicalAddress' | translate}}
+                </d-form-label>
+
+                <d-form-control>
+                  <input dTextInput autocomplete="off" name="physicalAddress" [placeholder]="'form.connectionLocationList.fields.physicalAddress' | translate"
+                  [(ngModel)]="projectFormData.physicalAddress"
+                  [dValidateRules]="{
+                    validators: [{ required: true }]
+                  }" />
+                </d-form-control>
+              </d-form-item>
+              <d-form-item *ngIf="projectFormData.nodeType === 'DC' || projectFormData.nodeType === 'Online'">
                 <d-form-label [required]="true" [hasHelp]="true" [helpTips]="'This is the LG Store Owner Id'">
                   {{'form.connectionLocationList.fields.lGStoreOwnerId' | translate}}
                 </d-form-label>
@@ -126,7 +139,7 @@
                   }" />
                 </d-form-control>
               </d-form-item>
-              <d-form-item>
+              <d-form-item *ngIf="projectFormData.nodeType === 'DC' || projectFormData.nodeType === 'Online'">
                 <d-form-label [required]="true" [hasHelp]="true" [helpTips]="'This is the LG Store WHS Id'">
                   {{'form.connectionLocationList.fields.lgStoreWhsId' | translate}}
                 </d-form-label>
@@ -134,19 +147,6 @@
                 <d-form-control>
                   <input dTextInput autocomplete="off" name="lgStoreWhsId" [placeholder]="'form.connectionLocationList.fields.lgStoreWhsId' | translate"
                   [(ngModel)]="projectFormData.lgStoreWhsId"
-                  [dValidateRules]="{
-                    validators: [{ required: true }]
-                  }" />
-                </d-form-control>
-              </d-form-item>
-              <d-form-item>
-                <d-form-label [required]="true" [hasHelp]="true" [helpTips]="'This is the Physical Address'">
-                  {{'form.connectionLocationList.fields.physicalAddress' | translate}}
-                </d-form-label>
-
-                <d-form-control>
-                  <input dTextInput autocomplete="off" name="physicalAddress" [placeholder]="'form.connectionLocationList.fields.physicalAddress' | translate"
-                  [(ngModel)]="projectFormData.physicalAddress"
                   [dValidateRules]="{
                     validators: [{ required: true }]
                   }" />

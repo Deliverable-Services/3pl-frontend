@@ -2,7 +2,7 @@
   <div class="add-session-btn">
     <d-breadcrumb>
       <d-breadcrumb-item>
-        <a routerLink="../">{{ 'form.company.title' | translate }}</a>
+        <a routerLink="../../">{{ 'list.breadcrumb.home' | translate }}</a>
       </d-breadcrumb-item>
       <d-breadcrumb-item>
         {{ 'form.company.edit_company' | translate }}
@@ -106,13 +106,13 @@
             </d-form-control>
           </d-form-item>
 
-          <d-form-item>
+          <!-- <d-form-item>
             <d-form-label>{{'form.company.fields.createdAt' | translate}}</d-form-label>
             <d-form-control>
               <input dTextInput disabled autocomplete="off" name="createdDate" [placeholder]="'form.company.fields.createdAt' | translate"
                 [(ngModel)]="companyFormData.createdDate" />
             </d-form-control>
-          </d-form-item>
+          </d-form-item> -->
 
           <d-form-item>
             <d-form-label>{{'form.company.fields.updatedAt' | translate}}</d-form-label>

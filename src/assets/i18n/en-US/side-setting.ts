@@ -9,7 +9,7 @@ export default {
     'hide-menu': 'Hide Menu',
     'hide-menu-head': 'Hide Menu Head',
     notice:
-      'The configuration bar only provides preview of dynamic layout switching in this site. You can manually copy and modify related configuration files and clear the localStorage cache.',
+      '',
     'copy-config': 'Copy Config',
     'copy-summary': 'Copy Successfully',
     'copy-content':

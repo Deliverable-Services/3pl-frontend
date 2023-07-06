@@ -71,6 +71,31 @@ export class CurrencyDataService extends CurrencyListData {
     );
   }
 
+  getCurrencyListActive(data?: any) {
+
+    const searchParams = {
+      filters: [
+        {
+          field: "",
+          operator: "",
+          value: "",
+        },
+      ],
+    };
+
+    let catUri;
+    if(data) {
+      catUri = `${this.baseApiUrl}/currency/list?pageSize=${data.perPage}`;
+    } else {
+      catUri = `${this.baseApiUrl}/currency/list`;
+    }
+
+    return this.http.post(
+      catUri,
+      searchParams
+    );
+  }
+
   addCurrency(data: CurrencyRate) {
     const httpOptionsToken = {
       headers: new HttpHeaders({

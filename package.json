@@ -9,7 +9,7 @@
   },
   "scripts": {
     "ng": "ng",
-    "start": "ng serve --open --port 3000 --proxy-config proxy.config.json",
+    "start": "ng serve --open --host 0.0.0.0 --port 3000 --disable-host-check",
     "build": "ng build",
     "build:website": "ng build --configuration production --base-href /admin/ --deploy-url /admin/ --output-path dist/admin",
     "test": "ng test",

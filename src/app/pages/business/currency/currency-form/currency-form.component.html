@@ -10,10 +10,15 @@
     </d-breadcrumb>
   </div>
 </div>
-
 <div class="da-content-wrapper">
   <da-layout-row [daGutter]="[24, 24]">
     <da-col-item [daSpan]="24">
+      <div style="float: right;">
+        <h4>Created At:{{currencyFormData.createdDate}} </h4>
+        <h4>Created By:{{currencyFormData.createdBy}} </h4>
+        <h4>Updated By,:{{currencyFormData.lastModifiedBy}} </h4>
+        <h4>Updated At:{{currencyFormData.lastModifiedDate}} </h4>
+      </div>
       <div class="da-basic-form">
         <form dForm ngForm [dValidateRules]="{
             message: 'The form verification failed, please check.'
@@ -21,6 +26,7 @@
           autocomplete="off">
           <div class="da-content-banner-title">
             {{ (mode === 'Add' ? "list.currency.buttonTitle" : "form.currency.edit_currency") | translate }}
+           
           </div>
           <d-form-item>
             <d-form-label [required]="true" [hasHelp]="true" [helpTips]="'This is the From Currency.'">

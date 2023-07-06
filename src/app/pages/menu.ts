@@ -30,7 +30,7 @@ export default function (values: any) {
         // },
       ],
       link: "/",
-      menuIcon: "icon icon-console",
+      menuIcon: "icon icon-op-task",
     },
 
     {
@@ -70,12 +70,12 @@ export default function (values: any) {
         },
       ],
       link: "/",
-      menuIcon: "icon icon-console",
+      menuIcon: "icon icon-more-func",
     },
     {
       title: "inventory",
       link: "/business/inventory",
-      menuIcon: "icon icon-console",
+      menuIcon: "icon icon-go-story",
     },
     // {
     //   title: "Connection Location",

@@ -4,8 +4,10 @@ import { DialogService, FormLayout, ToastService } from "ng-devui";
 import { Subscription } from "rxjs";
 import { Brand } from "src/app/@core/data/brandList";
 import { Category } from "src/app/@core/data/categoryList";
+import { CurrencyListData } from "src/app/@core/data/CurrencyList";
 import { Season } from "src/app/@core/data/season";
 import { BrandListDataService } from "src/app/@core/mock/brand-data.service";
+import { CurrencyDataService } from "src/app/@core/mock/currency-data.service";
 import { CategoryListDataService } from "src/app/@core/mock/category-data.service";
 import { MaterialListDataService } from "src/app/@core/mock/material-data.service";
 import { ProductListDataService } from "src/app/@core/mock/product-data.service";
@@ -27,6 +29,7 @@ export class ProductsFormComponent implements OnInit {
     fabicSwatch: "",
     unitWeight: "",
     slectedCat: {categoryId: ""},
+    selectedCurrency: {currencyId:""},
     optionType: "",
     retailPrice: "",
     exwLocalCurrency: "",
@@ -73,6 +76,7 @@ export class ProductsFormComponent implements OnInit {
   busy: Subscription | undefined;
 
   categoryList: Category[] = [];
+  currencyList: CurrencyListData[] = [];
   optionTypeList: any[] = ['NONE', 'COLOR', 'SIZE', 'COLOR_SIZE'];
   brandList: Brand[] = [];
   seasonList: Season[] = [];
@@ -85,6 +89,7 @@ export class ProductsFormComponent implements OnInit {
     private productListDataService: ProductListDataService,
     private productsListDataService: ProductsListDataService,
     private brandListDataService: BrandListDataService,
+    private currencyDataService: CurrencyDataService,
     private categoryListDataService: CategoryListDataService,
     private materialListDataService: MaterialListDataService,
     private unitListDataService: UnitListDataService,
@@ -97,6 +102,7 @@ export class ProductsFormComponent implements OnInit {
   ngOnInit() {
     // this.getBrandListActive();
     this.getCategoryListActive();
+    this.getCurrencyListActive();
     // this.getMaterialListActive();
     // this.getUnitListActive();
 
@@ -142,6 +148,12 @@ export class ProductsFormComponent implements OnInit {
       .subscribe((res: any) => {
         this.categoryList = res.content;
       });
+  }
+
+  getCurrencyListActive() {
+    this.currencyDataService.getCurrencyListActive({perPage:100}).subscribe((res:any) => {
+      this.currencyList = res.content;
+    })
   }
 
   // getSubCategoryList() {

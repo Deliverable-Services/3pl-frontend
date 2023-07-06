@@ -106,11 +106,16 @@
                   {{'form.product.fields.localCurrency' | translate}}
                 </d-form-label>
                 <d-form-control>
-                  <input dTextInput autocomplete="off" name="exwLocalCurrency"
+                  <!-- <input dTextInput autocomplete="off" name="exwLocalCurrency"
                     [placeholder]="'form.product.fields.localCurrency' | translate"
                     [(ngModel)]="productsFormData.exwLocalCurrency" [dValidateRules]="{
                         validators: [{ required: true }]
-                      }" />
+                      }" /> -->
+                      <d-select [ngStyle]="{ width: '100%' }" placeholder="Select a Currency" [scrollHight]="'300px'"
+                    [filterKey]="'currencyName'" [appendToBody]="true" [options]="currencyList" name="exwLocalCurrency"
+                    [isSearch]="true" [(ngModel)]="productsFormData.exwLocalCurrency" [dValidateRules]="{
+                      validators: [{ required: true }]
+                    }"></d-select>
                 </d-form-control>
               </d-form-item>
 

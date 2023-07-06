@@ -14,7 +14,11 @@ import { MSG } from "src/config/global-var";
 export class CurrencyFormComponent implements OnInit {
   currencyFormData = {
     currencyName: "",
+    createdBy:"",
+    lastModifiedBy:"",
+    lastModifiedDate:"",
     currencyCode: "",
+    createdDate:"",
     rate: 1,
     remarks:""
   };
