@@ -192,30 +192,33 @@ export class ProductsFormComponent implements OnInit {
       optionType: this.productsFormData?.optionType,
       variants: this.productVariants,
     };
-    if (window.confirm('Are you sure you want to publish?')) {
-      this.mode = 'edit';
-      this.productsListDataService
-          .setPublish(this.paramId, finaldata)
-          .subscribe((res) => this._showToast(res));
-    }
+    // if (window.confirm('Are you sure you want to publish?')) {
+    //   this.mode = 'edit';
+    //   this.productsListDataService
+    //       .setPublish(this.paramId, finaldata)
+    //       .subscribe((res) => this._showToast(res));
+    // }
+    this._showPopUp('publish', finaldata);
   }
 
   confirmInactive(): void {
-    if (window.confirm('Are you sure you want to publish?')) {
-      this.mode = 'edit';
-      this.productsListDataService
-          .setInactive(this.paramId)
-          .subscribe((res) => this._showToast(res));
-    }
+    // if (window.confirm('Are you sure you want to publish?')) {
+    //   this.mode = 'edit';
+    //   this.productsListDataService
+    //       .setInactive(this.paramId)
+    //       .subscribe((res) => this._showToast(res));
+    // }
+    this._showPopUp('inactive');
   }
 
   confirmActive(): void {
-    if (window.confirm('Are you sure you want to publish?')) {
-      this.mode = 'edit';
-      this.productsListDataService
-          .setActive(this.paramId)
-          .subscribe((res) => this._showToast(res));
-    }
+    // if (window.confirm('Are you sure you want to publish?')) {
+    //   this.mode = 'edit';
+    //   this.productsListDataService
+    //       .setActive(this.paramId)
+    //       .subscribe((res) => this._showToast(res));
+    // }
+    this._showPopUp('active');
   }
 
   getValue(value: object) {
@@ -334,5 +337,49 @@ export class ProductsFormComponent implements OnInit {
       return true;
 
     return false;  
+  }
+
+  _showPopUp(type: string, fData?: any) {
+    let checkPopup = this.dialogService.open({
+      id: 'manage-confirmation',
+      width: '350px',
+      maxHeight: '600px',
+      title: 'Are you sure you want to that?',
+      backdropCloseable: false,
+      content: '',
+      showCloseBtn: false,
+      dialogtype: 'warning',
+      onClose: () => {
+      },
+      buttons: [
+        {
+          cssClass: 'primary',
+          text: 'Ok',
+          handler: ($event: Event) => {
+            if(type === 'publish') {
+              this.productsListDataService
+              .setPublish(this.paramId, fData)
+              .subscribe((res) => this._showToast(res));
+            } else if(type === 'inactive') {
+              this.productsListDataService
+              .setInactive(this.paramId)
+              .subscribe((res) => this._showToast(res));
+            } else if(type === 'active') {
+              this.productsListDataService
+              .setActive(this.paramId)
+              .subscribe((res) => this._showToast(res));
+            }
+            checkPopup.modalInstance.hide();
+          },
+        },
+        {
+          cssClass: 'info',
+          text: 'Cancel',
+          handler: ($event: Event) => {
+            checkPopup.modalInstance.hide();
+          },
+        },
+      ],
+    });
   }
 }

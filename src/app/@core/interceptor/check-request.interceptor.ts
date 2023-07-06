@@ -9,16 +9,16 @@ import {
 import { Observable, throwError } from 'rxjs';
 import { catchError, retry, map } from 'rxjs/operators';
 import { Router } from '@angular/router';
-import { ToastService } from "ng-devui";
 import { AuthService } from '../services/auth.service';
+import { DialogService } from 'ng-devui';
 
 @Injectable()
 export class CheckRequestInterceptor implements HttpInterceptor {
 
   constructor(
-    private toastService: ToastService,
     private auth: AuthService,
     private route: Router,
+    private dialogService: DialogService,
   ) { }
 
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
@@ -27,14 +27,29 @@ export class CheckRequestInterceptor implements HttpInterceptor {
       if (err.status === 401) {
         const keysArray = Object.keys(err.error)
         const error = err.error[keysArray[0]];
-        this.toastService.open({
-          value: [
-            { severity: 'error', content: 'Unauthorized Access!'},
+        const dProperties = this.dialogService.open({
+          id: 'unauthorized-access',
+          width: '350px',
+          maxHeight: '600px',
+          title: 'Unauthorized Access',
+          content: "Sorry! You can't proceed further.",
+          backdropCloseable: false,
+          showCloseBtn: false,
+          dialogtype: 'failed',
+          onClose: () => {
+            this.auth.logout();
+            this.route.navigate(['/', 'login']);
+          },
+          buttons: [
+            {
+              cssClass: 'danger',
+              text: 'Ok',
+              handler: ($event: Event) => {
+                dProperties.modalInstance.hide();
+              },
+            },
           ],
-          life: 2000,
         });
-        // this.auth.logout();
-        // this.route.navigate(['/', 'login']);
       }
       return throwError(error);
     })).pipe(map<HttpEvent<any>, any>((evt: HttpEvent<any>) => {
