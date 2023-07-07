@@ -18,12 +18,22 @@
             <div class="da-header-left">
               <div class="da-common-search">
                 <div class="da-left">
-                  <d-search [size]="'sm'" [(ngModel)]="searchWithStyleName.keyword"
-                    (input)="search($event, searchWithStyleName)" class="da-inline"
-                    [placeholder]="'Search with Style Name'"></d-search>
-                  <d-search [size]="'sm'" [(ngModel)]="searchWithStyleCode.keyword"
+                  <div [ngStyle]="{
+                    display: 'inline-block',
+                    marginRight: '20px'
+                  }">
+                    <d-select placeholder="Filter By Status" [scrollHight]="'300px'"
+                      [filterKey]="'nodeName'" [appendToBody]="true" [options]="dropdownValues"
+                      [(ngModel)]="dropdownSearch.status" (valueChange)="startSearch($event)"></d-select>
+                  </div>
+                  <div [ngStyle]="{ display: 'inline-block' }">
+                    <d-search [size]="'sm'" [(ngModel)]="searchWithStyleName.keyword"
+                      (input)="search($event, searchWithStyleName)" class="da-inline"
+                      [placeholder]="'Search with Style Name'"></d-search>
+                  </div>
+                  <!-- <d-search [size]="'sm'" [(ngModel)]="searchWithStyleCode.keyword"
                     (input)="search($event, searchWithStyleCode)" class="da-inline"
-                    [placeholder]="'Search with Style Code'"></d-search>
+                    [placeholder]="'Search with Style Code'"></d-search> -->
                 </div>
                 <div class="header-right" routerLink="add">
                   <d-button class="mr-element-spacing">{{"list.product.buttonTitle" | translate}}</d-button>

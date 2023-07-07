@@ -21,8 +21,8 @@ export class CurrencyDataService extends CurrencyListData {
   private searchParams = {
     filters: [
       {
-        field: "",
-        operator: "",
+        field: "currencyCode",
+        operator: "match",
         value: "",
       },
     ],

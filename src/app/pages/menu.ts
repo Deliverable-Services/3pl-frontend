@@ -74,7 +74,7 @@ export default function (values: any) {
     },
     {
       title: "inventory",
-      link: "/business/inventory",
+      link: "/inventory",
       menuIcon: "icon icon-go-story",
     },
     // {

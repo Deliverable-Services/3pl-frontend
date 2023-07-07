@@ -2,6 +2,7 @@ import { RouterModule, Routes } from "@angular/router";
 import { NgModule } from "@angular/core";
 
 import { PagesComponent } from "./pages.component";
+import { InventoryListComponent } from "./business/inventory/inventory-list/inventory-list.component";
 // import { NotFoundComponent } from './abnormal/not-found/not-found.component';
 
 const routes: Routes = [
@@ -39,6 +40,10 @@ const routes: Routes = [
         path: "connection-location",
         loadChildren: () =>
           import("./connection-location/connection-location.module").then((m) => m.ConnectionLocationModule),
+      },
+      {
+        path: "inventory",
+        component: InventoryListComponent,
       },
       {
         path: "",

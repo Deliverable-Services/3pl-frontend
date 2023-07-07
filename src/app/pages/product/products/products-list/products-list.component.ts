@@ -30,6 +30,10 @@ export class ProductsListComponent implements OnInit {
     sortDir: "asc",
   };
 
+  dropdownValues: any[] = ['Draft', 'Inactive', 'Active'];
+  dropdownSearch: any = {
+    status: ''
+  }
   isAddSession: boolean = true;
   @Output() checked = new EventEmitter();
 
@@ -142,5 +146,14 @@ export class ProductsListComponent implements OnInit {
       styleId: rowId.styleId,
     };
     this.productsListDataService.statusToggle(data).subscribe((res: any) => {});
+  }
+
+  startSearch(event: any) {
+    // console.log(':: dropdownSearch.status :: ', this.dropdownSearch.status)
+    this.setSearchParams({
+      columnName: 'status',
+      searchType: 'match',
+      keyword: this.dropdownSearch.status
+    });
   }
 }

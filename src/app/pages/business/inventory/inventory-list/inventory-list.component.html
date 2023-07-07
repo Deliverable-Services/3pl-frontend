@@ -35,17 +35,16 @@
                       class="da-inline" [placeholder]="'Search with Style Name'"></d-search>
                     <d-search [size]="'sm'" [(ngModel)]="setSearch.sku" (input)="startSearch($event)" class="da-inline"
                       [placeholder]="'Search with SKU'"></d-search>
-
-                    <div style="float: right;margin-left: 120vh;">
-                      <d-button dLoading (click)="syncShopify()" class="mr-element-spacing primary" circled="true" style="margin-right: 8px">
-                        Sync Shopify
-                      </d-button>
-                      <d-button dLoading (click)="syncWMS()" class="mr-element-spacing primary" circled="true" style="margin-right: 8px">
-                        Sync WMS
-                      </d-button>
-                    </div>
-
                   </div>
+                </div>
+
+                <div>
+                  <d-button dLoading (click)="syncShopify()" class="mr-element-spacing primary" circled="true" style="margin-right: 8px">
+                    Sync Shopify
+                  </d-button>
+                  <d-button dLoading (click)="syncWMS()" class="mr-element-spacing primary" circled="true" style="margin-right: 8px">
+                    Sync WMS
+                  </d-button>
                 </div>
               </div>
             </div>
@@ -96,6 +95,26 @@
               </d-column>
 
               <d-column [field]="'skuDesc'" header="SKU Desc" [sortable]="true" [width]="columnSize.skuDesc">
+                <d-cell>
+                  <ng-template let-cellItem="cellItem">
+                    <span [title]="cellItem" class="over-flow-ellipsis">
+                      {{ cellItem }}
+                    </span>
+                  </ng-template>
+                </d-cell>
+              </d-column>
+
+              <d-column [field]="'unavailableInTransitQty'" header="In Transit Qty" [sortable]="true" [width]="columnSize.totalQty">
+                <d-cell>
+                  <ng-template let-cellItem="cellItem">
+                    <span [title]="cellItem" class="over-flow-ellipsis">
+                      {{ cellItem }}
+                    </span>
+                  </ng-template>
+                </d-cell>
+              </d-column>
+
+              <d-column [field]="'poQty'" header="PO Qty" [sortable]="true" [width]="columnSize.totalQty">
                 <d-cell>
                   <ng-template let-cellItem="cellItem">
                     <span [title]="cellItem" class="over-flow-ellipsis">

@@ -44,8 +44,8 @@ export class CurrencyListComponent implements OnInit {
 
   searchWithFromCurrency: SearchParam = {
     keyword: "",
-    sort: "asc",
-    columnName: "fromCurrency",
+    // sort: "asc",
+    columnName: "currencyCode",
     searchType: "match",
   };
 

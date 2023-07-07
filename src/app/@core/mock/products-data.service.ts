@@ -21,11 +21,11 @@ export class ProductsListDataService extends ProductsListData {
         operator: "match",
         value: "",
       },
-      // {
-      //   field: "styleCode",
-      //   operator: "match",
-      //   value: "",
-      // },
+      {
+        field: "status",
+        operator: "match",
+        value: "",
+      },
     ],
   };
 

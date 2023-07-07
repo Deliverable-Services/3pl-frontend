@@ -2,7 +2,7 @@
   <div class="add-session-btn">
     <d-breadcrumb>
       <d-breadcrumb-item>
-        <a routerLink="/product/style">{{ "list.product.title" | translate }}</a>
+        <a routerLink="/product/products">{{ "list.product.title" | translate }}</a>
       </d-breadcrumb-item>
       <d-breadcrumb-item>
         {{ (mode === 'Add' ? "list.product.buttonTitle" : "form.product.edit_product") | translate }}
@@ -39,7 +39,7 @@
               </d-button>
 
               <d-button dLoading *ngIf="productsFormData.status === 'Publish' || productsFormData.status === 'Active'"
-                class="mr-element-spacing danger" [title]="styleForm.errorMessage || ''" circled="true"
+                class="manage-inactive-btn danger" [title]="styleForm.errorMessage || ''" circled="true"
                 style="margin-right: 8px;" [showLoading]="styleForm.pending" (click)="confirmInactive()">
                 Inactive
               </d-button>
@@ -240,7 +240,7 @@
               </d-form-control>
             </d-form-item>
 
-            <d-form-operation *ngIf="paramId">
+            <d-form-operation *ngIf="paramId && productsFormData.status === 'Draft'">
               <d-button dLoading class="mr-element-spacing" [title]="styleForm.errorMessage || ''" circled="true"
                 [disabled]="isFormDisabled(productsFormData.status)" style="margin-right: 8px"
                 [showLoading]="styleForm.pending" (click)="addMoreVariant()">
@@ -359,7 +359,8 @@
             </ng-container>
             <!-- variant section -->
 
-            <d-form-operation>
+            <d-form-operation
+            *ngIf="productsFormData.status === 'Draft'">
               <d-button class="mr-element-spacing" [disabled]="!_checkForBtn()" dTooltip
                 [disabled]="isFormDisabled(productsFormData.status)"
                 [content]="!_checkForBtn() ? 'Please add all variant values!':''" dLoading class="mr-element-spacing"

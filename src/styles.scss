@@ -62,6 +62,15 @@ body {
     }
   }
 }
+.manage-inactive-btn {
+  background: #EE4B2B !important;
+  button {
+    background: #EE4B2B !important;
+    span {
+      color: #fff !important;
+    }
+  }
+}
 .devui-form-control-container button i{
   border-right: 0 !important;
 }

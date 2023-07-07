@@ -2,7 +2,7 @@ import { Observable } from "rxjs";
 
 export interface SearchParam {
   keyword: string;
-  sort: string;
+  sort?: string;
   columnName: string;
   searchType: string;
 }
