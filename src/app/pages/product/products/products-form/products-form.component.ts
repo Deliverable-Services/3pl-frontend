@@ -150,9 +150,16 @@ export class ProductsFormComponent implements OnInit {
       });
   }
 
+  isFormDisabled(status:string): boolean {
+    return status === 'Active' || status === 'Inactive';
+  }
+
   getCurrencyListActive() {
     this.currencyDataService.getCurrencyListActive({perPage:100}).subscribe((res:any) => {
-      this.currencyList = res.content;
+      
+      this.currencyList = res.content.map((el:any) =>{
+          return el.currencyCode;
+      })      
     })
   }
 

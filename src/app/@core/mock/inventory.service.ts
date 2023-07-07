@@ -44,4 +44,15 @@ export class InventoryService {
       httpOptionsToken
     );
   }
+
+  syncShopify(): Observable<any>  {
+    return this.http.get(
+      `${this.baseApiUrl}/inventory/fetch/shopify`
+    );
+  }
+  syncWMS(): Observable<any>  {
+    return this.http.get(
+      `${this.baseApiUrl}/inventory/fetch/wms`
+    );
+  }
 }

@@ -1,11 +1,9 @@
 <div class="da-list-wrap">
   <div class="da-content-banner">
     <d-breadcrumb>
-      <d-breadcrumb-item
-        ><a routerLink="/">{{
+      <d-breadcrumb-item><a routerLink="/">{{
           "list.breadcrumb.home" | translate
-        }}</a></d-breadcrumb-item
-      >
+          }}</a></d-breadcrumb-item>
       <d-breadcrumb-item>{{ "list.product.title" | translate }}</d-breadcrumb-item>
     </d-breadcrumb>
     <div class="da-content-banner-title">
@@ -20,20 +18,12 @@
             <div class="da-header-left">
               <div class="da-common-search">
                 <div class="da-left">
-                  <d-search
-                    [size]="'sm'"
-                    [(ngModel)]="searchWithStyleName.keyword"
-                    (input)="search($event, searchWithStyleName)"
-                    class="da-inline"
-                    [placeholder]="'Search with Style Name'"
-                  ></d-search>
-                  <d-search
-                    [size]="'sm'"
-                    [(ngModel)]="searchWithStyleCode.keyword"
-                    (input)="search($event, searchWithStyleCode)"
-                    class="da-inline"
-                    [placeholder]="'Search with Style Code'"
-                  ></d-search>
+                  <d-search [size]="'sm'" [(ngModel)]="searchWithStyleName.keyword"
+                    (input)="search($event, searchWithStyleName)" class="da-inline"
+                    [placeholder]="'Search with Style Name'"></d-search>
+                  <d-search [size]="'sm'" [(ngModel)]="searchWithStyleCode.keyword"
+                    (input)="search($event, searchWithStyleCode)" class="da-inline"
+                    [placeholder]="'Search with Style Code'"></d-search>
                 </div>
                 <div class="header-right" routerLink="add">
                   <d-button class="mr-element-spacing">{{"list.product.buttonTitle" | translate}}</d-button>
@@ -48,63 +38,48 @@
           </div>
 
           <div class="list-content" dLoading [loading]="busy">
-            <d-data-table
-              #datatable
-              [dataSource]="basicDataSource"
-              [scrollable]="true"
-              [onlyOneColumnSort]="true"
-              (multiSortChange)="multiSortChange($event)"
-            >
-              <d-column
-                field="styleName"
-                header="Style Name"
-                [width]="columnSize.styleName"
-                [sortable]="true"
-              >
+            <d-data-table #datatable [dataSource]="basicDataSource" [scrollable]="true" [onlyOneColumnSort]="true"
+              (multiSortChange)="multiSortChange($event)">
+              <d-column field="styleName" header="Style Name" [width]="columnSize.styleName" [sortable]="true">
                 <d-cell>
                   <ng-template let-cellItem="cellItem">
-                    <span
-                      [title]="cellItem"
-                      class="over-flow-ellipsis"
-                      [style.width]="'100px'"
-                    >
+                    <span [title]="cellItem" class="over-flow-ellipsis" [style.width]="'100px'">
                       {{ cellItem }}
                     </span>
                   </ng-template>
                 </d-cell>
               </d-column>
 
-              <d-column
-                field="collection"
-                header="Collection"
-                [width]="columnSize.styleCode"
-                [sortable]="true"
-              >
+              <d-column field="collection" header="Collection" [width]="columnSize.styleCode" [sortable]="true">
                 <d-cell>
                   <ng-template let-cellItem="cellItem">
-                    <span
-                      [title]="cellItem"
-                      class="over-flow-ellipsis"
-                      [style.width]="'100px'"
-                    >
+                    <span [title]="cellItem" class="over-flow-ellipsis" [style.width]="'100px'">
                       {{ cellItem }}
                     </span>
                   </ng-template>
                 </d-cell>
               </d-column>
 
-              <d-column
-                field="logisticsDesc"
-                header="Logistic Description"
-                [sortable]="true"
-              >
+              <d-column field="logisticsDesc" header="Logistic Description" [sortable]="true">
                 <d-cell>
                   <ng-template let-cellItem="cellItem">
-                    <span
-                      [title]="cellItem"
-                      class="over-flow-ellipsis"
-                      [style.width]="'100px'"
-                    >
+                    <span [title]="cellItem" class="over-flow-ellipsis" [style.width]="'100px'">
+                      {{ cellItem }}
+                    </span>
+                  </ng-template>
+                </d-cell>
+              </d-column>
+
+              <d-column [sortable]="true" field="status" header="Active Status" [width]="columnSize.active">
+                <d-cell>
+                  <!-- <ng-template let-rowItem="rowItem" let-rowIndex="rowIndex">
+                  <d-toggle
+                    (change)="toggleCheck($event, rowItem)"
+                    [(ngModel)]="rowItem.active"
+                  ></d-toggle>
+                </ng-template> -->
+                  <ng-template let-cellItem="cellItem">
+                    <span [title]="cellItem" class="over-flow-ellipsis">
                       {{ cellItem }}
                     </span>
                   </ng-template>
@@ -139,81 +114,35 @@
                 </d-cell>
               </d-column> -->
 
-              <d-column
-                field="lastModifiedDate"
-                header="Updated Date"
-                [width]="columnSize.lastModifiedDate"
-                [sortable]="true"
-              >
+              <d-column field="lastModifiedDate" header="Updated Date" [width]="columnSize.lastModifiedDate"
+                [sortable]="true">
                 <d-cell>
                   <ng-template let-cellItem="cellItem">
-                    <span
-                      [title]="cellItem"
-                      class="over-flow-ellipsis"
-                    >
+                    <span [title]="cellItem" class="over-flow-ellipsis">
                       {{ cellItem | date: 'dd/MM/yyyy hh:mm' }}
                     </span>
                   </ng-template>
                 </d-cell>
               </d-column>
 
-              <d-column
-                field="lastModifiedBy"
-                header="Last Updated By"
-                [width]="columnSize.lastModifiedBy"
-                [sortable]="true"
-              >
+              <d-column field="lastModifiedBy" header="Last Updated By" [width]="columnSize.lastModifiedBy"
+                [sortable]="true">
                 <d-cell>
                   <ng-template let-cellItem="cellItem">
-                    <span
-                      [title]="cellItem"
-                      class="over-flow-ellipsis"
-                      [style.width]="'100px'"
-                    >
+                    <span [title]="cellItem" class="over-flow-ellipsis" [style.width]="'100px'">
                       {{ cellItem }}
                     </span>
                   </ng-template>
                 </d-cell>
               </d-column>
 
-              <d-column
-                [sortable]="true"
-                field="status"
-                header="Active Status"
-                [width]="columnSize.active"
-              >
-                <d-cell>
-                  <!-- <ng-template let-rowItem="rowItem" let-rowIndex="rowIndex">
-                    <d-toggle
-                      (change)="toggleCheck($event, rowItem)"
-                      [(ngModel)]="rowItem.active"
-                    ></d-toggle>
-                  </ng-template> -->
-                  <ng-template let-cellItem="cellItem">
-                    <span
-                      [title]="cellItem"
-                      class="over-flow-ellipsis"
-                    >
-                      {{ cellItem }}
-                    </span>
-                  </ng-template>
-                </d-cell>
-              </d-column>
 
-              <d-column
-                field="action"
-                header="Actions"
-                [width]="columnSize.action"
-              >
+              <d-column field="action" header="Actions" [width]="columnSize.action">
                 <d-cell>
                   <ng-template let-rowItem="rowItem" let-rowIndex="rowIndex">
                     <div class="btn-group over-flow-ellipsis">
-                      <d-button
-                        icon="icon-edit"
-                        bsStyle="text-dark"
-                        title="edit"
-                        (click)="editStyle(rowItem.productId, rowIndex)"
-                      ></d-button>
+                      <d-button icon="icon-edit" bsStyle="text-dark" title="edit"
+                        (click)="editStyle(rowItem.productId, rowIndex)"></d-button>
                     </div>
                   </ng-template>
                 </d-cell>
@@ -221,19 +150,10 @@
             </d-data-table>
           </div>
           <div class="da-list-footer">
-            <d-pagination
-              [size]="'sm'"
-              [total]="pager.total"
-              [(pageSize)]="pager.pageSize"
-              [(pageIndex)]="pager.pageIndex"
-              [canViewTotal]="true"
-              [canChangePageSize]="true"
-              [canJumpPage]="true"
-              [maxItems]="5"
-              (pageIndexChange)="onPageChange($event)"
-              (pageSizeChange)="onSizeChange($event)"
-              [pageSizeOptions]="[100, 50, 20, 10, 5]"
-            >
+            <d-pagination [size]="'sm'" [total]="pager.total" [(pageSize)]="pager.pageSize"
+              [(pageIndex)]="pager.pageIndex" [canViewTotal]="true" [canChangePageSize]="true" [canJumpPage]="true"
+              [maxItems]="5" (pageIndexChange)="onPageChange($event)" (pageSizeChange)="onSizeChange($event)"
+              [pageSizeOptions]="[100, 50, 20, 10, 5]">
             </d-pagination>
           </div>
         </div>

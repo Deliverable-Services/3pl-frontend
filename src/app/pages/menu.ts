@@ -56,10 +56,10 @@ export default function (values: any) {
           title: "currency",
           link: "/business/currency",
         },
-        {
-          title: "creditTerms",
-          link: "/credit-terms",
-        },
+        // {
+        //   title: "creditTerms",
+        //   link: "/credit-terms",
+        // },
         {
           title: "connectionLocationList",
           link: "/connection-location",

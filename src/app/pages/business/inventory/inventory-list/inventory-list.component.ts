@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { Router } from "@angular/router";
 import { InventoryService } from 'src/app/@core/mock/inventory.service';
+import { DialogService } from "ng-devui";
 import {
   SortEventArg,
   ToastService
@@ -55,6 +56,7 @@ export class InventoryListComponent implements OnInit {
     private inventoryService: InventoryService,
     private connectionLocationService: ConnectionLocationService,
     private router: Router,
+    private dialogService: DialogService,
     private toastService: ToastService,
   ) { }
 
@@ -62,18 +64,18 @@ export class InventoryListComponent implements OnInit {
     this.getConnectionLocations();
     setTimeout(() => {
       this.getList();
-    },1000)
+    }, 1000)
   }
 
   getList(filterVal?: any) {
     this.busy = this.inventoryService
       .getList(filterVal || null)
       .subscribe((res) => {
-        res.content.forEach((item:any) => {
+        res.content.forEach((item: any) => {
           item.nodeName = this.basicDataSourceConnection[item.connectionLocationId]
         });
         this.basicDataSource = res.content;
-        
+
         this.columnSize = res.listSize;
         this.pager.total = res.totalItems;
         // Object.keys(res.listSize).map((key) => {
@@ -114,14 +116,14 @@ export class InventoryListComponent implements OnInit {
           nodeName: 'All'
         })
         // console.log(':: res ', res)
-       res.forEach((data:any) => {
+        res.forEach((data: any) => {
           this.basicDataSourceConnection[data.connectionLocationId] = data.nodeName;
           this.connectionLocations.push({
             connectionLocationId: data?.connectionLocationId || '',
             nodeName: data?.nodeName || ''
           })
         });
-        
+
         this.pager.total = res.totalItems;
         // Object.keys(res.listSize).map((key) => {
         //   let widthValue = res.listSize[key] + "%";
@@ -139,11 +141,11 @@ export class InventoryListComponent implements OnInit {
 
   //set delay for next process
   delay(ms: number) {
-    return new Promise( resolve => setTimeout(resolve, ms) );
+    return new Promise(resolve => setTimeout(resolve, ms));
   }
 
   setValue() {
-    if(this.dropdownSearch.connectionLocationId === 'All') {
+    if (this.dropdownSearch.connectionLocationId === 'All') {
       this.setSearch.connectionLocationId = '';
     } else {
       this.setSearch.connectionLocationId = this.dropdownSearch.connectionLocationId;
@@ -155,7 +157,7 @@ export class InventoryListComponent implements OnInit {
     const pattern = /^[0-9a-f]{8}-?[0-9a-f]{4}-?[0-9a-f]{4}-?[0-9a-f]{4}-?[0-9a-f]{12}$/;
     let filterVal: any[] = [];
     Object.keys(this.setSearch)?.forEach((k: any) => {
-      if(this.setSearch[k] !== '') {
+      if (this.setSearch[k] !== '') {
         if (pattern.test(this.setSearch[k])) {
           filterVal.push({
             field: k,
@@ -167,11 +169,77 @@ export class InventoryListComponent implements OnInit {
             field: k,
             operator: "match",
             value: this.setSearch[k],
-          }) 
+          })
         }
       }
     });
     this.getList(filterVal);
+  }
+
+  syncShopify(): void {
+    this._showPopUp('shopify');
+  }
+  syncWMS(): void {
+    this._showPopUp('wms');
+  }
+
+  _showPopUp(type: string, fData?: any) {
+    let checkPopup = this.dialogService.open({
+      id: 'manage-confirmation',
+      width: '350px',
+      maxHeight: '600px',
+      title: 'Are you sure you want to that?',
+      backdropCloseable: false,
+      content: '',
+      showCloseBtn: false,
+      dialogtype: 'warning',
+      onClose: () => {
+      },
+      buttons: [
+        {
+          cssClass: 'primary',
+          text: 'Ok',
+          handler: ($event: Event) => {
+            if (type === 'shopify') {
+              this._showToast("success")
+              this.inventoryService
+                .syncShopify()
+                .subscribe((res) => console.log(res));
+            } else if (type === 'wms') {
+              this._showToast("success")
+              this.inventoryService
+                .syncWMS()
+                .subscribe((res) => console.log(res));
+            }
+            checkPopup.modalInstance.hide();
+          },
+        },
+        {
+          cssClass: 'info',
+          text: 'Cancel',
+          handler: ($event: Event) => {
+            checkPopup.modalInstance.hide();
+          },
+        },
+      ],
+    });
+  }
+
+  _showToast(resp: any) {
+    let type, msg;
+    if (resp) {
+      type = 'success';
+      msg = MSG.update;
+    } else {
+      type = 'error';
+      msg = MSG.error;
+    }
+    this.toastService.open({
+      value: [
+        { severity: type, content: msg },
+      ],
+      life: 2000,
+    });
   }
 
 }

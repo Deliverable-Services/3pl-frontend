@@ -71,9 +71,23 @@
                   </d-cell>
                 </d-column>
 
-                <d-column
+                <!-- <d-column
                   [field]="'connectionLocationId'"
                   header="Connection Location Id"
+                  [sortable]="true"
+                >
+                  <d-cell>
+                    <ng-template let-cellItem="cellItem">
+                      <span [title]="cellItem" class="over-flow-ellipsis">
+                        {{ cellItem }}
+                      </span>
+                    </ng-template>
+                  </d-cell>
+                </d-column> -->
+
+                <d-column
+                  [field]="'lgStoreOwnerId'"
+                  header="LG Store Owner Id"
                   [sortable]="true"
                 >
                   <d-cell>
@@ -86,8 +100,8 @@
                 </d-column>
 
                 <d-column
-                  [field]="'lgStoreOwnerId'"
-                  header="LG Store Owner Id"
+                  [field]="'lgStoreWhsId'"
+                  header="LG WMS ID "
                   [sortable]="true"
                 >
                   <d-cell>

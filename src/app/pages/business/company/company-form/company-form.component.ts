@@ -26,6 +26,7 @@ export class CompanyFormComponent implements OnInit {
     contactPerson: "",
     createdDate: "",
     lastModifiedDate: "",
+    lastModifiedBy:""
   };
 
   mode: string = "Add";
@@ -72,6 +73,7 @@ export class CompanyFormComponent implements OnInit {
           primaryCurrencyName: res.primaryCurrencyName ?? "",
           contactPerson: res.contactPerson ?? "",
           contactPhone: res.contactPhone ?? "",
+          lastModifiedBy:res.lastModifiedBy ?? "",
         };
       });
   }

@@ -33,7 +33,12 @@ export interface Card {
   actions?: CardAction[];
 }
 
+export class CurrencyList{
+  currencyCode?: string;
+}
+
 export abstract class CurrencyListData {
+  currencyCode?: string;
   // abstract getBrandList(pager: ListPager): Observable<Brand[]>;
   // abstract getOriginSource(pager: ListPager): Observable<Brand[]>;
   // abstract getTreeSource(pager: ListPager): Observable<Brand[]>;

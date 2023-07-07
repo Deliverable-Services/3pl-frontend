@@ -1,14 +1,12 @@
 <div class="da-list-wrap">
   <div class="da-content-banner">
     <d-breadcrumb>
-      <d-breadcrumb-item
-        ><a routerLink="/">{{
+      <d-breadcrumb-item><a routerLink="/">{{
           "list.breadcrumb.home" | translate
-        }}</a></d-breadcrumb-item
-      >
+          }}</a></d-breadcrumb-item>
       <d-breadcrumb-item>{{
         "list.inventory.title" | translate
-      }}</d-breadcrumb-item>
+        }}</d-breadcrumb-item>
     </d-breadcrumb>
     <div class="da-content-banner-title">
       {{ "list.inventory.list" | translate }}
@@ -26,38 +24,25 @@
                     display: 'inline-block',
                     marginRight: '20px'
                   }">
-                    <d-select
-                      placeholder="Select a Connection Location"
-                      [scrollHight]="'300px'"
-                      [filterKey]="'nodeName'"
-                      [appendToBody]="true"
-                      [options]="connectionLocations"
-                      [isSearch]="true"
-                      [(ngModel)]="dropdownSearch"
-                      (valueChange)="setValue();startSearch($event)"
-                    ></d-select>
+                    <d-select placeholder="Select a Connection Location" [scrollHight]="'300px'"
+                      [filterKey]="'nodeName'" [appendToBody]="true" [options]="connectionLocations" [isSearch]="true"
+                      [(ngModel)]="dropdownSearch" (valueChange)="setValue();startSearch($event)"></d-select>
                   </div>
                   <div [ngStyle]="{ display: 'inline-block' }">
-                    <d-search
-                      [ngStyle]="{
+                    <d-search [ngStyle]="{
                         marginRight: '20px'
-                      }"
-                      [size]="'sm'"
-                      [(ngModel)]="setSearch.styleName"
-                      (input)="startSearch($event)"
-                      class="da-inline"
-                      [placeholder]="'Search with Style Name'"
-                    ></d-search>
-                    <d-search
-                      [size]="'sm'"
-                      [(ngModel)]="setSearch.sku"
-                      (input)="startSearch($event)"
-                      class="da-inline"
-                      [placeholder]="'Search with SKU'"
-                    ></d-search>
+                      }" [size]="'sm'" [(ngModel)]="setSearch.styleName" (input)="startSearch($event)"
+                      class="da-inline" [placeholder]="'Search with Style Name'"></d-search>
+                    <d-search [size]="'sm'" [(ngModel)]="setSearch.sku" (input)="startSearch($event)" class="da-inline"
+                      [placeholder]="'Search with SKU'"></d-search>
 
-                    <div style="float: right;">
-                      <button class="btn btn-primary">Sync Shopify</button>
+                    <div style="float: right;margin-left: 120vh;">
+                      <d-button dLoading (click)="syncShopify()" class="mr-element-spacing primary" circled="true" style="margin-right: 8px">
+                        Sync Shopify
+                      </d-button>
+                      <d-button dLoading (click)="syncWMS()" class="mr-element-spacing primary" circled="true" style="margin-right: 8px">
+                        Sync WMS
+                      </d-button>
                     </div>
 
                   </div>
@@ -67,19 +52,10 @@
           </div>
 
           <div class="list-content" dLoading [loading]="busy">
-            <d-data-table
-              #datatable
-              [dataSource]="basicDataSource"
-              [scrollable]="true"
-              [onlyOneColumnSort]="true"
-              (multiSortChange)="multiSortChange($event)"
-            >
-              <d-column
-                [field]="'nodeName'"
-                header="Connection Location"
-                [width]="columnSize.nodeName"
-                [sortable]="true"
-              >
+            <d-data-table #datatable [dataSource]="basicDataSource" [scrollable]="true" [onlyOneColumnSort]="true"
+              (multiSortChange)="multiSortChange($event)">
+              <d-column [field]="'nodeName'" header="Connection Location" [width]="columnSize.nodeName"
+                [sortable]="true">
                 <d-cell>
                   <ng-template let-cellItem="cellItem">
                     <span [title]="cellItem" class="over-flow-ellipsis">
@@ -89,42 +65,7 @@
                 </d-cell>
               </d-column>
 
-              <d-column
-              [field]="'styleName'"
-              header="Style Name"
-              [sortable]="true"
-              [width]="columnSize.styleName"
-            >
-              <d-cell>
-                <ng-template let-cellItem="cellItem">
-                  <span [title]="cellItem" class="over-flow-ellipsis">
-                    {{ cellItem }}
-                  </span>
-                </ng-template>
-              </d-cell>
-            </d-column>
-
-            <d-column
-              [field]="'sku'"
-              header="SKU"
-              [sortable]="true"
-              [width]="columnSize.sku"
-            >
-              <d-cell>
-                <ng-template let-cellItem="cellItem">
-                  <span [title]="cellItem" class="over-flow-ellipsis">
-                    {{ cellItem }}
-                  </span>
-                </ng-template>
-              </d-cell>
-            </d-column>
-
-              <d-column
-                [field]="'totalQty'"
-                header="Total Qty"
-                [sortable]="true"
-                [width]="columnSize.totalQty"
-              >
+              <d-column [field]="'styleName'" header="Style Name" [sortable]="true" [width]="columnSize.styleName">
                 <d-cell>
                   <ng-template let-cellItem="cellItem">
                     <span [title]="cellItem" class="over-flow-ellipsis">
@@ -134,12 +75,7 @@
                 </d-cell>
               </d-column>
 
-              <d-column
-                [field]="'unavailableQty'"
-                header="Unavailable Qty"
-                [sortable]="true"
-                [width]="columnSize.unavailableQty"
-              >
+              <d-column [field]="'sku'" header="SKU" [sortable]="true" [width]="columnSize.sku">
                 <d-cell>
                   <ng-template let-cellItem="cellItem">
                     <span [title]="cellItem" class="over-flow-ellipsis">
@@ -149,14 +85,7 @@
                 </d-cell>
               </d-column>
 
-             
-
-              <d-column
-                [field]="'avaiableQty'"
-                header="Avaiable Qty"
-                [sortable]="true"
-                [width]="columnSize.avaiableQty"
-              >
+              <d-column [field]="'skuType'" header="SKU Type" [sortable]="true" [width]="columnSize.skuType">
                 <d-cell>
                   <ng-template let-cellItem="cellItem">
                     <span [title]="cellItem" class="over-flow-ellipsis">
@@ -166,7 +95,53 @@
                 </d-cell>
               </d-column>
 
-              <d-column
+              <d-column [field]="'skuDesc'" header="SKU Desc" [sortable]="true" [width]="columnSize.skuDesc">
+                <d-cell>
+                  <ng-template let-cellItem="cellItem">
+                    <span [title]="cellItem" class="over-flow-ellipsis">
+                      {{ cellItem }}
+                    </span>
+                  </ng-template>
+                </d-cell>
+              </d-column>
+
+              <d-column [field]="'totalQty'" header="Total Qty" [sortable]="true" [width]="columnSize.totalQty">
+                <d-cell>
+                  <ng-template let-cellItem="cellItem">
+                    <span [title]="cellItem" class="over-flow-ellipsis">
+                      {{ cellItem }}
+                    </span>
+                  </ng-template>
+                </d-cell>
+              </d-column>
+
+              <d-column [field]="'avaiableQty'" header="Avaiable Qty" [sortable]="true"
+                [width]="columnSize.avaiableQty">
+                <d-cell>
+                  <ng-template let-cellItem="cellItem">
+                    <span [title]="cellItem" class="over-flow-ellipsis">
+                      {{ cellItem }}
+                    </span>
+                  </ng-template>
+                </d-cell>
+              </d-column>
+
+              <d-column [field]="'unavailableQty'" header="Unavailable Qty" [sortable]="true"
+                [width]="columnSize.unavailableQty">
+                <d-cell>
+                  <ng-template let-cellItem="cellItem">
+                    <span [title]="cellItem" class="over-flow-ellipsis">
+                      {{ cellItem }}
+                    </span>
+                  </ng-template>
+                </d-cell>
+              </d-column>
+
+
+
+
+
+              <!-- <d-column
                 [field]="'action'"
                 header="Action"
                 [sortable]="true"
@@ -179,23 +154,14 @@
                     </span>
                   </ng-template>
                 </d-cell>
-              </d-column>
+              </d-column> -->
             </d-data-table>
           </div>
           <div class="da-list-footer">
-            <d-pagination
-              [size]="'sm'"
-              [total]="pager.total"
-              [(pageSize)]="pager.pageSize"
-              [(pageIndex)]="pager.pageIndex"
-              [canViewTotal]="true"
-              [canChangePageSize]="true"
-              [canJumpPage]="true"
-              [maxItems]="5"
-              (pageIndexChange)="onPageChange($event)"
-              (pageSizeChange)="onSizeChange($event)"
-              [pageSizeOptions]="[100, 50, 20, 10, 5]"
-            >
+            <d-pagination [size]="'sm'" [total]="pager.total" [(pageSize)]="pager.pageSize"
+              [(pageIndex)]="pager.pageIndex" [canViewTotal]="true" [canChangePageSize]="true" [canJumpPage]="true"
+              [maxItems]="5" (pageIndexChange)="onPageChange($event)" (pageSizeChange)="onSizeChange($event)"
+              [pageSizeOptions]="[100, 50, 20, 10, 5]">
             </d-pagination>
           </div>
         </div>

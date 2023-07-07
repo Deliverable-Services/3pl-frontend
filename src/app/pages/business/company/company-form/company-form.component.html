@@ -122,6 +122,14 @@
             </d-form-control>
           </d-form-item>
 
+          <d-form-item>
+            <d-form-label>Updated By</d-form-label>
+            <d-form-control>
+              <input dTextInput disabled name="lastModifiedBy" [placeholder]="'lastModifiedBy' | translate"
+                [(ngModel)]="companyFormData.lastModifiedBy" />
+            </d-form-control>
+          </d-form-item>
+
           <d-form-operation>
             <d-button dLoading class="mr-element-spacing" [title]="companyForm.errorMessage || ''" circled="true"
               style="margin-right: 8px" [showLoading]="companyForm.pending" dFormSubmit
