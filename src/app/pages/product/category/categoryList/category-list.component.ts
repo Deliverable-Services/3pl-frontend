@@ -6,11 +6,7 @@ import {
   Output,
 } from "@angular/core";
 import { Router } from "@angular/router";
-import {
-  DialogService,
-  SortEventArg,
-  TableWidthConfig,
-} from "ng-devui";
+import { DialogService, SortEventArg, TableWidthConfig } from "ng-devui";
 import { Subscription } from "rxjs";
 import { Brand } from "src/app/@core/data/brandList";
 import { PageParam, SearchParam } from "src/app/@core/data/searchFormData";
@@ -59,10 +55,12 @@ export class CategoryListComponent implements OnInit {
   };
 
   columnSize: any = {
-    categoryName: "",
-    updatedAt: "",
-    action: "",
-    active: "",
+    categoryName: "10%",
+    updatedAt: "20%",
+    createdBy: "40%",
+    createdDate: "40%",
+    action: "10%",
+    active: "10%",
   };
 
   busy: Subscription | undefined;
@@ -73,6 +71,8 @@ export class CategoryListComponent implements OnInit {
   ) {}
 
   ngOnInit() {
+    this.pageParam.pageNo = 0;
+    this.categoryListDataService.setPageParams(this.pageParam);
     this.getCategoryList();
   }
 

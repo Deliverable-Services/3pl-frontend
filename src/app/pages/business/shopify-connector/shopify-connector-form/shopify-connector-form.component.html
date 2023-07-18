@@ -24,7 +24,7 @@
             {{ (mode === 'Add' ? "list.shopifyConnector.buttonTitle" : "form.shopifyConnector.edit") | translate }}
           </div>
           <d-form-item [ngStyle]="{ width: '500px' }">
-            <d-form-label [required]="true" [hasHelp]="true">
+            <d-form-label [required]="true" [hasHelp]="false">
               {{'form.shopifyConnector.fields.connectorName' | translate}}
             </d-form-label>
             <d-form-control>
@@ -36,7 +36,7 @@
           </d-form-item>
 
           <d-form-item [ngStyle]="{ width: '500px' }">
-              <d-form-label [required]="true" [hasHelp]="true">
+              <d-form-label [required]="true" [hasHelp]="false">
                 {{'form.shopifyConnector.fields.baseUrl' | translate}}
               </d-form-label>
               <d-form-control>
@@ -48,7 +48,7 @@
           </d-form-item>
 
           <d-form-item [ngStyle]="{ width: '500px' }">
-            <d-form-label [required]="true" [hasHelp]="true">
+            <d-form-label [required]="true" [hasHelp]="false">
               {{'form.shopifyConnector.fields.token' | translate}}
             </d-form-label>
             <d-form-control>

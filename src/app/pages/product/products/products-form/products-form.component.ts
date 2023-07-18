@@ -33,9 +33,10 @@ export class ProductsFormComponent implements OnInit {
     optionType: "",
     retailPrice: "",
     exwLocalCurrency: "",
-    exwLocalCost: "",
-    exwSgdCost: "",
+    exwLocalCost: 0,
+    exwSgdCost: 0,
     productCategoryId: "",
+    companyExwPrice:0,
     image: "",
     status: "",
     varients: []
@@ -72,11 +73,13 @@ export class ProductsFormComponent implements OnInit {
   // };
 
   mode: string = "Add";
+  currencyRate:any = 0;
   paramId: string = "";
   busy: Subscription | undefined;
 
   categoryList: Category[] = [];
   currencyList: CurrencyListData[] = [];
+  currencyData: CurrencyListData[] = [];
   optionTypeList: any[] = ['NONE', 'COLOR', 'SIZE', 'COLOR_SIZE'];
   brandList: Brand[] = [];
   seasonList: Season[] = [];
@@ -156,7 +159,7 @@ export class ProductsFormComponent implements OnInit {
 
   getCurrencyListActive() {
     this.currencyDataService.getCurrencyListActive({perPage:100}).subscribe((res:any) => {
-      
+      this.currencyData = res.content;
       this.currencyList = res.content.map((el:any) =>{
           return el.currencyCode;
       })      
@@ -193,6 +196,7 @@ export class ProductsFormComponent implements OnInit {
       unitWeight: this.productsFormData.unitWeight,
       productCategoryId: this.productsFormData?.slectedCat?.categoryId,
       exwLocalCurrency: this.productsFormData?.exwLocalCurrency,
+      companyExwPrice: this.productsFormData?.companyExwPrice,
       exwLocalCost:this.productsFormData.exwLocalCost,
       exwSgdCost: this.productsFormData?.exwSgdCost,
       retailPrice: this.productsFormData?.retailPrice,
@@ -236,6 +240,26 @@ export class ProductsFormComponent implements OnInit {
     return range.every((_: any) => !!_);
   }
 
+
+  onInputChange(event: Event) {
+    const input = event.target as HTMLInputElement;
+    const value = input.value;
+
+    // Restrict to two decimal places
+    const restrictedValue = this.restrictDecimal(value, 2);
+
+    // Update the input value
+    input.value = restrictedValue;
+  }
+
+  restrictDecimal(value: string, decimalPlaces: number): string {
+    const regex = new RegExp(`^-?\\d+(\\.\\d{0,${decimalPlaces}})?`);
+    const match = value.match(regex);
+
+    return match ? match[0] : "";
+  }
+
+
   submitStyleForm({ valid, directive, data, errors }: any) {
     const finaldata = {
       styleName: this.productsFormData.styleName,
@@ -247,6 +271,7 @@ export class ProductsFormComponent implements OnInit {
       productCategoryId: this.productsFormData?.slectedCat?.categoryId,
       exwLocalCurrency: this.productsFormData?.exwLocalCurrency,
       exwLocalCost:this.productsFormData.exwLocalCost,
+      companyExwPrice: this.productsFormData?.companyExwPrice,
       exwSgdCost: this.productsFormData?.exwSgdCost,
       retailPrice: this.productsFormData?.retailPrice,
       optionType: this.productsFormData?.optionType,
@@ -255,20 +280,26 @@ export class ProductsFormComponent implements OnInit {
 
     if (valid) {
       if (this.mode === "Add") {
-        this.productsListDataService.add(finaldata).subscribe((res) => this._showToast(res));
+        this.productsListDataService.add(finaldata).subscribe((res) => this._showToast(res),(error) => console.log(error));
       } else {
         this.productsListDataService
           .update(this.paramId, finaldata)
-          .subscribe((res) => this._showToast(res));
+          .subscribe((res) => this._showToast(res),(error) => console.log(error));
       }
     } else {
       // error tip
     }
   }
 
+  removeProductRow(index: number){
+    this.productVariants.splice(index, 1);
+  }
+
+
   editProduct(rowId: any, index: number) {
     this.router.navigate([`/product/product/edit/${rowId}`]);
   }
+  
 
   toggleCheck(activeCheck: any, rowId: any) {
     let data = {
@@ -338,6 +369,23 @@ export class ProductsFormComponent implements OnInit {
     return allowed;
   }
 
+  updateCompanyExwPrice() {
+    
+    if(this.productsFormData.exwLocalCost && this.productsFormData.exwLocalCurrency){
+        this.currencyData.forEach(c => {
+          if(this.productsFormData.exwLocalCurrency === c.currencyCode){
+             this.currencyRate = c.rate;  
+          }
+        })
+        if(!isNaN(this.productsFormData.exwLocalCost)){
+          this.productsFormData.exwSgdCost = Number((this.productsFormData.exwLocalCost * this.currencyRate).toFixed(2));
+          
+          
+        }
+        
+    }
+  }
+
   checkVIsibility(type: string) {
     if(this.productsFormData.optionType === type 
     || this.productsFormData.optionType === 'COLOR_SIZE')
@@ -346,6 +394,29 @@ export class ProductsFormComponent implements OnInit {
     return false;  
   }
 
+  _errorPopUp(error: string) { 
+    let checkPopup = this.dialogService.open({
+      id: 'manage-confirmation',
+      width: '350px',
+      maxHeight: '600px',
+      title: error,
+      backdropCloseable: false,
+      content: '',
+      showCloseBtn: false,
+      dialogtype: 'warning',
+      onClose: () => {
+      },
+      buttons: [
+        {
+          cssClass: 'info',
+          text: 'Close',
+          handler: ($event: Event) => {
+            checkPopup.modalInstance.hide();
+          },
+        },
+      ],
+    });
+  }
   _showPopUp(type: string, fData?: any) {
     let checkPopup = this.dialogService.open({
       id: 'manage-confirmation',
@@ -366,15 +437,15 @@ export class ProductsFormComponent implements OnInit {
             if(type === 'publish') {
               this.productsListDataService
               .setPublish(this.paramId, fData)
-              .subscribe((res) => this._showToast(res));
+              .subscribe((res) => this._showToast(res),(error) => console.log(error));
             } else if(type === 'inactive') {
               this.productsListDataService
               .setInactive(this.paramId)
-              .subscribe((res) => this._showToast(res));
+              .subscribe((res) => this._showToast(res), (error) => console.log(error));
             } else if(type === 'active') {
               this.productsListDataService
               .setActive(this.paramId)
-              .subscribe((res) => this._showToast(res));
+              .subscribe((res) => this._showToast(res),(error) => console.log(error));
             }
             checkPopup.modalInstance.hide();
           },

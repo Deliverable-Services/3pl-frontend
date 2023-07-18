@@ -24,7 +24,7 @@
               {{ (mode === 'Add' ? "list.creditTerms.buttonTitle" : "form.creditTerms.edit_currency") | translate }}
             </div>
             <d-form-item [ngStyle]="{ width: '500px' }">
-              <d-form-label [required]="true" [hasHelp]="true" [helpTips]="'This is Terms Subject.'">
+              <d-form-label [required]="true" [hasHelp]="false" [helpTips]="'This is Terms Subject.'">
                 {{'form.creditTerms.fields.termsSubject' | translate}}
               </d-form-label>
               <d-form-control>
@@ -36,7 +36,7 @@
             </d-form-item>
 
             <d-form-item [ngStyle]="{ width: '500px' }">
-                <d-form-label [required]="true" [hasHelp]="true" [helpTips]="'This is the Credit Day.'">
+                <d-form-label [required]="true" [hasHelp]="false" [helpTips]="'This is the Credit Day.'">
                   {{'form.creditTerms.fields.creditDay' | translate}}
                 </d-form-label>
                 <d-form-control>
@@ -48,7 +48,7 @@
             </d-form-item>
   
             <d-form-item>
-              <d-form-label [required]="true" [hasHelp]="true" [helpTips]="'Add Terms Code'">
+              <d-form-label [required]="true" [hasHelp]="false" [helpTips]="'Add Terms Code'">
                 {{'form.creditTerms.fields.termsDescription' | translate}}
               </d-form-label>
               <d-form-control>

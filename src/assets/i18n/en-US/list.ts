@@ -36,9 +36,9 @@ export default {
       buttonTitle: 'Add Credit Terms'
     },
     connectionLocationList: {
-      title: 'Connection Location',
-      list: 'Connection Location List',
-      buttonTitle: 'Add Connection Location'
+      title: 'Inventory Node',
+      list: 'Inventory Node List',
+      buttonTitle: 'Add Inventory Node'
     },
     shopifyConnector: {
       title: 'Shopify Connector',
@@ -47,6 +47,19 @@ export default {
     },
     inventory: {
       title: 'Inventory',
+      dropdown:"Select a Inventory Node",
+      inventoryNode:"Inventory Node",
+      TtQty:"Tt. Qty",
+      AvlQty:"Avl. Qty",
+      UnavlQty:"Unavl. Qty",
+      TrQty:"Tr. Qty",
+      POSQty:"PO Qty",
+      sku:"SKU",
+      skuType:"SKU Type",
+      skuDesc:"SKU Desc",
+      styleName:"Style Name",
+      skuSearch:"Search with SKU",
+      styleSearch:"Search with Style Name",
       list: 'Inventory List'
     },
     basicList: {

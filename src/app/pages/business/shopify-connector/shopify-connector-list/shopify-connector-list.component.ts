@@ -31,10 +31,15 @@ export class ShopifyConnectorListComponent implements OnInit {
   };
 
   columnSize: any = {
-    termsName: "",
-    updatedAt: "",
-    action: "",
-    active: "",
+    termsName: "10%",
+    lastModifiedBy: "10%",
+    lastModifiedDate: "10%",
+    token: "10%",
+    baseUrl: "10%",
+    connectorName: "10%",
+    updatedAt: "10%",
+    action: "10%",
+    active: "10%",
   };
 
   constructor(

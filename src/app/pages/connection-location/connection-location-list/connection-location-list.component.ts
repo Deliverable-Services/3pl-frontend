@@ -30,10 +30,16 @@ export class ConnectionLocationListComponent implements OnInit {
   };
 
   columnSize: any = {
-    termsName: "",
-    updatedAt: "",
-    action: "",
-    active: "",
+    nodeName: "10%",
+    lastModifiedBy:"10%",
+    lastModifiedDate:"10%",
+    shopifyLocationId:"10%",
+    lgStoreWhsId:"10%",
+    nodeType:"10%",
+    lgStoreOwnerId:"10%",
+    updatedAt: "10%",
+    action: "10%",
+    active: "10%",
   };
 
   constructor(

@@ -40,7 +40,7 @@ export default {
       fields: {termsSubject: 'Terms Subject', creditDay: 'Credit Day', termsDescription: 'Terms Description'}
     },
     connectionLocationList: {
-      edit_location: 'Edit Connection Location',
+      edit_location: 'Edit Inventory Node',
       fields: {nodeId: 'Node Id', nodeType: 'Node Type', shopifyLocationId: 'Shopify Location Id', shopifyConnectorId: 'Shopify Connector Id', remarks: 'Remarks',
       nodeDescription: 'Node Description', nodeName: 'Node Name', lGStoreOwnerId: 'LG Store Owner Id', lgStoreWhsId: 'LG Store WHS Id', physicalAddress: 'Physical Address'}
     },

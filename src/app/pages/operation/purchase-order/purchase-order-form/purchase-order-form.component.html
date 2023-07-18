@@ -109,7 +109,7 @@
           <div [ngStyle]="{ display: 'flex', justifyContent: 'space-between' }">
             <div [ngStyle]="{ width: '46%' }">
               <d-form-item>
-                <d-form-label [required]="true" [hasHelp]="true" [helpTips]="'This is the PO Ref. no..'">PO Reference
+                <d-form-label [required]="true" [hasHelp]="false" [helpTips]="'This is the PO Ref. no..'">PO Reference
                   no.</d-form-label>
                 <d-form-control>
                   <input dTextInput autocomplete="off" name="poReference" [disabled]="formEditFlag"
@@ -120,7 +120,7 @@
               </d-form-item>
 
               <d-form-item>
-                <d-form-label [required]="true" [hasHelp]="true" [helpTips]="'This is the Vendor'">Vendor</d-form-label>
+                <d-form-label [required]="true" [hasHelp]="false" [helpTips]="'This is the Vendor'">Vendor</d-form-label>
 
                 <d-select [filterKey]="'vendorName'" [extraConfig]="{
                     labelization: { enable: true, overflow: 'multiple-line' }
@@ -135,7 +135,7 @@
               </d-form-item>
 
               <d-form-item>
-                <d-form-label [required]="true" [hasHelp]="true" [helpTips]="'This is the Bill to address'">Bill to
+                <d-form-label [required]="true" [hasHelp]="false" [helpTips]="'This is the Bill to address'">Bill to
                   address
                   <i class="icon-copy-to-new" dTooltip content="Copy Address from Department" (click)="
                       poHeaderFormData.billToAddress =
@@ -152,7 +152,7 @@
                 </d-form-control>
               </d-form-item>
               <d-form-item>
-                <d-form-label [required]="true" [hasHelp]="true" [helpTips]="'This is the Trade term'">Trade term
+                <d-form-label [required]="true" [hasHelp]="false" [helpTips]="'This is the Trade term'">Trade term
                 </d-form-label>
 
                 <d-select placeholder="Select a Trade term" [filterKey]="'tradeSubject'" [appendToBody]="true"
@@ -165,7 +165,7 @@
 
             <div [ngStyle]="{ width: '46%' }">
               <d-form-item>
-                <d-form-label [required]="true" [hasHelp]="true" [helpTips]="'This is the department'">Department
+                <d-form-label [required]="true" [hasHelp]="false" [helpTips]="'This is the department'">Department
                 </d-form-label>
 
                 <d-select placeholder="Select a department" [filterKey]="'departmentName'" [appendToBody]="true"
@@ -175,7 +175,7 @@
                   }" [disabled]="formEditFlag"></d-select>
               </d-form-item>
               <d-form-item>
-                <d-form-label [required]="true" [hasHelp]="true" [helpTips]="'This is the Vendor Contact'">Vendor
+                <d-form-label [required]="true" [hasHelp]="false" [helpTips]="'This is the Vendor Contact'">Vendor
                   Contact</d-form-label>
 
                 <d-select [filterKey]="'contactName'" [extraConfig]="{
@@ -189,7 +189,7 @@
               </d-form-item>
 
               <d-form-item>
-                <d-form-label [required]="true" [hasHelp]="true" [helpTips]="'This is the Bill to address'">Ship to
+                <d-form-label [required]="true" [hasHelp]="false" [helpTips]="'This is the Bill to address'">Ship to
                   address
                   <i class="icon-copy-to-new" dTooltip content="Copy Address from Department" (click)="
                       poHeaderFormData.shipToAddress =
@@ -206,7 +206,7 @@
                 </d-form-control>
               </d-form-item>
               <d-form-item>
-                <d-form-label [required]="true" [hasHelp]="true" [helpTips]="'This is the Remarks'">Remarks
+                <d-form-label [required]="true" [hasHelp]="false" [helpTips]="'This is the Remarks'">Remarks
                 </d-form-label>
                 <d-form-control>
                   <input dTextInput autocomplete="off" name="remarks" placeholder="Remarks" [disabled]="formEditFlag"

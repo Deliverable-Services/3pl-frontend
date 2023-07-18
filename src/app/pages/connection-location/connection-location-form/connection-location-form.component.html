@@ -29,7 +29,7 @@
             <div [ngStyle]="{ width: '46%' }">
 
               <d-form-item>
-                <d-form-label [required]="true" [hasHelp]="true" [helpTips]="'This is the Node Name'">
+                <d-form-label [required]="true" [hasHelp]="false" [helpTips]="'This is the Node Name'">
                   {{'form.connectionLocationList.fields.nodeName' | translate}}
                 </d-form-label>
 
@@ -43,7 +43,7 @@
               </d-form-item>
             
               <d-form-item>
-                <d-form-label [required]="true" [hasHelp]="true" [helpTips]="'This is the Node Type'">
+                <d-form-label [required]="true" [hasHelp]="false" [helpTips]="'This is the Node Type'">
                   {{'form.connectionLocationList.fields.nodeType' | translate}}
                 </d-form-label>
                 <d-form-control>
@@ -60,7 +60,7 @@
                 </d-form-control>
               </d-form-item>
               <d-form-item *ngIf="projectFormData.nodeType === 'Store' || projectFormData.nodeType === 'Online'">
-                <d-form-label [required]="true" [hasHelp]="true" [helpTips]="'This is the Shopify Connector Id'">
+                <d-form-label [required]="true" [hasHelp]="false" [helpTips]="'This is the Shopify Connector Id'">
                   {{'form.connectionLocationList.fields.shopifyConnectorId' | translate}}
                 </d-form-label>
                 <d-form-control>
@@ -73,7 +73,7 @@
                 </d-form-control>
               </d-form-item>
               <!-- <d-form-item>
-                <d-form-label [required]="true" [hasHelp]="true" [helpTips]="'This is the Node Id.'">
+                <d-form-label [required]="true" [hasHelp]="false" [helpTips]="'This is the Node Id.'">
                   {{'form.connectionLocationList.fields.nodeId' | translate}}
                 </d-form-label>
                 <d-form-control>
@@ -85,7 +85,7 @@
                 </d-form-control>
               </d-form-item> -->
               <d-form-item *ngIf="projectFormData.nodeType === 'Store' || projectFormData.nodeType === 'Online'">
-                <d-form-label [required]="true" [hasHelp]="true" [helpTips]="'This is the Shopify Location Id'">
+                <d-form-label [required]="true" [hasHelp]="false" [helpTips]="'This is the Shopify Location Id'">
                   {{'form.connectionLocationList.fields.shopifyLocationId' | translate}}
                 </d-form-label>
 
@@ -98,7 +98,7 @@
                 </d-form-control>
               </d-form-item>
               <!-- <d-form-item>
-                <d-form-label [required]="true" [hasHelp]="true" [helpTips]="'This is the Remarks'">
+                <d-form-label [required]="true" [hasHelp]="false" [helpTips]="'This is the Remarks'">
                   {{'form.connectionLocationList.fields.remarks' | translate}}
                 </d-form-label>
 
@@ -114,7 +114,7 @@
 
             <div [ngStyle]="{ width: '46%' }">              
               <d-form-item>
-                <d-form-label [required]="true" [hasHelp]="true" [helpTips]="'This is the Physical Address'">
+                <d-form-label [required]="true" [hasHelp]="false" [helpTips]="'This is the Physical Address'">
                   {{'form.connectionLocationList.fields.physicalAddress' | translate}}
                 </d-form-label>
 
@@ -127,7 +127,7 @@
                 </d-form-control>
               </d-form-item>
               <d-form-item *ngIf="projectFormData.nodeType === 'DC' || projectFormData.nodeType === 'Online'">
-                <d-form-label [required]="true" [hasHelp]="true" [helpTips]="'This is the LG Store Owner Id'">
+                <d-form-label [required]="true" [hasHelp]="false" [helpTips]="'This is the LG Store Owner Id'">
                   {{'form.connectionLocationList.fields.lGStoreOwnerId' | translate}}
                 </d-form-label>
 
@@ -140,7 +140,7 @@
                 </d-form-control>
               </d-form-item>
               <d-form-item *ngIf="projectFormData.nodeType === 'DC' || projectFormData.nodeType === 'Online'">
-                <d-form-label [required]="true" [hasHelp]="true" [helpTips]="'This is the LG Store WHS Id'">
+                <d-form-label [required]="true" [hasHelp]="false" [helpTips]="'This is the LG Store WHS Id'">
                   {{'form.connectionLocationList.fields.lgStoreWhsId' | translate}}
                 </d-form-label>
 
@@ -156,7 +156,7 @@
           </div>
           <div [ngStyle]="{ width: '100%' }">
             <d-form-item>
-              <d-form-label [required]="true" [hasHelp]="true" [helpTips]="'This is the Node Description'">
+              <d-form-label [required]="true" [hasHelp]="false" [helpTips]="'This is the Node Description'">
                 {{'form.connectionLocationList.fields.nodeDescription' | translate}}
               </d-form-label>
               <d-form-control>

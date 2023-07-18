@@ -46,9 +46,22 @@ export default {
       buttonTitle: '添加 Shopify 连接器'
     },
     inventory: {
-      title: '存货',
-      list: '库存清单'
-    },
+      title: '库存',
+      dropdown: '选择一个库存节点',
+      inventoryNode: '库存节点',
+      TtQty: '总数量',
+      AvlQty: '可用数量',
+      UnavlQty: '不可用数量',
+      TrQty: '在途数量',
+      POSQty: '采购订单数量',
+      sku: 'SKU',
+      skuType: 'SKU类型',
+      skuDesc: 'SKU描述',
+      styleName: '款式名称',
+      skuSearch: '按SKU搜索',
+      styleSearch: '按款式名称搜索',
+      list: '库存列表'
+      },
     basicList: {
       title: '基础列表',
       description: '支持调整列表尺寸，间距等。'

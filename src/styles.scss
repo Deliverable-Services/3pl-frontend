@@ -74,6 +74,13 @@ body {
 .devui-form-control-container button i{
   border-right: 0 !important;
 }
+.product-form-list .devui-form-vertical .devui-form-item{
+  width: 100%;
+}
+.product-form-list .devui-form-control-container input{
+width: 100% !important;
+}
+
 @media only screen and (max-width: 1023px) {
   .modal-dialog {
     max-width: 400px !important;

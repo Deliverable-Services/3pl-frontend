@@ -39,6 +39,7 @@ export class CurrencyList{
 
 export abstract class CurrencyListData {
   currencyCode?: string;
+  rate?:string;
   // abstract getBrandList(pager: ListPager): Observable<Brand[]>;
   // abstract getOriginSource(pager: ListPager): Observable<Brand[]>;
   // abstract getTreeSource(pager: ListPager): Observable<Brand[]>;

@@ -1,11 +1,9 @@
 <div class="da-list-wrap">
   <div class="da-content-banner">
     <d-breadcrumb>
-      <d-breadcrumb-item
-        ><a routerLink="/">{{
+      <d-breadcrumb-item><a routerLink="/">{{
           "list.breadcrumb.home" | translate
-        }}</a></d-breadcrumb-item
-      >
+          }}</a></d-breadcrumb-item>
       <d-breadcrumb-item>{{ "list.category.title" | translate }}</d-breadcrumb-item>
     </d-breadcrumb>
     <div class="da-content-banner-title">
@@ -20,34 +18,23 @@
             <div class="da-header-left">
               <div class="da-common-search">
                 <div class="da-left">
-                  <d-search
-                    [size]="'sm'"
-                    [(ngModel)]="searchWithCategoryName.keyword"
-                    (input)="search($event, searchWithCategoryName)"
-                    class="da-inline"
-                    [placeholder]="'Search with Category Name'"
-                  ></d-search>
+                  <d-search [size]="'sm'" [(ngModel)]="searchWithCategoryName.keyword"
+                    (input)="search($event, searchWithCategoryName)" class="da-inline"
+                    [placeholder]="'Search with Category Name'"></d-search>
                 </div>
                 <div class="header-right">
-                  <d-button class="mr-element-spacing" routerLink="add">{{ "list.category.buttonTitle" | translate }}</d-button>
+                  <d-button class="mr-element-spacing" routerLink="add">{{ "list.category.buttonTitle" | translate
+                    }}</d-button>
                 </div>
               </div>
             </div>
           </div>
 
           <div class="list-content" dLoading [loading]="busy">
-            <d-data-table
-              #datatable
-              [dataSource]="basicDataSource"
-              [scrollable]="true"
-              [onlyOneColumnSort]="true"
-              (multiSortChange)="multiSortChange($event)"
-            >
-              <d-column
-                [field]="'categoryName'"
-                header="Category Name"
-                [sortable]="true"
-              >
+            <d-data-table #datatable [dataSource]="basicDataSource" [scrollable]="true" [onlyOneColumnSort]="true"
+              (multiSortChange)="multiSortChange($event)">
+              <d-column [width]="columnSize.categoryName" [field]="'categoryName'" header="Category Name"
+                [sortable]="true">
                 <d-cell>
                   <ng-template let-cellItem="cellItem">
                     <span [title]="cellItem" class="over-flow-ellipsis">
@@ -57,11 +44,7 @@
                 </d-cell>
               </d-column>
 
-              <d-column
-                [field]="'createdDate'"
-                header="Created At"
-                [sortable]="true"
-              >
+              <d-column [field]="'createdDate'" [width]="columnSize.createdDate" header="Created At" [sortable]="true">
                 <d-cell>
                   <ng-template let-cellItem="cellItem">
                     <span [title]="cellItem" class="over-flow-ellipsis">
@@ -71,11 +54,7 @@
                 </d-cell>
               </d-column>
 
-              <d-column
-                [field]="'createdBy'"
-                header="Created By"
-                [sortable]="true"
-             >
+              <d-column [field]="'createdBy'" [width]="columnSize.createdBy" header="Created By" [sortable]="true">
                 <d-cell>
                   <ng-template let-cellItem="cellItem">
                     <span [title]="cellItem" class="over-flow-ellipsis">
@@ -85,12 +64,8 @@
                 </d-cell>
               </d-column>
 
-              <d-column
-                [field]="'lastModifiedDate'"
-                header="Last Updated Date Time"
-                [sortable]="true"
-                [width]="columnSize.lastModifiedDate"
-              >
+              <d-column [field]="'lastModifiedDate'" header="Last Updated Date Time"
+                [sortable]="true" [width]="columnSize.lastModifiedDate">
                 <d-cell>
                   <ng-template let-cellItem="cellItem">
                     <span [title]="cellItem" class="over-flow-ellipsis">
@@ -100,12 +75,8 @@
                 </d-cell>
               </d-column>
 
-              <d-column
-                [field]="'lastModifiedBy'"
-                header="Last Updated By"
-                [sortable]="true"
-                [width]="columnSize.lastModifiedBy"
-              >
+              <d-column [field]="'lastModifiedBy'" header="Last Updated By" [sortable]="true"
+                [width]="columnSize.lastModifiedBy">
                 <d-cell>
                   <ng-template let-cellItem="cellItem">
                     <span [title]="cellItem" class="over-flow-ellipsis">
@@ -130,20 +101,12 @@
                   </ng-template>
                 </d-cell>
               </d-column> -->
-              <d-column
-                [field]="'action'"
-                header="Actions"
-                [width]="columnSize.action"
-              >
+              <d-column [field]="'action'" header="Actions" [width]="columnSize.action">
                 <d-cell>
                   <ng-template let-rowItem="rowItem" let-rowIndex="rowIndex">
                     <div class="btn-group over-flow-ellipsis">
-                      <d-button
-                        icon="icon-edit"
-                        bsStyle="text-dark"
-                        title="edit"
-                        (click)="editRow(rowItem.categoryId, rowIndex)"
-                      ></d-button>
+                      <d-button icon="icon-edit" bsStyle="text-dark" title="edit"
+                        (click)="editRow(rowItem.categoryId, rowIndex)"></d-button>
                       <!-- <d-button
                         icon="icon-delete"
                         bsStyle="text-dark"
@@ -157,19 +120,10 @@
             </d-data-table>
           </div>
           <div class="da-list-footer">
-            <d-pagination
-              [size]="'sm'"
-              [total]="pager.total"
-              [(pageSize)]="pager.pageSize"
-              [(pageIndex)]="pager.pageIndex"
-              [canViewTotal]="true"
-              [canChangePageSize]="true"
-              [canJumpPage]="true"
-              [maxItems]="5"
-              (pageIndexChange)="onPageChange($event)"
-              (pageSizeChange)="onSizeChange($event)"
-              [pageSizeOptions]="[100, 50, 20, 10, 5]"
-            >
+            <d-pagination [size]="'sm'" [total]="pager.total" [(pageSize)]="pager.pageSize"
+              [(pageIndex)]="pager.pageIndex" [canViewTotal]="true" [canChangePageSize]="true" [canJumpPage]="true"
+              [maxItems]="5" (pageIndexChange)="onPageChange($event)" (pageSizeChange)="onSizeChange($event)"
+              [pageSizeOptions]="[100, 50, 20, 10, 5]">
             </d-pagination>
           </div>
         </div>

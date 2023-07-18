@@ -24,7 +24,7 @@
                     display: 'inline-block',
                     marginRight: '20px'
                   }">
-                    <d-select placeholder="Select a Connection Location" [scrollHight]="'300px'"
+                    <d-select placeholder="{{'list.inventory.dropdown' | translate}}" [scrollHight]="'300px'"
                       [filterKey]="'nodeName'" [appendToBody]="true" [options]="connectionLocations" [isSearch]="true"
                       [(ngModel)]="dropdownSearch" (valueChange)="setValue();startSearch($event)"></d-select>
                   </div>
@@ -32,20 +32,22 @@
                     <d-search [ngStyle]="{
                         marginRight: '20px'
                       }" [size]="'sm'" [(ngModel)]="setSearch.styleName" (input)="startSearch($event)"
-                      class="da-inline" [placeholder]="'Search with Style Name'"></d-search>
+                      class="da-inline" placeholder="{{'list.inventory.skySearch' | translate}}"></d-search>
                     <d-search [size]="'sm'" [(ngModel)]="setSearch.sku" (input)="startSearch($event)" class="da-inline"
-                      [placeholder]="'Search with SKU'"></d-search>
+                    placeholder="{{'list.inventory.styleSearch' | translate}}" [placeholder]="''"></d-search>
                   </div>
                 </div>
 
-                <div>
-                  <d-button dLoading (click)="syncShopify()" class="mr-element-spacing primary" circled="true" style="margin-right: 8px">
+                <!-- <div>
+                  <d-button dLoading (click)="syncShopify()" class="mr-element-spacing primary" circled="true"
+                    style="margin-right: 8px">
                     Sync Shopify
                   </d-button>
-                  <d-button dLoading (click)="syncWMS()" class="mr-element-spacing primary" circled="true" style="margin-right: 8px">
+                  <d-button dLoading (click)="syncWMS()" class="mr-element-spacing primary" circled="true"
+                    style="margin-right: 8px">
                     Sync WMS
                   </d-button>
-                </div>
+                </div> -->
               </div>
             </div>
           </div>
@@ -53,8 +55,7 @@
           <div class="list-content" dLoading [loading]="busy">
             <d-data-table #datatable [dataSource]="basicDataSource" [scrollable]="true" [onlyOneColumnSort]="true"
               (multiSortChange)="multiSortChange($event)">
-              <d-column [field]="'nodeName'" header="Connection Location" [width]="columnSize.nodeName"
-                [sortable]="true">
+              <d-column [field]="'nodeName'" header="{{'list.inventory.inventoryNode' | translate}}" [width]="columnSize.nodeName">
                 <d-cell>
                   <ng-template let-cellItem="cellItem">
                     <span [title]="cellItem" class="over-flow-ellipsis">
@@ -64,7 +65,7 @@
                 </d-cell>
               </d-column>
 
-              <d-column [field]="'styleName'" header="Style Name" [sortable]="true" [width]="columnSize.styleName">
+              <d-column [field]="'styleName'"  header="{{'list.inventory.styleName' | translate}}" [sortable]="true" [width]="columnSize.styleName">
                 <d-cell>
                   <ng-template let-cellItem="cellItem">
                     <span [title]="cellItem" class="over-flow-ellipsis">
@@ -74,7 +75,7 @@
                 </d-cell>
               </d-column>
 
-              <d-column [field]="'sku'" header="SKU" [sortable]="true" [width]="columnSize.sku">
+              <d-column [field]="'sku'" header="{{'list.inventory.sku' | translate}}" [sortable]="true" [width]="columnSize.sku">
                 <d-cell>
                   <ng-template let-cellItem="cellItem">
                     <span [title]="cellItem" class="over-flow-ellipsis">
@@ -84,7 +85,7 @@
                 </d-cell>
               </d-column>
 
-              <d-column [field]="'skuType'" header="SKU Type" [sortable]="true" [width]="columnSize.skuType">
+              <d-column [field]="'skuType'" header="{{'list.inventory.skuType' | translate}}" [sortable]="true"  [width]="columnSize.skuType">
                 <d-cell>
                   <ng-template let-cellItem="cellItem">
                     <span [title]="cellItem" class="over-flow-ellipsis">
@@ -94,7 +95,7 @@
                 </d-cell>
               </d-column>
 
-              <d-column [field]="'skuDesc'" header="SKU Desc" [sortable]="true" [width]="columnSize.skuDesc">
+              <d-column [field]="'skuDesc'" header="{{'list.inventory.skuDesc' | translate}}" [sortable]="true" [width]="columnSize.skuDesc">
                 <d-cell>
                   <ng-template let-cellItem="cellItem">
                     <span [title]="cellItem" class="over-flow-ellipsis">
@@ -104,66 +105,59 @@
                 </d-cell>
               </d-column>
 
-              <d-column [field]="'unavailableInTransitQty'" header="In Transit Qty" [sortable]="true" [width]="columnSize.totalQty">
+              <d-column [field]="'totalQty'" header="{{'list.inventory.TtQty' | translate}}" [sortable]="true" [width]="columnSize.totalQty">
                 <d-cell>
                   <ng-template let-cellItem="cellItem">
-                    <span [title]="cellItem" class="over-flow-ellipsis">
+                    <span [title]="cellItem" style="text-align: right;" class="over-flow-ellipsis">
                       {{ cellItem }}
                     </span>
                   </ng-template>
                 </d-cell>
               </d-column>
 
-              <d-column [field]="'poQty'" header="PO Qty" [sortable]="true" [width]="columnSize.totalQty">
+              <d-column [field]="'avaiableQty'" header="{{'list.inventory.AvlQty' | translate}}" [sortable]="true" [width]="columnSize.avaiableQty">
                 <d-cell>
                   <ng-template let-cellItem="cellItem">
-                    <span [title]="cellItem" class="over-flow-ellipsis">
+                    <span [title]="cellItem" style="text-align: right;" class="over-flow-ellipsis">
                       {{ cellItem }}
                     </span>
                   </ng-template>
                 </d-cell>
               </d-column>
 
-              <d-column [field]="'totalQty'" header="Total Qty" [sortable]="true" [width]="columnSize.totalQty">
+              <d-column [field]="'unavailableQty'" header="{{'list.inventory.UnavlQty' | translate}}" [sortable]="true" [width]="columnSize.unavailableQty">
                 <d-cell>
                   <ng-template let-cellItem="cellItem">
-                    <span [title]="cellItem" class="over-flow-ellipsis">
+                    <span style="text-align: right;" [title]="cellItem" class="over-flow-ellipsis">
                       {{ cellItem }}
                     </span>
                   </ng-template>
                 </d-cell>
               </d-column>
 
-              <d-column [field]="'avaiableQty'" header="Avaiable Qty" [sortable]="true"
-                [width]="columnSize.avaiableQty">
+              <d-column [field]="'unavailableInTransitQty'" header="{{'list.inventory.TrQty' | translate}}" [sortable]="true" [width]="columnSize.intransitQty">
                 <d-cell>
                   <ng-template let-cellItem="cellItem">
-                    <span [title]="cellItem" class="over-flow-ellipsis">
+                    <span style="text-align: right;" [title]="cellItem" class="over-flow-ellipsis">
                       {{ cellItem }}
                     </span>
                   </ng-template>
                 </d-cell>
               </d-column>
 
-              <d-column [field]="'unavailableQty'" header="Unavailable Qty" [sortable]="true"
-                [width]="columnSize.unavailableQty">
+              <d-column [field]="'poQty'" header="{{'list.inventory.POQty' | translate}}" [sortable]="true" [width]="columnSize.poQty">
                 <d-cell>
                   <ng-template let-cellItem="cellItem">
-                    <span [title]="cellItem" class="over-flow-ellipsis">
+                    <span style="text-align: right;" [title]="cellItem" class="over-flow-ellipsis">
                       {{ cellItem }}
                     </span>
                   </ng-template>
                 </d-cell>
               </d-column>
-
-
-
-
-
               <!-- <d-column
                 [field]="'action'"
                 header="Action"
-                [sortable]="true"
+                
                 [width]="columnSize.action"
               >
                 <d-cell>

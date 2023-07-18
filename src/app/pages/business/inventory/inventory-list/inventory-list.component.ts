@@ -43,13 +43,16 @@ export class InventoryListComponent implements OnInit {
   connectionLocations: any[] = [];
 
   columnSize: any = {
-    connectionLocationId: "",
-    totalQty: "",
-    unavailableQty: "",
-    action: "",
-    styleName: "",
-    sku: "",
-    avaiableQty: ""
+    connectionLocationId: "12%",
+    styleName: "15%",
+    sku: "20%",
+    skuType: "8%",
+    skuDesc: "20%",
+    totalQty: "5%",
+    avaiableQty: "5%",
+    unavailableQty: "5%",
+    intransitQty: "5%",
+    poQty: "5%"
   };
 
   constructor(
@@ -63,6 +66,8 @@ export class InventoryListComponent implements OnInit {
   ngOnInit(): void {
     this.getConnectionLocations();
     setTimeout(() => {
+      this.pageParam.pageNo = 0;
+      this.inventoryService.setPageParams(this.pageParam);
       this.getList();
     }, 1000)
   }
@@ -76,7 +81,7 @@ export class InventoryListComponent implements OnInit {
         });
         this.basicDataSource = res.content;
 
-        this.columnSize = res.listSize;
+        // this.columnSize = res.listSize;
         this.pager.total = res.totalItems;
         // Object.keys(res.listSize).map((key) => {
         //   let widthValue = res.listSize[key] + "%";

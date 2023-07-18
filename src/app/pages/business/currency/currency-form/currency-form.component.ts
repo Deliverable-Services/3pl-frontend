@@ -47,6 +47,24 @@ export class CurrencyFormComponent implements OnInit {
     }
   }
 
+  onInputChange(event: Event) {
+    const input = event.target as HTMLInputElement;
+    const value = input.value;
+
+    // Restrict to two decimal places
+    const restrictedValue = this.restrictDecimal(value, 3);
+
+    // Update the input value
+    input.value = restrictedValue;
+  }
+
+  restrictDecimal(value: string, decimalPlaces: number): string {
+    const regex = new RegExp(`^-?\\d+(\\.\\d{0,${decimalPlaces}})?`);
+    const match = value.match(regex);
+
+    return match ? match[0] : "";
+  }
+
   verticalLayout: FormLayout = FormLayout.Vertical;
 
   getValue(value: object) {

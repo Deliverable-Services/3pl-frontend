@@ -46,9 +46,22 @@ export default {
       buttonTitle: '添加 Shopify 連接器'
     },
     inventory: {
-      title: '存貨',
+      title: '庫存',
+      dropdown: '選擇庫存節點',
+      inventoryNode: '庫存節點',
+      TtQty: '總數量',
+      AvlQty: '可用數量',
+      UnavlQty: '不可用數量',
+      TrQty: '在途數量',
+      POSQty: '採購訂單數量',
+      sku: 'SKU',
+      skuType: 'SKU類型',
+      skuDesc: 'SKU描述',
+      styleName: '款式名稱',
+      skuSearch: '使用SKU搜尋',
+      styleSearch: '使用款式名稱搜尋',
       list: '庫存清單'
-    },
+      },
     basicList: {
       title: '基本清單',
       description: '允許用戶調整列表大小和間距。'

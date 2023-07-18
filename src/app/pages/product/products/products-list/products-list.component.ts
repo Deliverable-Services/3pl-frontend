@@ -30,7 +30,7 @@ export class ProductsListComponent implements OnInit {
     sortDir: "asc",
   };
 
-  dropdownValues: any[] = ['Draft', 'Inactive', 'Active'];
+  dropdownValues: any[] = ['All','Draft', 'Inactive', 'Active'];
   dropdownSearch: any = {
     status: ''
   }
@@ -66,12 +66,12 @@ export class ProductsListComponent implements OnInit {
   };
 
   columnSize: any = {
-    styleName: "",
-    styleCode: "",
-    createdAt: "",
-    updatedAt: "",
-    action: "",
-    active: "",
+    styleName: "20%",
+    styleCode: "10%",
+    createdAt: "10%",
+    updatedAt: "10%",
+    action: "10%",
+    active: "10%",
   };
 
   busy: Subscription | undefined;
@@ -83,6 +83,8 @@ export class ProductsListComponent implements OnInit {
   ) {}
 
   ngOnInit() {
+    this.pageParam.pageNo = 0;
+    this.productsListDataService.setPageParams(this.pageParam);
     this.getProductsList();
   }
 
@@ -90,10 +92,12 @@ export class ProductsListComponent implements OnInit {
     this.busy = this.productsListDataService.getList().subscribe((res) => {
       this.pager.total = res.totalItems;
       this.basicDataSource = res.content;
-      Object.keys(res.listSize).map((key) => {
-        let widthValue = res.listSize[key] + "%";
-        return (this.columnSize[key] = widthValue);
-      });
+      // Object.keys(res.listSize).map((key) => {
+      //   let widthValue = res.listSize[key] + "%";
+      //   return (this.columnSize[key] = widthValue);
+      // });
+      console.log('column size',this.columnSize);
+      
     });
   }
 
@@ -150,10 +154,13 @@ export class ProductsListComponent implements OnInit {
 
   startSearch(event: any) {
     // console.log(':: dropdownSearch.status :: ', this.dropdownSearch.status)
+    if(this.dropdownSearch.status == "All"){
+      this.dropdownSearch.status = ""; 
+    }
     this.setSearchParams({
       columnName: 'status',
       searchType: 'match',
-      keyword: this.dropdownSearch.status
+      keyword: this.dropdownSearch.status 
     });
   }
 }
