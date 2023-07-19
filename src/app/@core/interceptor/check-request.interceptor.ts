@@ -11,6 +11,7 @@ import { catchError, retry, map } from 'rxjs/operators';
 import { Router } from '@angular/router';
 import { AuthService } from '../services/auth.service';
 import { DialogService } from 'ng-devui';
+import { ProductsFormComponent } from 'src/app/pages/product/products/products-form/products-form.component';
 
 @Injectable()
 export class CheckRequestInterceptor implements HttpInterceptor {
@@ -24,6 +25,29 @@ export class CheckRequestInterceptor implements HttpInterceptor {
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     return next.handle(request).pipe(catchError((err: HttpErrorResponse) => {
       let error = '';
+      if(err.status === 500 && err?.error?.detail && err?.error?.path && err?.error?.path?.includes('product')) {
+        let showAlertPopUp = this.dialogService.open({
+          id: 'manage-confirmation',
+          width: '350px',
+          maxHeight: '600px',
+          title: 'ERROR!',
+          backdropCloseable: false,
+          content: err?.error?.detail,
+          showCloseBtn: false,
+          dialogtype: 'failed',
+          onClose: () => {
+          },
+          buttons: [
+            {
+              cssClass: 'primary',
+              text: 'Ok',
+              handler: ($event: Event) => {
+                showAlertPopUp.modalInstance.hide();
+              },
+            }
+          ],
+        });
+      }
       if (err.status === 401) {
         const keysArray = Object.keys(err.error)
         const error = err.error[keysArray[0]];
