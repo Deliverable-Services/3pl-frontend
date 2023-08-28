@@ -39,7 +39,14 @@ export class UserFormComponent implements OnInit {
     this.paramId = this.route.snapshot.params["id"];
     this.mode = this.route.snapshot.params["id"] ? "Edit" : "Add";
 
+    this.getRoles();
     this.getCreditTermsById(this.paramId);
+  }
+
+  getRoles() {
+    this.userManagementService.getRoles().subscribe((res) => {
+      this.rolesName = res?.map((role: any) => role.name) || [];
+    });
   }
 
   getCreditTermsById(id: string) {

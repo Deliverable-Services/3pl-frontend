@@ -98,7 +98,6 @@ export class UserManagementService {
   }
 
   updateCreditTerms(id: string, data: any): Observable<any> {
-    console.log(' :::: ', data)
     return this.http.put(
       `${this.baseApiUrl}/users/${id}`,
       data
@@ -107,6 +106,10 @@ export class UserManagementService {
 
   getById(id: string): Observable<any> {
     return this.http.get(`${this.baseApiUrl}/users/${id}`);
+  }
+
+  getRoles(): Observable<any> {
+    return this.http.get(`${this.baseApiUrl}/role/list`);
   }
 
   statusToggle(data: any) {
