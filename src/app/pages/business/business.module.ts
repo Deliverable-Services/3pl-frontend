@@ -23,6 +23,7 @@ import { CurrencyFormComponent } from './currency/currency-form/currency-form.co
 import { CurrencyListComponent } from './currency/currency-list/currency-list.component';
 import { ShopifyConnectorListComponent } from "./shopify-connector/shopify-connector-list/shopify-connector-list.component";
 import { ShopifyConnectorFormComponent } from "./shopify-connector/shopify-connector-form/shopify-connector-form.component";
+import { InventoryOnlineComponent } from './inventory/inventory-online/inventory-online.component';
 // import { InventoryListComponent } from "./inventory/inventory-list/inventory-list.component";
 
 @NgModule({
@@ -39,6 +40,7 @@ import { ShopifyConnectorFormComponent } from "./shopify-connector/shopify-conne
     CurrencyListComponent,
     ShopifyConnectorListComponent,
     ShopifyConnectorFormComponent,
+    InventoryOnlineComponent,
     // InventoryListComponent
   ],
   imports: [

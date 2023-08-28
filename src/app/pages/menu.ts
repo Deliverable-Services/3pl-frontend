@@ -74,8 +74,27 @@ export default function (values: any) {
     },
     {
       title: "inventory",
-      link: "/inventory",
       menuIcon: "icon icon-go-story",
+      children:[
+        {
+          title:"inventoryList",
+          link: "/inventory"
+        },
+        {
+          title:"inventoryOnlineList",
+          link: "/inventory-online"
+        }
+      ],
+    },
+    {
+      title: "userManagement",
+      menuIcon: "icon icon-go-story",
+      children:[
+        {
+          title:"user",
+          link: "/user-management/user"
+        }
+      ],
     },
     // {
     //   title: "Connection Location",

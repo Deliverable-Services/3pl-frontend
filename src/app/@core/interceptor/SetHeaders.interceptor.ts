@@ -9,9 +9,9 @@ export class SetHeadersInterceptor implements HttpInterceptor {
 
   intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
     request = request.clone({
-      setHeaders: {
-        "Content-Type": "application/json",
-      }
+      // setHeaders: {
+      //   "Content-Type": "application/json",
+      // }
     });
 
     return next.handle(request);

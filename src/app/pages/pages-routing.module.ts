@@ -3,6 +3,7 @@ import { NgModule } from "@angular/core";
 
 import { PagesComponent } from "./pages.component";
 import { InventoryListComponent } from "./business/inventory/inventory-list/inventory-list.component";
+import { InventoryOnlineComponent } from "./business/inventory/inventory-online/inventory-online.component";
 // import { NotFoundComponent } from './abnormal/not-found/not-found.component';
 
 const routes: Routes = [
@@ -42,13 +43,27 @@ const routes: Routes = [
           import("./connection-location/connection-location.module").then((m) => m.ConnectionLocationModule),
       },
       {
+        path: "user-management",
+        loadChildren: () =>
+          import("./user-management/user-management.module").then((m) => m.UserManagementModule),
+      },
+      {
         path: "inventory",
         component: InventoryListComponent,
+      },
+      {
+        path: "inventory-online",
+        component: InventoryOnlineComponent,
       },
       {
         path: "",
         redirectTo: "",
         pathMatch: "full",
+      },
+      {
+        path: "user-management",
+        loadChildren: () =>
+          import("./connection-location/connection-location.module").then((m) => m.ConnectionLocationModule),
       },
       // {
       //   path: '**',

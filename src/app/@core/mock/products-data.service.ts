@@ -20,6 +20,8 @@ export class ProductsListDataService extends ProductsListData {
     super();
   }
 
+  private dataUrl = 'assets/countries.json';
+
   private searchParams = {
     filters: [
       {
@@ -45,13 +47,15 @@ export class ProductsListDataService extends ProductsListData {
   setSearchParams(searchParams: SearchParam) {
     this.searchParams.filters = this.searchParams.filters.map((param: any) => {
       if (param.field === searchParams.columnName) {
-        return {
-          field: searchParams.columnName,
-          operator: searchParams.searchType,
-          value: searchParams.keyword,
-        };
+        // if(searchParams.keyword != "")        
+          return {
+            field: searchParams.columnName,
+            operator: searchParams.searchType,
+            value: searchParams.keyword,
+          };
       } else {
-        return param;
+        // if(searchParams.keyword != "")
+          return param;
       }
     });
   }
@@ -138,4 +142,15 @@ export class ProductsListDataService extends ProductsListData {
       ""
     );
   }
+  getCountriesData() {
+    return this.http.get<any[]>(this.dataUrl);
+  }
+
+  uploadProductImage(id: string, data: FormData){
+    return this.http.post(
+      `${this.baseApiUrl}/product/${id}/image-upload`,
+      data
+    );
+  }
+
 }

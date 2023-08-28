@@ -36,6 +36,8 @@ export class InventoryService {
 
     if(searchVal) {
       this.searchParams.filters = searchVal;
+    }else{
+      this.searchParams.filters = [];
     }
 
     return this.http.post(

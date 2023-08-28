@@ -21,6 +21,8 @@ import { CreditTermsService } from "./credit-terms.service";
 import { ConnectionLocationService } from "./connection-location.service";
 import { ShopifyConnectorService } from "./shopify-connector.service";
 import { InventoryService } from "./inventory.service";
+import { InventoryOnlineService } from "./inventory-online-data.service";
+import { UserManagementService } from "./user-management.service";
 
 
 const SERVICES = [
@@ -44,7 +46,9 @@ const SERVICES = [
   CreditTermsService,
   ConnectionLocationService,
   ShopifyConnectorService,
-  InventoryService
+  InventoryService,
+  InventoryOnlineService,
+  UserManagementService
 ];
 
 @NgModule({

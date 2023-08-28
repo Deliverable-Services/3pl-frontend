@@ -23,9 +23,10 @@ export class CheckRequestInterceptor implements HttpInterceptor {
   ) { }
 
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+    console.log('API URL:', request.url); // Log the API URL
+
     return next.handle(request).pipe(catchError((err: HttpErrorResponse) => {
-      let error = '';
-      if(err.status === 500 && err?.error?.detail && err?.error?.path && err?.error?.path?.includes('product')) {
+      if (err.status === 500 && err?.error?.detail && err?.error?.path && err?.error?.path?.includes('product')) {
         let showAlertPopUp = this.dialogService.open({
           id: 'manage-confirmation',
           width: '350px',
@@ -47,9 +48,11 @@ export class CheckRequestInterceptor implements HttpInterceptor {
             }
           ],
         });
+        return throwError(err); // or return an empty observable if you don't want to rethrow
       }
-      if (err.status === 401) {
-        const keysArray = Object.keys(err.error)
+      
+      if (err.status === 401 && !request.url.includes('generate-session')) {
+        const keysArray = Object.keys(err.error);
         const error = err.error[keysArray[0]];
         const dProperties = this.dialogService.open({
           id: 'unauthorized-access',
@@ -74,10 +77,12 @@ export class CheckRequestInterceptor implements HttpInterceptor {
             },
           ],
         });
+        return throwError(error);
       }
-      return throwError(error);
+
+      return throwError(err); // Rethrow the error if it doesn't match any conditions
     })).pipe(map<HttpEvent<any>, any>((evt: HttpEvent<any>) => {
       return evt;
-    }));;
+    }));
   }
 }
