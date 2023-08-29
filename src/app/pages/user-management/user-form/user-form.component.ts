@@ -27,7 +27,7 @@ export class UserFormComponent implements OnInit {
   groups: any[] = ["INTERNAL", "EXTERNAL"];
   rolesName: any[] = ["A", "B"];
   paramId: string = "";
-  selectedCreditTerms: any = {};
+  // selectedCreditTerms: any = {};
   constructor(
     private userManagementService: UserManagementService,
     private route: ActivatedRoute,
@@ -51,8 +51,8 @@ export class UserFormComponent implements OnInit {
 
   getCreditTermsById(id: string) {
     this.userManagementService.getById(id).subscribe((res) => {
-      this.selectedCreditTerms = res;
       this.projectFormData = res;
+      this.projectFormData.selectedRoles = res?.roles?.map((role: any) => role?.name);
     });
   }
 

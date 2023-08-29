@@ -92,4 +92,9 @@ export class UserListComponent implements OnInit {
     this.router.navigate([`/user-management/user/edit/${rowId}`]);
   }
 
+  _showRoles(roles: any) {
+    let rNames = roles?.map((role: any) => role?.name);
+    return rNames?.join(",");
+  }
+
 }

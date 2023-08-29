@@ -99,7 +99,7 @@
                 </d-cell>
               </d-column>
 
-              <!-- <d-column
+              <d-column
                 [field]="'roles'"
                 header="Roles"
                 [sortable]="true"
@@ -107,11 +107,11 @@
                 <d-cell>
                   <ng-template let-cellItem="cellItem">
                     <span [title]="cellItem" class="over-flow-ellipsis">
-                      {{ cellItem }}
+                      {{ _showRoles(cellItem) }}
                     </span>
                   </ng-template>
                 </d-cell>
-              </d-column> -->
+              </d-column>
   
                 <d-column
                   [field]="'action'"
