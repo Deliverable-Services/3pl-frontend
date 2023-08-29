@@ -6,10 +6,10 @@ import { Observable, Subscription, of } from "rxjs";
 import { delay } from "rxjs/operators";
 import { Brand } from "src/app/@core/data/brandList";
 import { Season } from "src/app/@core/data/season";
-import { StyleListData } from "src/app/@core/data/styleList";
+import { ProductsListData } from "src/app/@core/data/styleList";
 import { BrandListDataService } from "src/app/@core/mock/brand-data.service";
 import { ProductListDataService } from "src/app/@core/mock/product-data.service";
-import { StyleListDataService } from "src/app/@core/mock/style-data.service";
+import { ProductsListDataService } from "src/app/@core/mock/products-data.service";
 import { FormConfig } from "src/app/@shared/components/admin-form";
 import { DaLayoutComponent } from "src/app/@shared/layouts/da-layout";
 import { StyleSelectModelComponent } from "../style-select-model/style-select-model.component";
@@ -39,7 +39,7 @@ export class ProductFormComponent implements OnInit {
   mode: string = "Add";
   paramId: string = "";
 
-  styleList: StyleListData[] = [];
+  styleList: ProductsListData[] = [];
 
   formData = {};
   editForm: any = null;
@@ -94,7 +94,7 @@ export class ProductFormComponent implements OnInit {
     private dialogService: DialogService,
     private router: Router,
     private route: ActivatedRoute,
-    private styleListDataServices: StyleListDataService
+    private productsListDataService: ProductsListDataService
   ) {}
 
   async ngOnInit() {
@@ -136,7 +136,7 @@ export class ProductFormComponent implements OnInit {
   }
 
   getStyleById(id: string) {
-    this.styleListDataServices.getStyleById(id).subscribe((res) => {
+    this.productsListDataService.getById(id).subscribe((res) => {
       this.styleData = res;
       this.materialToStr = this.styleData.materials
         .map((val: any) => val.material.materialName)
@@ -148,8 +148,8 @@ export class ProductFormComponent implements OnInit {
   }
 
   async getStyleList() {
-    this.busy = this.styleListDataServices
-      .getStyleListActive()
+    this.busy = this.productsListDataService
+      .getListActive()
       .subscribe((res) => {
         this.styleList = res.content;
 

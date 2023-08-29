@@ -1,5 +1,17 @@
 import { Observable } from "rxjs";
 
+export interface Products {
+  styleName: string;
+  logisticsDesc: string;
+  collection: string;
+  fabricComposition: string;
+  fabicSwatch: string;
+  unitWeight: string;
+  productCategoryId: string;
+  varients?: any;
+  updatedAt?: any;
+  createdAt?: any;
+}
 export interface Product {
   productId?: string;
   productName?: string;

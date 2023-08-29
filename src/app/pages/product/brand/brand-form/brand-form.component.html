@@ -23,7 +23,7 @@
             {{ mode + " " + "Brand" | translate }}
           </div>
           <d-form-item [ngStyle]="{ width: '500px' }">
-            <d-form-label [required]="true" [hasHelp]="true" [helpTips]="'This is the Brand name.'">Brand Name
+            <d-form-label [required]="true" [hasHelp]="false" [helpTips]="'This is the Brand name.'">Brand Name
             </d-form-label>
             <d-form-control>
               <input dTextInput autocomplete="off" name="brandName" placeholder="Brand Name"
@@ -34,7 +34,7 @@
           </d-form-item>
 
           <d-form-item>
-            <d-form-label [required]="true" [hasHelp]="true" [helpTips]="'Enter Brand Code'">Brand Code</d-form-label>
+            <d-form-label [required]="true" [hasHelp]="false" [helpTips]="'Enter Brand Code'">Brand Code</d-form-label>
             <d-form-control>
               <input dTextInput autocomplete="off" name="brandCode" placeholder="Brand Code"
                 onkeydown="if(['Space'].includes(arguments[0].code)){return false;}"

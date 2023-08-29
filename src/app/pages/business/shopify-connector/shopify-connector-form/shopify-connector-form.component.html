@@ -1,0 +1,83 @@
+<div class="da-content-banner">
+  <div class="add-session-btn">
+    <d-breadcrumb>
+      <d-breadcrumb-item>
+        <a routerLink="/business/shopify-connector">{{ 'list.shopifyConnector.title' | translate }}</a>
+      </d-breadcrumb-item>
+      <d-breadcrumb-item>
+        {{ (mode === 'Add' ? "list.shopifyConnector.buttonTitle" : "form.shopifyConnector.edit") | translate }}
+      </d-breadcrumb-item>
+      <!-- <d-button [ngStyle]="{ marginLeft: '900px' }" (click)="addSession()">Add Season</d-button> -->
+    </d-breadcrumb>
+  </div>
+</div>
+
+<div class="da-content-wrapper">
+  <da-layout-row [daGutter]="[24, 24]">
+    <da-col-item [daSpan]="24" [daXs]="24">
+      <div class="da-basic-form" [ngStyle]="{ display: 'flex', justifyContent: 'space-between' }">
+        <form dForm ngForm [dValidateRules]="{
+            message: 'The form verification failed, please check.'
+          }" [layout]="verticalLayout" #projectForm="dValidateRules" (dSubmit)="submitProjectForm($event)"
+          autocomplete="off">
+          <div class="da-content-banner-title">
+            {{ (mode === 'Add' ? "list.shopifyConnector.buttonTitle" : "form.shopifyConnector.edit") | translate }}
+          </div>
+          <d-form-item [ngStyle]="{ width: '500px' }">
+            <d-form-label [required]="true" [hasHelp]="false">
+              {{'form.shopifyConnector.fields.connectorName' | translate}}
+            </d-form-label>
+            <d-form-control>
+              <input dTextInput autocomplete="off" name="connectorName" [placeholder]="'form.shopifyConnector.fields.connectorName' | translate"
+                [(ngModel)]="projectFormData.connectorName" [dValidateRules]="{
+                  validators: [{ required: true }]
+                }" />
+            </d-form-control>
+          </d-form-item>
+
+          <d-form-item [ngStyle]="{ width: '500px' }">
+              <d-form-label [required]="true" [hasHelp]="false">
+                {{'form.shopifyConnector.fields.baseUrl' | translate}}
+              </d-form-label>
+              <d-form-control>
+                <input dTextInput autocomplete="off" name="baseUrl" [placeholder]="'form.shopifyConnector.fields.baseUrl' | translate"
+                  [(ngModel)]="projectFormData.baseUrl" [dValidateRules]="{
+                    validators: [{ required: true }]
+                  }" />
+              </d-form-control>
+          </d-form-item>
+
+          <d-form-item [ngStyle]="{ width: '500px' }">
+            <d-form-label [required]="true" [hasHelp]="false">
+              {{'form.shopifyConnector.fields.token' | translate}}
+            </d-form-label>
+            <d-form-control>
+              <input dTextInput autocomplete="off" name="token" [placeholder]="'form.shopifyConnector.fields.token' | translate"
+                [(ngModel)]="projectFormData.token" [dValidateRules]="{
+                  validators: [{ required: true }]
+                }" />
+            </d-form-control>
+          </d-form-item>
+
+          <d-form-operation>
+            <d-button dLoading class="mr-element-spacing" [title]="projectForm.errorMessage || ''" circled="true"
+              style="margin-right: 8px" [showLoading]="projectForm.pending" dFormSubmit
+              [dFormSubmitData]="'submit-button'">
+              {{ (paramId ? "form.common.update" : "form.common.create") | translate}}
+            </d-button>
+          </d-form-operation>
+        </form>
+        <!-- <div *ngIf="paramId">
+          <div class="dateWrapper">
+            {{ "Created Date :" + " " }}
+            {{ selectedCreditTerms.createdAt | mydatepipe }}
+          </div>
+          <div class="dateWrapper">
+            {{ "Updated Date :" + " " }}
+            {{ selectedCreditTerms.updatedAt | mydatepipe }}
+          </div>
+        </div> -->
+      </div>
+    </da-col-item>
+  </da-layout-row>
+</div>

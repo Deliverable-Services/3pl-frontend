@@ -2,14 +2,14 @@ import { Observable } from "rxjs";
 
 export interface SearchParam {
   keyword: string;
-  sort: string;
+  sort?: string;
   columnName: string;
   searchType: string;
 }
 
 export interface PageParam {
-  pageNo: "";
-  pageSize: "";
-  sortBy: "";
-  sortDir: "";
+  pageNo: string;
+  pageSize: string;
+  sortBy: string;
+  sortDir: string;
 }

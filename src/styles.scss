@@ -53,9 +53,34 @@ body {
     height: 28px;
     border-radius: 4px 4px;
 }
+.mr-element-spacing {
+  // background: #53ba75 !important;
+  button {
+    background: #53ba75 !important;
+    span {
+      color: #fff !important;
+    }
+  }
+}
+.manage-inactive-btn {
+  background: #EE4B2B !important;
+  button {
+    background: #EE4B2B !important;
+    span {
+      color: #fff !important;
+    }
+  }
+}
 .devui-form-control-container button i{
   border-right: 0 !important;
 }
+.product-form-list .devui-form-vertical .devui-form-item{
+  width: 100%;
+}
+.product-form-list .devui-form-control-container input{
+width: 100% !important;
+}
+
 @media only screen and (max-width: 1023px) {
   .modal-dialog {
     max-width: 400px !important;

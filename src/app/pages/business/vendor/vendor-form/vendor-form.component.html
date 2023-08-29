@@ -38,7 +38,7 @@
           <div [ngStyle]="{ display: 'flex', justifyContent: 'space-between' }">
             <div [ngStyle]="{ width: '46%' }">
               <d-form-item>
-                <d-form-label [required]="true" [hasHelp]="true" [helpTips]="'This is the Vendor name.'">Vendor Name
+                <d-form-label [required]="true" [hasHelp]="false" [helpTips]="'This is the Vendor name.'">Vendor Name
                 </d-form-label>
                 <d-form-control>
                   <input dTextInput autocomplete="off" name="vendorName" placeholder="Vendor Name"
@@ -49,7 +49,7 @@
               </d-form-item>
 
               <d-form-item>
-                <d-form-label [required]="true" [hasHelp]="true" [helpTips]="'Enter Vendor Code'">Vendor Code
+                <d-form-label [required]="true" [hasHelp]="false" [helpTips]="'Enter Vendor Code'">Vendor Code
                 </d-form-label>
                 <d-form-control>
                   <input dTextInput autocomplete="off" name="vendorCode" placeholder="Vendor Code"
@@ -61,7 +61,7 @@
               </d-form-item>
 
               <d-form-item>
-                <d-form-label [required]="true" [hasHelp]="true" [helpTips]="'Enter Phone Number'">Phone</d-form-label>
+                <d-form-label [required]="true" [hasHelp]="false" [helpTips]="'Enter Phone Number'">Phone</d-form-label>
                 <d-form-control>
                   <input dTextInput autocomplete="off" name="phoneNo" placeholder="Phone"
                     onkeydown="if(['Space'].includes(arguments[0].code)){return false;}"
@@ -72,7 +72,7 @@
               </d-form-item>
 
               <d-form-item>
-                <d-form-label [hasHelp]="true" [helpTips]="'Enter Fax No. '">Fax No.</d-form-label>
+                <d-form-label [hasHelp]="false" [helpTips]="'Enter Fax No. '">Fax No.</d-form-label>
                 <d-form-control>
                   <input dTextInput autocomplete="off" name="faxNo" placeholder="Fax No"
                     onkeydown="if(['Space'].includes(arguments[0].code)){return false;}"
@@ -82,7 +82,7 @@
             </div>
             <div [ngStyle]="{ width: '46%' }">
               <d-form-item>
-                <d-form-label [hasHelp]="true" [helpTips]="'Enter Website'">Website</d-form-label>
+                <d-form-label [hasHelp]="false" [helpTips]="'Enter Website'">Website</d-form-label>
                 <d-form-control>
                   <input dTextInput autocomplete="off" name="website" placeholder="Website"
                     onkeydown="if(['Space'].includes(arguments[0].code)){return false;}"
@@ -90,7 +90,7 @@
                 </d-form-control>
               </d-form-item>
               <d-form-item>
-                <d-form-label [hasHelp]="true" [helpTips]="'Enter Address'">Address</d-form-label>
+                <d-form-label [hasHelp]="false" [helpTips]="'Enter Address'">Address</d-form-label>
                 <d-form-control>
                   <input dTextInput autocomplete="off" name="address" placeholder="Enter Address"
                     onkeydown="if(['Space'].includes(arguments[0].code)){return false;}"
@@ -98,7 +98,7 @@
                 </d-form-control>
               </d-form-item>
               <d-form-item>
-                <d-form-label [required]="true" [hasHelp]="true" [helpTips]="'This is the Currency'">Currency
+                <d-form-label [required]="true" [hasHelp]="false" [helpTips]="'This is the Currency'">Currency
                 </d-form-label>
 
                 <d-select [readonly]="true" [filterKey]="'currency'" [extraConfig]="{

@@ -1,8 +1,8 @@
 <div class="da-operations">
   <!-- <d-search class="da-header-search" [iconPosition]="'left'" [noBorder]="true" (searchFn)="onSearch($event)"></d-search> -->
-  <a href="https://devui.design/admin-page/docs" target="_blank">
+  <!-- <a href="https://devui.design/admin-page/docs" target="_blank">
     <i class="icon icon-helping"></i>
-  </a>
+  </a> -->
   <!-- <div class="da-operations-notice" dDropDown [trigger]="'click'" dDropDownToggle appendToBody [closeScope]="'blank'">
     <d-badge [count]="noticeCount">
       <i class="icon icon-notice"></i>
@@ -12,8 +12,8 @@
     </div>
   </div> -->
 
-  <div class="da-operations-user" dDropDown [trigger]="'hover'" appendToBody dDropDownToggle>
-    <d-avatar [name]="user.userName" [width]="22" [height]="22"></d-avatar>
+  <div style="display: none;" class="da-operations-user" dDropDown [trigger]="'hover'" appendToBody dDropDownToggle>
+    <d-avatar [name]="user?.userName || ''" [width]="22" [height]="22"></d-avatar>
     <span class="da-user-name">{{ user?.userName }}</span>
     <ul dDropDownMenu class="devui-dropdown-menu devui-scrollbar" role="menu" style="min-width: 120px">
       <ng-container *ngIf="haveLoggedIn; else login">
@@ -44,8 +44,9 @@
       <li *ngFor="let item of languages" role="menuitem" [ngClass]="{ 'da-active-lang': language === item.code }"
         (click)="onLanguageClick(item.code)">
         <a class="devui-dropdown-item">
-          <span class="da-language-prefix">{{ item.prefix }}</span>
+          <!-- <span class="da-language-prefix">{{ item.prefix }}</span> -->
           {{ item.lang }}
+          <!-- {{item.code}} -->
         </a>
       </li>
     </ul>

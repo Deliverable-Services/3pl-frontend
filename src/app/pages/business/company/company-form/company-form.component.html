@@ -2,10 +2,10 @@
   <div class="add-session-btn">
     <d-breadcrumb>
       <d-breadcrumb-item>
-        <a routerLink="../">{{ "Company" | translate }}</a>
+        <a routerLink="../../">{{ 'list.breadcrumb.home' | translate }}</a>
       </d-breadcrumb-item>
       <d-breadcrumb-item>
-        {{ mode | translate }}
+        {{ 'form.company.edit_company' | translate }}
       </d-breadcrumb-item>
     </d-breadcrumb>
   </div>
@@ -20,13 +20,14 @@
           }" [layout]="verticalLayout" #companyForm="dValidateRules" (dSubmit)="submitCompanyForm($event)"
           autocomplete="off">
           <div class="da-content-banner-title">
-            {{ mode + " " + "Company" | translate }}
+            {{ 'form.company.edit_company' | translate }}
           </div>
           <d-form-item>
-            <d-form-label [required]="true" [hasHelp]="true" [helpTips]="'This is the Company name.'">Company Name
+            <d-form-label [required]="true" [hasHelp]="false" [helpTips]="'This is the Company name.'">
+              {{'form.company.fields.companyName' | translate}}
             </d-form-label>
             <d-form-control>
-              <input dTextInput autocomplete="off" name="brandName" placeholder="Company Name"
+              <input dTextInput autocomplete="off" name="brandName" [placeholder]="'form.company.fields.companyName' | translate"
                 [(ngModel)]="companyFormData.companyName" [dValidateRules]="{
                   validators: [{ required: true }]
                 }" />
@@ -34,40 +35,98 @@
           </d-form-item>
 
           <d-form-item>
-            <d-form-label [required]="true" [hasHelp]="true" [helpTips]="'Enter Company address'">Company address
+            <d-form-label [required]="true" [hasHelp]="false" [helpTips]="'Enter Company address'">
+              {{'form.company.fields.companyAddress' | translate}}
             </d-form-label>
             <d-form-control>
-              <input dTextInput autocomplete="off" name="address" placeholder="Company address"
-                [(ngModel)]="companyFormData.address" [dValidateRules]="{
+              <input dTextInput autocomplete="off" name="businessAddress" [placeholder]="'form.company.fields.companyAddress' | translate"
+                [(ngModel)]="companyFormData.businessAddress" [dValidateRules]="{
                   validators: [{ required: true }]
                 }" />
             </d-form-control>
           </d-form-item>
 
           <d-form-item>
-            <d-form-label [required]="true" [hasHelp]="true" [helpTips]="'Enter Primary Currency'">Primary Currency
+            <d-form-label [required]="true" [hasHelp]="false" [helpTips]="'Enter Primary Currency'">
+              {{'form.company.fields.primaryCurrency' | translate}}
             </d-form-label>
             <d-form-control>
-              <input dTextInput autocomplete="off" name="primaryCurrency" placeholder="Primary currency"
-                [(ngModel)]="companyFormData.primaryCurrency" [dValidateRules]="{
+              <input dTextInput autocomplete="off" name="primaryCurrencyName" [placeholder]="'form.company.fields.primaryCurrency' | translate"
+                [(ngModel)]="companyFormData.primaryCurrencyName" [dValidateRules]="{
                   validators: [{ required: true }]
                 }" />
             </d-form-control>
           </d-form-item>
 
           <d-form-item>
-            <d-form-label>Created At</d-form-label>
+            <d-form-label [required]="true" [hasHelp]="false" [helpTips]="'Enter Primary Currency'">
+              {{'form.company.fields.primaryCurrencyCode' | translate}}
+            </d-form-label>
             <d-form-control>
-              <input dTextInput disabled autocomplete="off" name="createdAt" placeholder="Created At"
-                [(ngModel)]="companyFormData.createdAt" />
+              <input dTextInput autocomplete="off" name="primaryCurrencyCode" [placeholder]="'form.company.fields.primaryCurrencyCode' | translate"
+                [(ngModel)]="companyFormData.primaryCurrencyCode" [dValidateRules]="{
+                  validators: [{ required: true }]
+                }" />
             </d-form-control>
           </d-form-item>
 
           <d-form-item>
-            <d-form-label>Updated At</d-form-label>
+            <d-form-label [required]="true" [hasHelp]="false" [helpTips]="'Enter Primary Currency'">
+              {{'form.company.fields.contactPerson' | translate}}
+            </d-form-label>
             <d-form-control>
-              <input dTextInput disabled name="updatedAt" placeholder="Updated At"
-                [(ngModel)]="companyFormData.updatedAt" />
+              <input dTextInput autocomplete="off" name="contactPerson" [placeholder]="'form.company.fields.contactPerson' | translate"
+                [(ngModel)]="companyFormData.contactPerson" [dValidateRules]="{
+                  validators: [{ required: true }]
+                }" />
+            </d-form-control>
+          </d-form-item>
+
+          <d-form-item>
+            <d-form-label [required]="true" [hasHelp]="false" [helpTips]="'Enter Primary Currency'">
+              {{'form.company.fields.contactPhone' | translate}}
+            </d-form-label>
+            <d-form-control>
+              <input dTextInput autocomplete="off" name="contactPhone" [placeholder]="'form.company.fields.contactPhone' | translate"
+                [(ngModel)]="companyFormData.contactPhone" [dValidateRules]="{
+                  validators: [{ required: true }]
+                }" />
+            </d-form-control>
+          </d-form-item>
+
+          <d-form-item>
+            <d-form-label [required]="true" [hasHelp]="false" [helpTips]="'Enter Primary Currency'">
+              {{'form.company.fields.contactEmail' | translate}}
+            </d-form-label>
+            <d-form-control>
+              <input dTextInput autocomplete="off" name="contactEmail" [placeholder]="'form.company.fields.contactEmail' | translate"
+                [(ngModel)]="companyFormData.contactEmail" [dValidateRules]="{
+                  validators: [{ required: true }]
+                }" />
+            </d-form-control>
+          </d-form-item>
+
+          <!-- <d-form-item>
+            <d-form-label>{{'form.company.fields.createdAt' | translate}}</d-form-label>
+            <d-form-control>
+              <input dTextInput disabled autocomplete="off" name="createdDate" [placeholder]="'form.company.fields.createdAt' | translate"
+                [(ngModel)]="companyFormData.createdDate" />
+            </d-form-control>
+          </d-form-item> -->
+
+          <d-form-item>
+            <d-form-label>{{'form.company.fields.updatedAt' | translate}}</d-form-label>
+            <d-form-control>
+              <input dTextInput disabled name="lastModifiedDate" [placeholder]="'form.company.fields.updatedAt' | translate"
+                [(ngModel)]="companyFormData.lastModifiedDate" />
+            </d-form-control>
+          </d-form-item>
+
+          <d-form-item>
+            <d-form-label>Updated By</d-form-label>
+            <d-form-control>
+              <input dTextInput disabled name="lastModifiedBy" [placeholder]="'lastModifiedBy' | translate"
+                [(ngModel)]="companyFormData.lastModifiedBy" />
             </d-form-control>
           </d-form-item>
 
@@ -75,7 +134,7 @@
             <d-button dLoading class="mr-element-spacing" [title]="companyForm.errorMessage || ''" circled="true"
               style="margin-right: 8px" [showLoading]="companyForm.pending" dFormSubmit
               [dFormSubmitData]="'submit-button'">
-              {{ mode === 'Edit' ? "Update" : "Create" }}
+              {{ (mode === 'Edit' ? "form.common.update" : "form.common.create") | translate}}
             </d-button>
           </d-form-operation>
         </form>

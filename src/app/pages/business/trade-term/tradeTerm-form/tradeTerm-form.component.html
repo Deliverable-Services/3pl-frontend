@@ -24,7 +24,7 @@
             {{ mode + " " + "Trade Terms" | translate }}
           </div>
           <d-form-item [ngStyle]="{ width: '500px' }">
-            <d-form-label [required]="true" [hasHelp]="true" [helpTips]="'This is the Vendor name.'">Trade Subject
+            <d-form-label [required]="true" [hasHelp]="false" [helpTips]="'This is the Vendor name.'">Trade Subject
             </d-form-label>
             <d-form-control>
               <input dTextInput autocomplete="off" name="tradeSubject" placeholder="Trade Subject Name"
@@ -35,7 +35,7 @@
           </d-form-item>
 
           <d-form-item>
-            <d-form-label [required]="true" [hasHelp]="true" [helpTips]="'Enter Vendor Code'">Trade Description
+            <d-form-label [required]="true" [hasHelp]="false" [helpTips]="'Enter Vendor Code'">Trade Description
             </d-form-label>
             <d-form-control>
               <textarea [ngStyle]="{ height: '104px' }" dTextarea resize="vertical" autocomplete="off" name="tradeDesc"

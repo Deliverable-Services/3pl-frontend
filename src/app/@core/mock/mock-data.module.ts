@@ -11,12 +11,18 @@ import { CategoryListDataService } from "./category-data.service";
 import { MaterialListDataService } from "./material-data.service";
 import { ProductListDataService } from "./product-data.service";
 import { UnitListDataService } from "./unit-data.service";
-import { StyleListDataService } from "./style-data.service";
+import { ProductsListDataService } from "./products-data.service";
 import { VendorListDataService } from "./vendor-data.service";
 import { TradeListDataService } from "./Trade-data.service";
 import { CompanyDataService } from "./company-data.service";
 import { DepartmentDataService } from "./department-data.service";
 import { PoDataService } from "./po-data.service";
+import { CreditTermsService } from "./credit-terms.service";
+import { ConnectionLocationService } from "./connection-location.service";
+import { ShopifyConnectorService } from "./shopify-connector.service";
+import { InventoryService } from "./inventory.service";
+import { InventoryOnlineService } from "./inventory-online-data.service";
+import { UserManagementService } from "./user-management.service";
 
 
 const SERVICES = [
@@ -27,7 +33,7 @@ const SERVICES = [
   TradeListDataService,
   ProductListDataService,
   UnitListDataService,
-  StyleListDataService,
+  ProductsListDataService,
   MaterialListDataService,
   CategoryListDataService,
   WorkItemService,
@@ -37,6 +43,12 @@ const SERVICES = [
   CompanyDataService,
   DepartmentDataService,
   PoDataService,
+  CreditTermsService,
+  ConnectionLocationService,
+  ShopifyConnectorService,
+  InventoryService,
+  InventoryOnlineService,
+  UserManagementService
 ];
 
 @NgModule({

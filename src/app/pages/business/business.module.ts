@@ -19,8 +19,12 @@ import { TradeTermFormComponent } from "./trade-term/tradeTerm-form/tradeTerm-fo
 import { DepartmentFormComponent } from './department/department-form/department-form.component';
 import { DepartmentListComponent } from './department/department-list/department-list.component';
 import { CompanyFormComponent } from './company/company-form/company-form.component';
-import { ExchangeRateFormComponent } from './exchange-rate/exchange-rate-form/exchange-rate-form.component';
-import { ExchangeRateListComponent } from './exchange-rate/exchange-rate-list/exchange-rate-list.component';
+import { CurrencyFormComponent } from './currency/currency-form/currency-form.component';
+import { CurrencyListComponent } from './currency/currency-list/currency-list.component';
+import { ShopifyConnectorListComponent } from "./shopify-connector/shopify-connector-list/shopify-connector-list.component";
+import { ShopifyConnectorFormComponent } from "./shopify-connector/shopify-connector-form/shopify-connector-form.component";
+import { InventoryOnlineComponent } from './inventory/inventory-online/inventory-online.component';
+// import { InventoryListComponent } from "./inventory/inventory-list/inventory-list.component";
 
 @NgModule({
   declarations: [
@@ -32,8 +36,12 @@ import { ExchangeRateListComponent } from './exchange-rate/exchange-rate-list/ex
     DepartmentFormComponent,
     DepartmentListComponent,
     CompanyFormComponent,
-    ExchangeRateFormComponent,
-    ExchangeRateListComponent,
+    CurrencyFormComponent,
+    CurrencyListComponent,
+    ShopifyConnectorListComponent,
+    ShopifyConnectorFormComponent,
+    InventoryOnlineComponent,
+    // InventoryListComponent
   ],
   imports: [
     CommonModule,

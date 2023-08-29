@@ -24,7 +24,7 @@
             {{ mode + " " + "Material" | translate }}
           </div>
           <d-form-item [ngStyle]="{ width: '500px' }">
-            <d-form-label [required]="true" [hasHelp]="true" [helpTips]="'This is the Material name.'">Material Name
+            <d-form-label [required]="true" [hasHelp]="false" [helpTips]="'This is the Material name.'">Material Name
             </d-form-label>
             <d-form-control>
               <input dTextInput autocomplete="off" name="materialName" placeholder="Material Name"
@@ -35,7 +35,7 @@
           </d-form-item>
 
           <d-form-item>
-            <d-form-label [required]="true" [hasHelp]="true" [helpTips]="'Enter HS Code'">HS Code</d-form-label>
+            <d-form-label [required]="true" [hasHelp]="false" [helpTips]="'Enter HS Code'">HS Code</d-form-label>
             <d-form-control>
               <input dTextInput autocomplete="off" name="hsCode" placeholder="HS Code"
                 onkeydown="if(['Space'].includes(arguments[0].code)){return false;}"
@@ -45,7 +45,7 @@
             </d-form-control>
           </d-form-item>
           <d-form-item>
-            <d-form-label [required]="true" [hasHelp]="true" [helpTips]="'Select a country Of Origin'">Country Of Origin
+            <d-form-label [required]="true" [hasHelp]="false" [helpTips]="'Select a country Of Origin'">Country Of Origin
             </d-form-label>
             <d-select [appendToBody]="true" placeholder="Select Country Of Origin" [options]="[
                 'dsvdfv',

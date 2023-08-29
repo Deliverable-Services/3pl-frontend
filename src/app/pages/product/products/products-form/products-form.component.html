@@ -1,0 +1,509 @@
+<div class="da-content-banner">
+  <div class="add-session-btn">
+    <d-breadcrumb>
+      <d-breadcrumb-item>
+        <a routerLink="/product/products">{{ "list.product.title" | translate }}</a>
+      </d-breadcrumb-item>
+      <d-breadcrumb-item>
+        {{ (mode === 'Add' ? "list.product.buttonTitle" : "form.product.edit_product") | translate }}
+      </d-breadcrumb-item>
+    </d-breadcrumb>
+  </div>
+</div>
+
+<div class="da-content-wrapper product-form-list">
+  <da-layout-row [daGutter]="[24, 24]">
+    <da-col-item [daSpan]="24" [daXs]="24">
+      <div class="da-basic-form" [ngStyle]="{
+          display: 'flex',
+          justifyContent: 'space-between',
+          width: '100%'
+        }">
+        <form dForm ngForm [dValidateRules]="{
+            message: 'The form verification failed, please check.'
+          }" [layout]="verticalLayout" #styleForm="dValidateRules" (dSubmit)="submitStyleForm($event)"
+          autocomplete="off">
+          <div class="da-content-banner-title">
+            {{ (mode === 'Add' ? "list.product.buttonTitle" : "form.product.edit_product") | translate }}
+            <div style="float: right;">
+              <d-button dLoading *ngIf="productsFormData.status === 'Draft'" class="mr-element-spacing"
+                [title]="styleForm.errorMessage || ''" circled="true" style="margin-right: 8px"
+                [showLoading]="styleForm.pending" (click)="confirmPublish()">
+                Publish
+              </d-button>
+
+              <d-button dLoading *ngIf="productsFormData.status === 'Publish' || productsFormData.status === 'Inactive'"
+                class="mr-element-spacing primary" [title]="styleForm.errorMessage || ''" circled="true"
+                style="margin-right: 8px" [showLoading]="styleForm.pending" (click)="confirmActive()">
+                Active
+              </d-button>
+
+              <d-button dLoading *ngIf="productsFormData.status === 'Publish' || productsFormData.status === 'Active'"
+                class="manage-inactive-btn danger" [title]="styleForm.errorMessage || ''" circled="true"
+                style="margin-right: 8px;" [showLoading]="styleForm.pending" (click)="confirmInactive()">
+                Inactive
+              </d-button>
+
+            </div>
+          </div>
+          <div [ngStyle]="{ display: 'flex', justifyContent: 'space-between' }">
+            <div [ngStyle]="{ width: '46%' }">
+              <d-form-item>
+                <d-form-label [required]="true" [hasHelp]="false"
+                  [helpTips]="'This is the Style name.'">{{"form.product.fields.styleName" | translate}}
+                </d-form-label>
+                <d-form-control>
+                  <input dTextInput autocomplete="off" name="styleName"
+                    [disabled]="isFormDisabled(productsFormData.status)"
+                    [placeholder]="'form.product.fields.styleName' | translate" [(ngModel)]="productsFormData.styleName"
+                    [dValidateRules]="{
+                      validators: [{ required: true }]
+                    }" />
+                </d-form-control>
+              </d-form-item>
+
+              
+
+              <d-form-item>
+                <d-form-label [required]="true" [hasHelp]="false"
+                  [helpTips]="'This is the Collection'">{{'form.product.fields.collection' | translate}}
+                </d-form-label>
+                <d-form-control>
+                  <input dTextInput autocomplete="off" name="collection"
+                    [disabled]="isFormDisabled(productsFormData.status)"
+                    [placeholder]="'form.product.fields.collection' | translate"
+                    [(ngModel)]="productsFormData.collection"
+                    onkeydown="if(['Space'].includes(arguments[0].code)){return false;}" [dValidateRules]="{
+                      validators: [{ required: true }]
+                    }" />
+                </d-form-control>
+              </d-form-item>
+              <d-form-item>
+                <d-form-label [required]="true" [hasHelp]="false" [helpTips]="'This is the Fabric Composition'">
+                  {{'form.product.fields.fabricComposition' | translate}}
+                </d-form-label>
+                <d-form-control>
+                  <input dTextInput autocomplete="off" name="fabricComposition"
+                    [disabled]="isFormDisabled(productsFormData.status)"
+                    [placeholder]="'form.product.fields.fabricComposition' | translate"
+                    [(ngModel)]="productsFormData.fabricComposition"
+                    onkeydown="if(['Space'].includes(arguments[0].code)){return false;}" [dValidateRules]="{
+                        validators: [{ required: true }]
+                      }" />
+                </d-form-control>
+              </d-form-item>
+
+              <d-form-item>
+                <d-form-label [required]="true" [hasHelp]="false" [helpTips]="'This is the Fabric Swatch'">
+                  {{'form.product.fields.fabricSwatch' | translate}}
+                </d-form-label>
+                <d-form-control>
+                  <input dTextInput autocomplete="off" name="fabicSwatch"
+                    [disabled]="isFormDisabled(productsFormData.status)"
+                    [placeholder]="'form.product.fields.fabricSwatch' | translate"
+                    [(ngModel)]="productsFormData.fabicSwatch"
+                    onkeydown="if(['Space'].includes(arguments[0].code)){return false;}" [dValidateRules]="{
+                        validators: [{ required: true }]
+                      }" />
+                </d-form-control>
+              </d-form-item>
+
+              <d-form-item>
+                <d-form-label [required]="true" [hasHelp]="false" [helpTips]="'This is the Local Currency'">
+                  {{'form.product.fields.localCurrency' | translate}}
+                </d-form-label>
+                <d-form-control>
+                  <!-- <input dTextInput autocomplete="off" name="exwLocalCurrency"
+                    [placeholder]="'form.product.fields.localCurrency' | translate"
+                    [(ngModel)]="productsFormData.exwLocalCurrency" [dValidateRules]="{
+                        validators: [{ required: true }]
+                      }" /> -->
+                  <d-select [disabled]="isFormDisabled(productsFormData.status)" [ngStyle]="{ width: '100%' }"
+                    (ngModelChange)="updateCompanyExwPrice()" placeholder="Select a Currency" [scrollHight]="'300px'"
+                    [filterKey]="'currencyCode'" [appendToBody]="true" [options]="currencyList" name="exwLocalCurrency"
+                    [isSearch]="true" [(ngModel)]="productsFormData.exwLocalCurrency" [dValidateRules]="{
+                      validators: [{ required: true }]
+                    }"></d-select>
+                </d-form-control>
+              </d-form-item>
+
+              <d-form-item>
+                <d-form-label [required]="true" [hasHelp]="false" [helpTips]="'This is the Local Exw Price'">
+                  {{'form.product.fields.localExwPrice' | translate}}
+                </d-form-label>
+                <d-form-control>
+                  <input dTextInput autocomplete="off" name="exwLocalCost"
+                    (keyup)="updateCompanyExwPrice();onInputChange($event)"
+                    [disabled]="isFormDisabled(productsFormData.status)"
+                    [placeholder]="'form.product.fields.localExwPrice' | translate"
+                    [(ngModel)]="productsFormData.exwLocalCost" [dValidateRules]="{
+                        validators: [{ required: true }]
+                      }" />
+                </d-form-control>
+              </d-form-item>
+              <d-form-item>
+                <d-form-label [required]="true" [hasHelp]="false" [helpTips]="'This is the Commodity Code'">
+                  {{'form.product.fields.commodityCode' | translate}}
+                </d-form-label>
+                <d-form-control>
+                
+                    <input dTextInput autocomplete="off" [disabled]="isFormDisabled(productsFormData.status)" name="commodityCode"
+                    [placeholder]="'form.product.fields.commodityCode' | translate"
+                    [(ngModel)]="productsFormData.commodityCode" [dValidateRules]="{
+                      validators: [{ required: true }]
+                    }" />
+                </d-form-control>
+              </d-form-item>
+            </div>
+
+            <div [ngStyle]="{ width: '46%' }">
+              <d-form-item>
+                <d-form-label [required]="true" [hasHelp]="false" [helpTips]="'This is the Unit Weight'">
+                  {{'form.product.fields.unitWeight' | translate}}
+                </d-form-label>
+                <d-form-control>
+                  <input dTextInput autocomplete="off" name="unitWeight"
+                    [disabled]="isFormDisabled(productsFormData.status)"
+                    [placeholder]="'form.product.fields.unitWeight' | translate"
+                    [(ngModel)]="productsFormData.unitWeight"
+                    onkeydown="if(['Space'].includes(arguments[0].code)){return false;}" [dValidateRules]="{
+                        validators: [{ required: true }]
+                      }" />
+                </d-form-control>
+              </d-form-item>
+              <d-form-item>
+                <d-form-label [required]="true" [hasHelp]="false" [helpTips]="'This is the Category'">
+                  {{'form.product.fields.category' | translate}}
+                </d-form-label>
+
+                <d-form-control>
+                  <d-select [ngStyle]="{ width: '100%' }" placeholder="Select a Category" [scrollHight]="'300px'"
+                    [disabled]="isFormDisabled(productsFormData.status)" [filterKey]="'categoryName'"
+                    [appendToBody]="true" [options]="categoryList" name="category" [isSearch]="true"
+                    [(ngModel)]="productsFormData.slectedCat" [dValidateRules]="{
+                      validators: [{ required: true }]
+                    }"></d-select>
+                </d-form-control>
+              </d-form-item>
+
+              <d-form-item>
+                <d-form-label [required]="true" [hasHelp]="false" [helpTips]="'This is the Option Type'">
+                  {{'form.product.fields.optionType' | translate}}
+                </d-form-label>
+                <d-form-control>
+                  <d-select [ngStyle]="{ width: '100%' }" [scrollHight]="'300px'" [appendToBody]="true"
+                    [options]="optionTypeList" name="optionType" [isSearch]="true"
+                    [disabled]="isFormDisabled(productsFormData.status)" [(ngModel)]="productsFormData.optionType"
+                    [dValidateRules]="{
+                      validators: [{ required: true }]
+                    }"></d-select>
+                </d-form-control>
+              </d-form-item>
+
+              <d-form-item>
+                <d-form-label [required]="true" [hasHelp]="false" [helpTips]="'This is the Company Exw Price'">
+                  {{'form.product.fields.companyExwPrice' | translate}}
+                </d-form-label>
+                <d-form-control>
+                  <input dTextInput autocomplete="off" name="exwSgdCost"
+                    [placeholder]="'form.product.fields.companyExwPrice' | translate" [readOnly]="true"
+                    [disabled]="isFormDisabled(productsFormData.status)" [(ngModel)]="productsFormData.exwSgdCost"
+                    [dValidateRules]="{
+                        validators: [{ required: true }]
+                      }" />
+                </d-form-control>
+              </d-form-item>
+
+              <d-form-item>
+                <d-form-label [required]="true" [hasHelp]="false" [helpTips]="'This is the Retail Price'">
+                  {{'form.product.fields.retailPrice' | translate}}
+                </d-form-label>
+                <d-form-control>
+                  <input dTextInput autocomplete="off" name="retailPrice" (keyup)="onInputChange($event)"
+                    [placeholder]="'form.product.fields.retailPrice' | translate"
+                    [disabled]="isFormDisabled(productsFormData.status)" [(ngModel)]="productsFormData.retailPrice"
+                    [dValidateRules]="{
+                        validators: [{ required: true }]
+                      }" />
+                </d-form-control>
+              </d-form-item>
+              <d-form-item>
+                <d-form-label [required]="true" [hasHelp]="false" [helpTips]="'This is the Option Type'">
+                  {{ 'form.product.fields.countryOfOrigin' | translate }}
+                </d-form-label>
+                <d-form-control>
+                  <d-select [disabled]="isFormDisabled(productsFormData.status)"
+                  (valueChange)="setListId()"
+                  [ngStyle]="{ width: '100%' }"
+                  placeholder="Select Country of Origin" [scrollHight]="'300px'"
+                  [filterKey]="'dcpn'"  [appendToBody]="true" [options]="countriesData" name="countryOfOrigin"
+                  [isSearch]="true" [(ngModel)]="selectedCountry" [dValidateRules]="{
+                    validators: [{ required: true }]
+                  }"></d-select>
+                </d-form-control>
+              </d-form-item>
+
+              <d-form-item>
+                <d-form-label [hasHelp]="false" [helpTips]="'This is Product Image'">{{'form.product.fields.image' |
+                  translate}}</d-form-label>
+                <d-form-control>
+                  <input type="file" autocomplete="off" name="image"
+                    (change)="setUploadImage($event)"
+                    style="width: 30% !important"
+                    [placeholder]="'form.product.fields.image' | translate" [(ngModel)]="productsFormData.image"
+                    [disabled]="isFormDisabled(productsFormData.status)" [dValidateRules]="{
+                        validators: [{ required: false }]
+                      }" />
+                      <div *ngIf="imageUrl">
+                        <img [src]="imageUrl" alt="Preview" height="150">
+                      </div>
+                </d-form-control>
+              </d-form-item>
+            </div>
+          </div>
+          <div [ngStyle]="{ width: '100%' }">
+            <d-form-item>
+              <d-form-label [required]="true" [hasHelp]="false" [helpTips]="'This is the Logistic Description'">
+                {{'form.product.fields.logisticDescription' | translate}}
+              </d-form-label>
+              <d-form-control>
+                <textarea [ngStyle]="{ height: '104px' }" dTextarea resize="vertical" autocomplete="off"
+                  [disabled]="isFormDisabled(productsFormData.status)" name="logisticsDesc"
+                  [placeholder]="'form.product.fields.logisticDescription' | translate"
+                  [(ngModel)]="productsFormData.logisticsDesc" [dValidateRules]="{
+                    validators: [{ required: true }]
+                  }"></textarea>
+              </d-form-control>
+            </d-form-item>
+
+
+            <d-form-operation *ngIf="paramId && productsFormData.status === 'Draft'">
+              <d-button dLoading class="mr-element-spacing" [title]="styleForm.errorMessage || ''" circled="true"
+                [disabled]="isFormDisabled(productsFormData.status)" style="margin-right: 8px"
+                [showLoading]="styleForm.pending" (click)="addMoreVariant()">
+                {{'form.product.addMore' | translate}}
+              </d-button>
+            </d-form-operation>
+
+            <!-- variant section -->
+            <ng-container *ngFor="let prod of productVariants; let i = index">
+              <div class="manage-variants">
+                <div [ngStyle]="{ display: 'flex' }">
+                  <d-form-item [ngStyle]="{ margin: '20px 20px 20px 0px' }">
+                    <d-form-label [required]="true" [hasHelp]="false"
+                      [helpTips]="'This is the SKU'">{{'form.product.fields.productSKU' | translate}}</d-form-label>
+                    <d-form-control>
+                      <input [ngStyle]="{ width: '200px' }" dTextInput autocomplete="off" name="productVariants[i].sku"
+                        [disabled]="isFormDisabled(productsFormData.status)"
+                        [placeholder]="'form.product.fields.productSKU' | translate" [value]="productVariants[i].sku"
+                        (input)="updateValue($event, 'sku', i)" />
+                    </d-form-control>
+                  </d-form-item>
+
+                  <d-form-item [ngStyle]="{ margin: '20px 20px 20px 0px' }">
+                    <d-form-label [required]="true" [hasHelp]="false"
+                      [helpTips]="'This is the Barcode'">{{'form.product.fields.barcode' | translate}}</d-form-label>
+                    <d-form-control>
+                      <input [ngStyle]="{ width: '200px' }" dTextInput autocomplete="off"
+                        [disabled]="isFormDisabled(productsFormData.status)" name="productVariants[i].barcode"
+                        [placeholder]="'form.product.fields.barcode' | translate" [value]="productVariants[i].barcode"
+                        (input)="updateValue($event, 'barcode', i)" />
+                    </d-form-control>
+                  </d-form-item>
+
+                  <d-form-item *ngIf="checkVIsibility('COLOR')" [ngStyle]="{ margin: '20px 20px 20px 0px' }">
+                    <d-form-label [required]="true" [hasHelp]="false"
+                      [helpTips]="'This is the Color.'">{{'form.product.fields.color' | translate}}</d-form-label>
+                    <d-form-control>
+                      <input [ngStyle]="{ width: '200px' }" dTextInput autocomplete="off"
+                        [disabled]="isFormDisabled(productsFormData.status)" name="productVariants[i].color"
+                        [placeholder]="'form.product.fields.color' | translate" [value]="productVariants[i].color"
+                        (input)="updateValue($event, 'color', i)" />
+                    </d-form-control>
+                  </d-form-item>
+
+                  <d-form-item *ngIf="checkVIsibility('SIZE')" [ngStyle]="{ margin: '20px 20px 20px 0px' }">
+                    <d-form-label [required]="true" [hasHelp]="false"
+                      [helpTips]="'This is the Size'">{{'form.product.fields.size' | translate}}</d-form-label>
+                    <d-form-control>
+                      <input [ngStyle]="{ width: '200px' }" dTextInput autocomplete="off" name="productVariants[i].size"
+                        [disabled]="isFormDisabled(productsFormData.status)"
+                        [placeholder]="'form.product.fields.size' | translate" [value]="productVariants[i].size"
+                        (input)="updateValue($event, 'size', i)" />
+                    </d-form-control>
+                  </d-form-item>
+
+                  <d-form-item [ngStyle]="{ margin: '20px 20px 20px 0px' }">
+                    <d-form-label [required]="true" [hasHelp]="false"
+                      [helpTips]="'This is the Label'">{{'form.product.fields.label' | translate}}</d-form-label>
+                    <d-form-control>
+                      <input [ngStyle]="{ width: '200px' }" dTextInput autocomplete="off"
+                        [disabled]="isFormDisabled(productsFormData.status)" name="productVariants[i].label"
+                        [placeholder]="'form.product.fields.label' | translate" [value]="productVariants[i].label"
+                        (input)="updateValue($event, 'label', i)" />
+                    </d-form-control>
+                  </d-form-item>
+
+                  <d-form-item [ngStyle]="{ margin: '20px 20px 20px 0px' }">
+                    <d-form-label [required]="true" [hasHelp]="false"
+                      [helpTips]="'This is the Hangtag Color'">{{'form.product.fields.hangtagColor' |
+                      translate}}</d-form-label>
+                    <d-form-control>
+                      <input [ngStyle]="{ width: '200px' }" dTextInput autocomplete="off"
+                        name="productVariants[i].hangtagColor" [disabled]="isFormDisabled(productsFormData.status)"
+                        [placeholder]="'form.product.fields.hangtagColor' | translate"
+                        [value]="productVariants[i].hangtagColor" (input)="updateValue($event, 'hangtagColor', i)" />
+                    </d-form-control>
+                  </d-form-item>
+
+
+                  <d-button *ngIf="i !=0 && productsFormData.status === 'Draft'" dLoading class="danger" [title]="styleForm.errorMessage || ''"
+                    circled="true" style="margin-right: 8px;margin-top: 47px;" [showLoading]="styleForm.pending"
+                    (click)="removeProductRow(i)">
+                    remove
+                  </d-button>
+
+
+
+
+                  <!-- <d-form-item [ngStyle]="{ margin: '20px 20px 20px 0px' }">
+                    <d-form-label [required]="true" [hasHelp]="false" [helpTips]="'This is the Local Currency'">
+                      {{'form.product.fields.localCurrency' | translate}}
+                    </d-form-label>
+                    <d-form-control>
+                      <input [ngStyle]="{ width: '200px' }" dTextInput autocomplete="off" name="productVariants[i].localCurrency" [placeholder]="'form.product.fields.localCurrency' | translate"
+                        [value]="productVariants[i].localCurrency" (input)="updateValue($event, 'localCurrency', i)"/>
+                    </d-form-control>
+                  </d-form-item> -->
+
+                </div>
+
+                <!-- <div [ngStyle]="{ display: 'flex' }">
+                  <d-form-item [ngStyle]="{ margin: '20px 20px 20px 0px' }">
+                    <d-form-label [required]="true" [hasHelp]="false" [helpTips]="'This is the Local Exw Price'">
+                      {{'form.product.fields.localExwPrice' | translate}}
+                    </d-form-label>
+                    <d-form-control>
+                      <input [ngStyle]="{ width: '200px' }" dTextInput autocomplete="off" name="productVariants[i].localExwPrice" [placeholder]="'form.product.fields.localExwPrice' | translate"
+                        [value]="productVariants[i].localExwPrice" (input)="updateValue($event, 'localExwPrice', i)"/>
+                    </d-form-control>
+                  </d-form-item>
+
+                  <d-form-item [ngStyle]="{ margin: '20px 20px 20px 0px' }">
+                    <d-form-label [required]="true" [hasHelp]="false" [helpTips]="'This is the Company Exw Price'">
+                      {{'form.product.fields.companyExwPrice' | translate}}
+                    </d-form-label>
+                    <d-form-control>
+                      <input [ngStyle]="{ width: '200px' }" dTextInput autocomplete="off" name="productVariants[i].companyExwPrice" [placeholder]="'form.product.fields.companyExwPrice' | translate"
+                        [value]="productVariants[i].companyExwPrice" (input)="updateValue($event, 'companyExwPrice', i)"/>
+                        <button *ngIf="i != 0" [ngStyle]="{ marginLeft: '4px' }" (click)="removeProduct(i)">
+                          <i [ngStyle]="{ paddingRight: '0px' }" class="icon icon-close"></i>
+                        </button>
+                    </d-form-control>
+                  </d-form-item>
+                </div> -->
+              </div>
+            </ng-container>
+            <!-- variant section -->
+
+            <d-form-operation *ngIf="productsFormData.status === 'Draft' ||  !productsFormData.status">
+              <d-button class="mr-element-spacing" [disabled]="!_checkForBtn()" dTooltip
+                [disabled]="isFormDisabled(productsFormData.status)"
+                [content]="!_checkForBtn() ? 'Please add all variant values!':''" dLoading class="mr-element-spacing"
+                [title]="styleForm.errorMessage || ''" circled="true" style="margin-right: 8px"
+                [showLoading]="styleForm.pending" dFormSubmit [dFormSubmitData]="'submit-button'">
+                {{ (paramId ? "form.common.update" : "form.common.create") | translate}}
+              </d-button>
+            </d-form-operation>
+          </div>
+        </form>
+      </div>
+    </da-col-item>
+  </da-layout-row>
+</div>
+
+<!-- <div class="da-content-wrapper" *ngIf="productsFormData.products.length > 0">
+  <da-layout-row [daGutter]="[24, 24]">
+    <da-col-item [daSpan]="24" [daXs]="24">
+      <div class="da-content-banner-title">Product List</div>
+      <div class="list-content" dLoading [loading]="busy">
+        <d-data-table #datatable [dataSource]="productsFormData.products" [scrollable]="true">
+          <d-column field="productSku" header="Product SKU" [width]="'100px'" [sortable]="true">
+            <d-cell>
+              <ng-template let-cellItem="cellItem">
+                <span [title]="cellItem" class="over-flow-ellipsis" [style.width]="'100px'">
+                  {{ cellItem }}
+                </span>
+              </ng-template>
+            </d-cell>
+          </d-column>
+          <d-column field="color" header="Color" [width]="'100px'" [sortable]="true">
+            <d-cell>
+              <ng-template let-cellItem="cellItem">
+                <span [title]="cellItem" class="over-flow-ellipsis" [style.width]="'100px'">
+                  {{ cellItem }}
+                </span>
+              </ng-template>
+            </d-cell>
+          </d-column>
+          <d-column field="size" header="Size" [width]="'100px'" [sortable]="true">
+            <d-cell>
+              <ng-template let-cellItem="cellItem">
+                <span [title]="cellItem" class="over-flow-ellipsis" [style.width]="'100px'">
+                  {{ cellItem }}
+                </span>
+              </ng-template>
+            </d-cell>
+          </d-column>
+          <d-column field="currency" header="Currency" [width]="'100px'" [sortable]="true">
+            <d-cell>
+              <ng-template let-cellItem="cellItem">
+                <span [title]="cellItem" class="over-flow-ellipsis" [style.width]="'100px'">
+                  {{ cellItem }}
+                </span>
+              </ng-template>
+            </d-cell>
+          </d-column>
+
+          <d-column field="createdAt" header="Created At" [sortable]="true" [width]="'100px'">
+            <d-cell>
+              <ng-template let-cellItem="cellItem">
+                <span [title]="cellItem" class="over-flow-ellipsis">
+                  {{ cellItem | mydatepipe }}
+                </span>
+              </ng-template>
+            </d-cell>
+          </d-column>
+
+          <d-column field="updatedAt" header="Updated Date" [width]="'100px'" [sortable]="true">
+            <d-cell>
+              <ng-template let-cellItem="cellItem">
+                <span [title]="cellItem" class="over-flow-ellipsis">
+                  {{ cellItem | mydatepipe }}
+                </span>
+              </ng-template>
+            </d-cell>
+          </d-column>
+          <d-column [sortable]="true" field="active" header="Active Status" [width]="'100px'">
+            <d-cell>
+              <ng-template let-rowItem="rowItem" let-rowIndex="rowIndex">
+                <d-toggle (change)="toggleCheck($event, rowItem)" [(ngModel)]="rowItem.active"></d-toggle>
+              </ng-template>
+            </d-cell>
+          </d-column>
+
+          <d-column field="Actions" header="Actions" [width]="'100px'">
+            <d-cell>
+              <ng-template let-rowItem="rowItem" let-rowIndex="rowIndex">
+                <div class="btn-group over-flow-ellipsis">
+                  <d-button icon="icon-edit" bsStyle="text-dark" title="edit"
+                    (click)="editProduct(rowItem.productId, rowIndex)"></d-button>
+                </div>
+              </ng-template>
+            </d-cell>
+          </d-column>
+        </d-data-table>
+      </div>
+    </da-col-item>
+  </da-layout-row>
+</div> -->

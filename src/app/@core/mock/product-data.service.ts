@@ -15,6 +15,7 @@ const baseUrl = environment.baseUrl;
 @Injectable()
 export class ProductListDataService {
   baseApiUrl: string = environment.baseUrl;
+  private dataUrl = 'assets/countries.json';
   constructor(private http: HttpClient) {}
 
   private searchParams = {
@@ -87,6 +88,11 @@ export class ProductListDataService {
     // console.log("data=============", data);
     return this.http.post(`${this.baseApiUrl}/product`, data);
   }
+
+  getCountriesData() {
+    return this.http.get<any[]>(this.dataUrl);
+  }
+
 
   updateProduct(data: any, id: any) {
     const httpOptionsToken = {

@@ -2,27 +2,15 @@ import {
   ChangeDetectorRef,
   Component,
   EventEmitter,
-  OnChanges,
   OnInit,
   Output,
-  SimpleChanges,
-  TemplateRef,
-  ViewChild,
 } from "@angular/core";
 import { Router } from "@angular/router";
-import {
-  DialogService,
-  FormLayout,
-  SortEventArg,
-  TableWidthConfig,
-} from "ng-devui";
+import { DialogService, SortEventArg, TableWidthConfig } from "ng-devui";
 import { Subscription } from "rxjs";
 import { Brand } from "src/app/@core/data/brandList";
-import { Category } from "src/app/@core/data/categoryList";
 import { PageParam, SearchParam } from "src/app/@core/data/searchFormData";
-import { BrandListDataService } from "src/app/@core/mock/brand-data.service";
 import { CategoryListDataService } from "src/app/@core/mock/category-data.service";
-import { FormConfig } from "src/app/@shared/components/admin-form";
 
 @Component({
   selector: "da-category-list",
@@ -67,22 +55,24 @@ export class CategoryListComponent implements OnInit {
   };
 
   columnSize: any = {
-    categoryName: "",
-    updatedAt: "",
-    action: "",
-    active: "",
+    categoryName: "10%",
+    updatedAt: "20%",
+    createdBy: "40%",
+    createdDate: "40%",
+    action: "10%",
+    active: "10%",
   };
 
   busy: Subscription | undefined;
 
   constructor(
     private categoryListDataService: CategoryListDataService,
-    private dialogService: DialogService,
-    private cdr: ChangeDetectorRef,
     private router: Router
   ) {}
 
   ngOnInit() {
+    this.pageParam.pageNo = 0;
+    this.categoryListDataService.setPageParams(this.pageParam);
     this.getCategoryList();
   }
 

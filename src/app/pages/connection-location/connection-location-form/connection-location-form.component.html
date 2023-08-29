@@ -1,0 +1,193 @@
+<div class="da-content-banner">
+  <div class="add-session-btn">
+    <d-breadcrumb>
+      <d-breadcrumb-item>
+        <a routerLink="/connection-location">{{ 'list.connectionLocationList.title' | translate }}</a>
+      </d-breadcrumb-item>
+      <d-breadcrumb-item>
+        {{ (mode === 'Add' ? "list.connectionLocationList.buttonTitle" : "form.connectionLocationList.edit_location") | translate }}
+      </d-breadcrumb-item>
+    </d-breadcrumb>
+  </div>
+</div>
+
+<div class="da-content-wrapper">
+  <da-layout-row [daGutter]="[24, 24]">
+    <da-col-item [daSpan]="24" [daXs]="24">
+      <div
+        class="da-basic-form"
+        [ngStyle]="{ display: 'flex', justifyContent: 'space-between' }"
+      >
+        <form dForm ngForm [dValidateRules]="{
+            message: 'The form verification failed, please check.'
+          }" [layout]="verticalLayout" #styleForm="dValidateRules"
+          autocomplete="off" (dSubmit)="submitProjectForm($event)">
+          <div class="da-content-banner-title">
+            {{ (mode === 'Add' ? "list.connectionLocationList.buttonTitle" : "form.connectionLocationList.edit_location") | translate }}
+          </div>
+          <div [ngStyle]="{ display: 'flex', justifyContent: 'space-between' }">
+            <div [ngStyle]="{ width: '46%' }">
+
+              <d-form-item>
+                <d-form-label [required]="true" [hasHelp]="false" [helpTips]="'This is the Node Name'">
+                  {{'form.connectionLocationList.fields.nodeName' | translate}}
+                </d-form-label>
+
+                <d-form-control>
+                  <input dTextInput autocomplete="off" name="nodeName" [placeholder]="'form.connectionLocationList.fields.nodeName' | translate"
+                  [(ngModel)]="projectFormData.nodeName"
+                  [dValidateRules]="{
+                    validators: [{ required: true }]
+                  }" />
+                </d-form-control>
+              </d-form-item>
+            
+              <d-form-item>
+                <d-form-label [required]="true" [hasHelp]="false" [helpTips]="'This is the Node Type'">
+                  {{'form.connectionLocationList.fields.nodeType' | translate}}
+                </d-form-label>
+                <d-form-control>
+                  <!-- <input dTextInput autocomplete="off" name="nodeType" placeholder="Node Type"
+                  [(ngModel)]="projectFormData.nodeType"
+                  [dValidateRules]="{
+                    validators: [{ required: true }]
+                  }" /> -->
+                  <d-select [ngStyle]="{ width: '100%' }" [placeholder]="'form.connectionLocationList.fields.nodeType' | translate" [appendToBody]="true"
+                    [multiple]="false" [options]="nodeList" name="nodeType" [(ngModel)]="projectFormData.nodeType"
+                    [dValidateRules]="{
+                      validators: [{ required: true }]
+                    }"></d-select>
+                </d-form-control>
+              </d-form-item>
+              <d-form-item *ngIf="projectFormData.nodeType === 'Store' || projectFormData.nodeType === 'Online'">
+                <d-form-label [required]="true" [hasHelp]="false" [helpTips]="'This is the Shopify Connector Id'">
+                  {{'form.connectionLocationList.fields.shopifyConnectorId' | translate}}
+                </d-form-label>
+                <d-form-control>
+                  <d-select [ngStyle]="{ width: '100%' }" [appendToBody]="true" [filterKey]="'connectorName'"
+                    [multiple]="false" [options]="shopifyListData" name="selectedShopifyList" [(ngModel)]="selectedShopifyList"
+                    (valueChange)="setListId()"
+                    [dValidateRules]="{
+                      validators: [{ required: true }]
+                    }"></d-select>
+                </d-form-control>
+              </d-form-item>
+              <!-- <d-form-item>
+                <d-form-label [required]="true" [hasHelp]="false" [helpTips]="'This is the Node Id.'">
+                  {{'form.connectionLocationList.fields.nodeId' | translate}}
+                </d-form-label>
+                <d-form-control>
+                  <input dTextInput autocomplete="off" name="nodeId" [placeholder]="'form.connectionLocationList.fields.nodeId' | translate"
+                  [(ngModel)]="projectFormData.nodeId"
+                  [dValidateRules]="{
+                    validators: [{ required: true }]
+                  }" />
+                </d-form-control>
+              </d-form-item> -->
+              <d-form-item *ngIf="projectFormData.nodeType === 'Store' || projectFormData.nodeType === 'Online'">
+                <d-form-label [required]="true" [hasHelp]="false" [helpTips]="'This is the Shopify Location Id'">
+                  {{'form.connectionLocationList.fields.shopifyLocationId' | translate}}
+                </d-form-label>
+
+                <d-form-control>
+                  <input dTextInput autocomplete="off" name="shopifyLocationId" [placeholder]="'form.connectionLocationList.fields.shopifyLocationId' | translate"
+                  [(ngModel)]="projectFormData.shopifyLocationId"
+                  [dValidateRules]="{
+                    validators: [{ required: true }]
+                  }" />
+                </d-form-control>
+              </d-form-item>
+              <!-- <d-form-item>
+                <d-form-label [required]="true" [hasHelp]="false" [helpTips]="'This is the Remarks'">
+                  {{'form.connectionLocationList.fields.remarks' | translate}}
+                </d-form-label>
+
+                <d-form-control>
+                  <input dTextInput autocomplete="off" name="remarks" [placeholder]="'form.connectionLocationList.fields.remarks' | translate"
+                  [(ngModel)]="projectFormData.remarks"
+                  [dValidateRules]="{
+                    validators: [{ required: true }]
+                  }" />
+                </d-form-control>
+              </d-form-item> -->
+            </div>
+
+            <div [ngStyle]="{ width: '46%' }">              
+              <d-form-item>
+                <d-form-label [required]="true" [hasHelp]="false" [helpTips]="'This is the Physical Address'">
+                  {{'form.connectionLocationList.fields.physicalAddress' | translate}}
+                </d-form-label>
+
+                <d-form-control>
+                  <input dTextInput autocomplete="off" name="physicalAddress" [placeholder]="'form.connectionLocationList.fields.physicalAddress' | translate"
+                  [(ngModel)]="projectFormData.physicalAddress"
+                  [dValidateRules]="{
+                    validators: [{ required: true }]
+                  }" />
+                </d-form-control>
+              </d-form-item>
+              <d-form-item *ngIf="projectFormData.nodeType === 'DC' || projectFormData.nodeType === 'Online'">
+                <d-form-label [required]="true" [hasHelp]="false" [helpTips]="'This is the LG Store Owner Id'">
+                  {{'form.connectionLocationList.fields.lGStoreOwnerId' | translate}}
+                </d-form-label>
+
+                <d-form-control>
+                  <input dTextInput autocomplete="off" name="lgStoreOwnerId" [placeholder]="'form.connectionLocationList.fields.lGStoreOwnerId' | translate"
+                  [(ngModel)]="projectFormData.lgStoreOwnerId"
+                  [dValidateRules]="{
+                    validators: [{ required: true }]
+                  }" />
+                </d-form-control>
+              </d-form-item>
+              <d-form-item *ngIf="projectFormData.nodeType === 'DC' || projectFormData.nodeType === 'Online'">
+                <d-form-label [required]="true" [hasHelp]="false" [helpTips]="'This is the LG Store WHS Id'">
+                  {{'form.connectionLocationList.fields.lgStoreWhsId' | translate}}
+                </d-form-label>
+
+                <d-form-control>
+                  <input dTextInput autocomplete="off" name="lgStoreWhsId" [placeholder]="'form.connectionLocationList.fields.lgStoreWhsId' | translate"
+                  [(ngModel)]="projectFormData.lgStoreWhsId"
+                  [dValidateRules]="{
+                    validators: [{ required: true }]
+                  }" />
+                </d-form-control>
+              </d-form-item>
+            </div>
+          </div>
+          <div [ngStyle]="{ width: '100%' }">
+            <d-form-item>
+              <d-form-label [required]="true" [hasHelp]="false" [helpTips]="'This is the Node Description'">
+                {{'form.connectionLocationList.fields.nodeDescription' | translate}}
+              </d-form-label>
+              <d-form-control>
+                <textarea [ngStyle]="{ height: '104px' }" dTextarea resize="vertical" autocomplete="off"
+                  name="nodeDesc" [placeholder]="'form.connectionLocationList.fields.nodeDescription' | translate" [(ngModel)]="projectFormData.nodeDesc"
+                  [dValidateRules]="{
+                    validators: [{ required: true }]
+                  }"></textarea>
+              </d-form-control>
+            </d-form-item>
+
+            <d-form-operation>
+              <d-button dLoading class="mr-element-spacing" [title]="styleForm.errorMessage || ''" circled="true"
+                style="margin-right: 8px" [showLoading]="styleForm.pending" dFormSubmit
+                [dFormSubmitData]="'submit-button'">
+              {{ (paramId ? "form.common.update" : "form.common.create") | translate}}
+              </d-button>
+            </d-form-operation>
+          </div>
+        </form>
+        <!-- <div *ngIf="paramId">
+          <div class="dateWrapper">
+            {{ "Created Date :" + " " }}
+            {{ selectedConnectionLocation.createdAt | mydatepipe }}
+          </div>
+          <div class="dateWrapper">
+            {{ "Updated Date :" + " " }}
+            {{ selectedConnectionLocation.updatedAt | mydatepipe }}
+          </div>
+        </div> -->
+      </div>
+    </da-col-item>
+  </da-layout-row>
+</div>

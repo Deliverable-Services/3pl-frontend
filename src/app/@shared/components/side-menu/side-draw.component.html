@@ -1,13 +1,20 @@
 <d-accordion
   class="da-menu"
   [data]="data"
+  [itemTemplate]="itemTemp"
   [menuItemTemplate]="menuTemplate"
   [linkType]="'routerLink'"
   [accordionType]="'embed'"
   [autoOpenActiveMenu]="true"
 ></d-accordion>
 
+<ng-template #itemTemp let-item="item">
+  <i [class]="item.menuIcon" style="margin-right: 8px"></i>
+  <!-- {{ item.title }} -->
+  {{ ('list.'+item?.title+'.title') | translate }}
+</ng-template>
+
 <ng-template #menuTemplate let-item="item">
   <i [class]="item.menuIcon" style="margin-right: 8px"></i>
-  {{ item.title }}
+  {{ ('list.'+item?.title+'.title') | translate }}
 </ng-template>

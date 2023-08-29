@@ -2,10 +2,10 @@
   <div class="add-session-btn">
     <d-breadcrumb>
       <d-breadcrumb-item>
-        <a routerLink="/product/category">{{ "Category" | translate }}</a>
+        <a routerLink="/product/category">{{ "list.category.title" | translate }}</a>
       </d-breadcrumb-item>
       <d-breadcrumb-item>
-        {{ mode | translate }}
+        {{ (mode === 'Add' ? "form.category.add_category" : "form.category.edit_category") | translate }}
       </d-breadcrumb-item>
       <!-- <d-button [ngStyle]="{ marginLeft: '900px' }" (click)="addSession()">Add Season</d-button> -->
     </d-breadcrumb>
@@ -21,14 +21,14 @@
           }" [layout]="verticalLayout" #projectForm="dValidateRules" (dSubmit)="submitProjectForm($event)"
           autocomplete="off">
           <div class="da-content-banner-title">
-            {{ mode + " " + "Category" | translate }}
+            {{ (mode === 'Add' ? "form.category.add_category" : "form.category.edit_category") | translate }}
           </div>
 
           <d-form-item>
-            <d-form-label [required]="true" [hasHelp]="true" [helpTips]="'This is the Category name.'">Category Name
+            <d-form-label [required]="true" [hasHelp]="false" [helpTips]="'This is the Category name.'">{{"form.category.fields.category_name" | translate}}
             </d-form-label>
             <d-form-control>
-              <input dTextInput autocomplete="off" name="categoryName" placeholder="Category Name"
+              <input dTextInput autocomplete="off" name="categoryName" [placeholder]="'form.category.fields.category_name' | translate"
                 [(ngModel)]="projectFormData.categoryName" [dValidateRules]="{
                   validators: [{ required: true }]
                 }" />
@@ -45,25 +45,25 @@
             <d-button dLoading class="mr-element-spacing" [title]="projectForm.errorMessage || ''" circled="true"
               style="margin-right: 8px" [showLoading]="projectForm.pending" dFormSubmit
               [dFormSubmitData]="'submit-button'">
-              {{ paramId ? "Update" : "Create" }}
+              {{ (paramId ? 'form.common.update' : 'form.common.create') | translate }}
             </d-button>
           </d-form-operation>
         </form>
-        <div *ngIf="paramId">
+        <!-- <div *ngIf="paramId">
           <div class="dateWrapper">
             {{ "Created At :" + " " }}
-            {{ selectedCategory.createdAt | mydatepipe }}
+            {{ selectedCategory?.createdDate | date }}
           </div>
           <div class="dateWrapper">
             {{ "Updated At :" + " " }}
-            {{ selectedCategory.updatedAt | mydatepipe }}
+            {{ selectedCategory?.lastModifiedDate | date }}
           </div>
-        </div>
+        </div> -->
       </div>
     </da-col-item>
   </da-layout-row>
 </div>
-<div class="da-content-wrapper" *ngIf="paramId">
+<!-- <div class="da-content-wrapper" *ngIf="paramId">
   <da-layout-row [daGutter]="[24, 24]">
     <da-col-item [daSpan]="24" [daXs]="24">
       <div class="da-basic-form">
@@ -118,4 +118,4 @@
       </div>
     </da-col-item>
   </da-layout-row>
-</div>
+</div> -->

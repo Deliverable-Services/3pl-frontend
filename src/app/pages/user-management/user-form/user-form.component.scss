@@ -1,0 +1,78 @@
+@import "~ng-devui/styles-var/devui-var.scss";
+@import "src/app/@shared/styles/common.scss";
+
+.da-basic-form {
+  padding: 20px;
+  background-color: $devui-base-bg;
+  border-radius: $devui-border-radius-card;
+  box-shadow: $devui-shadow-length-base $devui-light-shadow;
+}
+
+.da-basic-form2 {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px;
+  background-color: $devui-base-bg;
+  border-radius: $devui-border-radius-card;
+  box-shadow: $devui-shadow-length-base $devui-light-shadow;
+}
+
+.devui-btn-primary{
+  background-color: red !important;
+}
+
+form {
+  margin: 0 20px;
+  // max-width: 70%;
+  width: 100%;
+}
+
+@media only screen and (max-width: 1023px) {
+  form {
+    max-width: 80%;
+  }
+}
+.add-session-btn {
+  display: flex;
+  justify-content: space-between;
+}
+
+.devui-input-group-addon {
+  width: 1%;
+  vertical-align: middle;
+
+  &:hover {
+    color: $devui-brand-active;
+  }
+}
+
+.devui-input-group {
+  max-width: 250px;
+}
+
+.close-icon-wrapper {
+  padding: 0;
+}
+
+.icon-close {
+  border-right: 1px solid $devui-dividing-line;
+  padding-right: 10px;
+  cursor: pointer;
+}
+
+:host ::ng-deep .devui-select-placeholder {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.dateWrapper {
+  font-size: "12px";
+  margin: "8px";
+  font-weight: "500";
+}
+
+.icon-close[_ngcontent-obh-c240] {
+  padding-right: 0px !important;
+}

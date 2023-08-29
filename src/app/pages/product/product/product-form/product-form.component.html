@@ -17,7 +17,7 @@
   <d-row>
     <d-col [dSpan]="8">
       <d-row>
-        <d-col [dSpan]="6"> <b>Style Name:</b> </d-col>
+        <d-col [dSpan]="6"> <b>Style Names:</b> </d-col>
         <d-col [dSpan]="6"> {{ styleData.styleName }} </d-col>
       </d-row>
       <br />
@@ -74,7 +74,7 @@
           </div>
           <div [ngStyle]="{ width: '98%' }" *ngIf="!paramId">
             <d-form-item>
-              <d-form-label [required]="true" [hasHelp]="true" [helpTips]="'This is the product descruption.'">Product
+              <d-form-label [required]="true" [hasHelp]="false" [helpTips]="'This is the product descruption.'">Product
                 description</d-form-label>
               <d-form-control>
                 <input dTextInput autocomplete="off" name="productDesc" placeholder="Product Description"
@@ -87,7 +87,7 @@
           <div [ngStyle]="{ display: 'flex', justifyContent: 'space-between' }" *ngIf="!paramId">
             <div [ngStyle]="{ width: '46%' }">
               <d-form-item>
-                <d-form-label [required]="true" [hasHelp]="true" [helpTips]="'This is the currency.'">Currency
+                <d-form-label [required]="true" [hasHelp]="false" [helpTips]="'This is the currency.'">Currency
                 </d-form-label>
                 <d-form-control>
                   <input dTextInput autocomplete="off" name="currency" placeholder="Currency"
@@ -99,7 +99,7 @@
               <div [ngStyle]="{}">
                 <d-form-item>
                   <div [ngStyle]="{ display: 'flex', alignItems: 'space-between' }">
-                    <d-form-label *ngIf="colorArray.length > 0" [required]="true" [hasHelp]="true"
+                    <d-form-label *ngIf="colorArray.length > 0" [required]="true" [hasHelp]="false"
                       [helpTips]="'This is the Color.'">Color</d-form-label>
 
                     <d-button [ngStyle]="{ margin: '0px 21px 6px 0px' }" (click)="addColorInput()">Add Color</d-button>
@@ -121,7 +121,7 @@
 
             <div [ngStyle]="{ width: '46%' }">
               <d-form-item>
-                <d-form-label [required]="true" [hasHelp]="true" [helpTips]="'This is the price'">Price</d-form-label>
+                <d-form-label [required]="true" [hasHelp]="false" [helpTips]="'This is the price'">Price</d-form-label>
                 <d-form-control>
                   <input dTextInput autocomplete="off" name="price" placeholder="Price"
                     [(ngModel)]="productFormData.price" [dValidateRules]="{
@@ -133,7 +133,7 @@
               <div>
                 <d-form-item>
                   <div [ngStyle]="{ display: 'flex', alignItems: 'space-between' }">
-                    <d-form-label *ngIf="sizeArray.length > 0" [required]="true" [hasHelp]="true"
+                    <d-form-label *ngIf="sizeArray.length > 0" [required]="true" [hasHelp]="false"
                       [helpTips]="'This isthe Color.'">Size</d-form-label>
 
                     <d-button [ngStyle]="{ margin: '0px 21px 6px 0px' }" (click)="addSizeInput()">Add Size</d-button>
@@ -159,7 +159,7 @@
 
           <div [ngStyle]="{ display: 'flex' }" *ngFor="let prod of productArray; let i = index">
             <d-form-item [ngStyle]="{ margin: '20px 20px 20px 0px' }">
-              <d-form-label [required]="true" [hasHelp]="true" [helpTips]="'This is the Color.'">Color</d-form-label>
+              <d-form-label [required]="true" [hasHelp]="false" [helpTips]="'This is the Color.'">Color</d-form-label>
               <d-form-control>
                 <input [ngStyle]="{ width: '200px' }" dTextInput autocomplete="off" name="productArray[i].color"
                   placeholder="Color" [value]="productArray[i].color" disabled />
@@ -167,7 +167,7 @@
             </d-form-item>
 
             <d-form-item [ngStyle]="{ margin: '20px 20px 20px 0px' }">
-              <d-form-label [required]="true" [hasHelp]="true" [helpTips]="'This is the Size'">Size</d-form-label>
+              <d-form-label [required]="true" [hasHelp]="false" [helpTips]="'This is the Size'">Size</d-form-label>
               <d-form-control>
                 <input [ngStyle]="{ width: '200px' }" dTextInput autocomplete="off" name="productArray[i].size"
                   placeholder="Size" [value]="productArray[i].size" disabled />
@@ -175,7 +175,7 @@
             </d-form-item>
 
             <d-form-item [ngStyle]="{ margin: '20px 20px 20px 0px' }">
-              <d-form-label [required]="true" [hasHelp]="true" [helpTips]="'This is the SKU'">Product SKU</d-form-label>
+              <d-form-label [required]="true" [hasHelp]="false" [helpTips]="'This is the SKU'">Product SKU</d-form-label>
               <d-form-control>
                 <input [ngStyle]="{ width: '200px' }" dTextInput autocomplete="off" name="productArray[i].productSku"
                   placeholder="SKU" [(ngModel)]="productArray[i].productSku" />
@@ -183,7 +183,7 @@
             </d-form-item>
 
             <d-form-item [ngStyle]="{ margin: '20px 20px 20px 0px' }">
-              <d-form-label [required]="true" [hasHelp]="true" [helpTips]="'This is the product descruption.'">Product
+              <d-form-label [required]="true" [hasHelp]="false" [helpTips]="'This is the product descruption.'">Product
                 description</d-form-label>
               <d-form-control>
                 <input [ngStyle]="{ width: '200px' }" dTextInput autocomplete="off" name="productArray[i].productDesc"
@@ -193,7 +193,7 @@
 
             <d-form-item [ngStyle]="{ margin: '20px 20px 20px 0px' }">
 
-              <d-form-label [required]="true" [hasHelp]="true" [helpTips]="'This is the Pice'">Price</d-form-label>
+              <d-form-label [required]="true" [hasHelp]="false" [helpTips]="'This is the Pice'">Price</d-form-label>
               <d-form-control>
                 <input dTextInput autocomplete="off" [ngStyle]="{ width: '200px' }" name="productArray[i].price"
                   autocomplete="off" placeholder="Price" [(ngModel)]="productArray[i].price" />

@@ -10,8 +10,8 @@ import { MaterialFormComponent } from "./material/material-form/material-form.co
 import { UnitListComponent } from "./unit/unitList/unit-list.component";
 import { ProductListComponent } from "./product/productList/product-list.component";
 import { ProductFormComponent } from "./product/product-form/product-form.component";
-import { StyleListComponent } from "./style/styleList/style-list.component";
-import { StyleFormComponent } from "./style/style-form/style-form.component";
+import { ProductsListComponent } from "./products/products-list/products-list.component";
+import { ProductsFormComponent } from "./products/products-form/products-form.component";
 import { UnitFormComponent } from "./unit/unit-form/unit-form.component";
 
 const routes: Routes = [
@@ -79,17 +79,17 @@ const routes: Routes = [
     component: ProductFormComponent,
   },
   {
-    path: "style",
-    component: StyleListComponent,
+    path: "products",
+    component: ProductsListComponent,
   },
 
   {
-    path: "style/add",
-    component: StyleFormComponent,
+    path: "products/add",
+    component: ProductsFormComponent,
   },
   {
-    path: "style/edit/:id",
-    component: StyleFormComponent,
+    path: "products/edit/:id",
+    component: ProductsFormComponent,
   },
 ];
 
