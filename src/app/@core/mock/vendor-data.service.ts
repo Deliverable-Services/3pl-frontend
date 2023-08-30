@@ -13,6 +13,7 @@ const baseUrl = environment.baseUrl;
 
 @Injectable()
 export class VendorListDataService extends VendorListData {
+  baseApiUrl: string = environment.baseUrl;
   constructor(private http: HttpClient) {
     super();
   }
@@ -63,7 +64,7 @@ export class VendorListDataService extends VendorListData {
       }),
     };
 
-    return this.http.post("/vendors", this.searchParams, httpOptionsToken);
+    return this.http.post(`${this.baseApiUrl}/vendors/list`, this.searchParams, httpOptionsToken);
   }
 
   addVendor(data: any) {
@@ -73,7 +74,7 @@ export class VendorListDataService extends VendorListData {
       }),
     };
     console.log("data=============", data);
-    return this.http.post("/vendor", data);
+    return this.http.post(`${this.baseApiUrl}/vendor`, data);
   }
   updateVendor(id: string, data: any): Observable<any> {
     const httpOptionsToken = {
@@ -84,7 +85,7 @@ export class VendorListDataService extends VendorListData {
 
     console.log("data in brand");
 
-    return this.http.put(`/vendor/${id}`, data, httpOptionsToken);
+    return this.http.put(`${this.baseApiUrl}/vendor/${id}`, data, httpOptionsToken);
   }
   getVendorById(id: string): Observable<any> {
     const httpOptionsToken = {
@@ -93,7 +94,7 @@ export class VendorListDataService extends VendorListData {
       }),
     };
 
-    return this.http.get(`/vendor/${id}`, httpOptionsToken);
+    return this.http.get(`${this.baseApiUrl}/vendor/${id}`, httpOptionsToken);
   }
   addSeason(data: Season) {
     this.seasonList.unshift(data);
@@ -109,6 +110,6 @@ export class VendorListDataService extends VendorListData {
       }),
     };
 
-    return this.http.post(`/vendor/${id}/contact`, data, httpOptionsToken);
+    return this.http.post(`${this.baseApiUrl}/vendor/${id}/contact`, data, httpOptionsToken);
   }
 }

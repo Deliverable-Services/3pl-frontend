@@ -89,6 +89,7 @@
                 <d-form-control>
                   <d-select [ngStyle]="{ width: '100%' }"
                     placeholder="Select a Group" [scrollHight]="'300px'"
+                    (valueChange)="showRole($event)"
                     [filterKey]="'group'" [appendToBody]="true" [options]="groups" name="group"
                     [(ngModel)]="projectFormData.group" [dValidateRules]="{
                       validators: [{ required: true }]

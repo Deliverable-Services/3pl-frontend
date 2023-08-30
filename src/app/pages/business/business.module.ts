@@ -24,6 +24,8 @@ import { CurrencyListComponent } from './currency/currency-list/currency-list.co
 import { ShopifyConnectorListComponent } from "./shopify-connector/shopify-connector-list/shopify-connector-list.component";
 import { ShopifyConnectorFormComponent } from "./shopify-connector/shopify-connector-form/shopify-connector-form.component";
 import { InventoryOnlineComponent } from './inventory/inventory-online/inventory-online.component';
+import { ShippingPartnerFormComponent } from './shipping-partner/shipping-partner-form/shipping-partner-form.component';
+import { ShippingPartnerListComponent } from './shipping-partner/shipping-partner-list/shipping-partner-list.component';
 // import { InventoryListComponent } from "./inventory/inventory-list/inventory-list.component";
 
 @NgModule({
@@ -41,6 +43,8 @@ import { InventoryOnlineComponent } from './inventory/inventory-online/inventory
     ShopifyConnectorListComponent,
     ShopifyConnectorFormComponent,
     InventoryOnlineComponent,
+    ShippingPartnerFormComponent,
+    ShippingPartnerListComponent,
     // InventoryListComponent
   ],
   imports: [

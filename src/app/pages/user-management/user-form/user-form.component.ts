@@ -24,8 +24,8 @@ export class UserFormComponent implements OnInit {
     roles: [],
     selectedRoles: []
   };
-  groups: any[] = ["INTERNAL", "EXTERNAL"];
-  rolesName: any[] = ["A", "B"];
+  groups: any[] = ["SELECT","INTERNAL", "EXTERNAL"];
+  rolesName: any[] = [];
   paramId: string = "";
   // selectedCreditTerms: any = {};
   constructor(
@@ -39,16 +39,22 @@ export class UserFormComponent implements OnInit {
     this.paramId = this.route.snapshot.params["id"];
     this.mode = this.route.snapshot.params["id"] ? "Edit" : "Add";
 
-    this.getRoles();
+    // this.getRoles();
     this.getCreditTermsById(this.paramId);
   }
 
-  getRoles() {
+  showRole(event : any){
+    console.log('working role');    
     this.userManagementService.getRoles().subscribe((res) => {
-      this.rolesName = res?.map((role: any) => role.name) || [];
+      this.rolesName = res?.map((role: any) => {
+        if(role.group == event){
+          return role.name;
+        }
+      }) || [];
     });
   }
 
+  
   getCreditTermsById(id: string) {
     this.userManagementService.getById(id).subscribe((res) => {
       this.projectFormData = res;

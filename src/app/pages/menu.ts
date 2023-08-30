@@ -44,10 +44,14 @@ export default function (values: any) {
         //   title: "Department",
         //   link: "/business/department",
         // },
-        // {
-        //   title: "Vendor",
-        //   link: "/business/vendor",
-        // },
+        {
+          title: "Vendor",
+          link: "/business/vendor",
+        },
+        {
+          title: "shipping-partner",
+          link: "/business/shipping-partner",
+        },
         // {
         //   title: "Trade Terms",
         //   link: "/business/trade-terms",
