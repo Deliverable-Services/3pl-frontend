@@ -114,5 +114,14 @@ export default {
       title: "樹列表",
       description: "支持樹表渲染。",
     },
+    sPartner: {
+      title: 'Shopify 合作夥伴',
+      categoryList: 'Shopify 合作夥伴列表',
+      buttonTitle: '添加'
+    },
+    common: {
+      buttonTitleAdd: '添加',
+      buttonTitleEdit: '編輯'
+    }
   },
 };

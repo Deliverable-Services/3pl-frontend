@@ -300,6 +300,11 @@ export default {
       fields: {userId: '用户身份', username: '用户名', email: '电子邮件', description: '描述', title: '标题', department: '部门',
       group: '团体', roles: '角色'}
     },
+    sPartner: {
+      fields: {id: 'ID', address: '地址', businessRegNo: '商业登记号', companyName: '公司名称', generalEmail: '一般电子邮件', 
+      generalPhone: '通用电话', primaryContactEmail: '主要联系人电子邮件', primaryContactName: '主要联系人姓名',
+      primaryContactPhone1: '主要联系电话 1', primaryContactPhone2: '主要联系电话 2', website: '网站'}
+    },
     'basicForm':{
       'title': '基础表单',
       'description': '表单页用于对用户信息进行收集或校验。基础表单具备数据收集、校验和提交功能。'

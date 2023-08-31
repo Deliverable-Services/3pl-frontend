@@ -44,7 +44,7 @@ export class UserFormComponent implements OnInit {
   }
 
   showRole(event : any){
-    console.log('working role');    
+    // console.log('working role');    
     this.userManagementService.getRoles().subscribe((res) => {
       this.rolesName = res?.map((role: any) => {
         if(role.group == event){

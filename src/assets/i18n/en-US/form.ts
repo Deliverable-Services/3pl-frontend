@@ -259,7 +259,9 @@ export default {
     },
     common: {
       create: 'Create',
-      update: 'Update'
+      update: 'Update',
+      add: 'Add',
+      edit: 'Edit'
     },
     category: {
       add_category: 'Add Category',
@@ -301,6 +303,11 @@ export default {
       edit_user: 'Edit User',
       fields: {userId: 'User Id', username: 'Username', email: 'Email', description: 'Description', title: 'Title', department: 'Department',
       group: 'Group', roles: 'Roles'}
+    },
+    sPartner: {
+      fields: {id: 'ID', address: 'Address', businessRegNo: 'Business Reg No', companyName: 'Company Name', generalEmail: 'General Email', 
+      generalPhone: 'General Phone', primaryContactEmail: 'Primary Contact Email', primaryContactName: 'Primary Contact Name',
+      primaryContactPhone1: 'Primary Contact Phone 1', primaryContactPhone2: 'Primary Contact Phone 2', website: 'Website'}
     },
     'basicForm':{
       'title': 'Basic Form',

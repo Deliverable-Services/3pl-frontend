@@ -23,6 +23,7 @@ import { ShopifyConnectorService } from "./shopify-connector.service";
 import { InventoryService } from "./inventory.service";
 import { InventoryOnlineService } from "./inventory-online-data.service";
 import { UserManagementService } from "./user-management.service";
+import { ShippingPartnerService } from "./shipping-partner.service";
 
 
 const SERVICES = [
@@ -48,7 +49,8 @@ const SERVICES = [
   ShopifyConnectorService,
   InventoryService,
   InventoryOnlineService,
-  UserManagementService
+  UserManagementService,
+  ShippingPartnerService
 ];
 
 @NgModule({

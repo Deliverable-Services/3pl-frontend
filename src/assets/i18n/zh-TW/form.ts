@@ -304,6 +304,11 @@ export default {
       fields: {userId: '用戶身份', username: '用戶名', email: '電子郵件', description: '描述', title: '標題', department: '部門',
       group: '團體', roles: '角色'}
     },
+    sPartner: {
+      fields: {id: 'ID', address: '地址', businessRegNo: '商業登記號', companyName: '公司名稱', generalEmail: '一般電子郵件', 
+      generalPhone: '通用電話', primaryContactEmail: '主要聯繫人電子郵件', primaryContactName: '主要聯繫人姓名',
+      primaryContactPhone1: '主要聯繫電話 1', primaryContactPhone2: '主要聯繫電話 2', website: '網站'}
+    },
     'formLayout':{
       'title': '表單佈局',
       'description': '表單佈局頁面顯示各種表單，包括水平、垂直、彈出和多列佈局。',

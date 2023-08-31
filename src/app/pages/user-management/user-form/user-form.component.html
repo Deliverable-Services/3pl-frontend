@@ -30,19 +30,68 @@
                 </d-form-label>
                 <d-form-control>
                   <input dTextInput autocomplete="off" name="userId"
+                    [ngStyle]="{ opacity: '0.5' }"
                     readonly
                     [placeholder]="'form.user.fields.userId' | translate" [(ngModel)]="projectFormData.userId"
                     [dValidateRules]="{
                       validators: [{ required: true }]
                     }" />
                 </d-form-control>
-              </d-form-item>              
+              </d-form-item>
 
+              <d-form-item>
+                <d-form-label [required]="true">
+                  {{'form.user.fields.email' | translate}}
+                </d-form-label>
+                <d-form-control>
+                  <input dTextInput autocomplete="off" name="email"
+                    [ngStyle]="{ opacity: '0.5' }"
+                    readonly
+                    [placeholder]="'form.user.fields.email' | translate"
+                    [(ngModel)]="projectFormData.email"
+                    [dValidateRules]="{
+                        validators: [{ required: true }]
+                      }" />
+                </d-form-control>
+              </d-form-item>
+
+              <d-form-item>
+                <d-form-label [required]="true">
+                  {{'form.user.fields.department' | translate}}
+                </d-form-label>
+                <d-form-control>
+                  <input dTextInput autocomplete="off" name="department"
+                    [placeholder]="'form.user.fields.department' | translate"
+                    [(ngModel)]="projectFormData.department" [dValidateRules]="{
+                        validators: [{ required: true }]
+                      }" />
+                </d-form-control>
+              </d-form-item>
+
+              <d-form-item>
+                <d-form-label [required]="true">
+                  {{'form.user.fields.group' | translate}}
+                </d-form-label>
+                <d-form-control>
+                  <d-select [ngStyle]="{ width: '100%' }"
+                    placeholder="Select a Group" [scrollHight]="'300px'"
+                    (valueChange)="showRole($event)"
+                    [filterKey]="'group'" [appendToBody]="true" [options]="groups" name="group"
+                    [(ngModel)]="projectFormData.group" [dValidateRules]="{
+                      validators: [{ required: true }]
+                    }"></d-select>
+                </d-form-control>
+              </d-form-item>
+
+            </div>
+
+            <div [ngStyle]="{ width: '46%' }">
               <d-form-item>
                 <d-form-label [required]="true">{{'form.user.fields.username' | translate}}
                 </d-form-label>
                 <d-form-control>
                   <input dTextInput autocomplete="off" name="username"
+                    [ngStyle]="{ opacity: '0.5' }"
                     readonly
                     [placeholder]="'form.user.fields.username' | translate"
                     [(ngModel)]="projectFormData.username"
@@ -51,18 +100,19 @@
                     }" />
                 </d-form-control>
               </d-form-item>
+
               <d-form-item>
                 <d-form-label [required]="true">
-                  {{'form.user.fields.email' | translate}}
+                  {{'form.user.fields.description' | translate}}
                 </d-form-label>
                 <d-form-control>
-                  <input dTextInput autocomplete="off" name="email"
-                    readonly
-                    [placeholder]="'form.user.fields.email' | translate"
-                    [(ngModel)]="projectFormData.email"
-                    [dValidateRules]="{
-                        validators: [{ required: true }]
-                      }" />
+                
+                    <input readonly dTextInput autocomplete="off" name="description"
+                    [ngStyle]="{ opacity: '0.5' }"
+                    [placeholder]="'form.user.fields.description' | translate"
+                    [(ngModel)]="projectFormData.description" [dValidateRules]="{
+                      validators: [{ required: true }]
+                    }" />
                 </d-form-control>
               </d-form-item>
 
@@ -79,60 +129,12 @@
                       }" />
                 </d-form-control>
               </d-form-item>
-            </div>
-
-            <div [ngStyle]="{ width: '46%' }">
-              <d-form-item>
-                <d-form-label [required]="true">
-                  {{'form.user.fields.group' | translate}}
-                </d-form-label>
-                <d-form-control>
-                  <d-select [ngStyle]="{ width: '100%' }"
-                    placeholder="Select a Group" [scrollHight]="'300px'"
-                    (valueChange)="showRole($event)"
-                    [filterKey]="'group'" [appendToBody]="true" [options]="groups" name="group"
-                    [(ngModel)]="projectFormData.group" [dValidateRules]="{
-                      validators: [{ required: true }]
-                    }"></d-select>
-                </d-form-control>
-              </d-form-item>
-
-              <d-form-item>
-                <d-form-label [required]="true">
-                  {{'form.user.fields.department' | translate}}
-                </d-form-label>
-                <d-form-control>
-                  <input dTextInput autocomplete="off" name="department"
-                    [placeholder]="'form.user.fields.department' | translate"
-                    [(ngModel)]="projectFormData.department" [dValidateRules]="{
-                        validators: [{ required: true }]
-                      }" />
-                </d-form-control>
-              </d-form-item>
-              <d-form-item>
-                <d-form-label [required]="true">
-                  {{'form.user.fields.description' | translate}}
-                </d-form-label>
-                <d-form-control>
-                
-                    <input readonly dTextInput autocomplete="off" name="description"
-                    [placeholder]="'form.user.fields.description' | translate"
-                    [(ngModel)]="projectFormData.description" [dValidateRules]="{
-                      validators: [{ required: true }]
-                    }" />
-                </d-form-control>
-              </d-form-item>
+              
               <d-form-item>
                 <d-form-label [required]="true">
                   {{'form.user.fields.roles' | translate}}
                 </d-form-label>
                 <d-form-control>
-                  <!-- <input dTextInput autocomplete="off" name="roles"
-                    [placeholder]="'form.user.fields.roles' | translate"
-                    [(ngModel)]="projectFormData.roles"
-                    [dValidateRules]="{
-                        validators: [{ required: true }]
-                      }" /> -->
                       <d-checkbox-group
                         [(ngModel)]="projectFormData.selectedRoles"
                         [name]="'roles'"

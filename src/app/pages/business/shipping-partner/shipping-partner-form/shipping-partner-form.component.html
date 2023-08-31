@@ -1,1 +1,191 @@
-<p>shipping-partner-form works!</p>
+<div class="da-content-banner">
+    <div class="add-session-btn">
+      <d-breadcrumb>
+        <d-breadcrumb-item>
+          <a routerLink="/product/products">{{ "list.product.title" | translate }}</a>
+        </d-breadcrumb-item>
+        <d-breadcrumb-item>
+          {{ (mode === 'Add' ? "list.common.buttonTitleAdd" : "list.common.buttonTitleEdit") | translate }}
+        </d-breadcrumb-item>
+      </d-breadcrumb>
+    </div>
+  </div>
+  
+  <div class="da-content-wrapper product-form-list">
+    <da-layout-row [daGutter]="[24, 24]">
+      <da-col-item [daSpan]="24" [daXs]="24">
+        <div class="da-basic-form" [ngStyle]="{
+            display: 'flex',
+            justifyContent: 'space-between',
+            width: '100%'
+          }">
+          <form dForm ngForm [dValidateRules]="{
+              message: 'The form verification failed, please check.'
+            }" [layout]="verticalLayout" #styleForm="dValidateRules" (dSubmit)="submitProjectForm($event)"
+            autocomplete="off">
+            <div [ngStyle]="{ display: 'flex', justifyContent: 'space-between' }">
+              <div [ngStyle]="{ width: '46%' }">
+                <!-- <d-form-item>
+                  <d-form-label [required]="true">{{"form.sPartner.fields.id" | translate}}
+                  </d-form-label>
+                  <d-form-control>
+                    <input dTextInput autocomplete="off" name="id"
+                      [placeholder]="'form.sPartner.fields.id' | translate" [(ngModel)]="projectFormData.id"
+                      [dValidateRules]="{
+                        validators: [{ required: true }]
+                      }" />
+                  </d-form-control>
+                </d-form-item>               -->
+  
+                <d-form-item>
+                  <d-form-label [required]="true">{{'form.sPartner.fields.companyName' | translate}}
+                  </d-form-label>
+                  <d-form-control>
+                    <input dTextInput autocomplete="off" name="companyName"
+                      [placeholder]="'form.sPartner.fields.companyName' | translate"
+                      [(ngModel)]="projectFormData.companyName"
+                      [dValidateRules]="{
+                        validators: [{ required: true }]
+                      }" />
+                  </d-form-control>
+                </d-form-item>
+                <d-form-item>
+                  <d-form-label [required]="true">
+                    {{'form.sPartner.fields.generalEmail' | translate}}
+                  </d-form-label>
+                  <d-form-control>
+                    <input dTextInput autocomplete="off" name="generalEmail"
+                      [placeholder]="'form.sPartner.fields.generalEmail' | translate"
+                      [(ngModel)]="projectFormData.generalEmail"
+                      [dValidateRules]="{
+                          validators: [{ required: true }]
+                        }" />
+                  </d-form-control>
+                </d-form-item>
+  
+                <d-form-item>
+                  <d-form-label [required]="true">
+                    {{'form.sPartner.fields.generalPhone' | translate}}
+                  </d-form-label>
+                  <d-form-control>
+                    <input dTextInput autocomplete="off" name="generalPhone"
+                      [placeholder]="'form.sPartner.fields.generalPhone' | translate"
+                      [(ngModel)]="projectFormData.generalPhone"
+                      [dValidateRules]="{
+                          validators: [{ required: true }]
+                        }" />
+                  </d-form-control>
+                </d-form-item>
+
+                <d-form-item>
+                    <d-form-label [required]="true">
+                      {{'form.sPartner.fields.businessRegNo' | translate}}
+                    </d-form-label>
+                    <d-form-control>
+                      <input dTextInput autocomplete="off" name="businessRegNo"
+                        [placeholder]="'form.sPartner.fields.businessRegNo' | translate"
+                        [(ngModel)]="projectFormData.businessRegNo"
+                        [dValidateRules]="{
+                            validators: [{ required: true }]
+                          }" />
+                    </d-form-control>
+                  </d-form-item>
+
+                <d-form-item>
+                    <d-form-label [required]="true">
+                      {{'form.sPartner.fields.address' | translate}}
+                    </d-form-label>
+                    <d-form-control>
+                      <input dTextInput autocomplete="off" name="address"
+                        [placeholder]="'form.sPartner.fields.address' | translate"
+                        [(ngModel)]="projectFormData.address"
+                        [dValidateRules]="{
+                            validators: [{ required: true }]
+                          }" />
+                    </d-form-control>
+                  </d-form-item>
+              </div>
+  
+              <div [ngStyle]="{ width: '46%' }">
+                <d-form-item>
+                  <d-form-label [required]="true">
+                    {{'form.sPartner.fields.primaryContactName' | translate}}
+                  </d-form-label>
+                  <d-form-control>
+                    <input dTextInput autocomplete="off" name="primaryContactName"
+                        [placeholder]="'form.sPartner.fields.primaryContactName' | translate"
+                        [(ngModel)]="projectFormData.primaryContactName"
+                        [dValidateRules]="{
+                            validators: [{ required: true }]
+                          }" />
+                  </d-form-control>
+                </d-form-item>
+  
+                <d-form-item>
+                  <d-form-label [required]="true">
+                    {{'form.sPartner.fields.primaryContactEmail' | translate}}
+                  </d-form-label>
+                  <d-form-control>
+                    <input dTextInput autocomplete="off" name="primaryContactEmail"
+                      [placeholder]="'form.sPartner.fields.primaryContactEmail' | translate"
+                      [(ngModel)]="projectFormData.primaryContactEmail" [dValidateRules]="{
+                          validators: [{ required: true }]
+                        }" />
+                  </d-form-control>
+                </d-form-item>
+                <d-form-item>
+                  <d-form-label [required]="true">
+                    {{'form.sPartner.fields.primaryContactPhone1' | translate}}
+                  </d-form-label>
+                  <d-form-control>
+                  
+                      <input dTextInput autocomplete="off" name="primaryContactPhone1"
+                      [placeholder]="'form.sPartner.fields.primaryContactPhone1' | translate"
+                      [(ngModel)]="projectFormData.primaryContactPhone1" [dValidateRules]="{
+                        validators: [{ required: true }]
+                      }" />
+                  </d-form-control>
+                </d-form-item>
+                <d-form-item>
+                  <d-form-label [required]="true">
+                    {{'form.sPartner.fields.primaryContactPhone2' | translate}}
+                  </d-form-label>
+                  <d-form-control>
+                    <input dTextInput autocomplete="off" name="primaryContactPhone2"
+                      [placeholder]="'form.sPartner.fields.primaryContactPhone2' | translate"
+                      [(ngModel)]="projectFormData.primaryContactPhone2"
+                      [dValidateRules]="{
+                          validators: [{ required: true }]
+                        }" />
+                  </d-form-control>
+                </d-form-item>
+                <d-form-item>
+                    <d-form-label [required]="true">
+                      {{'form.sPartner.fields.website' | translate}}
+                    </d-form-label>
+                    <d-form-control>
+                      <input dTextInput autocomplete="off" name="website"
+                        [placeholder]="'form.sPartner.fields.website' | translate"
+                        [(ngModel)]="projectFormData.website"
+                        [dValidateRules]="{
+                            validators: [{ required: true }]
+                          }" />
+                    </d-form-control>
+                  </d-form-item>
+              </div>
+            </div>
+            <div [ngStyle]="{ width: '100%' }">
+              <d-form-operation>
+                <d-button class="mr-element-spacing" dTooltip
+                  class="mr-element-spacing"
+                  [title]="styleForm.errorMessage || ''" circled="true" style="margin-right: 8px"
+                  [showLoading]="styleForm.pending" dFormSubmit [dFormSubmitData]="'submit-button'">
+                  {{ (mode === 'Add' ? "list.common.buttonTitleAdd" : "form.common.update") | translate }}
+                </d-button>
+              </d-form-operation>
+            </div>
+          </form>
+        </div>
+      </da-col-item>
+    </da-layout-row>
+  </div>

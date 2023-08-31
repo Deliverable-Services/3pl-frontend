@@ -58,22 +58,8 @@
                 </d-column>
 
                 <d-column
-                  [field]="'group'"
-                  header="Group"
-                  [sortable]="true"
-                >
-                  <d-cell>
-                    <ng-template let-cellItem="cellItem">
-                      <span [title]="cellItem" class="over-flow-ellipsis">
-                        {{ cellItem }}
-                      </span>
-                    </ng-template>
-                  </d-cell>
-                </d-column>
-
-                <d-column
-                  [field]="'title'"
-                  header="Title"
+                  [field]="'username'"
+                  header="Username"
                   [sortable]="true"
                 >
                   <d-cell>
@@ -98,6 +84,34 @@
                   </ng-template>
                 </d-cell>
               </d-column>
+
+              <d-column
+                  [field]="'title'"
+                  header="Title"
+                  [sortable]="true"
+                >
+                  <d-cell>
+                    <ng-template let-cellItem="cellItem">
+                      <span [title]="cellItem" class="over-flow-ellipsis">
+                        {{ cellItem }}
+                      </span>
+                    </ng-template>
+                  </d-cell>
+                </d-column>
+
+                <d-column
+                  [field]="'group'"
+                  header="Group"
+                  [sortable]="true"
+                >
+                  <d-cell>
+                    <ng-template let-cellItem="cellItem">
+                      <span [title]="cellItem" class="over-flow-ellipsis">
+                        {{ cellItem }}
+                      </span>
+                    </ng-template>
+                  </d-cell>
+                </d-column>
 
               <d-column
                 [field]="'roles'"
@@ -127,12 +141,6 @@
                           title="edit"
                           (click)="editRow(rowItem.userId, rowIndex)"
                         ></d-button>
-                        <!-- <d-button
-                          icon="icon-delete"
-                          bsStyle="text-dark"
-                          title="delete"
-                          (click)="deleteRow(rowIndex)"
-                        ></d-button> -->
                       </div>
                     </ng-template>
                   </d-cell>

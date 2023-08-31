@@ -45,11 +45,11 @@ export default function (values: any) {
         //   link: "/business/department",
         // },
         {
-          title: "Vendor",
+          title: "vendor",
           link: "/business/vendor",
         },
         {
-          title: "shipping-partner",
+          title: "sPartner",
           link: "/business/shipping-partner",
         },
         // {
@@ -60,10 +60,10 @@ export default function (values: any) {
           title: "currency",
           link: "/business/currency",
         },
-        // {
-        //   title: "creditTerms",
-        //   link: "/credit-terms",
-        // },
+        {
+          title: "creditTerms",
+          link: "/credit-terms",
+        },
         {
           title: "connectionLocationList",
           link: "/connection-location",

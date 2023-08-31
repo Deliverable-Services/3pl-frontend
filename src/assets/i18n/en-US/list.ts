@@ -40,6 +40,11 @@ export default {
       list: 'Inventory Node List',
       buttonTitle: 'Add Inventory Node'
     },
+    vendor: {
+      title: 'Vendor',
+      list: 'Vendor List',
+      buttonTitle: 'Add'
+    },
     shopifyConnector: {
       title: 'Shopify Connector',
       list: 'Shopify Connector List',
@@ -113,6 +118,15 @@ export default {
     treeList: {
       title: 'Tree List',
       description: 'Tree table rendering is supported.'
+    },
+    sPartner: {
+      title: 'Shipping Partner',
+      categoryList: 'Shipping Partner List',
+      buttonTitle: 'Add'
+    },
+    common: {
+      buttonTitleAdd: 'Add',
+      buttonTitleEdit: 'Edit'
     }
   },
 };

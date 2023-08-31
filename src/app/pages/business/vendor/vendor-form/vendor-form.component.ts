@@ -18,15 +18,39 @@ import { FormConfig } from "src/app/@shared/components/admin-form";
 export class VendorFormComponent implements OnInit {
   @ViewChild("EditorTemplate", { static: true })
   EditorTemplate!: TemplateRef<any>;
+  todayDate: any = new Date();
   
   projectFormData = {
-    vendorName: "",
-    vendorCode: "",
-    phoneNo: "",
-    currency: "",
+    id: "",
     address: "",
+    businessRegNo: "",
+    companyName: "",
+    generalEmail: "",
+    generalPhone: "",
+    paymentCurrency: "",
+    primaryContactEmail: "",
+    primaryContactName: "",
+    primaryContactPhone1: "",
+    primaryContactPhone2: "",
+    status: "ACTIVE",
     website: "",
-    faxNo: "",
+    creditTermsDto: {
+      createdBy: "",
+      createdDate: "",
+      creditDay: 0,
+      creditTermsDetails: "",
+      creditTermsId: "",
+      creditTermsSubject: "",
+      lastModifiedBy: "",
+      lastModifiedDate: "",
+      status: "Active"
+    },
+    bankInfo: {
+      accName: "",
+      accNo: "",
+      bankName: "",
+      swiftCode: ""
+    },
   };
   mode: string = "Add";
   paramId: string = "";
