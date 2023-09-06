@@ -14,6 +14,8 @@ import { ShopifyConnectorListComponent } from "./shopify-connector/shopify-conne
 import { ShopifyConnectorFormComponent } from "./shopify-connector/shopify-connector-form/shopify-connector-form.component";
 import { ShippingPartnerListComponent } from "./shipping-partner/shipping-partner-list/shipping-partner-list.component";
 import { ShippingPartnerFormComponent } from "./shipping-partner/shipping-partner-form/shipping-partner-form.component";
+import { TransferOrderListComponent } from "./transferOrder/transfer-order-list/transfer-order-list.component";
+import { TransferOrderFormComponent } from "./transferOrder/transfer-order-form/transfer-order-form.component";
 // import { InventoryListComponent } from "./inventory/inventory-list/inventory-list.component";
 
 const routes: Routes = [
@@ -94,6 +96,18 @@ const routes: Routes = [
   {
     path: "shipping-partner/edit/:id",
     component: ShippingPartnerFormComponent,
+  },
+  {
+    path: "transfer-order",
+    component: TransferOrderListComponent,
+  },
+  {
+    path: "transfer-order/add",
+    component: TransferOrderFormComponent,
+  },
+  {
+    path: "transfer-order/edit/:id",
+    component: TransferOrderFormComponent,
   },
   // {
   //   path: "inventory",

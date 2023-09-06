@@ -1,0 +1,237 @@
+<div class="da-content-banner">
+  <div class="add-session-btn">
+    <d-breadcrumb>
+      <d-breadcrumb-item>
+        <a routerLink="/product/category">{{
+          "list.transferOrder.title" | translate
+        }}</a>
+      </d-breadcrumb-item>
+      <d-breadcrumb-item>
+        {{
+          (mode === "Add"
+            ? "list.transferOrder.buttonTitle"
+            : "form.transferOrder.edit_currency"
+          ) | translate
+        }}
+      </d-breadcrumb-item>
+      <!-- <d-button [ngStyle]="{ marginLeft: '900px' }" (click)="addSession()">Add Season</d-button> -->
+    </d-breadcrumb>
+  </div>
+</div>
+
+<div class="da-content-wrapper">
+  <da-layout-row [daGutter]="[24, 24]">
+    <da-col-item [daSpan]="24" [daXs]="24">
+      <div
+        class="da-basic-form"
+        [ngStyle]="{ display: 'flex', justifyContent: 'space-between' }"
+      >
+        <form
+          dForm
+          ngForm
+          [dValidateRules]="{
+            message: 'The form verification failed, please check.'
+          }"
+          [layout]="verticalLayout"
+          #projectForm="dValidateRules"
+          (dSubmit)="submitProjectForm($event)"
+          autocomplete="off"
+        >
+          <div class="da-content-banner-title">
+            {{
+              (mode === "Add"
+                ? "form.transferOrder.buttonTitle"
+                : "form.transferOrder.editbuttonTitle"
+              ) | translate
+            }}
+          </div>
+          <d-form-item [ngStyle]="{ width: '500px' }">
+            <d-form-label
+              [required]="true"
+              [hasHelp]="false"
+              [helpTips]="'This is the Credit Day.'"
+            >
+              {{ "form.transferOrder.fields.origin" | translate }}
+            </d-form-label>
+            <d-form-control>
+              <d-select
+                [ngStyle]="{ width: '100%' }"
+                [placeholder]="'form.transferOrder.fields.origin' | translate"
+                [appendToBody]="true"
+                [multiple]="false"
+                [filterKey]="'nodeName'"
+                [options]="connectionLocationList"
+                name="origin"
+                [(ngModel)]="projectFormData.originLocation"
+                (valueChange)="checkNodeType()"
+                [dValidateRules]="{
+                  validators: [{ required: true }]
+                }"
+              ></d-select>
+            </d-form-control>
+          </d-form-item>
+
+          <d-form-item [ngStyle]="{ width: '500px' }">
+            <d-form-label
+              [required]="true"
+              [hasHelp]="false"
+              [helpTips]="'This is Terms Subject.'"
+            >
+              {{ "form.transferOrder.fields.destination" | translate }}
+            </d-form-label>
+            <d-form-control>
+              <d-select
+                [ngStyle]="{ width: '100%' }"
+                [placeholder]="
+                  'form.transferOrder.fields.destination' | translate
+                "
+                [appendToBody]="true"
+                [multiple]="false"
+                [filterKey]="'nodeName'"
+                [options]="connectionLocationList"
+                name="destination"
+                (valueChange)="checkNodeType()"
+                [(ngModel)]="projectFormData.destinationLocation"
+                [dValidateRules]="{
+                  validators: [{ required: true }]
+                }"
+              ></d-select>
+            </d-form-control>
+          </d-form-item>
+
+          <ng-container *ngIf="mode?.toLowerCase() === 'edit'">
+            <d-form-item [ngStyle]="{ width: '500px' }">
+              <d-form-label>TO Type</d-form-label>
+              <d-form-control>
+                <input
+                  dTextInput
+                  autocomplete="off"
+                  [(ngModel)]="toTypeLabel"
+                  disabled
+                />
+              </d-form-control>
+            </d-form-item>
+            <d-form-item [ngStyle]="{ width: '500px' }">
+              <d-form-label [required]="true">Remarks</d-form-label>
+              <d-form-control>
+                <input
+                  dTextInput
+                  autocomplete="off"
+                  name="remarks"
+                  placeholder="Remarks"
+                  [(ngModel)]="projectFormData.remarks"
+                  [dValidateRules]="{
+                    validators: [{ required: true }]
+                  }"
+                />
+              </d-form-control>
+            </d-form-item>
+
+            <div class="">
+              <d-form-label [required]="true"
+                >Expected Arrival Date</d-form-label
+              >
+              <div
+                style="width: 100%"
+                class="devui-input-group devui-dropdown-origin"
+                dActiveFormControl
+              >
+                <input
+                  class="devui-input devui-form-control"
+                  placeholder="'y/MM/dd HH:mm:ss'"
+                  [dateFormat]="'y/MM/dd HH:mm:ss'"
+                  (click)="datePicker1.toggle()"
+                  name="dp"
+                  [(ngModel)]="projectFormData.expectedArrivalDate"
+                  autocomplete="off"
+                  dDatepicker
+                  #datePicker1="datepicker"
+                  [showTime]="true"
+                  [minDate]="todayDate"
+                  (selectedDateChange)="arrivalDate($event)"
+                />
+                <div
+                  *ngIf="projectFormData.expectedArrivalDate"
+                  class="devui-input-group-addon close-icon-wrapper"
+                  (click)="datePicker1.clearAll(); datePicker2.clearAll()"
+                >
+                  <i class="icon icon-close"></i>
+                </div>
+                <div
+                  class="devui-input-group-addon"
+                  (click)="datePicker1.toggle()"
+                >
+                  <i class="icon icon-calendar"></i>
+                </div>
+              </div>
+            </div>
+
+            <div class="input-setting">
+              <d-form-label [required]="true"
+                >Expected Delivery Date</d-form-label
+              >
+              <div
+                style="width: 100%"
+                class="devui-input-group devui-dropdown-origin"
+                dActiveFormControl
+              >
+                <input
+                  class="devui-input devui-form-control"
+                  placeholder="'y/MM/dd HH:mm:ss'"
+                  [dateFormat]="'y/MM/dd HH:mm:ss'"
+                  (click)="datePicker2.toggle()"
+                  name="dp"
+                  [(ngModel)]="projectFormData.expectedDeliveryDate"
+                  autocomplete="off"
+                  dDatepicker
+                  #datePicker2="datepicker"
+                  [showTime]="true"
+                  [minDate]="dDate"
+                />
+                <div
+                  *ngIf="projectFormData.expectedDeliveryDate"
+                  class="devui-input-group-addon close-icon-wrapper"
+                  (click)="datePicker2.clearAll()"
+                >
+                  <i class="icon icon-close"></i>
+                </div>
+                <div
+                  class="devui-input-group-addon"
+                  (click)="datePicker2.toggle()"
+                >
+                  <i class="icon icon-calendar"></i>
+                </div>
+              </div>
+            </div>
+
+            <div class="da-content-banner-title">Details</div>
+            <div [ngStyle]="{ display: 'inline-block' }">
+                <d-search [size]="'sm'"
+                  (input)="search($event)" class="da-inline"
+                  [placeholder]="'Search with Style Name'"></d-search>
+              </div>
+          </ng-container>
+
+          <d-form-operation>
+            <d-button
+              [disabled]="!allowSubmit"
+              dLoading
+              class="mr-element-spacing"
+              [title]="projectForm.errorMessage || ''"
+              circled="true"
+              style="margin-right: 8px"
+              [showLoading]="projectForm.pending"
+              dFormSubmit
+              [dFormSubmitData]="'submit-button'"
+            >
+              {{
+                (paramId ? "form.common.update" : "form.common.create")
+                  | translate
+              }}
+            </d-button>
+          </d-form-operation>
+        </form>
+      </div>
+    </da-col-item>
+  </da-layout-row>
+</div>

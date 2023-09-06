@@ -127,6 +127,16 @@ export default {
     common: {
       buttonTitleAdd: 'Add',
       buttonTitleEdit: 'Edit'
+    },
+    transferOrder:{
+        status: "Status",
+        id: "TO No.",
+        nodeName:"Destination",
+        nodeName2:"Origin",
+        receiptDiscrepancy:"Discrepancy",
+        list:"Transfer Order List",
+        title:"Transfer Order",
+        buttonTitle:"Create Transfer Order",
     }
   },
 };

@@ -309,6 +309,10 @@ export default {
       generalPhone: 'General Phone', primaryContactEmail: 'Primary Contact Email', primaryContactName: 'Primary Contact Name',
       primaryContactPhone1: 'Primary Contact Phone 1', primaryContactPhone2: 'Primary Contact Phone 2', website: 'Website'}
     },
+    transferOrder:{
+      fields:{origin:"Origin", destination:"Destination"},
+      buttonTitle: 'Create Transfer Order',editButtonTitle: 'Edit Transfer Order'
+    },
     'basicForm':{
       'title': 'Basic Form',
       'description': 'The form page is used to collect or verify user information. Basic forms can be used to collect, verify, and submit data.'

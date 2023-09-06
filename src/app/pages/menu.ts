@@ -65,6 +65,10 @@ export default function (values: any) {
           link: "/credit-terms",
         },
         {
+          title: "transferOrder",
+          link: "/business/transfer-order",
+        },
+        {
           title: "connectionLocationList",
           link: "/connection-location",
         },
