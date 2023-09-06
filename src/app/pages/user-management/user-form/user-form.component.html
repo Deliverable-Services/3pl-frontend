@@ -1,0 +1,188 @@
+<div class="da-content-banner">
+  <div class="add-session-btn">
+    <d-breadcrumb>
+      <d-breadcrumb-item>
+        <a routerLink="/product/products">{{ "list.product.title" | translate }}</a>
+      </d-breadcrumb-item>
+      <d-breadcrumb-item>
+        {{ (mode === 'Add' ? "list.product.buttonTitle" : "form.product.edit_product") | translate }}
+      </d-breadcrumb-item>
+    </d-breadcrumb>
+  </div>
+</div>
+
+<div class="da-content-wrapper product-form-list">
+  <da-layout-row [daGutter]="[24, 24]">
+    <da-col-item [daSpan]="24" [daXs]="24">
+      <div class="da-basic-form" [ngStyle]="{
+          display: 'flex',
+          justifyContent: 'space-between',
+          width: '100%'
+        }">
+        <form dForm ngForm [dValidateRules]="{
+            message: 'The form verification failed, please check.'
+          }" [layout]="verticalLayout" #styleForm="dValidateRules" (dSubmit)="submitProjectForm($event)"
+          autocomplete="off">
+          <div [ngStyle]="{ display: 'flex', justifyContent: 'space-between' }">
+            <div [ngStyle]="{ width: '46%' }">
+              <d-form-item>
+                <d-form-label [required]="true">{{"form.user.fields.userId" | translate}}
+                </d-form-label>
+                <d-form-control>
+                  <input dTextInput autocomplete="off" name="userId"
+                    [ngStyle]="{ opacity: '0.5' }"
+                    readonly
+                    [placeholder]="'form.user.fields.userId' | translate" [(ngModel)]="projectFormData.userId"
+                    [dValidateRules]="{
+                      validators: [{ required: true }]
+                    }" />
+                </d-form-control>
+              </d-form-item>
+
+              <d-form-item>
+                <d-form-label [required]="true">
+                  {{'form.user.fields.email' | translate}}
+                </d-form-label>
+                <d-form-control>
+                  <input dTextInput autocomplete="off" name="email"
+                    [ngStyle]="{ opacity: '0.5' }"
+                    readonly
+                    [placeholder]="'form.user.fields.email' | translate"
+                    [(ngModel)]="projectFormData.email"
+                    [dValidateRules]="{
+                        validators: [{ required: true }]
+                      }" />
+                </d-form-control>
+              </d-form-item>
+
+              <d-form-item>
+                <d-form-label [required]="true">
+                  {{'form.user.fields.department' | translate}}
+                </d-form-label>
+                <d-form-control>
+                  <input dTextInput autocomplete="off" name="department"
+                    [placeholder]="'form.user.fields.department' | translate"
+                    [(ngModel)]="projectFormData.department" [dValidateRules]="{
+                        validators: [{ required: true }]
+                      }" />
+                </d-form-control>
+              </d-form-item>
+
+              <d-form-item>
+                <d-form-label [required]="true">
+                  {{'form.user.fields.group' | translate}}
+                </d-form-label>
+                <d-form-control>
+                  <d-select [ngStyle]="{ width: '100%' }"
+                    placeholder="Select a Group" [scrollHight]="'300px'"
+                    (valueChange)="showRole($event)"
+                    [filterKey]="'group'" [appendToBody]="true" [options]="groups" name="group"
+                    [(ngModel)]="projectFormData.group" [dValidateRules]="{
+                      validators: [{ required: true }]
+                    }"></d-select>
+                </d-form-control>
+              </d-form-item>
+
+            </div>
+
+            <div [ngStyle]="{ width: '46%' }">
+              <d-form-item>
+                <d-form-label [required]="true">{{'form.user.fields.username' | translate}}
+                </d-form-label>
+                <d-form-control>
+                  <input dTextInput autocomplete="off" name="username"
+                    [ngStyle]="{ opacity: '0.5' }"
+                    readonly
+                    [placeholder]="'form.user.fields.username' | translate"
+                    [(ngModel)]="projectFormData.username"
+                    [dValidateRules]="{
+                      validators: [{ required: true }]
+                    }" />
+                </d-form-control>
+              </d-form-item>
+
+              <d-form-item>
+                <d-form-label [required]="true">
+                  {{'form.user.fields.description' | translate}}
+                </d-form-label>
+                <d-form-control>
+                
+                    <input readonly dTextInput autocomplete="off" name="description"
+                    [ngStyle]="{ opacity: '0.5' }"
+                    [placeholder]="'form.user.fields.description' | translate"
+                    [(ngModel)]="projectFormData.description" [dValidateRules]="{
+                      validators: [{ required: true }]
+                    }" />
+                </d-form-control>
+              </d-form-item>
+
+              <d-form-item>
+                <d-form-label [required]="true">
+                  {{'form.user.fields.title' | translate}}
+                </d-form-label>
+                <d-form-control>
+                  <input dTextInput autocomplete="off" name="title"
+                    [placeholder]="'form.user.fields.title' | translate"
+                    [(ngModel)]="projectFormData.title"
+                    [dValidateRules]="{
+                        validators: [{ required: true }]
+                      }" />
+                </d-form-control>
+              </d-form-item>
+              
+              <d-form-item>
+                <d-form-label [required]="true">
+                  {{'form.user.fields.roles' | translate}}
+                </d-form-label>
+                <d-form-control>
+                      <d-checkbox-group
+                        [(ngModel)]="projectFormData.selectedRoles"
+                        [name]="'roles'"
+                        [options]="rolesName"
+                        [direction]="'row'"
+                        [isShowTitle]="true"
+                        (change)="checkRole($event)"
+                      >
+                      </d-checkbox-group>
+                </d-form-control>
+              </d-form-item>
+            </div>
+          </div>
+          <div [ngStyle]="{ width: '100%' }">
+            <!-- <d-form-item>
+              <d-form-label [required]="true" [hasHelp]="false" [helpTips]="'This is the Logistic Description'">
+                {{'form.product.fields.logisticDescription' | translate}}
+              </d-form-label>
+              <d-form-control>
+                <textarea [ngStyle]="{ height: '104px' }" dTextarea resize="vertical" autocomplete="off"
+                  [disabled]="isFormDisabled(projectFormData.status)" name="logisticsDesc"
+                  [placeholder]="'form.product.fields.logisticDescription' | translate"
+                  [(ngModel)]="projectFormData.logisticsDesc" [dValidateRules]="{
+                    validators: [{ required: true }]
+                  }"></textarea>
+              </d-form-control>
+            </d-form-item>
+
+
+            <d-form-operation *ngIf="paramId && projectFormData.status === 'Draft'">
+              <d-button dLoading class="mr-element-spacing" [title]="styleForm.errorMessage || ''" circled="true"
+                [disabled]="isFormDisabled(projectFormData.status)" style="margin-right: 8px"
+                [showLoading]="styleForm.pending" (click)="addMoreVariant()">
+                {{'form.product.addMore' | translate}}
+              </d-button>
+            </d-form-operation> -->
+
+            <d-form-operation>
+              <d-button class="mr-element-spacing" dTooltip
+                class="mr-element-spacing"
+                [title]="styleForm.errorMessage || ''" circled="true" style="margin-right: 8px"
+                [showLoading]="styleForm.pending" dFormSubmit [dFormSubmitData]="'submit-button'">
+                {{ "form.common.update" | translate}}
+              </d-button>
+            </d-form-operation>
+          </div>
+        </form>
+      </div>
+    </da-col-item>
+  </da-layout-row>
+</div>

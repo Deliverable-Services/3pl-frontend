@@ -1,0 +1,69 @@
+<div class="da-content-banner">
+    <div class="add-session-btn">
+        <d-breadcrumb>
+            <d-breadcrumb-item>
+                <a routerLink="/product/category">{{ 'list.transferOrder.title' | translate }}</a>
+            </d-breadcrumb-item>
+            <d-breadcrumb-item>
+                {{ (mode === 'Add' ? "list.transferOrder.buttonTitle" : "form.transferOrder.edit_currency") | translate
+                }}
+            </d-breadcrumb-item>
+            <!-- <d-button [ngStyle]="{ marginLeft: '900px' }" (click)="addSession()">Add Season</d-button> -->
+        </d-breadcrumb>
+    </div>
+</div>
+
+<div class="da-content-wrapper">
+    <da-layout-row [daGutter]="[24, 24]">
+        <da-col-item [daSpan]="24" [daXs]="24">
+            <div class="da-basic-form" [ngStyle]="{ display: 'flex', justifyContent: 'space-between' }">
+                <form dForm ngForm [dValidateRules]="{
+              message: 'The form verification failed, please check.'
+            }" [layout]="verticalLayout" #projectForm="dValidateRules" (dSubmit)="submitProjectForm($event)"
+                    autocomplete="off">
+                    <div class="da-content-banner-title">
+                        {{ (mode === 'Add' ? "form.transferOrder.buttonTitle" : "form.transferOrder.editbuttonTitle") |
+                        translate }}
+                    </div>
+                    <d-form-item [ngStyle]="{ width: '500px' }">
+                        <d-form-label [required]="true" [hasHelp]="false" [helpTips]="'This is Terms Subject.'">
+                            {{'form.transferOrder.fields.destination' | translate}}
+                        </d-form-label>
+                        <d-form-control>
+                            <d-select [ngStyle]="{ width: '100%' }"
+                                [placeholder]="'form.transferOrder.fields.destination' | translate"
+                                [appendToBody]="true" [multiple]="false" [filterKey]="'nodeName'"
+                                [options]="connectionLocationList" name="destination"
+                                [(ngModel)]="projectFormData.destinationLocation" [dValidateRules]="{
+                  validators: [{ required: true }]
+                }"></d-select>
+                        </d-form-control>
+                    </d-form-item>
+
+                    <d-form-item [ngStyle]="{ width: '500px' }">
+                        <d-form-label [required]="true" [hasHelp]="false" [helpTips]="'This is the Credit Day.'">
+                            {{'form.transferOrder.fields.origin' | translate}}
+                        </d-form-label>
+                        <d-form-control>
+                            <d-select [ngStyle]="{ width: '100%' }"
+                                [placeholder]="'form.transferOrder.fields.origin' | translate" [appendToBody]="true"
+                                [multiple]="false" [filterKey]="'nodeName'" [options]="connectionLocationList"
+                                name="origin" [(ngModel)]="projectFormData.originLocation"
+                                [dValidateRules]="{
+                      validators: [{ required: true }]
+                    }"></d-select>
+                        </d-form-control>
+                    </d-form-item>
+
+                    <d-form-operation>
+                        <d-button dLoading class="mr-element-spacing" [title]="projectForm.errorMessage || ''"
+                            circled="true" style="margin-right: 8px" [showLoading]="projectForm.pending" dFormSubmit
+                            [dFormSubmitData]="'submit-button'">
+                            {{ (paramId ? "form.common.update" : "form.common.create") | translate}}
+                        </d-button>
+                    </d-form-operation>
+                </form>
+            </div>
+        </da-col-item>
+    </da-layout-row>
+</div>

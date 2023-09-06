@@ -38,76 +38,130 @@
           <div [ngStyle]="{ display: 'flex', justifyContent: 'space-between' }">
             <div [ngStyle]="{ width: '46%' }">
               <d-form-item>
-                <d-form-label [required]="true" [hasHelp]="false" [helpTips]="'This is the Vendor name.'">Vendor Name
+                <d-form-label [required]="true">ID
                 </d-form-label>
                 <d-form-control>
-                  <input dTextInput autocomplete="off" name="vendorName" placeholder="Vendor Name"
-                    [(ngModel)]="projectFormData.vendorName" [dValidateRules]="{
+                  <input dTextInput autocomplete="off" name="id" placeholder="id"
+                    [(ngModel)]="projectFormData.id" [dValidateRules]="{
                       validators: [{ required: true }]
                     }" />
                 </d-form-control>
               </d-form-item>
 
               <d-form-item>
-                <d-form-label [required]="true" [hasHelp]="false" [helpTips]="'Enter Vendor Code'">Vendor Code
+                <d-form-label [required]="true">Business Reg No
                 </d-form-label>
                 <d-form-control>
-                  <input dTextInput autocomplete="off" name="vendorCode" placeholder="Vendor Code"
-                    onkeydown="if(['Space'].includes(arguments[0].code)){return false;}"
-                    [(ngModel)]="projectFormData.vendorCode" [dValidateRules]="{
+                  <input dTextInput autocomplete="off" name="businessRegNo" placeholder="Business Reg No"
+                    [(ngModel)]="projectFormData.businessRegNo" [dValidateRules]="{
                       validators: [{ required: true }]
                     }" />
                 </d-form-control>
               </d-form-item>
 
               <d-form-item>
-                <d-form-label [required]="true" [hasHelp]="false" [helpTips]="'Enter Phone Number'">Phone</d-form-label>
+                <d-form-label [required]="true">Company Name</d-form-label>
                 <d-form-control>
-                  <input dTextInput autocomplete="off" name="phoneNo" placeholder="Phone"
-                    onkeydown="if(['Space'].includes(arguments[0].code)){return false;}"
-                    [(ngModel)]="projectFormData.phoneNo" [dValidateRules]="{
+                  <input dTextInput autocomplete="off" name="companyName" placeholder="Company Name"
+                    [(ngModel)]="projectFormData.companyName" [dValidateRules]="{
                       validators: [{ required: true }]
                     }" />
                 </d-form-control>
               </d-form-item>
 
               <d-form-item>
-                <d-form-label [hasHelp]="false" [helpTips]="'Enter Fax No. '">Fax No.</d-form-label>
+                <d-form-label [required]="true">General Email</d-form-label>
                 <d-form-control>
-                  <input dTextInput autocomplete="off" name="faxNo" placeholder="Fax No"
-                    onkeydown="if(['Space'].includes(arguments[0].code)){return false;}"
-                    [(ngModel)]="projectFormData.faxNo" />
+                  <input dTextInput autocomplete="off" name="generalEmail" placeholder="General Email"
+                    [(ngModel)]="projectFormData.generalEmail" [dValidateRules]="{
+                      validators: [{ required: true }]
+                    }"/>
                 </d-form-control>
               </d-form-item>
-            </div>
-            <div [ngStyle]="{ width: '46%' }">
+
               <d-form-item>
-                <d-form-label [hasHelp]="false" [helpTips]="'Enter Website'">Website</d-form-label>
+                <d-form-label [required]="true">General Phone</d-form-label>
                 <d-form-control>
-                  <input dTextInput autocomplete="off" name="website" placeholder="Website"
-                    onkeydown="if(['Space'].includes(arguments[0].code)){return false;}"
-                    [(ngModel)]="projectFormData.website" />
-                </d-form-control>
-              </d-form-item>
-              <d-form-item>
-                <d-form-label [hasHelp]="false" [helpTips]="'Enter Address'">Address</d-form-label>
-                <d-form-control>
-                  <input dTextInput autocomplete="off" name="address" placeholder="Enter Address"
-                    onkeydown="if(['Space'].includes(arguments[0].code)){return false;}"
-                    [(ngModel)]="projectFormData.address" />
+                  <input dTextInput autocomplete="off" name="generalPhone" placeholder="General Phone"
+                    [(ngModel)]="projectFormData.generalPhone"
+                    [dValidateRules]="{
+                      validators: [{ required: true }]
+                    }"/>
                 </d-form-control>
               </d-form-item>
               <d-form-item>
-                <d-form-label [required]="true" [hasHelp]="false" [helpTips]="'This is the Currency'">Currency
+                <d-form-label [required]="true">Payment Currency
                 </d-form-label>
 
                 <d-select [readonly]="true" [filterKey]="'currency'" [extraConfig]="{
                     labelization: { enable: true, overflow: 'multiple-line' }
-                  }" [appendToBody]="true" placeholder="Select a Brand"
-                  [options]="['sdf', 'sdg', 'etre', 'ere', 'qwe', 'werweqr']" name="currency"
-                  [(ngModel)]="projectFormData.currency" [dValidateRules]="{
+                  }" [appendToBody]="true" placeholder="Select a Payment Currency"
+                  [options]="['sdf', 'sdg', 'etre', 'ere', 'qwe', 'werweqr']" name="paymentCurrency"
+                  [(ngModel)]="projectFormData.paymentCurrency" [dValidateRules]="{
                     validators: [{ required: true }]
                   }"></d-select>
+              </d-form-item>
+            </div>
+            <div [ngStyle]="{ width: '46%' }">
+
+              <d-form-item>
+                <d-form-label [required]="true">Primary Contact Email</d-form-label>
+                <d-form-control>
+                  <input dTextInput autocomplete="off" name="primaryContactEmail" placeholder="Primary Contact Email"
+                    [(ngModel)]="projectFormData.address" [dValidateRules]="{
+                      validators: [{ required: true }]
+                    }"/>
+                </d-form-control>
+              </d-form-item>
+
+              <d-form-item>
+                <d-form-label [required]="true">Primary Contact Name</d-form-label>
+                <d-form-control>
+                  <input dTextInput autocomplete="off" name="primaryContactName" placeholder="Primary Contact Name"
+                    [(ngModel)]="projectFormData.primaryContactName" [dValidateRules]="{
+                      validators: [{ required: true }]
+                    }"/>
+                </d-form-control>
+              </d-form-item>
+
+              <d-form-item>
+                <d-form-label [required]="true">Primary Contact Phone 1</d-form-label>
+                <d-form-control>
+                  <input dTextInput autocomplete="off" name="primaryContactPhone1" placeholder="Primary Contact Phone 1"
+                    [(ngModel)]="projectFormData.primaryContactPhone1" [dValidateRules]="{
+                      validators: [{ required: true }]
+                    }"/>
+                </d-form-control>
+              </d-form-item>
+
+              <d-form-item>
+                <d-form-label [required]="true">Primary Contact Phone 2</d-form-label>
+                <d-form-control>
+                  <input dTextInput autocomplete="off" name="primaryContactPhone2" placeholder="Primary Contact Phone 2"
+                    [(ngModel)]="projectFormData.primaryContactPhone2" [dValidateRules]="{
+                      validators: [{ required: true }]
+                    }"/>
+                </d-form-control>
+              </d-form-item>
+
+              <d-form-item>
+                <d-form-label [required]="true">Website</d-form-label>
+                <d-form-control>
+                  <input dTextInput autocomplete="off" name="website" placeholder="Website"
+                    [(ngModel)]="projectFormData.website" [dValidateRules]="{
+                      validators: [{ required: true }]
+                    }"/>
+                </d-form-control>
+              </d-form-item>
+
+              <d-form-item>
+                <d-form-label [required]="true">Address</d-form-label>
+                <d-form-control>
+                  <input dTextInput autocomplete="off" name="address" placeholder="Address"
+                    [(ngModel)]="projectFormData.address" [dValidateRules]="{
+                      validators: [{ required: true }]
+                    }"/>
+                </d-form-control>
               </d-form-item>
             </div>
           </div>

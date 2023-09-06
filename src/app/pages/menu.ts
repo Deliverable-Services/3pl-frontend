@@ -44,10 +44,14 @@ export default function (values: any) {
         //   title: "Department",
         //   link: "/business/department",
         // },
-        // {
-        //   title: "Vendor",
-        //   link: "/business/vendor",
-        // },
+        {
+          title: "vendor",
+          link: "/business/vendor",
+        },
+        {
+          title: "sPartner",
+          link: "/business/shipping-partner",
+        },
         // {
         //   title: "Trade Terms",
         //   link: "/business/trade-terms",
@@ -56,10 +60,14 @@ export default function (values: any) {
           title: "currency",
           link: "/business/currency",
         },
-        // {
-        //   title: "creditTerms",
-        //   link: "/credit-terms",
-        // },
+        {
+          title: "creditTerms",
+          link: "/credit-terms",
+        },
+        {
+          title: "transferOrder",
+          link: "/business/transfer-order",
+        },
         {
           title: "connectionLocationList",
           link: "/connection-location",
@@ -74,8 +82,27 @@ export default function (values: any) {
     },
     {
       title: "inventory",
-      link: "/inventory",
       menuIcon: "icon icon-go-story",
+      children:[
+        {
+          title:"inventoryList",
+          link: "/inventory"
+        },
+        {
+          title:"inventoryOnlineList",
+          link: "/inventory-online"
+        }
+      ],
+    },
+    {
+      title: "userManagement",
+      menuIcon: "icon icon-go-story",
+      children:[
+        {
+          title:"user",
+          link: "/user-management/user"
+        }
+      ],
     },
     // {
     //   title: "Connection Location",

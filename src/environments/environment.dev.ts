@@ -1,4 +1,6 @@
+let API_URL = localStorage.getItem('API_URL') as string;
+ 
 export const environment = {
-  production: true,
-  baseUrl: "http://localhost:8081/api/v1",
+  production: false,
+  baseUrl: API_URL,
 };

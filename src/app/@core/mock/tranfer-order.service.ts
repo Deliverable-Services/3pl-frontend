@@ -1,0 +1,132 @@
+import { Injectable } from "@angular/core";
+import { Observable, of as observableOf } from "rxjs";
+
+// import { ListDataService } from './brand-data.service';
+import { environment } from "src/environments/environment";
+import { HttpClient, HttpHeaders, HttpParams } from "@angular/common/http";
+import { PageParam, SearchParam } from "../data/searchFormData";
+import { TransferOrderListData } from "../data/transferOrderList";
+
+@Injectable()
+export class TransferOrderListDataService extends TransferOrderListData {
+  
+  baseApiUrl: string = environment.baseUrl;
+  constructor(private http: HttpClient) {
+    super();
+  }
+
+  private searchParams = {
+    filters: [
+      
+    ],
+  };
+
+  private pageParams = {
+    pageNo: "",
+    pageSize: "",
+    sortBy: "",
+    sortDir: "",
+  };
+
+//   setSearchParams(searchParams: SearchParam) {
+//     this.searchParams.filters = this.searchParams.filters.map((param: any) => {
+//       if (param.field === searchParams.columnName) {
+//         return {
+//           field: searchParams.columnName,
+//           operator: searchParams.searchType,
+//           value: searchParams.keyword,
+//         };
+//       } else {
+//         return param;
+//       }
+//     });
+//   }
+
+  setPageParams(pageParams: PageParam) {
+    this.pageParams = pageParams;
+    console.log(this.pageParams);
+  }
+
+  addTransferOrder(data: any): Observable<any> {
+    const httpOptionsToken = {
+      headers: new HttpHeaders({
+        "Content-Type": "application/json",
+      }),
+    };
+
+    return this.http.post(
+      `${this.baseApiUrl}/transfer-order`,
+      data,
+      httpOptionsToken
+    );
+  }
+
+  getTransferOrderList(): Observable<any> {
+    const httpOptionsToken = {
+      params: new HttpParams({
+        fromObject: this.pageParams,
+      }),
+    };
+
+    return this.http.post(
+      `${this.baseApiUrl}/transfer-order/list`,
+      this.searchParams,
+      httpOptionsToken
+    );
+  }
+
+  getTransferOrderListActive(data?: any) {
+
+    // const searchParams = {
+    //   filters: [
+    //     {
+    //       field: "isActive",
+    //       operator: "equal",
+    //       value: true,
+    //     },
+    //   ],
+    // };
+
+    const searchParams = {
+      filters: [
+
+      ]
+    }
+
+    let catUri;
+    if(data) {
+      catUri = `${this.baseApiUrl}/transfer-order/list?pageSize=${data.perPage}`;
+    } else {
+      catUri = `${this.baseApiUrl}/transfer-order/list`;
+    }
+
+    return this.http.post(
+      catUri,
+      searchParams
+    );
+  }
+
+  updateTransferOrder(id: string, data: any): Observable<any> {
+    const httpOptionsToken = {
+      headers: new HttpHeaders({
+        // "Content-Type": "application/json",
+      }),
+    };
+
+    return this.http.put(
+      `${this.baseApiUrl}/transfer-order/${id}`,
+      data,
+      httpOptionsToken
+    );
+  }
+
+  getTransferOrderById(id: string): Observable<any> {
+    const httpOptionsToken = {
+      headers: new HttpHeaders({
+        // "Content-Type": "application/json",
+      }),
+    };
+
+    return this.http.get(`${this.baseApiUrl}/transfer-order/${id}`, httpOptionsToken);
+  }
+}

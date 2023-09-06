@@ -1,0 +1,1994 @@
+[
+    {
+        "code_alpha2": "AD",
+        "code_alpha3": "AND",
+        "code_num": "020",
+        "calling_code": "376",
+        "dcpn": "Andorra",
+        "capid": "element.country.ad"
+    },
+    {
+        "code_alpha2": "AE",
+        "code_alpha3": "ARE",
+        "code_num": "784",
+        "calling_code": "971",
+        "dcpn": "United Arab Emirates (the)",
+        "capid": "element.country.ae"
+    },
+    {
+        "code_alpha2": "AF",
+        "code_alpha3": "AFG",
+        "code_num": "004",
+        "calling_code": "93",
+        "dcpn": "Afghanistan",
+        "capid": "element.country.af"
+    },
+    {
+        "code_alpha2": "AG",
+        "code_alpha3": "ATG",
+        "code_num": "028",
+        "calling_code": "268",
+        "dcpn": "Antigua and Barbuda",
+        "capid": "element.country.ag"
+    },
+    {
+        "code_alpha2": "AI",
+        "code_alpha3": "AIA",
+        "code_num": "660",
+        "calling_code": "264",
+        "dcpn": "Anguilla",
+        "capid": "element.country.ai"
+    },
+    {
+        "code_alpha2": "AL",
+        "code_alpha3": "ALB",
+        "code_num": "008",
+        "calling_code": "355",
+        "dcpn": "Albania",
+        "capid": "element.country.al"
+    },
+    {
+        "code_alpha2": "AM",
+        "code_alpha3": "ARM",
+        "code_num": "051",
+        "calling_code": "374",
+        "dcpn": "Armenia, Republic of",
+        "capid": "element.country.am"
+    },
+    {
+        "code_alpha2": "AO",
+        "code_alpha3": "AGO",
+        "code_num": "024",
+        "calling_code": "244",
+        "dcpn": "Angola",
+        "capid": "element.country.ao"
+    },
+    {
+        "code_alpha2": "AQ",
+        "code_alpha3": "ATA",
+        "code_num": "010",
+        "calling_code": "672",
+        "dcpn": "Antarctica",
+        "capid": "element.country.aq"
+    },
+    {
+        "code_alpha2": "AR",
+        "code_alpha3": "ARG",
+        "code_num": "032",
+        "calling_code": "54",
+        "dcpn": "Argentina",
+        "capid": "element.country.ar"
+    },
+    {
+        "code_alpha2": "AS",
+        "code_alpha3": "ASM",
+        "code_num": "016",
+        "calling_code": "654",
+        "dcpn": "American Samoa",
+        "capid": "element.country.as"
+    },
+    {
+        "code_alpha2": "AT",
+        "code_alpha3": "AUT",
+        "code_num": "040",
+        "calling_code": "43",
+        "dcpn": "Austria",
+        "capid": "element.country.at"
+    },
+    {
+        "code_alpha2": "AU",
+        "code_alpha3": "AUS",
+        "code_num": "036",
+        "calling_code": "672",
+        "dcpn": "Australia ",
+        "capid": "element.country.au"
+    },
+    {
+        "code_alpha2": "AW",
+        "code_alpha3": "ABW",
+        "code_num": "051",
+        "calling_code": "297",
+        "dcpn": "Aruba",
+        "capid": "element.country.aw"
+    },
+    {
+        "code_alpha2": "AX",
+        "code_alpha3": "ALA",
+        "code_num": "248",
+        "calling_code": "358",
+        "dcpn": "Åland Islands",
+        "capid": "element.country.ax"
+    },
+    {
+        "code_alpha2": "AZ",
+        "code_alpha3": "AZE",
+        "code_num": "031",
+        "calling_code": "994",
+        "dcpn": "Azerbaijan",
+        "capid": "element.country.az"
+    },
+    {
+        "code_alpha2": "BA",
+        "code_alpha3": "BIH",
+        "code_num": "070",
+        "calling_code": "387",
+        "dcpn": "Bosnia and Herzegovina",
+        "capid": "element.country.ba"
+    },
+    {
+        "code_alpha2": "BB",
+        "code_alpha3": "BRB",
+        "code_num": "052",
+        "calling_code": "246",
+        "dcpn": "Barbados",
+        "capid": "element.country.bb"
+    },
+    {
+        "code_alpha2": "BD",
+        "code_alpha3": "BGD",
+        "code_num": "050",
+        "calling_code": "880",
+        "dcpn": "Bangladesh",
+        "capid": "element.country.bd"
+    },
+    {
+        "code_alpha2": "BE",
+        "code_alpha3": "BEL",
+        "code_num": "084",
+        "calling_code": "32",
+        "dcpn": "Belgium",
+        "capid": "element.country.be"
+    },
+    {
+        "code_alpha2": "BF",
+        "code_alpha3": "BFA",
+        "code_num": "854",
+        "calling_code": "226",
+        "dcpn": "Burkina Faso",
+        "capid": "element.country.bf"
+    },
+    {
+        "code_alpha2": "BG",
+        "code_alpha3": "BGR",
+        "code_num": "100",
+        "calling_code": "359",
+        "dcpn": "Bulgaria",
+        "capid": "element.country.bg"
+    },
+    {
+        "code_alpha2": "BH",
+        "code_alpha3": "BHR",
+        "code_num": "048",
+        "calling_code": "973",
+        "dcpn": "Bahrain",
+        "capid": "element.country.bh"
+    },
+    {
+        "code_alpha2": "BI",
+        "code_alpha3": "BDI",
+        "code_num": "108",
+        "calling_code": "257",
+        "dcpn": "Burundi",
+        "capid": "element.country.bi"
+    },
+    {
+        "code_alpha2": "BJ",
+        "code_alpha3": "BEN",
+        "code_num": "204",
+        "calling_code": "229",
+        "dcpn": "Benin",
+        "capid": "element.country.bj"
+    },
+    {
+        "code_alpha2": "BL",
+        "code_alpha3": "BLM",
+        "code_num": "652",
+        "calling_code": "590",
+        "dcpn": "Saint Barthélemy",
+        "capid": "element.country.bl"
+    },
+    {
+        "code_alpha2": "BM",
+        "code_alpha3": "BMU",
+        "code_num": "060",
+        "calling_code": "441",
+        "dcpn": "Bermuda",
+        "capid": "element.country.bm"
+    },
+    {
+        "code_alpha2": "BN",
+        "code_alpha3": "BRN",
+        "code_num": "096",
+        "calling_code": "673",
+        "dcpn": "Brunei Darussalam ",
+        "capid": "element.country.bn"
+    },
+    {
+        "code_alpha2": "BO",
+        "code_alpha3": "BOL",
+        "code_num": "068",
+        "calling_code": "591",
+        "dcpn": "Bolivia (Plurinational State of)",
+        "capid": "element.country.bo"
+    },
+    {
+        "code_alpha2": "BQ",
+        "code_alpha3": "BES",
+        "code_num": "535",
+        "calling_code": "599",
+        "dcpn": "Bonaire, Sint Eustatius and Saba",
+        "capid": "element.country.bq"
+    },
+    {
+        "code_alpha2": "BR",
+        "code_alpha3": "BRA",
+        "code_num": "076",
+        "calling_code": "55",
+        "dcpn": "Brazil",
+        "capid": "element.country.br"
+    },
+    {
+        "code_alpha2": "BS",
+        "code_alpha3": "BHS",
+        "code_num": "044",
+        "calling_code": "242",
+        "dcpn": "Bahamas",
+        "capid": "element.country.bs"
+    },
+    {
+        "code_alpha2": "BT",
+        "code_alpha3": "BTN",
+        "code_num": "064",
+        "calling_code": "975",
+        "dcpn": "Bhutan",
+        "capid": "element.country.bt"
+    },
+    {
+        "code_alpha2": "BV",
+        "code_alpha3": "BVT",
+        "code_num": "074",
+        "calling_code": "55",
+        "dcpn": "Bouvet Island",
+        "capid": "element.country.bv"
+    },
+    {
+        "code_alpha2": "BW",
+        "code_alpha3": "BWA",
+        "code_num": "072",
+        "calling_code": "267",
+        "dcpn": "Botswana",
+        "capid": "element.country.bw"
+    },
+    {
+        "code_alpha2": "BY",
+        "code_alpha3": "BLR",
+        "code_num": "112",
+        "calling_code": "375",
+        "dcpn": "Belarus",
+        "capid": "element.country.by"
+    },
+    {
+        "code_alpha2": "BZ",
+        "code_alpha3": "BLZ",
+        "code_num": "084",
+        "calling_code": "501",
+        "dcpn": "Belize",
+        "capid": "element.country.bz"
+    },
+    {
+        "code_alpha2": "CA",
+        "code_alpha3": "CAN",
+        "code_num": "124",
+        "calling_code": "1",
+        "dcpn": "Canada",
+        "capid": "element.country.ca"
+    },
+    {
+        "code_alpha2": "CC",
+        "code_alpha3": "CCK",
+        "code_num": "166",
+        "calling_code": "61",
+        "dcpn": "Cocos (Keeling) Islands",
+        "capid": "element.country.cc"
+    },
+    {
+        "code_alpha2": "CD",
+        "code_alpha3": "COD",
+        "code_num": "180",
+        "calling_code": "243",
+        "dcpn": "The Democratic Republic of the Congo",
+        "capid": "element.country.cd"
+    },
+    {
+        "code_alpha2": "CF",
+        "code_alpha3": "CAF",
+        "code_num": "140",
+        "calling_code": "236",
+        "dcpn": "Central African Republic",
+        "capid": "element.country.cf"
+    },
+    {
+        "code_alpha2": "CG",
+        "code_alpha3": "COG",
+        "code_num": "178",
+        "calling_code": "242",
+        "dcpn": "Republic of the Congo",
+        "capid": "element.country.cg"
+    },
+    {
+        "code_alpha2": "CH",
+        "code_alpha3": "CHE",
+        "code_num": "756",
+        "calling_code": "41",
+        "dcpn": "Switzerland",
+        "capid": "element.country.ch"
+    },
+    {
+        "code_alpha2": "CI",
+        "code_alpha3": "CIV",
+        "code_num": "384",
+        "calling_code": "225",
+        "dcpn": "Côte d'Ivoire",
+        "capid": "element.country.ci"
+    },
+    {
+        "code_alpha2": "CK",
+        "code_alpha3": "COK",
+        "code_num": "184",
+        "calling_code": "682",
+        "dcpn": "Cook Islands",
+        "capid": "element.country.ck"
+    },
+    {
+        "code_alpha2": "CL",
+        "code_alpha3": "CHL",
+        "code_num": "152",
+        "calling_code": "56",
+        "dcpn": "Chile",
+        "capid": "element.country.cl"
+    },
+    {
+        "code_alpha2": "CM",
+        "code_alpha3": "CNR",
+        "code_num": "120",
+        "calling_code": "237",
+        "dcpn": "Cameroon",
+        "capid": "element.country.cm"
+    },
+    {
+        "code_alpha2": "CN",
+        "code_alpha3": "CHN",
+        "code_num": "156",
+        "calling_code": "86",
+        "dcpn": "China",
+        "capid": "element.country.cn"
+    },
+    {
+        "code_alpha2": "CO",
+        "code_alpha3": "COL",
+        "code_num": "170",
+        "calling_code": "57",
+        "dcpn": "Colombia",
+        "capid": "element.country.co"
+    },
+    {
+        "code_alpha2": "CR",
+        "code_alpha3": "CRI",
+        "code_num": "188",
+        "calling_code": "506",
+        "dcpn": "Costa Rica",
+        "capid": "element.country.cr"
+    },
+    {
+        "code_alpha2": "CU",
+        "code_alpha3": "CUB",
+        "code_num": "192",
+        "calling_code": "53",
+        "dcpn": "Cuba",
+        "capid": "element.country.cu"
+    },
+    {
+        "code_alpha2": "CV",
+        "code_alpha3": "CPV",
+        "code_num": "132",
+        "calling_code": "238",
+        "dcpn": "Cabo Verde",
+        "capid": "element.country.cv"
+    },
+    {
+        "code_alpha2": "CW",
+        "code_alpha3": "CUW",
+        "code_num": "531",
+        "calling_code": "599",
+        "dcpn": "Curaçao",
+        "capid": "element.country.cw"
+    },
+    {
+        "code_alpha2": "CX",
+        "code_alpha3": "CXR",
+        "code_num": "162",
+        "calling_code": "61",
+        "dcpn": "Christmas Island",
+        "capid": "element.country.cx"
+    },
+    {
+        "code_alpha2": "CY",
+        "code_alpha3": "CYP",
+        "code_num": "196",
+        "calling_code": "357",
+        "dcpn": "Cyprus",
+        "capid": "element.country.cy"
+    },
+    {
+        "code_alpha2": "CZ",
+        "code_alpha3": "CZE",
+        "code_num": "203",
+        "calling_code": "420",
+        "dcpn": "Czechia",
+        "capid": "element.country.cz"
+    },
+    {
+        "code_alpha2": "DE",
+        "code_alpha3": "DEU",
+        "code_num": "276",
+        "calling_code": "49",
+        "dcpn": "Germany",
+        "capid": "element.country.de"
+    },
+    {
+        "code_alpha2": "DJ",
+        "code_alpha3": "DJI",
+        "code_num": "262",
+        "calling_code": "253",
+        "dcpn": "Djibouti",
+        "capid": "element.country.dj"
+    },
+    {
+        "code_alpha2": "DK",
+        "code_alpha3": "DNK",
+        "code_num": "208",
+        "calling_code": "45",
+        "dcpn": "Denmark",
+        "capid": "element.country.dk"
+    },
+    {
+        "code_alpha2": "DM",
+        "code_alpha3": "DMA",
+        "code_num": "212",
+        "calling_code": "1",
+        "dcpn": "Dominica",
+        "capid": "element.country.dm"
+    },
+    {
+        "code_alpha2": "DO",
+        "code_alpha3": "DOM",
+        "code_num": "214",
+        "calling_code": "1",
+        "dcpn": "Dominican Republic",
+        "capid": "element.country.do"
+    },
+    {
+        "code_alpha2": "DZ",
+        "code_alpha3": "DZA",
+        "code_num": "012",
+        "calling_code": "213",
+        "dcpn": "Algeria",
+        "capid": "element.country.dz"
+    },
+    {
+        "code_alpha2": "EC",
+        "code_alpha3": "ECU",
+        "code_num": "218",
+        "calling_code": "593",
+        "dcpn": "Ecuador",
+        "capid": "element.country.ec"
+    },
+    {
+        "code_alpha2": "EE",
+        "code_alpha3": "EST",
+        "code_num": "233",
+        "calling_code": "372",
+        "dcpn": "Estonia",
+        "capid": "element.country.ee"
+    },
+    {
+        "code_alpha2": "EG",
+        "code_alpha3": "EGY",
+        "code_num": "818",
+        "calling_code": "20",
+        "dcpn": "Egypt",
+        "capid": "element.country.eg"
+    },
+    {
+        "code_alpha2": "EH",
+        "code_alpha3": "ESH",
+        "code_num": "732",
+        "calling_code": "212",
+        "dcpn": "Western Sahara",
+        "capid": "element.country.eh"
+    },
+    {
+        "code_alpha2": "ER",
+        "code_alpha3": "ERI",
+        "code_num": "232",
+        "calling_code": "291",
+        "dcpn": "Eritrea",
+        "capid": "element.country.er"
+    },
+    {
+        "code_alpha2": "ES",
+        "code_alpha3": "ESP",
+        "code_num": "724",
+        "calling_code": "34",
+        "dcpn": "Spain",
+        "capid": "element.country.es"
+    },
+    {
+        "code_alpha2": "ET",
+        "code_alpha3": "ETH",
+        "code_num": "231",
+        "calling_code": "251",
+        "dcpn": "Ethiopia",
+        "capid": "element.country.et"
+    },
+    {
+        "code_alpha2": "FI",
+        "code_alpha3": "FIN",
+        "code_num": "246",
+        "calling_code": "358",
+        "dcpn": "Finland",
+        "capid": "element.country.fi"
+    },
+    {
+        "code_alpha2": "FJ",
+        "code_alpha3": "FJI",
+        "code_num": "242",
+        "calling_code": "679",
+        "dcpn": "Fiji",
+        "capid": "element.country.fj"
+    },
+    {
+        "code_alpha2": "FK",
+        "code_alpha3": "FLK",
+        "code_num": "238",
+        "calling_code": "500",
+        "dcpn": "Falkland Islands (the) [Malvinas]",
+        "capid": "element.country.fk"
+    },
+    {
+        "code_alpha2": "FM",
+        "code_alpha3": "FSM",
+        "code_num": "583",
+        "calling_code": "691",
+        "dcpn": "Micronesia (Federated States of)",
+        "capid": "element.country.fm"
+    },
+    {
+        "code_alpha2": "FO",
+        "code_alpha3": "FRO",
+        "code_num": "234",
+        "calling_code": "298",
+        "dcpn": "Faroe Islands",
+        "capid": "element.country.fo"
+    },
+    {
+        "code_alpha2": "FR",
+        "code_alpha3": "FRA",
+        "code_num": "250",
+        "calling_code": "33",
+        "dcpn": "France",
+        "capid": "element.country.fr"
+    },
+    {
+        "code_alpha2": "GA",
+        "code_alpha3": "GAB",
+        "code_num": "266",
+        "calling_code": "241",
+        "dcpn": "Gabon",
+        "capid": "element.country.ga"
+    },
+    {
+        "code_alpha2": "GB",
+        "code_alpha3": "GBR",
+        "code_num": "826",
+        "calling_code": "44",
+        "dcpn": "United Kingdom of Great Britain and Northern Ireland",
+        "capid": "element.country.gb"
+    },
+    {
+        "code_alpha2": "GD",
+        "code_alpha3": "GRD",
+        "code_num": "308",
+        "calling_code": "1",
+        "dcpn": "Grenada",
+        "capid": "element.country.gd"
+    },
+    {
+        "code_alpha2": "GE",
+        "code_alpha3": "GEO",
+        "code_num": "268",
+        "calling_code": "995",
+        "dcpn": "Georgia",
+        "capid": "element.country.ge"
+    },
+    {
+        "code_alpha2": "GF",
+        "code_alpha3": "GUF",
+        "code_num": "254",
+        "calling_code": "594",
+        "dcpn": "French Guiana",
+        "capid": "element.country.gf"
+    },
+    {
+        "code_alpha2": "GG",
+        "code_alpha3": "GGY",
+        "code_num": "831",
+        "calling_code": "44",
+        "dcpn": "Guernsey",
+        "capid": "element.country.gg"
+    },
+    {
+        "code_alpha2": "GH",
+        "code_alpha3": "GHA",
+        "code_num": "288",
+        "calling_code": "233",
+        "dcpn": "Ghana",
+        "capid": "element.country.gh"
+    },
+    {
+        "code_alpha2": "GI",
+        "code_alpha3": "GIB",
+        "code_num": "292",
+        "calling_code": "350",
+        "dcpn": "Gibraltar",
+        "capid": "element.country.gi"
+    },
+    {
+        "code_alpha2": "GL",
+        "code_alpha3": "GRL",
+        "code_num": "304",
+        "calling_code": "299",
+        "dcpn": "Greenland",
+        "capid": "element.country.gl"
+    },
+    {
+        "code_alpha2": "GM",
+        "code_alpha3": "GMB",
+        "code_num": "270",
+        "calling_code": "220",
+        "dcpn": "Gambia",
+        "capid": "element.country.gm"
+    },
+    {
+        "code_alpha2": "GN",
+        "code_alpha3": "GIN",
+        "code_num": "324",
+        "calling_code": "224",
+        "dcpn": "Guinea",
+        "capid": "element.country.gn"
+    },
+    {
+        "code_alpha2": "GP",
+        "code_alpha3": "GLP",
+        "code_num": "312",
+        "calling_code": "590",
+        "dcpn": "Guadeloupe",
+        "capid": "element.country.gp"
+    },
+    {
+        "code_alpha2": "GQ",
+        "code_alpha3": "GNQ",
+        "code_num": "226",
+        "calling_code": "240",
+        "dcpn": "Equatorial Guinea",
+        "capid": "element.country.gq"
+    },
+    {
+        "code_alpha2": "GR",
+        "code_alpha3": "GRC",
+        "code_num": "300",
+        "calling_code": "30",
+        "dcpn": "Greece",
+        "capid": "element.country.gr"
+    },
+    {
+        "code_alpha2": "GS",
+        "code_alpha3": "SGS",
+        "code_num": "239",
+        "calling_code": "500",
+        "dcpn": "South Georgia and the South Sandwich Islands",
+        "capid": "element.country.gs"
+    },
+    {
+        "code_alpha2": "GT",
+        "code_alpha3": "GTM",
+        "code_num": "320",
+        "calling_code": "502",
+        "dcpn": "Guatemala",
+        "capid": "element.country.gt"
+    },
+    {
+        "code_alpha2": "GU",
+        "code_alpha3": "GUM",
+        "code_num": "316",
+        "calling_code": "1",
+        "dcpn": "Guam",
+        "capid": "element.country.gu"
+    },
+    {
+        "code_alpha2": "GW",
+        "code_alpha3": "GNB",
+        "code_num": "624",
+        "calling_code": "245",
+        "dcpn": "Guinea-Bissau",
+        "capid": "element.country.gw"
+    },
+    {
+        "code_alpha2": "GY",
+        "code_alpha3": "GUY",
+        "code_num": "328",
+        "calling_code": "592",
+        "dcpn": "Guyana",
+        "capid": "element.country.gy"
+    },
+    {
+        "code_alpha2": "HK",
+        "code_alpha3": "HKG",
+        "code_num": "344",
+        "calling_code": "852",
+        "dcpn": "Hong Kong",
+        "capid": "element.country.hk"
+    },
+    {
+        "code_alpha2": "HM",
+        "code_alpha3": "HMD",
+        "code_num": "334",
+        "calling_code": "55",
+        "dcpn": "Heard Island and McDonald Islands",
+        "capid": "element.country.hm"
+    },
+    {
+        "code_alpha2": "HN",
+        "code_alpha3": "HND",
+        "code_num": "340",
+        "calling_code": "504",
+        "dcpn": "Honduras",
+        "capid": "element.country.hn"
+    },
+    {
+        "code_alpha2": "HR",
+        "code_alpha3": "HRV",
+        "code_num": "191",
+        "calling_code": "385",
+        "dcpn": "Croatia",
+        "capid": "element.country.hr"
+    },
+    {
+        "code_alpha2": "HT",
+        "code_alpha3": "HTI",
+        "code_num": "332",
+        "calling_code": "509",
+        "dcpn": "Haiti",
+        "capid": "element.country.ht"
+    },
+    {
+        "code_alpha2": "HU",
+        "code_alpha3": "HUN",
+        "code_num": "348",
+        "calling_code": "36",
+        "dcpn": "Hungary",
+        "capid": "element.country.hu"
+    },
+    {
+        "code_alpha2": "ID",
+        "code_alpha3": "IDN",
+        "code_num": "360",
+        "calling_code": "62",
+        "dcpn": "Indonesia",
+        "capid": "element.country.id"
+    },
+    {
+        "code_alpha2": "IE",
+        "code_alpha3": "IRL",
+        "code_num": "372",
+        "calling_code": "353",
+        "dcpn": "Ireland",
+        "capid": "element.country.ie"
+    },
+    {
+        "code_alpha2": "IL",
+        "code_alpha3": "ISR",
+        "code_num": "376",
+        "calling_code": "972",
+        "dcpn": "Israel",
+        "capid": "element.country.il"
+    },
+    {
+        "code_alpha2": "IM",
+        "code_alpha3": "IMN",
+        "code_num": "833",
+        "calling_code": "44",
+        "dcpn": "Isle of Man",
+        "capid": "element.country.im"
+    },
+    {
+        "code_alpha2": "IN",
+        "code_alpha3": "IND",
+        "code_num": "356",
+        "calling_code": "91",
+        "dcpn": "India",
+        "capid": "element.country.in"
+    },
+    {
+        "code_alpha2": "IO",
+        "code_alpha3": "IOT",
+        "code_num": "086",
+        "calling_code": "246",
+        "dcpn": "British Indian Ocean Territory",
+        "capid": "element.country.io"
+    },
+    {
+        "code_alpha2": "IQ",
+        "code_alpha3": "IRQ",
+        "code_num": "368",
+        "calling_code": "964",
+        "dcpn": "Iraq",
+        "capid": "element.country.iq"
+    },
+    {
+        "code_alpha2": "IR",
+        "code_alpha3": "IRN",
+        "code_num": "364",
+        "calling_code": "98",
+        "dcpn": "Iran (Islamic Republic of)",
+        "capid": "element.country.ir"
+    },
+    {
+        "code_alpha2": "IS",
+        "code_alpha3": "ISL",
+        "code_num": "352",
+        "calling_code": "354",
+        "dcpn": "Iceland",
+        "capid": "element.country.is"
+    },
+    {
+        "code_alpha2": "IT",
+        "code_alpha3": "ITA",
+        "code_num": "380",
+        "calling_code": "39",
+        "dcpn": "Italy",
+        "capid": "element.country.it"
+    },
+    {
+        "code_alpha2": "JE",
+        "code_alpha3": "JEY",
+        "code_num": "832",
+        "calling_code": "44",
+        "dcpn": "Jersey",
+        "capid": "element.country.je"
+    },
+    {
+        "code_alpha2": "JM",
+        "code_alpha3": "JAM",
+        "code_num": "388",
+        "calling_code": "1",
+        "dcpn": "Jamaica",
+        "capid": "element.country.jm"
+    },
+    {
+        "code_alpha2": "JO",
+        "code_alpha3": "JOR",
+        "code_num": "400",
+        "calling_code": "962",
+        "dcpn": "Jordan",
+        "capid": "element.country.jo"
+    },
+    {
+        "code_alpha2": "JP",
+        "code_alpha3": "JPN",
+        "code_num": "392",
+        "calling_code": "81",
+        "dcpn": "Japan",
+        "capid": "element.country.jp"
+    },
+    {
+        "code_alpha2": "KE",
+        "code_alpha3": "KEN",
+        "code_num": "404",
+        "calling_code": "254",
+        "dcpn": "Kenya",
+        "capid": "element.country.ke"
+    },
+    {
+        "code_alpha2": "KG",
+        "code_alpha3": "KGZ",
+        "code_num": "417",
+        "calling_code": "996",
+        "dcpn": "Kyrgyzstan",
+        "capid": "element.country.kg"
+    },
+    {
+        "code_alpha2": "KH",
+        "code_alpha3": "KHM",
+        "code_num": "116",
+        "calling_code": "855",
+        "dcpn": "Cambodia",
+        "capid": "element.country.kh"
+    },
+    {
+        "code_alpha2": "KI",
+        "code_alpha3": "KIR",
+        "code_num": "296",
+        "calling_code": "686",
+        "dcpn": "Kiribati",
+        "capid": "element.country.ki"
+    },
+    {
+        "code_alpha2": "KM",
+        "code_alpha3": "COM",
+        "code_num": "174",
+        "calling_code": "269",
+        "dcpn": "Comoros",
+        "capid": "element.country.km"
+    },
+    {
+        "code_alpha2": "KN",
+        "code_alpha3": "KNA",
+        "code_num": "659",
+        "calling_code": "1",
+        "dcpn": "Saint Kitts and Nevis",
+        "capid": "element.country.kn"
+    },
+    {
+        "code_alpha2": "KP",
+        "code_alpha3": "PRK",
+        "code_num": "408",
+        "calling_code": "850",
+        "dcpn": "Korea (Democratic People's Republic of)",
+        "capid": "element.country.kp"
+    },
+    {
+        "code_alpha2": "KR",
+        "code_alpha3": "KOR",
+        "code_num": "410",
+        "calling_code": "82",
+        "dcpn": "Korea (Republic of)",
+        "capid": "element.country.kr"
+    },
+    {
+        "code_alpha2": "KW",
+        "code_alpha3": "KWT",
+        "code_num": "414",
+        "calling_code": "965",
+        "dcpn": "Kuwait",
+        "capid": "element.country.kw"
+    },
+    {
+        "code_alpha2": "KY",
+        "code_alpha3": "CYM",
+        "code_num": "136",
+        "calling_code": "1",
+        "dcpn": "Cayman Islands",
+        "capid": "element.country.ky"
+    },
+    {
+        "code_alpha2": "KZ",
+        "code_alpha3": "KAZ",
+        "code_num": "398",
+        "calling_code": "7",
+        "dcpn": "Kazakhstan",
+        "capid": "element.country.kz"
+    },
+    {
+        "code_alpha2": "LA",
+        "code_alpha3": "LAO",
+        "code_num": "418",
+        "calling_code": "856",
+        "dcpn": "Lao People's Democratic Republic",
+        "capid": "element.country.la"
+    },
+    {
+        "code_alpha2": "LB",
+        "code_alpha3": "LBN",
+        "code_num": "422",
+        "calling_code": "961",
+        "dcpn": "Lebanon",
+        "capid": "element.country.lb"
+    },
+    {
+        "code_alpha2": "LC",
+        "code_alpha3": "LCA",
+        "code_num": "662",
+        "calling_code": "1",
+        "dcpn": "Saint Lucia",
+        "capid": "element.country.lc"
+    },
+    {
+        "code_alpha2": "LI",
+        "code_alpha3": "LIE",
+        "code_num": "438",
+        "calling_code": "423",
+        "dcpn": "Liechtenstein",
+        "capid": "element.country.li"
+    },
+    {
+        "code_alpha2": "LK",
+        "code_alpha3": "LKA",
+        "code_num": "144",
+        "calling_code": "94",
+        "dcpn": "Sri Lanka",
+        "capid": "element.country.lk"
+    },
+    {
+        "code_alpha2": "LR",
+        "code_alpha3": "LBR",
+        "code_num": "430",
+        "calling_code": "231",
+        "dcpn": "Liberia",
+        "capid": "element.country.lr"
+    },
+    {
+        "code_alpha2": "LS",
+        "code_alpha3": "LSO",
+        "code_num": "426",
+        "calling_code": "266",
+        "dcpn": "Lesotho",
+        "capid": "element.country.ls"
+    },
+    {
+        "code_alpha2": "LT",
+        "code_alpha3": "LTU",
+        "code_num": "440",
+        "calling_code": "370",
+        "dcpn": "Lithuania",
+        "capid": "element.country.lt"
+    },
+    {
+        "code_alpha2": "LU",
+        "code_alpha3": "LUX",
+        "code_num": "442",
+        "calling_code": "352",
+        "dcpn": "Luxembourg",
+        "capid": "element.country.lu"
+    },
+    {
+        "code_alpha2": "LV",
+        "code_alpha3": "LVA",
+        "code_num": "428",
+        "calling_code": "371",
+        "dcpn": "Latvia",
+        "capid": "element.country.lv"
+    },
+    {
+        "code_alpha2": "LY",
+        "code_alpha3": "LBY",
+        "code_num": "434",
+        "calling_code": "218",
+        "dcpn": "Libya",
+        "capid": "element.country.ly"
+    },
+    {
+        "code_alpha2": "MA",
+        "code_alpha3": "MAR",
+        "code_num": "504",
+        "calling_code": "212",
+        "dcpn": "Morocco",
+        "capid": "element.country.ma"
+    },
+    {
+        "code_alpha2": "MC",
+        "code_alpha3": "MCO",
+        "code_num": "492",
+        "calling_code": "377",
+        "dcpn": "Monaco",
+        "capid": "element.country.mc"
+    },
+    {
+        "code_alpha2": "MD",
+        "code_alpha3": "MDA",
+        "code_num": "498",
+        "calling_code": "373",
+        "dcpn": "Moldova (Republic of)",
+        "capid": "element.country.md"
+    },
+    {
+        "code_alpha2": "ME",
+        "code_alpha3": "MNE",
+        "code_num": "499",
+        "calling_code": "382",
+        "dcpn": "Montenegro",
+        "capid": "element.country.me"
+    },
+    {
+        "code_alpha2": "MF",
+        "code_alpha3": "MAF",
+        "code_num": "663",
+        "calling_code": "590",
+        "dcpn": "Saint Martin (French part)",
+        "capid": "element.country.mf"
+    },
+    {
+        "code_alpha2": "MG",
+        "code_alpha3": "MDG",
+        "code_num": "450",
+        "calling_code": "261",
+        "dcpn": "Madagascar",
+        "capid": "element.country.mg"
+    },
+    {
+        "code_alpha2": "MH",
+        "code_alpha3": "MHL",
+        "code_num": "584",
+        "calling_code": "692",
+        "dcpn": "Marshall Islands",
+        "capid": "element.country.mh"
+    },
+    {
+        "code_alpha2": "MK",
+        "code_alpha3": "MKD",
+        "code_num": "807",
+        "calling_code": "389",
+        "dcpn": "North Macedonia",
+        "capid": "element.country.mk"
+    },
+    {
+        "code_alpha2": "ML",
+        "code_alpha3": "MLI",
+        "code_num": "466",
+        "calling_code": "223",
+        "dcpn": "Mali",
+        "capid": "element.country.ml"
+    },
+    {
+        "code_alpha2": "MM",
+        "code_alpha3": "MMR",
+        "code_num": "104",
+        "calling_code": "95",
+        "dcpn": "Myanmar",
+        "capid": "element.country.mm"
+    },
+    {
+        "code_alpha2": "MN",
+        "code_alpha3": "MNG",
+        "code_num": "496",
+        "calling_code": "976",
+        "dcpn": "Mongolia",
+        "capid": "element.country.mn"
+    },
+    {
+        "code_alpha2": "MO",
+        "code_alpha3": "MAC",
+        "code_num": "446",
+        "calling_code": "853",
+        "dcpn": "Macao",
+        "capid": "element.country.mo"
+    },
+    {
+        "code_alpha2": "MP",
+        "code_alpha3": "MNP",
+        "code_num": "580",
+        "calling_code": "1",
+        "dcpn": "Northern Mariana Islands",
+        "capid": "element.country.mp"
+    },
+    {
+        "code_alpha2": "MQ",
+        "code_alpha3": "MTQ",
+        "code_num": "474",
+        "calling_code": "596",
+        "dcpn": "Martinique",
+        "capid": "element.country.mq"
+    },
+    {
+        "code_alpha2": "MR",
+        "code_alpha3": "MRT",
+        "code_num": "478",
+        "calling_code": "222",
+        "dcpn": "Mauritania",
+        "capid": "element.country.mr"
+    },
+    {
+        "code_alpha2": "MS",
+        "code_alpha3": "MSR",
+        "code_num": "500",
+        "calling_code": "1",
+        "dcpn": "Montserrat",
+        "capid": "element.country.ms"
+    },
+    {
+        "code_alpha2": "MT",
+        "code_alpha3": "MLT",
+        "code_num": "470",
+        "calling_code": "356",
+        "dcpn": "Malta",
+        "capid": "element.country.mt"
+    },
+    {
+        "code_alpha2": "MU",
+        "code_alpha3": "MUS",
+        "code_num": "480",
+        "calling_code": "230",
+        "dcpn": "Mauritius",
+        "capid": "element.country.mu"
+    },
+    {
+        "code_alpha2": "MV",
+        "code_alpha3": "MDV",
+        "code_num": "462",
+        "calling_code": "960",
+        "dcpn": "Maldives",
+        "capid": "element.country.mv"
+    },
+    {
+        "code_alpha2": "MW",
+        "code_alpha3": "MWI",
+        "code_num": "454",
+        "calling_code": "265",
+        "dcpn": "Malawi",
+        "capid": "element.country.mw"
+    },
+    {
+        "code_alpha2": "MX",
+        "code_alpha3": "MEX",
+        "code_num": "484",
+        "calling_code": "52",
+        "dcpn": "Mexico",
+        "capid": "element.country.mx"
+    },
+    {
+        "code_alpha2": "MY",
+        "code_alpha3": "MYS",
+        "code_num": "458",
+        "calling_code": "60",
+        "dcpn": "Malaysia",
+        "capid": "element.country.my"
+    },
+    {
+        "code_alpha2": "MZ",
+        "code_alpha3": "MOZ",
+        "code_num": "508",
+        "calling_code": "258",
+        "dcpn": "Mozambique",
+        "capid": "element.country.mz"
+    },
+    {
+        "code_alpha2": "NA",
+        "code_alpha3": "NAM",
+        "code_num": "516",
+        "calling_code": "264",
+        "dcpn": "Namibia",
+        "capid": "element.country.na"
+    },
+    {
+        "code_alpha2": "NC",
+        "code_alpha3": "NCL",
+        "code_num": "540",
+        "calling_code": "687",
+        "dcpn": "New Caledonia",
+        "capid": "element.country.nc"
+    },
+    {
+        "code_alpha2": "NE",
+        "code_alpha3": "NER",
+        "code_num": "562",
+        "calling_code": "227",
+        "dcpn": "Niger",
+        "capid": "element.country.ne"
+    },
+    {
+        "code_alpha2": "NF",
+        "code_alpha3": "NFK",
+        "code_num": "574",
+        "calling_code": "672",
+        "dcpn": "Norfolk Island",
+        "capid": "element.country.nf"
+    },
+    {
+        "code_alpha2": "NG",
+        "code_alpha3": "NGA",
+        "code_num": "566",
+        "calling_code": "234",
+        "dcpn": "Nigeria",
+        "capid": "element.country.ng"
+    },
+    {
+        "code_alpha2": "NI",
+        "code_alpha3": "NIC",
+        "code_num": "558",
+        "calling_code": "505",
+        "dcpn": "Nicaragua",
+        "capid": "element.country.ni"
+    },
+    {
+        "code_alpha2": "NL",
+        "code_alpha3": "NLD",
+        "code_num": "528",
+        "calling_code": "31",
+        "dcpn": "Netherlands",
+        "capid": "element.country.nl"
+    },
+    {
+        "code_alpha2": "NO",
+        "code_alpha3": "NOR",
+        "code_num": "578",
+        "calling_code": "47",
+        "dcpn": "Norway",
+        "capid": "element.country.no"
+    },
+    {
+        "code_alpha2": "NP",
+        "code_alpha3": "NPL",
+        "code_num": "524",
+        "calling_code": "977",
+        "dcpn": "Nepal",
+        "capid": "element.country.np"
+    },
+    {
+        "code_alpha2": "NR",
+        "code_alpha3": "NRU",
+        "code_num": "520",
+        "calling_code": "674",
+        "dcpn": "Nauru",
+        "capid": "element.country.nr"
+    },
+    {
+        "code_alpha2": "NU",
+        "code_alpha3": "NIU",
+        "code_num": "570",
+        "calling_code": "683",
+        "dcpn": "Niue",
+        "capid": "element.country.nu"
+    },
+    {
+        "code_alpha2": "NZ",
+        "code_alpha3": "NZL",
+        "code_num": "554",
+        "calling_code": "64",
+        "dcpn": "New Zealand",
+        "capid": "element.country.nz"
+    },
+    {
+        "code_alpha2": "OM",
+        "code_alpha3": "OMN",
+        "code_num": "512",
+        "calling_code": "968",
+        "dcpn": "Oman",
+        "capid": "element.country.om"
+    },
+    {
+        "code_alpha2": "PA",
+        "code_alpha3": "PAN",
+        "code_num": "591",
+        "calling_code": "507",
+        "dcpn": "Panama",
+        "capid": "element.country.pa"
+    },
+    {
+        "code_alpha2": "PE",
+        "code_alpha3": "PER",
+        "code_num": "604",
+        "calling_code": "51",
+        "dcpn": "Peru",
+        "capid": "element.country.pe"
+    },
+    {
+        "code_alpha2": "PF",
+        "code_alpha3": "PYF",
+        "code_num": "258",
+        "calling_code": "689",
+        "dcpn": "French Polynesia",
+        "capid": "element.country.pf"
+    },
+    {
+        "code_alpha2": "PG",
+        "code_alpha3": "PNG",
+        "code_num": "598",
+        "calling_code": "675",
+        "dcpn": "Papua New Guinea",
+        "capid": "element.country.pg"
+    },
+    {
+        "code_alpha2": "PH",
+        "code_alpha3": "PHL",
+        "code_num": "608",
+        "calling_code": "63",
+        "dcpn": "Philippines",
+        "capid": "element.country.ph"
+    },
+    {
+        "code_alpha2": "PK",
+        "code_alpha3": "PAK",
+        "code_num": "586",
+        "calling_code": "92",
+        "dcpn": "Pakistan",
+        "capid": "element.country.pk"
+    },
+    {
+        "code_alpha2": "PL",
+        "code_alpha3": "POL",
+        "code_num": "616",
+        "calling_code": "48",
+        "dcpn": "Poland",
+        "capid": "element.country.pl"
+    },
+    {
+        "code_alpha2": "PM",
+        "code_alpha3": "SPM",
+        "code_num": "666",
+        "calling_code": "508",
+        "dcpn": "Saint Pierre and Miquelon",
+        "capid": "element.country.pm"
+    },
+    {
+        "code_alpha2": "PN",
+        "code_alpha3": "PCN",
+        "code_num": "612",
+        "calling_code": "64",
+        "dcpn": "Pitcairn",
+        "capid": "element.country.pn"
+    },
+    {
+        "code_alpha2": "PR",
+        "code_alpha3": "PRI",
+        "code_num": "630",
+        "calling_code": "1",
+        "dcpn": "Puerto Rico",
+        "capid": "element.country.pr"
+    },
+    {
+        "code_alpha2": "PS",
+        "code_alpha3": "PSE",
+        "code_num": "275",
+        "calling_code": "970",
+        "dcpn": "Palestine, State of",
+        "capid": "element.country.ps"
+    },
+    {
+        "code_alpha2": "PT",
+        "code_alpha3": "PRT",
+        "code_num": "620",
+        "calling_code": "351",
+        "dcpn": "Portugal",
+        "capid": "element.country.pt"
+    },
+    {
+        "code_alpha2": "PW",
+        "code_alpha3": "PLW",
+        "code_num": "585",
+        "calling_code": "680",
+        "dcpn": "Palau",
+        "capid": "element.country.pw"
+    },
+    {
+        "code_alpha2": "PY",
+        "code_alpha3": "PRY",
+        "code_num": "600",
+        "calling_code": "595",
+        "dcpn": "Paraguay",
+        "capid": "element.country.py"
+    },
+    {
+        "code_alpha2": "QA",
+        "code_alpha3": "QAT",
+        "code_num": "634",
+        "calling_code": "974",
+        "dcpn": "Qatar",
+        "capid": "element.country.qa"
+    },
+    {
+        "code_alpha2": "RE",
+        "code_alpha3": "REU",
+        "code_num": "638",
+        "calling_code": "262",
+        "dcpn": "Réunion",
+        "capid": "element.country.re"
+    },
+    {
+        "code_alpha2": "RO",
+        "code_alpha3": "ROU",
+        "code_num": "642",
+        "calling_code": "40",
+        "dcpn": "Romania",
+        "capid": "element.country.ro"
+    },
+    {
+        "code_alpha2": "RS",
+        "code_alpha3": "SRB",
+        "code_num": "688",
+        "calling_code": "381",
+        "dcpn": "Serbia",
+        "capid": "element.country.rs"
+    },
+    {
+        "code_alpha2": "RU",
+        "code_alpha3": "RUS",
+        "code_num": "643",
+        "calling_code": "7",
+        "dcpn": "Russian Federation",
+        "capid": "element.country.ru"
+    },
+    {
+        "code_alpha2": "RW",
+        "code_alpha3": "RWA",
+        "code_num": "646",
+        "calling_code": "250",
+        "dcpn": "Rwanda",
+        "capid": "element.country.rw"
+    },
+    {
+        "code_alpha2": "SA",
+        "code_alpha3": "SAU",
+        "code_num": "682",
+        "calling_code": "966",
+        "dcpn": "Saudi Arabia",
+        "capid": "element.country.sa"
+    },
+    {
+        "code_alpha2": "SB",
+        "code_alpha3": "SLB",
+        "code_num": "090",
+        "calling_code": "677",
+        "dcpn": "Solomon Islands",
+        "capid": "element.country.sb"
+    },
+    {
+        "code_alpha2": "SC",
+        "code_alpha3": "SYC",
+        "code_num": "690",
+        "calling_code": "248",
+        "dcpn": "Seychelles",
+        "capid": "element.country.sc"
+    },
+    {
+        "code_alpha2": "SD",
+        "code_alpha3": "SDN",
+        "code_num": "729",
+        "calling_code": "249",
+        "dcpn": "Sudan",
+        "capid": "element.country.sd"
+    },
+    {
+        "code_alpha2": "SE",
+        "code_alpha3": "SWE",
+        "code_num": "752",
+        "calling_code": "46",
+        "dcpn": "Sweden",
+        "capid": "element.country.se"
+    },
+    {
+        "code_alpha2": "SG",
+        "code_alpha3": "SGP",
+        "code_num": "702",
+        "calling_code": "65",
+        "dcpn": "Singapore",
+        "capid": "element.country.sg"
+    },
+    {
+        "code_alpha2": "SH",
+        "code_alpha3": "SHN",
+        "code_num": "654",
+        "calling_code": "290",
+        "dcpn": "Saint Helena, Ascension and Tristan da Cunha",
+        "capid": "element.country.sh"
+    },
+    {
+        "code_alpha2": "SI",
+        "code_alpha3": "SVN",
+        "code_num": "705",
+        "calling_code": "386",
+        "dcpn": "Slovenia",
+        "capid": "element.country.si"
+    },
+    {
+        "code_alpha2": "SJ",
+        "code_alpha3": "SJM",
+        "code_num": "744",
+        "calling_code": "47",
+        "dcpn": "Svalbard and Jan Mayen",
+        "capid": "element.country.sj"
+    },
+    {
+        "code_alpha2": "SK",
+        "code_alpha3": "SVK",
+        "code_num": "703",
+        "calling_code": "421",
+        "dcpn": "Slovakia",
+        "capid": "element.country.sk"
+    },
+    {
+        "code_alpha2": "SL",
+        "code_alpha3": "SLE",
+        "code_num": "694",
+        "calling_code": "232",
+        "dcpn": "Sierra Leone",
+        "capid": "element.country.sl"
+    },
+    {
+        "code_alpha2": "SM",
+        "code_alpha3": "SMR",
+        "code_num": "674",
+        "calling_code": "378",
+        "dcpn": "San Marino",
+        "capid": "element.country.sm"
+    },
+    {
+        "code_alpha2": "SN",
+        "code_alpha3": "SEN",
+        "code_num": "686",
+        "calling_code": "221",
+        "dcpn": "Senegal",
+        "capid": "element.country.sn"
+    },
+    {
+        "code_alpha2": "SO",
+        "code_alpha3": "SOM",
+        "code_num": "706",
+        "calling_code": "252",
+        "dcpn": "Somalia",
+        "capid": "element.country.so"
+    },
+    {
+        "code_alpha2": "SR",
+        "code_alpha3": "SUR",
+        "code_num": "740",
+        "calling_code": "597",
+        "dcpn": "Suriname",
+        "capid": "element.country.sr"
+    },
+    {
+        "code_alpha2": "SS",
+        "code_alpha3": "SSD",
+        "code_num": "728",
+        "calling_code": "211",
+        "dcpn": "South Sudan",
+        "capid": "element.country.ss"
+    },
+    {
+        "code_alpha2": "ST",
+        "code_alpha3": "STP",
+        "code_num": "678",
+        "calling_code": "239",
+        "dcpn": "Sao Tome and Principe",
+        "capid": "element.country.st"
+    },
+    {
+        "code_alpha2": "SV",
+        "code_alpha3": "SLV",
+        "code_num": "222",
+        "calling_code": "503",
+        "dcpn": "El Salvador",
+        "capid": "element.country.sv"
+    },
+    {
+        "code_alpha2": "SX",
+        "code_alpha3": "SXM",
+        "code_num": "534",
+        "calling_code": "1",
+        "dcpn": "Sint Maarten (Dutch part)",
+        "capid": "element.country.sx"
+    },
+    {
+        "code_alpha2": "SY",
+        "code_alpha3": "SYR",
+        "code_num": "760",
+        "calling_code": "963",
+        "dcpn": "Syrian Arab Republic",
+        "capid": "element.country.sy"
+    },
+    {
+        "code_alpha2": "SZ",
+        "code_alpha3": "SWZ",
+        "code_num": "748",
+        "calling_code": "268",
+        "dcpn": "Eswatini",
+        "capid": "element.country.sz"
+    },
+    {
+        "code_alpha2": "TC",
+        "code_alpha3": "TCA",
+        "code_num": "796",
+        "calling_code": "1",
+        "dcpn": "Turks and Caicos Islands",
+        "capid": "element.country.tc"
+    },
+    {
+        "code_alpha2": "TD",
+        "code_alpha3": "TCD",
+        "code_num": "148",
+        "calling_code": "235",
+        "dcpn": "Chad",
+        "capid": "element.country.td"
+    },
+    {
+        "code_alpha2": "TF",
+        "code_alpha3": "ATF",
+        "code_num": "260",
+        "calling_code": "262",
+        "dcpn": "French Southern Territories",
+        "capid": "element.country.tf"
+    },
+    {
+        "code_alpha2": "TG",
+        "code_alpha3": "TGO",
+        "code_num": "768",
+        "calling_code": "228",
+        "dcpn": "Togo",
+        "capid": "element.country.tg"
+    },
+    {
+        "code_alpha2": "TH",
+        "code_alpha3": "THA",
+        "code_num": "764",
+        "calling_code": "66",
+        "dcpn": "Thailand",
+        "capid": "element.country.th"
+    },
+    {
+        "code_alpha2": "TJ",
+        "code_alpha3": "TJK",
+        "code_num": "762",
+        "calling_code": "992",
+        "dcpn": "Tajikistan",
+        "capid": "element.country.tj"
+    },
+    {
+        "code_alpha2": "TK",
+        "code_alpha3": "TKL",
+        "code_num": "772",
+        "calling_code": "690",
+        "dcpn": "Tokelau",
+        "capid": "element.country.tk"
+    },
+    {
+        "code_alpha2": "TL",
+        "code_alpha3": "TLS",
+        "code_num": "626",
+        "calling_code": "670",
+        "dcpn": "Timor-Leste",
+        "capid": "element.country.tl"
+    },
+    {
+        "code_alpha2": "TM",
+        "code_alpha3": "TKM",
+        "code_num": "795",
+        "calling_code": "993",
+        "dcpn": "Turkmenistan",
+        "capid": "element.country.tm"
+    },
+    {
+        "code_alpha2": "TN",
+        "code_alpha3": "TUN",
+        "code_num": "788",
+        "calling_code": "216",
+        "dcpn": "Tunisia",
+        "capid": "element.country.tn"
+    },
+    {
+        "code_alpha2": "TO",
+        "code_alpha3": "TON",
+        "code_num": "776",
+        "calling_code": "676",
+        "dcpn": "Tonga",
+        "capid": "element.country.to"
+    },
+    {
+        "code_alpha2": "TR",
+        "code_alpha3": "TUR",
+        "code_num": "792",
+        "calling_code": "90",
+        "dcpn": "Turkey",
+        "capid": "element.country.tr"
+    },
+    {
+        "code_alpha2": "TT",
+        "code_alpha3": "TTO",
+        "code_num": "780",
+        "calling_code": "1",
+        "dcpn": "Trinidad and Tobago",
+        "capid": "element.country.tt"
+    },
+    {
+        "code_alpha2": "TV",
+        "code_alpha3": "TUV",
+        "code_num": "798",
+        "calling_code": "688",
+        "dcpn": "Tuvalu",
+        "capid": "element.country.tv"
+    },
+    {
+        "code_alpha2": "TW",
+        "code_alpha3": "TWN",
+        "code_num": "158",
+        "calling_code": "886",
+        "dcpn": "Taiwan, Province of China",
+        "capid": "element.country.tw"
+    },
+    {
+        "code_alpha2": "TZ",
+        "code_alpha3": "TZA",
+        "code_num": "834",
+        "calling_code": "255",
+        "dcpn": "Tanzania, United Republic of",
+        "capid": "element.country.tz"
+    },
+    {
+        "code_alpha2": "UA",
+        "code_alpha3": "UKR",
+        "code_num": "804",
+        "calling_code": "380",
+        "dcpn": "Ukraine",
+        "capid": "element.country.ua"
+    },
+    {
+        "code_alpha2": "UG",
+        "code_alpha3": "UGA",
+        "code_num": "800",
+        "calling_code": "256",
+        "dcpn": "Uganda",
+        "capid": "element.country.ug"
+    },
+    {
+        "code_alpha2": "UM",
+        "code_alpha3": "UMI",
+        "code_num": "581",
+        "calling_code": "1",
+        "dcpn": "United States Minor Outlying Islands",
+        "capid": "element.country.um"
+    },
+    {
+        "code_alpha2": "US",
+        "code_alpha3": "USA",
+        "code_num": "840",
+        "calling_code": "1",
+        "dcpn": "United States of America",
+        "capid": "element.country.us"
+    },
+    {
+        "code_alpha2": "UY",
+        "code_alpha3": "URY",
+        "code_num": "858",
+        "calling_code": "598",
+        "dcpn": "Uruguay",
+        "capid": "element.country.uy"
+    },
+    {
+        "code_alpha2": "UZ",
+        "code_alpha3": "UZB",
+        "code_num": "860",
+        "calling_code": "998",
+        "dcpn": "Uzbekistan",
+        "capid": "element.country.uz"
+    },
+    {
+        "code_alpha2": "VA",
+        "code_alpha3": "VAT",
+        "code_num": "336",
+        "calling_code": "39",
+        "dcpn": "Holy See",
+        "capid": "element.country.va"
+    },
+    {
+        "code_alpha2": "VC",
+        "code_alpha3": "VCT",
+        "code_num": "670",
+        "calling_code": "1",
+        "dcpn": "Saint Vincent and the Grenadines",
+        "capid": "element.country.vc"
+    },
+    {
+        "code_alpha2": "VE",
+        "code_alpha3": "VEN",
+        "code_num": "862",
+        "calling_code": "58",
+        "dcpn": "Venezuela (Bolivarian Republic of)",
+        "capid": "element.country.ve"
+    },
+    {
+        "code_alpha2": "VG",
+        "code_alpha3": "VGB",
+        "code_num": "092",
+        "calling_code": "1",
+        "dcpn": "Virgin Islands (British)",
+        "capid": "element.country.vg"
+    },
+    {
+        "code_alpha2": "VI",
+        "code_alpha3": "VIR",
+        "code_num": "850",
+        "calling_code": "1",
+        "dcpn": "Virgin Islands (U.S.)",
+        "capid": "element.country.vi"
+    },
+    {
+        "code_alpha2": "VN",
+        "code_alpha3": "VNM",
+        "code_num": "704",
+        "calling_code": "84",
+        "dcpn": "Viet Nam",
+        "capid": "element.country.vn"
+    },
+    {
+        "code_alpha2": "VU",
+        "code_alpha3": "VUT",
+        "code_num": "548",
+        "calling_code": "678",
+        "dcpn": "Vanuatu",
+        "capid": "element.country.vu"
+    },
+    {
+        "code_alpha2": "WF",
+        "code_alpha3": "WLF",
+        "code_num": "876",
+        "calling_code": "681",
+        "dcpn": "Wallis and Futuna",
+        "capid": "element.country.wf"
+    },
+    {
+        "code_alpha2": "WS",
+        "code_alpha3": "WSM",
+        "code_num": "882",
+        "calling_code": "685",
+        "dcpn": "Samoa",
+        "capid": "element.country.ws"
+    },
+    {
+        "code_alpha2": "YE",
+        "code_alpha3": "YEM",
+        "code_num": "887",
+        "calling_code": "967",
+        "dcpn": "Yemen",
+        "capid": "element.country.ye"
+    },
+    {
+        "code_alpha2": "YT",
+        "code_alpha3": "MYT",
+        "code_num": "175",
+        "calling_code": "262",
+        "dcpn": "Mayotte",
+        "capid": "element.country.yt"
+    },
+    {
+        "code_alpha2": "ZA",
+        "code_alpha3": "ZAF",
+        "code_num": "710",
+        "calling_code": "27",
+        "dcpn": "South Africa",
+        "capid": "element.country.za"
+    },
+    {
+        "code_alpha2": "ZM",
+        "code_alpha3": "ZMB",
+        "code_num": "894",
+        "calling_code": "260",
+        "dcpn": "Zambia",
+        "capid": "element.country.zm"
+    },
+    {
+        "code_alpha2": "ZW",
+        "code_alpha3": "ZWE",
+        "code_num": "716",
+        "calling_code": "263",
+        "dcpn": "Zimbabwe",
+        "capid": "element.country.zw"
+    }
+]

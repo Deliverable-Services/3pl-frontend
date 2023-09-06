@@ -44,15 +44,15 @@ export class InventoryListComponent implements OnInit {
 
   columnSize: any = {
     connectionLocationId: "12%",
-    styleName: "15%",
+    styleName: "13%",
     sku: "20%",
     skuType: "8%",
-    skuDesc: "20%",
-    totalQty: "5%",
-    avaiableQty: "5%",
-    unavailableQty: "5%",
-    intransitQty: "5%",
-    poQty: "5%"
+    skuDesc: "12%",
+    totalQty: "7%",
+    avaiableQty: "7%",
+    unavailableQty: "7%",
+    intransitQty: "7%",
+    poQty: "7%"
   };
 
   constructor(

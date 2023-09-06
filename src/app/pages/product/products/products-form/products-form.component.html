@@ -62,6 +62,8 @@
                 </d-form-control>
               </d-form-item>
 
+              
+
               <d-form-item>
                 <d-form-label [required]="true" [hasHelp]="false"
                   [helpTips]="'This is the Collection'">{{'form.product.fields.collection' | translate}}
@@ -139,6 +141,19 @@
                       }" />
                 </d-form-control>
               </d-form-item>
+              <d-form-item>
+                <d-form-label [required]="true" [hasHelp]="false" [helpTips]="'This is the Commodity Code'">
+                  {{'form.product.fields.commodityCode' | translate}}
+                </d-form-label>
+                <d-form-control>
+                
+                    <input dTextInput autocomplete="off" [disabled]="isFormDisabled(productsFormData.status)" name="commodityCode"
+                    [placeholder]="'form.product.fields.commodityCode' | translate"
+                    [(ngModel)]="productsFormData.commodityCode" [dValidateRules]="{
+                      validators: [{ required: true }]
+                    }" />
+                </d-form-control>
+              </d-form-item>
             </div>
 
             <div [ngStyle]="{ width: '46%' }">
@@ -212,16 +227,36 @@
                       }" />
                 </d-form-control>
               </d-form-item>
+              <d-form-item>
+                <d-form-label [required]="true" [hasHelp]="false" [helpTips]="'This is the Option Type'">
+                  {{ 'form.product.fields.countryOfOrigin' | translate }}
+                </d-form-label>
+                <d-form-control>
+                  <d-select [disabled]="isFormDisabled(productsFormData.status)"
+                  (valueChange)="setListId()"
+                  [ngStyle]="{ width: '100%' }"
+                  placeholder="Select Country of Origin" [scrollHight]="'300px'"
+                  [filterKey]="'dcpn'"  [appendToBody]="true" [options]="countriesData" name="countryOfOrigin"
+                  [isSearch]="true" [(ngModel)]="selectedCountry" [dValidateRules]="{
+                    validators: [{ required: true }]
+                  }"></d-select>
+                </d-form-control>
+              </d-form-item>
 
               <d-form-item>
                 <d-form-label [hasHelp]="false" [helpTips]="'This is Product Image'">{{'form.product.fields.image' |
                   translate}}</d-form-label>
                 <d-form-control>
                   <input type="file" autocomplete="off" name="image"
+                    (change)="setUploadImage($event)"
+                    style="width: 30% !important"
                     [placeholder]="'form.product.fields.image' | translate" [(ngModel)]="productsFormData.image"
                     [disabled]="isFormDisabled(productsFormData.status)" [dValidateRules]="{
                         validators: [{ required: false }]
                       }" />
+                      <div *ngIf="imageUrl">
+                        <img [src]="imageUrl" alt="Preview" height="150">
+                      </div>
                 </d-form-control>
               </d-form-item>
             </div>
@@ -240,6 +275,7 @@
                   }"></textarea>
               </d-form-control>
             </d-form-item>
+
 
             <d-form-operation *ngIf="paramId && productsFormData.status === 'Draft'">
               <d-button dLoading class="mr-element-spacing" [title]="styleForm.errorMessage || ''" circled="true"

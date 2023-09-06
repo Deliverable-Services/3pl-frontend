@@ -23,6 +23,12 @@ import { CurrencyFormComponent } from './currency/currency-form/currency-form.co
 import { CurrencyListComponent } from './currency/currency-list/currency-list.component';
 import { ShopifyConnectorListComponent } from "./shopify-connector/shopify-connector-list/shopify-connector-list.component";
 import { ShopifyConnectorFormComponent } from "./shopify-connector/shopify-connector-form/shopify-connector-form.component";
+import { InventoryOnlineComponent } from './inventory/inventory-online/inventory-online.component';
+import { ShippingPartnerFormComponent } from './shipping-partner/shipping-partner-form/shipping-partner-form.component';
+import { ShippingPartnerListComponent } from './shipping-partner/shipping-partner-list/shipping-partner-list.component';
+import { TransferOrderListComponent } from './transferOrder/transfer-order-list/transfer-order-list.component';
+import { TransferOrderFormComponent } from './transferOrder/transfer-order-form/transfer-order-form.component';
+import { TransferOrderFormModalComponent } from './transferOrder/transfer-order-form-modal/transfer-order-form-modal.component';
 // import { InventoryListComponent } from "./inventory/inventory-list/inventory-list.component";
 
 @NgModule({
@@ -39,6 +45,12 @@ import { ShopifyConnectorFormComponent } from "./shopify-connector/shopify-conne
     CurrencyListComponent,
     ShopifyConnectorListComponent,
     ShopifyConnectorFormComponent,
+    InventoryOnlineComponent,
+    ShippingPartnerFormComponent,
+    ShippingPartnerListComponent,
+    TransferOrderListComponent,
+    TransferOrderFormComponent,
+    TransferOrderFormModalComponent,
     // InventoryListComponent
   ],
   imports: [
