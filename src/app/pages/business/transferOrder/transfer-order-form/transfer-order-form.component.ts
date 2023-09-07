@@ -15,7 +15,7 @@ import { TransferOrderFormModalComponent } from "../transfer-order-form-modal/tr
 export class TransferOrderFormComponent implements OnInit {
   mode: string = "Add";
   verticalLayout: FormLayout = FormLayout.Vertical;
-  projectFormData = {
+  projectFormData:any = {
     destinationLocation: {
       connectionLocationId: "",
       nodeName: "",
@@ -30,6 +30,23 @@ export class TransferOrderFormComponent implements OnInit {
     remarks: "",
     expectedArrivalDate: null,
     expectedDeliveryDate: null
+  };
+  stVariants: any = [];
+  detailsInputs:any = [];
+
+  config = {
+    id: 'dialog-service',
+    width: '50%',
+    maxHeight: '600px',
+    title: 'Select Produts With Style',
+    content: TransferOrderFormModalComponent,
+    backdropCloseable: true,
+    onClose: () => console.log(''),
+    data: {
+      name: 'Tom',
+      age: 10,
+      address: 'Chengdu',
+    },
   };
 
   toTypeLabel:string = 'Origin To Destination';
@@ -104,11 +121,18 @@ export class TransferOrderFormComponent implements OnInit {
       this.selectedTransferOrder = res;
       this.projectFormData = res;
       this.toTypeLabel = this.projectFormData?.originLocation?.nodeType+ ' To ' +this.projectFormData?.destinationLocation?.nodeType;
+      this.detailsInputs = this.projectFormData?.details?.map((d: any) => {
+        return {
+          variantId: d?.variantId,
+          skuNo: d?.skuNo,
+          plannedQuantity: d?.plannedQuantity
+        }
+      })
     });
   }
 
   submitProjectForm(event: any) {
-    if (event?.valid) {
+    if (event?.valid && this._checkIfValid()) {
       if (this.mode === "Add") {
         const destinationId = this.projectFormData.destinationLocation.connectionLocationId;
         const originId = this.projectFormData.originLocation.connectionLocationId;
@@ -122,6 +146,7 @@ export class TransferOrderFormComponent implements OnInit {
           });
         }
       } else {
+        this.projectFormData.details = this.detailsInputs;
         this.transferOrderService
           .updateTransferOrder(this.paramId, this.projectFormData)
           .subscribe((res) => {
@@ -177,21 +202,6 @@ export class TransferOrderFormComponent implements OnInit {
     this.dDate = new Date(event?.selectedDate);
   }
 
-  config = {
-    id: 'dialog-service',
-    width: '50%',
-    maxHeight: '600px',
-    title: 'Select Produts With Style',
-    content: TransferOrderFormModalComponent,
-    backdropCloseable: true,
-    onClose: () => console.log('on dialog closed'),
-    data: {
-      name: 'Tom',
-      age: 10,
-      address: 'Chengdu',
-    },
-  };
-
   openDialog(dialogtype?: string, showAnimation?: boolean) {
     const results = this.dialogService.open({
       ...this.config,
@@ -203,8 +213,14 @@ export class TransferOrderFormComponent implements OnInit {
           text: 'Ok',
           disabled: false,
           handler: (variantList: any) => {
-            console.log('Received variantList:', variantList);
             results.modalInstance.hide();
+            this.detailsInputs = this.stVariants?.map((p: any) => {
+              return {
+                variantId: p?.variantId,
+                skuNo: p?.sku,
+                plannedQuantity: null
+              }
+            })
           },
         },
         {
@@ -212,14 +228,49 @@ export class TransferOrderFormComponent implements OnInit {
           cssClass: 'common',
           text: 'Cancel',
           handler: (variantList: any) => {
-            console.log('Received variantList:', variantList);
+            this.stVariants = [];
+            this.detailsInputs = [];
             results.modalInstance.hide();
           },
         },
       ],
+      data: {
+        vList: (vData: any) => {
+          this.stVariants = vData;
+          this.detailsInputs = [];
+        }
+      },
     });
-    console.log(results.modalContentInstance);
   }
 
+  updateValue(event: any, keyName: string, index: number) {
+    this.detailsInputs[index][keyName] = event.target.value;
+  }
+
+  _checkIfValid() {
+    return this?.detailsInputs?.findIndex((p: any) => (!p?.variantId || !p?.skuNo || !p?.plannedQuantity)) === -1;
+  }
+
+  updateStatus(type: string) {
+    this.transferOrderService
+    .updateStatus({
+      id: this.paramId, 
+      formData: this.projectFormData,
+      type: type
+    })
+    .subscribe((res) => {
+      let type;
+      let msg;
+      if(res) {
+        type = "success";
+        msg = "Data Updated Successfully"
+        
+      } else {
+        type= "error";
+        msg = MSG.error;
+      }
+      this._showToastMsg(type, msg);
+    });
+  }
   
 }

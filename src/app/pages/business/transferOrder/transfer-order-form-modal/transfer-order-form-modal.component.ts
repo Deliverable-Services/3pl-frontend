@@ -44,6 +44,7 @@ export class TransferOrderFormModalComponent {
         this.selectedVariants.splice(index, 1);
       }
     }
+    this.data.vList(this.variantList);
   }
 
   search(e: any) {

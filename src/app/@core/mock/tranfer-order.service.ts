@@ -129,4 +129,17 @@ export class TransferOrderListDataService extends TransferOrderListData {
 
     return this.http.get(`${this.baseApiUrl}/transfer-order/${id}`, httpOptionsToken);
   }
+
+  updateStatus(data: any) {
+    const httpOptionsToken = {
+      headers: new HttpHeaders({
+      }),
+    };
+
+    return this.http.put(
+      `${this.baseApiUrl}/transfer-order/${data?.id}/${data?.type}`,
+      data?.formData,
+      httpOptionsToken
+    );
+  }
 }
