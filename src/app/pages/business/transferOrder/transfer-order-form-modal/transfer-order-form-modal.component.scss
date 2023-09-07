@@ -1,0 +1,50 @@
+ul {
+  list-style: none;
+  padding: 0;
+}
+
+li {
+  display: flex;
+  align-items: center;
+  margin-bottom: 8px;
+  cursor: pointer;
+  padding: 8px;
+  border: 1px solid #ccc;
+}
+
+.selected {
+  background-color: #007bff; /* Customize the background color */
+  color: #fff; /* Customize the text color */
+}
+
+/* Styles for the Variant List */
+.variant-list {
+    list-style: none;
+    padding: 0;
+  }
+  
+  .variant-item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 8px;
+    cursor: pointer;
+    padding: 8px;
+    border: 1px solid #ccc;
+    background-color: #f7f7f7; /* Background color for each item */
+  }
+  
+  .variant-item:hover {
+    background-color: #e0e0e0; /* Background color on hover */
+  }
+  
+  /* Styles for checkboxes */
+  .variant-item input[type="checkbox"] {
+    margin-right: 8px;
+  }
+  
+  /* Heading style */
+  h3 {
+    margin-top: 16px;
+    font-size: 1.2rem;
+  }
+  

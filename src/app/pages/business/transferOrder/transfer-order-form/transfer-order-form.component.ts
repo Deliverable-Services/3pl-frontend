@@ -1,10 +1,11 @@
 import { Component, OnInit } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
-import { FormLayout, ToastService } from "ng-devui";
+import { DialogService, FormLayout, ToastService } from "ng-devui";
 import { ConnectionLocationService } from "src/app/@core/mock/connection-location.service";
 import { TransferOrderListDataService } from "src/app/@core/mock/tranfer-order.service";
 import { MSG } from "src/config/global-var";
 import { ProductsListDataService } from "src/app/@core/mock/products-data.service";
+import { TransferOrderFormModalComponent } from "../transfer-order-form-modal/transfer-order-form-modal.component";
 
 @Component({
   selector: "app-transfer-order-form",
@@ -30,6 +31,7 @@ export class TransferOrderFormComponent implements OnInit {
     expectedArrivalDate: null,
     expectedDeliveryDate: null
   };
+
   toTypeLabel:string = 'Origin To Destination';
   todayDate:any = new Date();
   dDate:any = new Date();
@@ -37,19 +39,15 @@ export class TransferOrderFormComponent implements OnInit {
   connectionLocationList: any[] = [];
   selectedTransferOrder: any = {};
   allowSubmit: boolean = true;
-  searchWithStyleName:any = {
-    keyword: "",
-    sort: "asc",
-    columnName: "styleName",
-    searchType: "match",
-  };
+
   constructor(
     private transferOrderService: TransferOrderListDataService,
     private connectionLocationService: ConnectionLocationService,
     private route: ActivatedRoute,
+    private dialogService: DialogService,
     private router: Router,
     private toastService: ToastService,
-    private productsListDataService: ProductsListDataService
+   
   ) {}
 
   ngOnInit(): void {
@@ -179,15 +177,49 @@ export class TransferOrderFormComponent implements OnInit {
     this.dDate = new Date(event?.selectedDate);
   }
 
-  search(e: any) {
-    this.searchWithStyleName.keyword = e.target.value;
-    this.productsListDataService.setSearchParams(this.searchWithStyleName)
-    this.getProductsList();
+  config = {
+    id: 'dialog-service',
+    width: '50%',
+    maxHeight: '600px',
+    title: 'Select Produts With Style',
+    content: TransferOrderFormModalComponent,
+    backdropCloseable: true,
+    onClose: () => console.log('on dialog closed'),
+    data: {
+      name: 'Tom',
+      age: 10,
+      address: 'Chengdu',
+    },
+  };
+
+  openDialog(dialogtype?: string, showAnimation?: boolean) {
+    const results = this.dialogService.open({
+      ...this.config,
+      dialogtype: dialogtype,
+      showAnimation: showAnimation,
+      buttons: [
+        {
+          cssClass: 'primary',
+          text: 'Ok',
+          disabled: false,
+          handler: (variantList: any) => {
+            console.log('Received variantList:', variantList);
+            results.modalInstance.hide();
+          },
+        },
+        {
+          id: 'btn-cancel',
+          cssClass: 'common',
+          text: 'Cancel',
+          handler: (variantList: any) => {
+            console.log('Received variantList:', variantList);
+            results.modalInstance.hide();
+          },
+        },
+      ],
+    });
+    console.log(results.modalContentInstance);
   }
 
-  getProductsList() {
-    this.productsListDataService.getList().subscribe((res) => {
-      console.log(' res ', res);      
-    });
-  }
+  
 }
