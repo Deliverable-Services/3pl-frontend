@@ -135,7 +135,7 @@ export class TransferOrderFormComponent implements OnInit {
   }
 
   submitProjectForm(event: any) {
-    if (event?.valid && this._checkIfValid()) {
+    if (event?.valid) {
       if (this.mode === "Add") {
         const destinationId = this.projectFormData.destinationLocation.connectionLocationId;
         const originId = this.projectFormData.originLocation.connectionLocationId;
