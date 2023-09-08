@@ -125,7 +125,10 @@ export class TransferOrderFormComponent implements OnInit {
         return {
           variantId: d?.variantId,
           skuNo: d?.skuNo,
-          plannedQuantity: d?.plannedQuantity
+          plannedQuantity: d?.plannedQuantity,
+          skuDescription: d?.skuDescription,
+          receivedQuantity: d?.receivedQuantity,
+          sentQuantity: d?.sentQuantity
         }
       })
     });
@@ -136,6 +139,10 @@ export class TransferOrderFormComponent implements OnInit {
       if (this.mode === "Add") {
         const destinationId = this.projectFormData.destinationLocation.connectionLocationId;
         const originId = this.projectFormData.originLocation.connectionLocationId;
+
+        delete this.projectFormData.destinationLocation?.nodeType;
+        delete this.projectFormData.originLocation?.nodeType;
+
         if(destinationId == originId){
           this._showDuplicatToast();
         }else{
@@ -261,6 +268,7 @@ export class TransferOrderFormComponent implements OnInit {
     .subscribe((res) => {
       let type;
       let msg;
+      this.getTransferOrderById(this.paramId)
       if(res) {
         type = "success";
         msg = "Data Updated Successfully"

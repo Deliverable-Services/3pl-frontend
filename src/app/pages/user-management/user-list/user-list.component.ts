@@ -22,8 +22,10 @@ export class UserListComponent implements OnInit {
     sortBy: "",
     sortDir: "",
   };
+  groups: any[] = ["SELECT","INTERNAL", "EXTERNAL"];
   busy: Subscription | undefined;
   basicDataSource: any[] = [];
+  stRoles:any;
   pager = {
     total: 0,
     pageIndex: 1,
@@ -37,6 +39,14 @@ export class UserListComponent implements OnInit {
     active: "",
   };
 
+  searchKeywords:any = {
+    username: '',
+    department: '',
+    title: '',
+    group: '',
+    roles: ''
+  }
+
   constructor(
     private userManagementService: UserManagementService,
     private router: Router,
@@ -45,6 +55,7 @@ export class UserListComponent implements OnInit {
 
   ngOnInit(): void {
     this.getCreditTermsList();
+    this.getRoles();
   }
 
   getCreditTermsList() {
@@ -53,10 +64,15 @@ export class UserListComponent implements OnInit {
       .subscribe((res) => {
         this.basicDataSource = res.content;
         this.pager.total = res.totalItems;
-        // Object.keys(res.listSize).map((key) => {
-        //   let widthValue = res.listSize[key] + "%";
-        //   this.columnSize[key] = widthValue;
-        // });
+      });
+  }
+
+  getRoles() {
+    this.busy = this.userManagementService
+      .getRoles()
+      .subscribe((res) => {
+        this.stRoles = res;
+        console.log(':: this.stRoles :: ',this.stRoles);
       });
   }
 
@@ -95,6 +111,10 @@ export class UserListComponent implements OnInit {
   _showRoles(roles: any) {
     let rNames = roles?.map((role: any) => role?.name);
     return rNames?.join(",");
+  }
+
+  startSearch(event: any) {
+
   }
 
 }

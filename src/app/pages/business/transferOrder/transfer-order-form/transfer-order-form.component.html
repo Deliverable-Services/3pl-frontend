@@ -39,7 +39,13 @@
         <div [ngStyle]="{ width: '100%' }">
 
           <d-form-operation>
-            <d-button [ngStyle]="{ float: 'right' }" [disabled]="!allowSubmit" dLoading class="mr-element-spacing"
+            <d-button *ngIf="!paramId" [ngStyle]="{ float: 'right' }" [disabled]="!allowSubmit" dLoading class="mr-element-spacing"
+              [title]="projectForm.errorMessage || ''" circled="true" style="margin-right: 8px"
+              [showLoading]="projectForm.pending" dFormSubmit [dFormSubmitData]="'submit-button'">
+              {{ ("form.common.create") |translate }}
+            </d-button>
+
+            <d-button *ngIf="projectFormData.status?.toLowerCase() === 'draft'" [ngStyle]="{ float: 'right' }" [disabled]="!allowSubmit" dLoading class="mr-element-spacing"
               [title]="projectForm.errorMessage || ''" circled="true" style="margin-right: 8px"
               [showLoading]="projectForm.pending" dFormSubmit [dFormSubmitData]="'submit-button'">
               {{
@@ -48,17 +54,21 @@
               }}
             </d-button>
 
-            <d-button [ngStyle]="{ float: 'right' }" class="mr-element-spacing"
+            <d-button *ngIf="projectFormData.status?.toLowerCase() === 'draft'" [ngStyle]="{ float: 'right' }" class="mr-element-spacing"
               circled="true" style="margin-right: 8px" (btnClick)="updateStatus('publish')">
               Publish
             </d-button>
 
-            <d-button [ngStyle]="{ float: 'right' }" class="mr-element-spacing"
+            <d-button *ngIf="projectFormData.status?.toLowerCase() === 'open'
+              && projectFormData?.destinationLocation?.nodeType?.toLowerCase() === 'store'" 
+              [ngStyle]="{ float: 'right' }" class="mr-element-spacing"
               circled="true" style="margin-right: 8px" (btnClick)="updateStatus('received')">
-              Receive
+              Confirm
             </d-button>
 
-            <d-button [ngStyle]="{ float: 'right' }" class="mr-element-spacing"
+            <d-button *ngIf="projectFormData.status?.toLowerCase() === 'open' 
+              && projectFormData?.originLocation?.nodeType?.toLowerCase() === 'store'" 
+              [ngStyle]="{ float: 'right' }" class="mr-element-spacing"
               circled="true" style="margin-right: 8px" (btnClick)="updateStatus('shipped')">
               Ship
             </d-button>
@@ -89,13 +99,6 @@
               </d-form-item>
 
               <ng-container *ngIf="mode?.toLowerCase() === 'edit'">
-                <d-form-item>
-                  <d-form-label>TO Type</d-form-label>
-                  <d-form-control>
-                    <input dTextInput autocomplete="off" [(ngModel)]="toTypeLabel" disabled />
-                  </d-form-control>
-                </d-form-item>
-
                 <div class="">
                   <d-form-label [required]="true">Expected Arrival Date</d-form-label>
                   <div style="width: 100%" class="devui-input-group devui-dropdown-origin" dActiveFormControl>
@@ -115,6 +118,13 @@
                     </div>
                   </div>
                 </div>
+
+                <!-- <d-form-item>
+                  <d-form-label>TO Type</d-form-label>
+                  <d-form-control>
+                    <input dTextInput autocomplete="off" [(ngModel)]="toTypeLabel" disabled />
+                  </d-form-control>
+                </d-form-item> -->
               </ng-container>
 
             </div>
@@ -137,15 +147,6 @@
               </d-form-item>
 
               <ng-container *ngIf="mode?.toLowerCase() === 'edit'">
-                <d-form-item>
-                  <d-form-label [required]="true">Remarks</d-form-label>
-                  <d-form-control>
-                    <input dTextInput autocomplete="off" name="remarks" placeholder="Remarks"
-                      [(ngModel)]="projectFormData.remarks" [dValidateRules]="{
-                        validators: [{ required: true }]
-                      }" />
-                  </d-form-control>
-                </d-form-item>
 
                 <div class="input-setting">
                   <d-form-label [required]="true">Expected Delivery Date</d-form-label>
@@ -170,43 +171,82 @@
             </div>
           </div>
 
-          <div class="da-content-banner-title">
-            Details
-          </div>
-          <div [ngStyle]="{ width: '100%' }">
+          <d-form-item [ngStyle]="{ marginTop: '20px' }">
+            <d-form-label [required]="true">Remarks</d-form-label>
+            <d-form-control>
+                <textarea [ngStyle]="{ height: '104px' }" dTextarea resize="vertical" autocomplete="off" name="tradeDesc"
+                [placeholder]="'form.creditTerms.fields.termsDescription' | translate" [(ngModel)]="projectFormData.remarks" [dValidateRules]="{
+                  validators: [{ required: true }]
+                }"></textarea>
+            </d-form-control>
+          </d-form-item>
 
-            <d-form-operation>
-              <d-button [ngStyle]="{ 'margin-bottom': '12px' }" dLoading class="mr-element-spacing"
-                circled="true" (click)="openDialog()">
-                  Select Product With Style
-              </d-button>
-            </d-form-operation>
-          </div>
-          <ng-container *ngIf="detailsInputs?.length">
-            <div  *ngFor="let input of detailsInputs; let i = index" [ngStyle]="{ display: 'flex', justifyContent: 'space-between' }">
-                <div [ngStyle]="{ width: '46%' }">
-                  <d-form-item>
-                    <d-form-label [required]="true">SKU</d-form-label>
-                      <d-form-control>
-                        <input disabled dTextInput autocomplete="off" placeholder="Remarks"
-                          [value]="input.skuNo" (input)="updateValue($event, 'skuNo', i)"/>
-                      </d-form-control>
-                  </d-form-item>
-
-                </div>
-
-                <div [ngStyle]="{ width: '46%' }">
-
-                  <d-form-item>
-                    <d-form-label [required]="true">Planned Quantity</d-form-label>
-                      <d-form-control>
-                        <input dTextInput autocomplete="off" placeholder="Planned Quantity"
-                        [value]="input.plannedQuantity" (input)="updateValue($event, 'plannedQuantity', i)"/>
-                      </d-form-control>
-                  </d-form-item>
-
-                </div>
+          <ng-container *ngIf="mode?.toLowerCase() === 'edit'">
+            <div class="da-content-banner-title">
+              Details
             </div>
+            <div [ngStyle]="{ width: '100%' }">
+
+              <d-form-operation>
+                <d-button [ngStyle]="{ 'margin-bottom': '12px' }" dLoading class="mr-element-spacing"
+                  circled="true" (click)="openDialog()">
+                    Select Product With Style
+                </d-button>
+              </d-form-operation>
+            </div>
+            <ng-container *ngIf="detailsInputs?.length">
+              <div  *ngFor="let input of detailsInputs; let i = index" [ngStyle]="{ display: 'flex', justifyContent: 'space-between' }">
+                  <div [ngStyle]="{ width: '46%' }">
+                    <d-form-item>
+                      <d-form-label [required]="true">SKU</d-form-label>
+                        <d-form-control>
+                          <input disabled dTextInput autocomplete="off" placeholder="Remarks"
+                            [value]="input.skuNo" (input)="updateValue($event, 'skuNo', i)"/>
+                        </d-form-control>
+                    </d-form-item>
+
+                    <d-form-item *ngIf="projectFormData.status?.toLowerCase() === 'open'">
+                      <d-form-label [required]="true">Sent Qty</d-form-label>
+                        <d-form-control>
+                          <input [disabled]="!(projectFormData.status?.toLowerCase() === 'open' 
+                          && projectFormData?.originLocation?.nodeType?.toLowerCase() === 'store')" dTextInput autocomplete="off" placeholder="Sent Qty"
+                            [value]="input.sentQuantity" (input)="updateValue($event, 'sentQuantity', i)"/>
+                        </d-form-control>
+                    </d-form-item>
+
+                    <d-form-item *ngIf="projectFormData.status?.toLowerCase() === 'open'">
+                      <d-form-label [required]="true">Description</d-form-label>
+                      <d-form-control>
+                          <textarea disabled [ngStyle]="{ height: '104px' }" dTextarea resize="vertical" autocomplete="off" name="tradeDesc"
+                          [(ngModel)]="projectFormData.skuDescription"></textarea>
+                      </d-form-control>
+                    </d-form-item>
+
+                  </div>
+
+                  <div [ngStyle]="{ width: '46%' }">
+
+                    <d-form-item>
+                      <d-form-label [required]="true">Planned Quantity</d-form-label>
+                        <d-form-control>
+                          <input [disabled]="!(projectFormData.status?.toLowerCase() === 'draft')" dTextInput autocomplete="off" placeholder="Planned Quantity"
+                          [value]="input.plannedQuantity" (input)="updateValue($event, 'plannedQuantity', i)"/>
+                        </d-form-control>
+                    </d-form-item>
+
+                    <d-form-item *ngIf="projectFormData.status?.toLowerCase() === 'open'">
+                      <d-form-label [required]="true">Received Qty</d-form-label>
+                        <d-form-control>
+                          <input [disabled]="!(projectFormData.status?.toLowerCase() === 'open' 
+                          && projectFormData?.destinationLocation?.nodeType?.toLowerCase() === 'store')" dTextInput autocomplete="off" placeholder="Received Qty"
+                            [value]="input.receivedQuantity" (input)="updateValue($event, 'receivedQuantity', i)"/>
+                        </d-form-control>
+                    </d-form-item>
+
+                  </div>
+
+              </div>
+            </ng-container>
           </ng-container>
         </form>
       </div>
