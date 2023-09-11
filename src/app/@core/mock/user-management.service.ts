@@ -52,7 +52,7 @@ export class UserManagementService {
     this.pageParams = pageParams;
   }
 
-  getList(): Observable<any> {
+  getList(srarchParams?: any): Observable<any> {
     const httpOptionsToken = {
       params: new HttpParams({
         fromObject: this.pageParams,
@@ -61,7 +61,7 @@ export class UserManagementService {
 
     return this.http.post(
       `${this.baseApiUrl}/users/list`,
-      this.searchParams,
+      srarchParams ? srarchParams:this.searchParams,
       httpOptionsToken
     );
   }

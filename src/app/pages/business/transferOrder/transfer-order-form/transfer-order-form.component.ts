@@ -32,7 +32,30 @@ export class TransferOrderFormComponent implements OnInit {
     expectedDeliveryDate: null
   };
   stVariants: any = [];
-  detailsInputs:any = [];
+  detailsInputs:any = [
+    {
+      variantId: 'p?.variantId',
+      skuNo: 'p?.sku',
+      plannedQuantity: null
+    },
+    {
+      variantId: 'p?.variantId',
+      skuNo: 'p?.sku',
+      plannedQuantity: null
+    }
+  ];
+
+  discrepancyValues:any = ['ORIGIN', 'DESTINATION'];
+
+  dObj:any = {
+    details: [
+      {
+        discrepancyFlag: false,
+        discrepancyResolvedTo: "",
+        lineNumber: 0
+      }
+    ]
+  }
 
   config = {
     id: 'dialog-service',
@@ -128,8 +151,17 @@ export class TransferOrderFormComponent implements OnInit {
           plannedQuantity: d?.plannedQuantity,
           skuDescription: d?.skuDescription,
           receivedQuantity: d?.receivedQuantity,
-          sentQuantity: d?.sentQuantity
+          sentQuantity: d?.sentQuantity,
+          discrepancyResolvedTo: d?.discrepancyResolvedTo,
+          lineNumber: d?.lineNumber,
+          discrepancyFlag: d?.discrepancyFlag
         }
+      })
+
+      this.detailsInputs?.sort((a: any, b: any) => {
+        let fVal = parseInt(a.lineNumber);
+        let sVal = parseInt(b.lineNumber);
+        return fVal > sVal ? 1 : fVal < sVal ? -1:0;
       })
     });
   }
@@ -153,6 +185,7 @@ export class TransferOrderFormComponent implements OnInit {
           });
         }
       } else {
+        this.detailsInputs?.forEach((key: any, e: any) => e.lineNumber = parseInt(key+1));
         this.projectFormData.details = this.detailsInputs;
         this.transferOrderService
           .updateTransferOrder(this.paramId, this.projectFormData)
@@ -272,6 +305,34 @@ export class TransferOrderFormComponent implements OnInit {
       if(res) {
         type = "success";
         msg = "Data Updated Successfully"
+        
+      } else {
+        type= "error";
+        msg = MSG.error;
+      }
+      this._showToastMsg(type, msg);
+    });
+  }
+
+  confirmNow(rowIndex: number) {
+    this.dObj.details = [];
+    this.dObj.details.push({
+      discrepancyFlag: this.detailsInputs[rowIndex]?.discrepancyFlag,
+      discrepancyResolvedTo: this.detailsInputs[rowIndex]?.discrepancyResolvedTo,
+      lineNumber: this.detailsInputs[rowIndex]?.lineNumber
+    });
+    this.transferOrderService
+    .updateStatus({
+      id: this.paramId, 
+      formData: this.dObj
+    })
+    .subscribe((res) => {
+      let type;
+      let msg;
+      this.getTransferOrderById(this.paramId)
+      if(res) {
+        type = "success";
+        msg = MSG.update
         
       } else {
         type= "error";

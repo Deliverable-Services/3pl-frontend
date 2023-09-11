@@ -42,19 +42,19 @@
                     [placeholder]="'Search with Title'"
                   ></d-search>
 
-                  <d-select [ngStyle]="{ width: 'calc(100% - 77%)' }"
+                  <d-select [ngStyle]="{ width: 'calc(100% - 82%)' }"
                     class="da-inline"
                     placeholder="Select a Group" [scrollHight]="'300px'"
                     (valueChange)="startSearch($event)"
                     [filterKey]="'group'" [appendToBody]="true" [options]="groups" name="group"
                     [(ngModel)]="searchKeywords.group"></d-select>
                     
-                    <d-select [ngStyle]="{ width: 'calc(100% - 77%)' }"
+                    <d-select [ngStyle]="{ width: 'calc(100% - 82)' }"
                     class="da-inline"
-                    placeholder="Select a Group" [scrollHight]="'300px'"
+                    placeholder="Select a Role" [scrollHight]="'300px'"
                     (valueChange)="startSearch($event)"
-                    [filterKey]="'group'" [appendToBody]="true" [options]="groups" name="group"
-                    [(ngModel)]="searchKeywords.group"></d-select>
+                    [filterKey]="'roles'" [appendToBody]="true" [options]="rolesName" name="roles"
+                    [(ngModel)]="searchKeywords.roles"></d-select>
                 </div>
                 <!-- <div class="header-right">
                     <d-button class="mr-element-spacing" routerLink="add">{{"list.creditTerms.buttonTitle" | translate}}</d-button>

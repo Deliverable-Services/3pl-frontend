@@ -142,4 +142,17 @@ export class TransferOrderListDataService extends TransferOrderListData {
       httpOptionsToken
     );
   }
+
+  resolveDiscrepancy(data: any) {
+    const httpOptionsToken = {
+      headers: new HttpHeaders({
+      }),
+    };
+
+    return this.http.put(
+      `${this.baseApiUrl}/transfer-order/${data?.id}/resolve-discrepancy`,
+      data?.formData,
+      httpOptionsToken
+    );
+  }
 }

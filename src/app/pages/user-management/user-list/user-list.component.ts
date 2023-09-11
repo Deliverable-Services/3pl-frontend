@@ -23,9 +23,9 @@ export class UserListComponent implements OnInit {
     sortDir: "",
   };
   groups: any[] = ["SELECT","INTERNAL", "EXTERNAL"];
+  rolesName: any[] = [];
   busy: Subscription | undefined;
   basicDataSource: any[] = [];
-  stRoles:any;
   pager = {
     total: 0,
     pageIndex: 1,
@@ -54,13 +54,13 @@ export class UserListComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.getCreditTermsList();
+    this.getUserList();
     this.getRoles();
   }
 
-  getCreditTermsList() {
+  getUserList(searchParams?: any) {
     this.busy = this.userManagementService
-      .getList()
+      .getList(searchParams)
       .subscribe((res) => {
         this.basicDataSource = res.content;
         this.pager.total = res.totalItems;
@@ -71,8 +71,7 @@ export class UserListComponent implements OnInit {
     this.busy = this.userManagementService
       .getRoles()
       .subscribe((res) => {
-        this.stRoles = res;
-        console.log(':: this.stRoles :: ',this.stRoles);
+        this.rolesName = res?.map((role: any) => role.name) || [];
       });
   }
 
@@ -81,27 +80,27 @@ export class UserListComponent implements OnInit {
       this.pageParam.sortBy = e[0].field;
       this.pageParam.sortDir = e[0].direction.toLowerCase();
       this.userManagementService.setPageParams(this.pageParam);
-      this.getCreditTermsList();
+      this.getUserList();
     }
   }
 
   setPageParams(pageParam: PageParam) {
     this.userManagementService.setPageParams(pageParam);
-    this.getCreditTermsList();
+    this.getUserList();
   }
 
   onPageChange(e: number) {
     this.pager.pageIndex = e;
     this.pageParam.pageNo = this.pager.pageIndex - 1;
     this.setPageParams(this.pageParam);
-    this.getCreditTermsList();
+    this.getUserList();
   }
 
   onSizeChange(e: number) {
     this.pager.pageSize = e;
     this.pageParam.pageSize = e;
     this.setPageParams(this.pageParam);
-    this.getCreditTermsList();
+    this.getUserList();
   }
 
   editRow(rowId: any, index: number) {
@@ -114,7 +113,22 @@ export class UserListComponent implements OnInit {
   }
 
   startSearch(event: any) {
+    let newSearchParams:any = {
+      filters: []
+    }
+    setTimeout(() => {
+      Object.keys(this.searchKeywords).forEach(field => {
+        if(this.searchKeywords[field]) {
+          newSearchParams.filters.push({
+            field: field,
+            operator: "match",
+            value: this.searchKeywords[field],
+          });
+        }
+      });
 
+      this.getUserList(newSearchParams);
+    }, 500);
   }
 
 }
