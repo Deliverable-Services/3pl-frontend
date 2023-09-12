@@ -52,10 +52,10 @@ export class CreditTermsService {
     this.pageParams = pageParams;
   }
 
-  getList(): Observable<any> {
+  getList(params?:any): Observable<any> {
     const httpOptionsToken = {
       params: new HttpParams({
-        fromObject: this.pageParams,
+        fromObject: params? params:this.pageParams,
       }),
     };
 

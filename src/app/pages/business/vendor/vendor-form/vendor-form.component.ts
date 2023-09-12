@@ -9,6 +9,7 @@ import { Season } from "src/app/@core/data/season";
 import { BrandListDataService } from "src/app/@core/mock/brand-data.service";
 import { VendorListDataService } from "src/app/@core/mock/vendor-data.service";
 import { FormConfig } from "src/app/@shared/components/admin-form";
+import { CreditTermsService } from 'src/app/@core/mock/credit-terms.service';
 
 @Component({
   selector: "app-vendor-form",
@@ -20,11 +21,14 @@ export class VendorFormComponent implements OnInit {
   EditorTemplate!: TemplateRef<any>;
   todayDate: any = new Date();
   
-  projectFormData = {
-    id: "",
+  projectFormData:any = {
     address: "",
     businessRegNo: "",
     companyName: "",
+    creditTermsDto: {
+      creditTermsId: "",
+    },
+    termsObj: {},
     generalEmail: "",
     generalPhone: "",
     paymentCurrency: "",
@@ -32,25 +36,14 @@ export class VendorFormComponent implements OnInit {
     primaryContactName: "",
     primaryContactPhone1: "",
     primaryContactPhone2: "",
-    status: "ACTIVE",
     website: "",
-    creditTermsDto: {
-      createdBy: "",
-      createdDate: "",
-      creditDay: 0,
-      creditTermsDetails: "",
-      creditTermsId: "",
-      creditTermsSubject: "",
-      lastModifiedBy: "",
-      lastModifiedDate: "",
-      status: "Active"
-    },
     bankInfo: {
       accName: "",
       accNo: "",
       bankName: "",
       swiftCode: ""
     },
+    status: "ACTIVE"
   };
   mode: string = "Add";
   paramId: string = "";
@@ -60,6 +53,7 @@ export class VendorFormComponent implements OnInit {
   brandList: Brand[] = [];
   formData = {};
   editForm: any = null;
+  creditTerms:any = [];
   
   formConfig: FormConfig = {
     layout: FormLayout.Horizontal,
@@ -108,12 +102,14 @@ export class VendorFormComponent implements OnInit {
     private vendorListDataService: VendorListDataService,
     private dialogService: DialogService,
     private router: Router,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private creditTermsService: CreditTermsService
   ) {}
 
   ngOnInit() {
     this.paramId = this.route.snapshot.params["id"];
     this.mode = this.route.snapshot.params["id"] ? "Edit" : "Add";
+    this.getCreditTermsList();
 
     if (this.mode === "Edit") {
       this.getVendorById(this.paramId);
@@ -124,10 +120,11 @@ export class VendorFormComponent implements OnInit {
 
   getVendorById(id: string) {
     this.vendorListDataService.getVendorById(id).subscribe((res) => {
-      console.log({ res });
+      // console.log({ res });
       this.selectedVendor = res;
       this.contactList = res.vendorContacts;
       this.projectFormData = res;
+      this.projectFormData.termsObj = this.projectFormData.creditTermsDto;
     });
   }
 
@@ -146,6 +143,7 @@ export class VendorFormComponent implements OnInit {
 
   submitProjectForm({ valid, directive, data, errors }: any) {
     console.log("projectFormData", this.projectFormData);
+    // delete this.projectFormData.termsObj;
     if (valid) {
       if (this.mode === "Add") {
         this.vendorListDataService
@@ -219,6 +217,25 @@ export class VendorFormComponent implements OnInit {
           this.getVendorById(this.paramId);
         });
     }
+  }
+
+  getCreditTermsList() {
+    this.busy = this.creditTermsService
+      .getList({
+        pageNo: 0,
+        pageSize: 100,
+        sortBy: "",
+        sortDir: "",
+      })
+      .subscribe((res) => {
+        this.creditTerms = res?.content?.map((data: any) => {
+          return {
+            creditTermsId: data?.creditTermsId,
+            creditTermsSubject: data?.creditTermsSubject
+          }
+        })
+        console.log(':: : ', res, this.creditTerms);
+      });
   }
 
   editBrand(rowId: any, index: number) {

@@ -37,7 +37,7 @@
           </div>
           <div [ngStyle]="{ display: 'flex', justifyContent: 'space-between' }">
             <div [ngStyle]="{ width: '46%' }">
-              <d-form-item>
+              <!-- <d-form-item>
                 <d-form-label [required]="true">ID
                 </d-form-label>
                 <d-form-control>
@@ -46,7 +46,7 @@
                       validators: [{ required: true }]
                     }" />
                 </d-form-control>
-              </d-form-item>
+              </d-form-item> -->
 
               <d-form-item>
                 <d-form-label [required]="true">Business Reg No
@@ -89,7 +89,8 @@
                     }"/>
                 </d-form-control>
               </d-form-item>
-              <d-form-item>
+              
+              <d-form-item [ngStyle]="{ marginBottom: '35px' }">
                 <d-form-label [required]="true">Payment Currency
                 </d-form-label>
 
@@ -101,6 +102,20 @@
                     validators: [{ required: true }]
                   }"></d-select>
               </d-form-item>
+              
+              <d-form-item>
+                <d-form-label [required]="true">Credit Terms DTO
+                </d-form-label>
+
+                <d-select [readonly]="true" [filterKey]="'creditTermsSubject'" [extraConfig]="{
+                    labelization: { enable: true, overflow: 'multiple-line' }
+                  }" [appendToBody]="true" placeholder="Select Credit Terms DTO"
+                  [options]="creditTerms" name="creditTermsId"
+                  [(ngModel)]="projectFormData.termsObj"
+                  (valueChange)="projectFormData.creditTermsDto.creditTermsId = projectFormData.termsObj?.creditTermsId" [dValidateRules]="{
+                    validators: [{ required: true }]
+                  }"></d-select>
+              </d-form-item>
             </div>
             <div [ngStyle]="{ width: '46%' }">
 
@@ -108,7 +123,7 @@
                 <d-form-label [required]="true">Primary Contact Email</d-form-label>
                 <d-form-control>
                   <input dTextInput autocomplete="off" name="primaryContactEmail" placeholder="Primary Contact Email"
-                    [(ngModel)]="projectFormData.address" [dValidateRules]="{
+                    [(ngModel)]="projectFormData.primaryContactEmail" [dValidateRules]="{
                       validators: [{ required: true }]
                     }"/>
                 </d-form-control>
@@ -165,6 +180,60 @@
               </d-form-item>
             </div>
           </div>
+
+          <div [ngStyle]="{ display: 'flex', justifyContent: 'space-between' }">
+            <div class="da-content-banner-title">
+              {{ "Bank Details" | translate }}
+            </div>
+          </div>
+          <div [ngStyle]="{ display: 'flex', justifyContent: 'space-between' }">
+            <div [ngStyle]="{ width: '46%' }">
+
+              <d-form-item>
+                <d-form-label [required]="true">Account Name
+                </d-form-label>
+                <d-form-control>
+                  <input dTextInput autocomplete="off" name="accName" placeholder="Account Name"
+                    [(ngModel)]="projectFormData.bankInfo.accName" [dValidateRules]="{
+                      validators: [{ required: true }]
+                    }" />
+                </d-form-control>
+              </d-form-item>
+
+              <d-form-item>
+                <d-form-label [required]="true">Bank Name</d-form-label>
+                <d-form-control>
+                  <input dTextInput autocomplete="off" name="bankName" placeholder="Bank Name"
+                    [(ngModel)]="projectFormData.bankInfo.bankName" [dValidateRules]="{
+                      validators: [{ required: true }]
+                    }" />
+                </d-form-control>
+              </d-form-item>
+            </div>
+            <div [ngStyle]="{ width: '46%' }">
+
+              <d-form-item>
+                <d-form-label [required]="true">Account No.</d-form-label>
+                <d-form-control>
+                  <input dTextInput autocomplete="off" name="accNo" placeholder="Account No"
+                    [(ngModel)]="projectFormData.bankInfo.accNo" [dValidateRules]="{
+                      validators: [{ required: true }]
+                    }"/>
+                </d-form-control>
+              </d-form-item>
+
+              <d-form-item>
+                <d-form-label [required]="true">Swift Code</d-form-label>
+                <d-form-control>
+                  <input dTextInput autocomplete="off" name="swiftCode" placeholder="Swift Code"
+                    [(ngModel)]="projectFormData.bankInfo.swiftCode" [dValidateRules]="{
+                      validators: [{ required: true }]
+                    }"/>
+                </d-form-control>
+              </d-form-item>
+            </div>
+          </div>
+
           <ng-template #EditorTemplate>
             <da-admin-form [formConfig]="formConfig" [formData]="formData" (submitted)="onSubmitted($event)"
               (canceled)="onCanceled()">

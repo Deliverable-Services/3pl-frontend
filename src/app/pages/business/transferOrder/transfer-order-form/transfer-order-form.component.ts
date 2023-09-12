@@ -36,12 +36,14 @@ export class TransferOrderFormComponent implements OnInit {
     {
       variantId: 'p?.variantId',
       skuNo: 'p?.sku',
-      plannedQuantity: null
+      plannedQuantity: null,
+      alreadyAdded: false
     },
     {
       variantId: 'p?.variantId',
       skuNo: 'p?.sku',
-      plannedQuantity: null
+      plannedQuantity: null,
+      alreadyAdded: false
     }
   ];
 
@@ -154,7 +156,8 @@ export class TransferOrderFormComponent implements OnInit {
           sentQuantity: d?.sentQuantity,
           discrepancyResolvedTo: d?.discrepancyResolvedTo,
           lineNumber: d?.lineNumber,
-          discrepancyFlag: d?.discrepancyFlag
+          discrepancyFlag: d?.discrepancyFlag,
+          alreadyAdded: true
         }
       })
 
@@ -185,7 +188,9 @@ export class TransferOrderFormComponent implements OnInit {
           });
         }
       } else {
-        this.detailsInputs?.forEach((key: any, e: any) => e.lineNumber = parseInt(key+1));
+        this.detailsInputs?.forEach((e: any, key: any) => {
+          e['lineNumber'] = parseInt(key+1)
+        });
         this.projectFormData.details = this.detailsInputs;
         this.transferOrderService
           .updateTransferOrder(this.paramId, this.projectFormData)
@@ -258,7 +263,8 @@ export class TransferOrderFormComponent implements OnInit {
               return {
                 variantId: p?.variantId,
                 skuNo: p?.sku,
-                plannedQuantity: null
+                plannedQuantity: null,
+                alreadyAdded: false
               }
             })
           },
@@ -340,6 +346,10 @@ export class TransferOrderFormComponent implements OnInit {
       }
       this._showToastMsg(type, msg);
     });
+  }
+
+  removeNow(rowIndex: number) {
+    this.detailsInputs?.splice(rowIndex, 1);
   }
   
 }
