@@ -95,6 +95,9 @@ export default {
     userManagement: {
       title: 'User Management',
     },
+    businessCategory:{
+      title: 'Business Category'
+    },
     user: {
       title: 'User',
       list: 'User List'

@@ -98,3 +98,19 @@ width: 100% !important;
     left: 60px !important;
   }
 }
+
+.devui-dropdown-origin.disabled[_ngcontent-lys-c139] .devui-select-list-wrapper.devui-form-control[_ngcontent-lys-c139], .devui-dropdown-origin.disabled[_ngcontent-lys-c139] .devui-form-control.devui-select-input[_ngcontent-lys-c139], .devui-dropdown-origin.disabled[_ngcontent-lys-c139]:hover .devui-select-list-wrapper.devui-form-control[_ngcontent-lys-c139], .devui-dropdown-origin.disabled[_ngcontent-lys-c139]:hover .devui-form-control.devui-select-input[_ngcontent-lys-c139] {
+  cursor: not-allowed;
+  background-color: #f5f5f5;
+  background-color: var(--devui-disabled-bg, #f5f5f5);
+  color: black !important;
+}
+
+.devui-form-controls textarea.devui-disabled, .devui-form-controls textarea.devui-disabled:hover, .devui-form-controls textarea.disabled, .devui-form-controls textarea.disabled:hover, .devui-form-controls textarea[disabled], .devui-form-controls textarea[disabled]:hover, [dTextInput].devui-disabled, [dTextInput].devui-disabled:hover, [dTextInput].disabled, [dTextInput].disabled:hover, [dTextInput][disabled], [dTextInput][disabled]:hover, [dTextarea].devui-disabled, [dTextarea].devui-disabled:hover, [dTextarea].disabled, [dTextarea].disabled:hover, [dTextarea][disabled], [dTextarea][disabled]:hover {
+  cursor: not-allowed;
+  background-color: #f5f5f5;
+  background-color: var(--devui-disabled-bg,#f5f5f5);
+  border-color: #dfe1e6;
+  border-color: var(--devui-disabled-line,#dfe1e6);
+  color: black !important;
+}

@@ -65,10 +65,6 @@ export default function (values: any) {
           link: "/credit-terms",
         },
         {
-          title: "transferOrder",
-          link: "/business/transfer-order",
-        },
-        {
           title: "connectionLocationList",
           link: "/connection-location",
         },
@@ -101,6 +97,17 @@ export default function (values: any) {
         {
           title:"user",
           link: "/user-management/user"
+        }
+      ],
+    },
+
+    {
+      title: "businessCategory",
+      menuIcon: "icon icon-go-story",
+      children:[
+        {
+            title: "transferOrder",
+            link: "/business/transfer-order",
         }
       ],
     },

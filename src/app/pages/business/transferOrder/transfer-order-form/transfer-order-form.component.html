@@ -4,14 +4,14 @@
       <d-breadcrumb-item>
         <a routerLink="/product/category">{{
           "list.transferOrder.title" | translate
-        }}</a>
+          }}</a>
       </d-breadcrumb-item>
       <d-breadcrumb-item>
         {{
-          (mode === "Add"
-            ? "form.transferOrder.buttonTitle"
-            : "form.transferOrder.editButtonTitle"
-          ) | translate
+        (mode === "Add"
+        ? "form.transferOrder.buttonTitle"
+        : "form.transferOrder.editButtonTitle"
+        ) | translate
         }}
       </d-breadcrumb-item>
     </d-breadcrumb>
@@ -21,65 +21,58 @@
 <div class="da-content-wrapper">
   <da-layout-row [daGutter]="[24, 24]">
     <da-col-item [daSpan]="24" [daXs]="24">
-      <div
-        class="da-basic-form"
-        [ngStyle]="{ display: 'flex', justifyContent: 'space-between' }"
-      >
-        <form
-          dForm
-          ngForm
-          [dValidateRules]="{
+      <div class="da-basic-form" [ngStyle]="{ display: 'flex', justifyContent: 'space-between' }">
+        <form dForm ngForm [dValidateRules]="{
             message: 'The form verification failed, please check.'
-          }"
-          [layout]="verticalLayout"
-          #projectForm="dValidateRules"
-          (dSubmit)="submitProjectForm($event)"
-          autocomplete="off"
-        >
-        <div [ngStyle]="{ width: '100%' }">
+          }" [layout]="verticalLayout" #projectForm="dValidateRules" (dSubmit)="submitProjectForm($event)"
+          autocomplete="off">
+          <div [ngStyle]="{ width: '100%' }">
 
-          <d-form-operation>
-            <d-button *ngIf="!paramId" [ngStyle]="{ float: 'right' }" [disabled]="!allowSubmit" dLoading class="mr-element-spacing"
-              [title]="projectForm.errorMessage || ''" circled="true" style="margin-right: 8px"
-              [showLoading]="projectForm.pending" dFormSubmit [dFormSubmitData]="'submit-button'">
-              {{ ("form.common.create") |translate }}
-            </d-button>
+            <d-form-operation>
+              <d-button *ngIf="!paramId" [ngStyle]="{ float: 'right' }" [disabled]="!allowSubmit" dLoading
+                class="mr-element-spacing" [title]="projectForm.errorMessage || ''" circled="true"
+                style="margin-right: 8px" [showLoading]="projectForm.pending" dFormSubmit
+                [dFormSubmitData]="'submit-button'">
+                {{ ("form.common.create") |translate }}
+              </d-button>
 
-            <d-button *ngIf="projectFormData.status?.toLowerCase() === 'draft'" [ngStyle]="{ float: 'right' }" [disabled]="!allowSubmit" dLoading class="mr-element-spacing"
-              [title]="projectForm.errorMessage || ''" circled="true" style="margin-right: 8px"
-              [showLoading]="projectForm.pending" dFormSubmit [dFormSubmitData]="'submit-button'">
-              {{
-              (paramId ? "form.common.update" : "form.common.create")
-              | translate
-              }}
-            </d-button>
+              <d-button *ngIf="projectFormData.status?.toLowerCase() === 'draft'" [ngStyle]="{ float: 'right' }"
+                [disabled]="!allowSubmit" dLoading class="mr-element-spacing" [title]="projectForm.errorMessage || ''"
+                circled="true" style="margin-right: 8px" [showLoading]="projectForm.pending" dFormSubmit
+                [dFormSubmitData]="'submit-button'">
+                {{
+                (paramId ? "form.common.update" : "form.common.create")
+                | translate
+                }}
+              </d-button>
 
-            <d-button *ngIf="projectFormData.status?.toLowerCase() === 'draft'" [ngStyle]="{ float: 'right' }" class="mr-element-spacing"
-              circled="true" style="margin-right: 8px" (btnClick)="updateStatus('publish')">
-              Publish
-            </d-button>
+              <d-button *ngIf="projectFormData.status?.toLowerCase() === 'draft'" [ngStyle]="{ float: 'right' }"
+                class="mr-element-spacing" circled="true" style="margin-right: 8px"
+                (btnClick)="updateStatus('publish')">
+                Publish
+              </d-button>
 
-            <d-button *ngIf="projectFormData.status?.toLowerCase() === 'open'
-              && projectFormData?.destinationLocation?.nodeType?.toLowerCase() === 'store'" 
-              [ngStyle]="{ float: 'right' }" class="mr-element-spacing"
-              circled="true" style="margin-right: 8px" (btnClick)="updateStatus('received')">
-              Confirm
-            </d-button>
+              <d-button *ngIf="projectFormData.status?.toLowerCase() === 'open'
+              && projectFormData?.destinationLocation?.nodeType?.toLowerCase() === 'store'"
+                [ngStyle]="{ float: 'right' }" class="mr-element-spacing" circled="true" style="margin-right: 8px"
+                (btnClick)="updateStatus('received')">
+                Confirm
+              </d-button>
 
-            <d-button *ngIf="projectFormData.status?.toLowerCase() === 'open' 
-              && projectFormData?.originLocation?.nodeType?.toLowerCase() === 'store'" 
-              [ngStyle]="{ float: 'right' }" class="mr-element-spacing"
-              circled="true" style="margin-right: 8px" (btnClick)="updateStatus('shipped')">
-              Ship
-            </d-button>
-          </d-form-operation>
-        </div>
+              <d-button *ngIf="projectFormData.status?.toLowerCase() === 'open' 
+              && projectFormData?.originLocation?.nodeType?.toLowerCase() === 'store'" [ngStyle]="{ float: 'right' }"
+                class="mr-element-spacing" circled="true" style="margin-right: 8px"
+                (btnClick)="updateStatus('shipped')">
+                Ship
+              </d-button>
+            </d-form-operation>
+          </div>
           <div class="da-content-banner-title">
             {{
-              (mode === "Add"
-              ? "form.transferOrder.buttonTitle"
-              : "form.transferOrder.editButtonTitle"
-              ) | translate
+            (mode === "Add"
+            ? "form.transferOrder.buttonTitle"
+            : "form.transferOrder.editButtonTitle"
+            ) | translate
             }}
           </div>
           <div [ngStyle]="{ display: 'flex', justifyContent: 'space-between' }">
@@ -89,7 +82,7 @@
                   {{ "form.transferOrder.fields.origin" | translate }}
                 </d-form-label>
                 <d-form-control>
-                  <d-select [ngStyle]="{ width: '100%' }" [placeholder]="'form.transferOrder.fields.origin' | translate"
+                  <d-select [disabled]="projectFormData.status?.toLowerCase() !== 'draft'" [ngStyle]="{ width: '100%' }" [placeholder]="'form.transferOrder.fields.origin' | translate"
                     [appendToBody]="true" [multiple]="false" [filterKey]="'nodeName'" [options]="connectionLocationList"
                     name="origin" [(ngModel)]="projectFormData.originLocation" (valueChange)="checkNodeType()"
                     [dValidateRules]="{
@@ -102,13 +95,13 @@
                 <div class="">
                   <d-form-label [required]="true">Expected Arrival Date</d-form-label>
                   <div style="width: 100%" class="devui-input-group devui-dropdown-origin" dActiveFormControl>
-                    <input class="devui-input devui-form-control" placeholder="'y/MM/dd HH:mm:ss'"
+                    <input [disabled]="projectFormData.status?.toLowerCase() !== 'draft'" class="devui-input devui-form-control" placeholder="'y/MM/dd HH:mm:ss'"
                       [dateFormat]="'y/MM/dd HH:mm:ss'" (click)="datePicker1.toggle()" name="dp"
                       [(ngModel)]="projectFormData.expectedArrivalDate" autocomplete="off" dDatepicker
                       #datePicker1="datepicker" [showTime]="true" [minDate]="todayDate"
                       (selectedDateChange)="arrivalDate($event)" [dValidateRules]="{
                         validators: [{ required: true }]
-                      }"/>
+                      }" />
                     <div *ngIf="projectFormData.expectedArrivalDate" class="devui-input-group-addon close-icon-wrapper"
                       (click)="datePicker1.clearAll();">
                       <i class="icon icon-close"></i>
@@ -136,7 +129,7 @@
                   {{ "form.transferOrder.fields.destination" | translate }}
                 </d-form-label>
                 <d-form-control>
-                  <d-select [ngStyle]="{ width: '100%' }" [placeholder]="
+                  <d-select [disabled]="projectFormData.status?.toLowerCase() !== 'draft'" [ngStyle]="{ width: '100%' }" [placeholder]="
                       'form.transferOrder.fields.destination' | translate
                     " [appendToBody]="true" [multiple]="false" [filterKey]="'nodeName'"
                     [options]="connectionLocationList" name="destination" (valueChange)="checkNodeType()"
@@ -149,14 +142,14 @@
               <ng-container *ngIf="mode?.toLowerCase() === 'edit'">
 
                 <div class="input-setting">
-                  <d-form-label [required]="true">Expected Delivery Date</d-form-label>
+                  <d-form-label  [required]="true">Expected Delivery Date</d-form-label>
                   <div style="width: 100%" class="devui-input-group devui-dropdown-origin" dActiveFormControl>
-                    <input class="devui-input devui-form-control" placeholder="'y/MM/dd HH:mm:ss'"
+                    <input [disabled]="projectFormData.status?.toLowerCase() !== 'draft'" class="devui-input devui-form-control" placeholder="'y/MM/dd HH:mm:ss'"
                       [dateFormat]="'y/MM/dd HH:mm:ss'" (click)="datePicker2.toggle()" name="dp"
                       [(ngModel)]="projectFormData.expectedDeliveryDate" autocomplete="off" dDatepicker
                       #datePicker2="datepicker" [showTime]="true" [minDate]="dDate" [dValidateRules]="{
                         validators: [{ required: true }]
-                      }"/>
+                      }" />
                     <div *ngIf="projectFormData.expectedDeliveryDate" class="devui-input-group-addon close-icon-wrapper"
                       (click)="datePicker2.clearAll()">
                       <i class="icon icon-close"></i>
@@ -174,8 +167,9 @@
           <d-form-item [ngStyle]="{ marginTop: '20px' }">
             <d-form-label [required]="true">Remarks</d-form-label>
             <d-form-control>
-                <textarea [ngStyle]="{ height: '104px' }" dTextarea resize="vertical" autocomplete="off" name="tradeDesc"
-                [placeholder]="'form.creditTerms.fields.termsDescription' | translate" [(ngModel)]="projectFormData.remarks" [dValidateRules]="{
+              <textarea [ngStyle]="{ height: '104px' }" dTextarea resize="vertical" autocomplete="off" name="tradeDesc"
+                [placeholder]="'form.creditTerms.fields.termsDescription' | translate"
+                [(ngModel)]="projectFormData.remarks" [dValidateRules]="{
                   validators: [{ required: true }]
                 }"></textarea>
             </d-form-control>
@@ -187,17 +181,17 @@
             </div>
             <div [ngStyle]="{ width: '100%' }">
 
-              <d-form-operation>
-                <d-button [ngStyle]="{ 'margin-bottom': '12px' }" dLoading class="mr-element-spacing"
-                  circled="true" (click)="openDialog()">
-                    Select Product With Style
+              <d-form-operation *ngif="projectFormData.status?.toLowerCase() === 'draft'">
+                <d-button [ngStyle]="{ 'margin-bottom': '12px' }" dLoading class="mr-element-spacing" circled="true"
+                  (click)="openDialog()">
+                  Select Product With Style
                 </d-button>
               </d-form-operation>
             </div>
-            {{detailsInputs | json}}
             <ng-container *ngIf="detailsInputs?.length">
-              <div  *ngFor="let input of detailsInputs; let i = index" [ngStyle]="{ display: 'flex', justifyContent: 'space-between' }">
-                  <!-- <div [ngStyle]="{ width: '46%' }">
+              <div *ngFor="let input of detailsInputs; let i = index"
+                [ngStyle]="{ display: 'flex', justifyContent: 'space-between' }">
+                <!-- <div [ngStyle]="{ width: '46%' }">
                     <d-form-item>
                       <d-form-label [required]="true">SKU</d-form-label>
                         <d-form-control>
@@ -246,65 +240,72 @@
 
                   </div> -->
 
-                  <div [ngStyle]="{ display: 'flex' }">
-                    <d-form-item [ngStyle]="{ margin: '20px 20px 20px 0px' }">
-                      <d-form-label [required]="true">SKU</d-form-label>
-                      <d-form-control>
-                        <input disabled dTextInput autocomplete="off" placeholder="Remarks"
-                            [value]="input.skuNo" (input)="updateValue($event, 'skuNo', i)"/>
-                      </d-form-control>
-                    </d-form-item>
+                <div [ngStyle]="{ display: 'flex' }">
+                  <d-form-item [ngStyle]="{ margin: '20px 20px 20px 0px' }">
+                    <d-form-label [required]="true">SKU</d-form-label>
+                    <d-form-control>
+                      <input disabled dTextInput autocomplete="off" placeholder="Remarks" [value]="input.skuNo"
+                        (input)="updateValue($event, 'skuNo', i)" />
+                    </d-form-control>
+                  </d-form-item>
 
-                    <d-form-item *ngIf="projectFormData.status?.toLowerCase() === 'open'" [ngStyle]="{ margin: '20px 20px 20px 0px' }">
-                      <d-form-label [required]="true">Sent Qty</d-form-label>
-                        <d-form-control>
-                          <input [disabled]="!(projectFormData.status?.toLowerCase() === 'open' 
-                          && projectFormData?.originLocation?.nodeType?.toLowerCase() === 'store')" dTextInput autocomplete="off" placeholder="Sent Qty"
-                            [value]="input.sentQuantity" (input)="updateValue($event, 'sentQuantity', i)"/>
-                        </d-form-control>
-                    </d-form-item>
-                    
-                    <d-form-item *ngIf="projectFormData.status?.toLowerCase() === 'open'" [ngStyle]="{ margin: '20px 20px 20px 0px' }">
-                      <d-form-label [required]="true">Description</d-form-label>
-                      <d-form-control>
-                        <input dTextInput disabled autocomplete="off" name="tradeDesc"
-                          [(ngModel)]="projectFormData.skuDescription">
-                      </d-form-control>
-                    </d-form-item>
+                  <d-form-item *ngIf="projectFormData.status?.toLowerCase() === 'open'"
+                    [ngStyle]="{ margin: '20px 20px 20px 0px' }">
+                    <d-form-label [required]="true">Description</d-form-label>
+                    <d-form-control>
+                      <input dTextInput disabled autocomplete="off" name="tradeDesc"
+                        [(ngModel)]="projectFormData.skuDescription">
+                    </d-form-control>
+                  </d-form-item>
 
-                    <d-form-item [ngStyle]="{ margin: '20px 20px 20px 0px' }">
-                      <d-form-label [required]="true">Planned Quantity</d-form-label>
-                        <d-form-control>
-                          <input [disabled]="!(projectFormData.status?.toLowerCase() === 'draft')" dTextInput autocomplete="off" placeholder="Planned Quantity"
-                          [value]="input.plannedQuantity" (input)="updateValue($event, 'plannedQuantity', i)"/>
-                        </d-form-control>
-                    </d-form-item>
-                    
-                    <d-form-item *ngIf="projectFormData.status?.toLowerCase() === 'open'" [ngStyle]="{ margin: '20px 20px 20px 0px' }">
-                      <d-form-label [required]="true">Received Qty</d-form-label>
-                        <d-form-control>
-                          <input [disabled]="!(projectFormData.status?.toLowerCase() === 'open' 
-                          && projectFormData?.destinationLocation?.nodeType?.toLowerCase() === 'store')" dTextInput autocomplete="off" placeholder="Received Qty"
-                            [value]="input.receivedQuantity" (input)="updateValue($event, 'receivedQuantity', i)"/>
-                        </d-form-control>
-                    </d-form-item>
+                  <d-form-item [ngStyle]="{ margin: '20px 20px 20px 0px' }">
+                    <d-form-label [required]="true">Planned Quantity</d-form-label>
+                    <d-form-control>
+                      <input [disabled]="!(projectFormData.status?.toLowerCase() === 'draft')" dTextInput
+                        autocomplete="off" placeholder="Planned Quantity" [value]="input.plannedQuantity"
+                        (input)="updateValue($event, 'plannedQuantity', i)" />
+                    </d-form-control>
+                  </d-form-item>
 
-                    <d-form-item *ngIf="projectFormData.status?.toLowerCase() === 'open'" [ngStyle]="{ margin: '20px 20px 20px 0px' }">
-                      <d-form-label [required]="true">Discrepancy Resolved To</d-form-label>
-                        <d-form-control>
-                          <d-select [disabled]="!input.discrepancyFlag" [ngStyle]="{ width: '100%' }" [placeholder]="'Discrepancy Resolved To'"
-                          [appendToBody]="true" [multiple]="false" [filterKey]="'discrepancyResolvedTo'" [options]="discrepancyValues"
-                          name="origin" [(ngModel)]="input.discrepancyResolvedTo"
-                          ></d-select>
-                        </d-form-control>
-                    </d-form-item>
+                  <d-form-item *ngIf="projectFormData.status?.toLowerCase() === 'open'"
+                    [ngStyle]="{ margin: '20px 20px 20px 0px' }">
+                    <d-form-label [required]="true">Sent Qty</d-form-label>
+                    <d-form-control>
+                      <input [disabled]="!(projectFormData.status?.toLowerCase() === 'open' 
+                          && projectFormData?.originLocation?.nodeType?.toLowerCase() === 'store')" dTextInput
+                        autocomplete="off" placeholder="Sent Qty" [value]="input.sentQuantity"
+                        (input)="updateValue($event, 'sentQuantity', i)" />
+                    </d-form-control>
+                  </d-form-item>
 
-                    <d-button [disabled]="!input.discrepancyFlag" dLoading class="warning"
-                      circled="true" style="margin-right: 8px;margin-top: 47px;"
-                      (click)="confirmNow(i)">
-                      Confirm
-                    </d-button>
-                  </div>  
+                  <d-form-item *ngIf="projectFormData.status?.toLowerCase() === 'open'"
+                    [ngStyle]="{ margin: '20px 20px 20px 0px' }">
+                    <d-form-label [required]="true">Received Qty</d-form-label>
+                    <d-form-control>
+                      <input [disabled]="!(projectFormData.status?.toLowerCase() === 'open' 
+                          && projectFormData?.destinationLocation?.nodeType?.toLowerCase() === 'store')" dTextInput
+                        autocomplete="off" placeholder="Received Qty" [value]="input.receivedQuantity"
+                        (input)="updateValue($event, 'receivedQuantity', i)" />
+                    </d-form-control>
+                  </d-form-item>
+
+                  <d-form-item *ngIf="projectFormData.status?.toLowerCase() === 'confirm'"
+                    [ngStyle]="{ margin: '20px 20px 20px 0px' }">
+                    <d-form-label [required]="true">Discrepancy Resolved To</d-form-label>
+                    <d-form-control>
+                      <d-select [disabled]="!input.discrepancyFlag" [ngStyle]="{ width: '100%' }"
+                        [placeholder]="'Discrepancy Resolved To'" [appendToBody]="true" [multiple]="false"
+                        [filterKey]="'discrepancyResolvedTo'" [options]="discrepancyValues" name="origin"
+                        [(ngModel)]="input.discrepancyResolvedTo"></d-select>
+                    </d-form-control>
+                  </d-form-item>
+
+                  <d-button *ngif="projectFormData.status?.toLowerCase() === 'confirm'"
+                    [disabled]="!input.discrepancyFlag" dLoading class="warning" circled="true"
+                    style="margin-right: 8px;margin-top: 47px;" (click)="confirmNow(i)">
+                    Confirm
+                  </d-button>
+                </div>
 
               </div>
             </ng-container>
