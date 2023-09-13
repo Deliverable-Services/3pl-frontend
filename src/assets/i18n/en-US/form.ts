@@ -309,9 +309,24 @@ export default {
       generalPhone: 'General Phone', primaryContactEmail: 'Primary Contact Email', primaryContactName: 'Primary Contact Name',
       primaryContactPhone1: 'Primary Contact Phone 1', primaryContactPhone2: 'Primary Contact Phone 2', website: 'Website'}
     },
-    transferOrder:{
-      fields:{origin:"Origin", destination:"Destination"},
-      buttonTitle: 'Create Transfer Order',editButtonTitle: 'Edit Transfer Order'
+    transferOrder: {
+      title2: "Details",
+      fields:{ origin:"Origin", destination:"Destination", expectedArrivalDate: "Expected Arrival Date", expectedDeliveryDate: "Expected Delivery Date",
+      remarks: "Remarks", sku: 'SKU', description: 'Description', plannedQuantity: 'Planned Quantity', sentQty: 'Sent Qty', receivedQty: 'Received Qty',
+      discrepancyResolvedTo: 'Discrepancy Resolved To'},
+      buttonTitle: 'Create Transfer Order',editButtonTitle: 'Edit Transfer Order',
+      popupBtn: 'Select Product With Style',
+      buttons: { publish: 'Publish', confirm: 'Confirm', ship: 'Ship', cancel: 'Cancel', remove: 'Remove' }
+    },
+    vendor:{
+      title: "Vendor",
+      title2: "Bank Details",
+      fields:{ businessRegNo: "Business Reg No", companyName: "Company Name", generalEmail: "General Email", generalPhone: "General Phone",
+      paymentCurrency: "Payment Currency", creditTermsDTO: "Credit Terms DTO", primaryContactEmail: "Primary Contact Email", primaryContactName: "Primary Contact Name",
+      primaryContactPhone1: "Primary Contact Phone One", primaryContactPhone2: "Primary Contact Phone Two", website: "Website", address: "Address",
+      accountName: "Account Name", bankName: "Bank Name", accountNo: "Account No.", swiftCode: "Swift Code"  
+      },
+      buttonTitle: { publish: "Publish", active: "Active", inactive: "Inactive" } 
     },
     'basicForm':{
       'title': 'Basic Form',

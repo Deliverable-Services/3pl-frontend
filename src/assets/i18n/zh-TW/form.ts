@@ -309,6 +309,25 @@ export default {
       generalPhone: '通用電話', primaryContactEmail: '主要聯繫人電子郵件', primaryContactName: '主要聯繫人姓名',
       primaryContactPhone1: '主要聯繫電話 1', primaryContactPhone2: '主要聯繫電話 2', website: '網站'}
     },
+    transferOrder: {
+      title2: "細節",
+      fields:{ origin:"起源", destination:"目的地", expectedArrivalDate: "預計抵達日期", expectedDeliveryDate: "預計交貨日期",
+      remarks: "評論", sku: '存貨單位', description: '描述', plannedQuantity: '計劃數量', sentQty: '發送數量', receivedQty: '收到數量',
+      discrepancyResolvedTo: '差異已解決'},
+      buttonTitle: '創建轉移單',editButtonTitle: '編輯轉移單',
+      popupBtn: '選擇有風格的產品',
+      buttons: { publish: '發布', confirm: '確認', ship: '船', cancel: '取消', remove: '消除' }
+    },
+    vendor:{
+      title: "小販",
+      title2: "銀行明細",
+      fields:{ businessRegNo: "商業登記號", companyName: "公司名稱", generalEmail: "一般電子郵件", generalPhone: "通用電話",
+      paymentCurrency: "付款貨幣", creditTermsDTO: "信用條款 DTO", primaryContactEmail: "主要聯繫人電子郵件", primaryContactName: "主要聯繫人姓名",
+      primaryContactPhone1: "主要聯繫電話一", primaryContactPhone2: "主要聯繫電話二", website: "網站", address: "地址",
+      accountName: "帳戶名稱", bankName: "銀行名", accountNo: "戶口號碼。", swiftCode: "SWIFT代碼"  
+      },
+      buttonTitle: { publish: "發布", active: "積極的", inactive: "不活躍" } 
+    },
     'formLayout':{
       'title': '表單佈局',
       'description': '表單佈局頁面顯示各種表單，包括水平、垂直、彈出和多列佈局。',

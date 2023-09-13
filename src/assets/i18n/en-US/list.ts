@@ -140,6 +140,7 @@ export default {
         list:"Transfer Order List",
         title:"Transfer Order",
         buttonTitle:"Create Transfer Order",
+        actions:"Actions",
     }
   },
 };

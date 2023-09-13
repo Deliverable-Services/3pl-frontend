@@ -305,6 +305,25 @@ export default {
       generalPhone: '通用电话', primaryContactEmail: '主要联系人电子邮件', primaryContactName: '主要联系人姓名',
       primaryContactPhone1: '主要联系电话 1', primaryContactPhone2: '主要联系电话 2', website: '网站'}
     },
+    transferOrder: {
+      title2: "细节",
+      fields:{ origin:"起源", destination:"目的地", expectedArrivalDate: "预计抵达日期", expectedDeliveryDate: "预计交货日期",
+      remarks: "评论", sku: '存货单位', description: '描述', plannedQuantity: '计划数量', sentQty: '发送数量', receivedQty: '收到数量',
+      discrepancyResolvedTo: '差异已解决'},
+      buttonTitle: '创建转移单',editButtonTitle: '编辑转移单',
+      popupBtn: '选择有风格的产品',
+      buttons: { publish: '发布', confirm: '确认', ship: '船', cancel: '取消', remove: '消除' }
+    },
+    vendor:{
+      title: "小贩",
+      title2: "银行明细",
+      fields:{ businessRegNo: "商业登记号", companyName: "公司名称", generalEmail: "一般电子邮件", generalPhone: "通用电话",
+      paymentCurrency: "付款货币", creditTermsDTO: "信用条款 DTO", primaryContactEmail: "主要联系人电子邮件", primaryContactName: "主要联系人姓名",
+      primaryContactPhone1: "主要联系电话一", primaryContactPhone2: "主要联系电话二", website: "网站", address: "地址",
+      accountName: "帐户名称", bankName: "银行名", accountNo: "户口号码。", swiftCode: "SWIFT代码"  
+      },
+      buttonTitle: { publish: "发布", active: "积极的", inactive: "不活跃" } 
+    },
     'basicForm':{
       'title': '基础表单',
       'description': '表单页用于对用户信息进行收集或校验。基础表单具备数据收集、校验和提交功能。'

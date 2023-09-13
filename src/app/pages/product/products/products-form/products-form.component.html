@@ -29,19 +29,19 @@
               <d-button dLoading *ngIf="productsFormData.status === 'Draft'" class="mr-element-spacing"
                 [title]="styleForm.errorMessage || ''" circled="true" style="margin-right: 8px"
                 [showLoading]="styleForm.pending" (click)="confirmPublish()">
-                Publish
+                {{ "form.vendor.buttonTitle.publish" | translate }}
               </d-button>
 
               <d-button dLoading *ngIf="productsFormData.status === 'Publish' || productsFormData.status === 'Inactive'"
                 class="mr-element-spacing primary" [title]="styleForm.errorMessage || ''" circled="true"
                 style="margin-right: 8px" [showLoading]="styleForm.pending" (click)="confirmActive()">
-                Active
+                {{ "form.vendor.buttonTitle.active" | translate }}
               </d-button>
 
               <d-button dLoading *ngIf="productsFormData.status === 'Publish' || productsFormData.status === 'Active'"
                 class="manage-inactive-btn danger" [title]="styleForm.errorMessage || ''" circled="true"
                 style="margin-right: 8px;" [showLoading]="styleForm.pending" (click)="confirmInactive()">
-                Inactive
+                {{ "form.vendor.buttonTitle.inactive" | translate }}
               </d-button>
 
             </div>

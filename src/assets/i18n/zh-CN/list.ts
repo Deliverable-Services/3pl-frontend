@@ -15,6 +15,20 @@ export default {
     company: {
       title: "公司",
     },
+    vendor: {
+      list: '供应商名单',
+    },
+    transferOrder: {
+      status: "地位",
+      id: "至 否。",
+      nodeName:"目的地",
+      nodeName2:"起源",
+      receiptDiscrepancy:"差异",
+      list:"调拨单清单",
+      title:"调令",
+      buttonTitle:"创建转移单",
+      actions:"行动",
+    },
     category: {
       title: "类别",
       categoryList: "类别列表",
