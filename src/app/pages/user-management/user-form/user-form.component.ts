@@ -3,6 +3,8 @@ import { FormLayout, ToastService } from "ng-devui";
 import { ActivatedRoute, Router } from "@angular/router";
 import { UserManagementService } from 'src/app/@core/mock/user-management.service';
 import { MSG } from 'src/config/global-var';
+import { ConnectionLocationService } from 'src/app/@core/mock/connection-location.service';
+import { VendorListDataService } from 'src/app/@core/mock/vendor-data.service';
 
 @Component({
   selector: 'app-user-form',
@@ -13,6 +15,9 @@ export class UserFormComponent implements OnInit {
 
   mode: string = "Add";
   verticalLayout: FormLayout = FormLayout.Vertical;
+  connectionLocationListDC: any[] = [];
+  connectionLocationListStore: any[] = [];
+  vendorList: any[] = [];
   projectFormData:any = {
     userId: "",
     username: "",
@@ -20,6 +25,7 @@ export class UserFormComponent implements OnInit {
     description: "",
     title: "",
     department: "",
+    rfidManager: false,
     group: "",
     roles: [],
     selectedRoles: []
@@ -30,6 +36,8 @@ export class UserFormComponent implements OnInit {
   // selectedCreditTerms: any = {};
   constructor(
     private userManagementService: UserManagementService,
+    private connectionLocationService: ConnectionLocationService,
+    private vendorListDataService: VendorListDataService,
     private route: ActivatedRoute,
     private router: Router,
     private toastService: ToastService
@@ -40,17 +48,17 @@ export class UserFormComponent implements OnInit {
     this.mode = this.route.snapshot.params["id"] ? "Edit" : "Add";
 
     // this.getRoles();
+    this.getConnectionLocationList();
     this.getCreditTermsById(this.paramId);
   }
 
-  showRole(event : any){
-    // console.log('working role');    
+  showRole(event: any) {
+    console.log('showRole called with event:', event);
+  
     this.userManagementService.getRoles().subscribe((res) => {
-      this.rolesName = res?.map((role: any) => {
-        if(role.group == event){
-          return role.name;
-        }
-      }) || [];
+      // Filter roles based on the event condition
+      this.rolesName = res?.filter((role: any) => role.group === event).map((filteredRole: any) => filteredRole.name);
+      console.log(this.rolesName, 'filtered roles');
     });
   }
 
@@ -62,12 +70,55 @@ export class UserFormComponent implements OnInit {
     });
   }
 
+  getConnectionLocationList() {
+    this.connectionLocationService
+      .getList()
+      .subscribe((res) => {
+        this.connectionLocationListDC = res?.filter((c: any) => c?.nodeType?.toLowerCase() === 'dc');
+        this.connectionLocationListStore = res?.filter((c: any) => c?.nodeType?.toLowerCase() === 'store');
+        this.connectionLocationListStore = this.connectionLocationListStore?.map((c: any) => {
+          return {
+                connectionLocationId: c?.connectionLocationId || "",
+                nodeName: c?.nodeName || "",
+                nodeType: c?.nodeType,
+          }
+        })
+        this.connectionLocationListDC = this.connectionLocationListDC?.map((c: any) => {
+          return {
+                connectionLocationId: c?.connectionLocationId || "",
+                nodeName: c?.nodeName || "",
+                nodeType: c?.nodeType,
+          }
+        })
+      });
+  }
+
+  getVendorList() {
+    this.connectionLocationService
+      .getList()
+      .subscribe((res) => {
+        this.vendorList = res.content;
+        this.vendorList = this.connectionLocationListStore?.map((c: any) => {
+          return {
+                id: c?.id || "",
+                name: c?.primaryContactName || "",
+          }
+        })
+        
+      });
+  }
+
+  selected(event: any) {
+    console.log('event selected',this.projectFormData.selectedRoles);
+    
+  }
+
   submitProjectForm(event: any) {
     let formData = this.projectFormData;
     delete formData.selectedRoles;
     if (event?.valid) {
       this.userManagementService
-          .updateCreditTerms(this.paramId, formData)
+          .updateUser(this.paramId, formData)
           .subscribe((res) => {
             this._showToast(res);
           });

@@ -82,6 +82,64 @@
                     }"></d-select>
                 </d-form-control>
               </d-form-item>
+              <d-form-item>
+                <d-form-label [required]="true">
+                  {{'form.user.fields.roles' | translate}}
+                </d-form-label>
+                <d-form-control>
+                      <d-checkbox-group
+                        [(ngModel)]="projectFormData.selectedRoles"
+                        [name]="'roles'"
+                        [options]="rolesName"
+                        [direction]="'row'"
+                        [isShowTitle]="true"
+                        (click)="selected($event)"
+                      >
+                      </d-checkbox-group>
+                </d-form-control>
+              </d-form-item>
+
+              <d-form-item *ngIf="projectFormData.selectedRoles.includes('DC Manager')">
+                <d-form-label [required]="true">
+                  {{'form.user.fields.dc' | translate}}
+                </d-form-label>
+                <d-form-control>
+                  <d-select [ngStyle]="{ width: '100%' }"
+                    placeholder="Select a DC" [scrollHight]="'300px'"
+                    [filterKey]="'nodeName'" [appendToBody]="true" [options]="connectionLocationListDC" name="dc"
+                    [(ngModel)]="projectFormData.store" [dValidateRules]="{
+                      validators: [{ required: true }]
+                    }"></d-select>
+                </d-form-control>
+              </d-form-item>
+
+              <d-form-item *ngIf="projectFormData.selectedRoles.includes('Store Manager')">
+                <d-form-label [required]="true">
+                  {{'form.user.fields.store' | translate}}
+                </d-form-label>
+                <d-form-control>
+                  <d-select [ngStyle]="{ width: '100%' }"
+                    placeholder="Select a Store" [scrollHight]="'300px'"
+                    [filterKey]="'nodeName'" [appendToBody]="true" [options]="connectionLocationListStore" name="store"
+                    [(ngModel)]="projectFormData.dc" [dValidateRules]="{
+                      validators: [{ required: true }]
+                    }"></d-select>
+                </d-form-control>
+              </d-form-item>
+
+              <d-form-item *ngIf="projectFormData.selectedRoles.includes('Vendor')">
+                <d-form-label [required]="true">
+                  {{'form.user.fields.vendor' | translate}}
+                </d-form-label>
+                <d-form-control>
+                  <d-select [ngStyle]="{ width: '100%' }"
+                    placeholder="Select a Vendor" [scrollHight]="'300px'"
+                    [filterKey]="'group'" [appendToBody]="true" [options]="groups" name="vendor"
+                    [(ngModel)]="projectFormData.vendor" [dValidateRules]="{
+                      validators: [{ required: true }]
+                    }"></d-select>
+                </d-form-control>
+              </d-form-item>
 
             </div>
 
@@ -130,22 +188,7 @@
                 </d-form-control>
               </d-form-item>
               
-              <d-form-item>
-                <d-form-label [required]="true">
-                  {{'form.user.fields.roles' | translate}}
-                </d-form-label>
-                <d-form-control>
-                      <d-checkbox-group
-                        [(ngModel)]="projectFormData.selectedRoles"
-                        [name]="'roles'"
-                        [options]="rolesName"
-                        [direction]="'row'"
-                        [isShowTitle]="true"
-                        (change)="checkRole($event)"
-                      >
-                      </d-checkbox-group>
-                </d-form-control>
-              </d-form-item>
+
             </div>
           </div>
           <div [ngStyle]="{ width: '100%' }">

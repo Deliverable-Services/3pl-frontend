@@ -93,12 +93,12 @@ export class UserManagementService {
     );
   }
 
-  addCreditTerms(data: any) {
+  addUser(data: any) {
     return this.http.post(`${this.baseApiUrl}/credit-terms`, data);
   }
 
-  updateCreditTerms(id: string, data: any): Observable<any> {
-    return this.http.put(
+  updateUser(id: string, data: any): Observable<any> {
+    return this.http.put( 
       `${this.baseApiUrl}/users/${id}`,
       data
     );

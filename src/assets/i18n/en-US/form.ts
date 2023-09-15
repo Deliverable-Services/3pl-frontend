@@ -302,7 +302,8 @@ export default {
     user: {
       edit_user: 'Edit User',
       fields: {userId: 'User Id', username: 'Username', email: 'Email', description: 'Description', title: 'Title', department: 'Department',
-      group: 'Group', roles: 'Roles'}
+      group: 'Group', roles: 'Roles', dc: "Select DC", store: "Select Store", vendor: "Select Vendor"
+    }
     },
     sPartner: {
       fields: {id: 'ID', address: 'Address', businessRegNo: 'Business Reg No', companyName: 'Company Name', generalEmail: 'General Email', 
