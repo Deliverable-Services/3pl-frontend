@@ -93,20 +93,20 @@ export class UserFormComponent implements OnInit {
       });
   }
 
-  getVendorList() {
-    this.connectionLocationService
-      .getList()
-      .subscribe((res) => {
-        this.vendorList = res.content;
-        this.vendorList = this.connectionLocationListStore?.map((c: any) => {
-          return {
-                id: c?.id || "",
-                name: c?.primaryContactName || "",
-          }
-        })
+  // getVendorList() {
+  //   this.vendorListDataService
+  //     .getVendorList()
+  //     .subscribe((res) => {
+  //       this.vendorList = res;
+  //       this.vendorList = this.connectionLocationListStore?.map((c: any) => {
+  //         return {
+  //               id: c?.id || "",
+  //               name: c?.primaryContactName || "",
+  //         }
+  //       })
         
-      });
-  }
+  //     });
+  // }
 
   selected(event: any) {
     console.log('event selected',this.projectFormData.selectedRoles);
