@@ -98,9 +98,10 @@ export class UserManagementService {
   }
 
   updateUser(id: string, data: any): Observable<any> {
+    let fData = data;
     return this.http.put( 
       `${this.baseApiUrl}/users/${id}`,
-      data
+      fData
     );
   }
 

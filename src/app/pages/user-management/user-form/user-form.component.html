@@ -99,43 +99,49 @@
                 </d-form-control>
               </d-form-item>
 
-              <d-form-item *ngIf="projectFormData.selectedRoles.includes('DC Manager')">
+              <d-form-item *ngIf="projectFormData.selectedRoles?.includes('DC Manager')
+              && projectFormData.group === 'INTERNAL'">
                 <d-form-label [required]="true">
                   {{'form.user.fields.dc' | translate}}
                 </d-form-label>
                 <d-form-control>
                   <d-select [ngStyle]="{ width: '100%' }"
                     placeholder="Select a DC" [scrollHight]="'300px'"
+                    (valueChange)="manageVal($event, 'store')"
                     [filterKey]="'nodeName'" [appendToBody]="true" [options]="connectionLocationListDC" name="dc"
-                    [(ngModel)]="projectFormData.store" [dValidateRules]="{
+                    [(ngModel)]="projectFormData.warehouseInfo" [dValidateRules]="{
                       validators: [{ required: true }]
                     }"></d-select>
                 </d-form-control>
               </d-form-item>
 
-              <d-form-item *ngIf="projectFormData.selectedRoles.includes('Store Manager')">
+              <d-form-item *ngIf="projectFormData.selectedRoles?.includes('Store Manager')
+                && projectFormData.group === 'INTERNAL'">
                 <d-form-label [required]="true">
                   {{'form.user.fields.store' | translate}}
                 </d-form-label>
                 <d-form-control>
                   <d-select [ngStyle]="{ width: '100%' }"
                     placeholder="Select a Store" [scrollHight]="'300px'"
+                    (valueChange)="manageVal($event, 'warehouse')"
                     [filterKey]="'nodeName'" [appendToBody]="true" [options]="connectionLocationListStore" name="store"
-                    [(ngModel)]="projectFormData.dc" [dValidateRules]="{
+                    [(ngModel)]="projectFormData.storeInfo" [dValidateRules]="{
                       validators: [{ required: true }]
                     }"></d-select>
                 </d-form-control>
               </d-form-item>
 
-              <d-form-item *ngIf="projectFormData.selectedRoles.includes('Vendor')">
+              <d-form-item *ngIf="projectFormData.selectedRoles?.includes('Vendor')
+              && projectFormData.group === 'EXTERNAL'">
                 <d-form-label [required]="true">
                   {{'form.user.fields.vendor' | translate}}
                 </d-form-label>
                 <d-form-control>
                   <d-select [ngStyle]="{ width: '100%' }"
                     placeholder="Select a Vendor" [scrollHight]="'300px'"
-                    [filterKey]="'group'" [appendToBody]="true" [options]="groups" name="vendor"
-                    [(ngModel)]="projectFormData.vendor" [dValidateRules]="{
+                    (valueChange)="manageVal($event, 'vendor')"
+                    [filterKey]="'name'" [appendToBody]="true" [options]="vendorList" name="vendor"
+                    [(ngModel)]="projectFormData.vendorInfo" [dValidateRules]="{
                       validators: [{ required: true }]
                     }"></d-select>
                 </d-form-control>

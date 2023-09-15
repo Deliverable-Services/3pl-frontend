@@ -28,7 +28,19 @@ export class UserFormComponent implements OnInit {
     rfidManager: false,
     group: "",
     roles: [],
-    selectedRoles: []
+    selectedRoles: [],
+    store: {
+      connectionLocationId: "",
+    },
+    vendor: {
+      id: ""
+    },
+    warehouse: {
+      connectionLocationId: ""
+    },
+    storeInfo: {},
+    vendorInfo: {},
+    warehouseInfo: {}
   };
   groups: any[] = ["SELECT","INTERNAL", "EXTERNAL"];
   rolesName: any[] = [];
@@ -50,15 +62,13 @@ export class UserFormComponent implements OnInit {
     // this.getRoles();
     this.getConnectionLocationList();
     this.getCreditTermsById(this.paramId);
+    this.getVendorList();
   }
 
   showRole(event: any) {
-    console.log('showRole called with event:', event);
-  
     this.userManagementService.getRoles().subscribe((res) => {
       // Filter roles based on the event condition
       this.rolesName = res?.filter((role: any) => role.group === event).map((filteredRole: any) => filteredRole.name);
-      console.log(this.rolesName, 'filtered roles');
     });
   }
 
@@ -67,6 +77,14 @@ export class UserFormComponent implements OnInit {
     this.userManagementService.getById(id).subscribe((res) => {
       this.projectFormData = res;
       this.projectFormData.selectedRoles = res?.roles?.map((role: any) => role?.name);
+
+      this.projectFormData.store = res?.store || {connectionLocationId: ''};
+      this.projectFormData.warehouse = res?.warehouse || {connectionLocationId: ''};
+      this.projectFormData.vendor = res?.vendor || {id: ''};
+
+      this.projectFormData.storeInfo = res?.store|| {};
+      this.projectFormData.warehouseInfo = res?.warehouse || {};
+      this.projectFormData.vendorInfo = res?.vendor || {};
     });
   }
 
@@ -93,32 +111,47 @@ export class UserFormComponent implements OnInit {
       });
   }
 
-  // getVendorList() {
-  //   this.vendorListDataService
-  //     .getVendorList()
-  //     .subscribe((res) => {
-  //       this.vendorList = res;
-  //       this.vendorList = this.connectionLocationListStore?.map((c: any) => {
-  //         return {
-  //               id: c?.id || "",
-  //               name: c?.primaryContactName || "",
-  //         }
-  //       })
+  getVendorList() {
+    this.vendorListDataService
+      .getVendorList()
+      .subscribe((res: any) => {
+        this.vendorList = res?.content?.map((c: any) => {
+          return {
+                id: c?.id || "",
+                name: c?.primaryContactName || "",
+          }
+        })
         
-  //     });
-  // }
+      });
+  }
 
   selected(event: any) {
-    console.log('event selected',this.projectFormData.selectedRoles);
-    
+    this.projectFormData.roles = this.projectFormData.selectedRoles?.map((role: any) => {
+      return { name: role }
+    });
   }
 
   submitProjectForm(event: any) {
     let formData = this.projectFormData;
-    delete formData.selectedRoles;
+    
+    formData['rfidManager'] = formData.selectedRoles.includes('EPC Manager');
+
     if (event?.valid) {
       this.userManagementService
-          .updateUser(this.paramId, formData)
+          .updateUser(this.paramId, {
+            userId: formData.userId,
+            username: formData.username,
+            email: formData.email,
+            description: formData.description,
+            title: formData.title,
+            department: formData.department,
+            rfidManager: formData.rfidManager,
+            group: formData.group,
+            roles: formData.roles,
+            store: formData['group'] === 'EXTERNAL' ? null:formData.store,
+            vendor: formData['group'] === 'INTERNAL' ? null:formData.vendor,
+            warehouse: formData['group'] === 'EXTERNAL' ? null:formData.warehouse
+          })
           .subscribe((res) => {
             this._showToast(res);
           });
@@ -153,6 +186,17 @@ export class UserFormComponent implements OnInit {
       this.projectFormData.roles?.push({
         name: stEv.value
       });
+    }
+  }
+
+  manageVal(event: any, type: string) {
+    console.log(this.projectFormData, event, type);
+    if(type === 'store') {
+      this.projectFormData.store['connectionLocationId'] = event?.connectionLocationId;
+    } else if(type === 'warehouse') {
+      this.projectFormData.warehouse['connectionLocationId'] = event?.connectionLocationId;
+    } else if(type === 'vendor') {
+      this.projectFormData.vendor['id'] = event?.id;
     }
   }
 
