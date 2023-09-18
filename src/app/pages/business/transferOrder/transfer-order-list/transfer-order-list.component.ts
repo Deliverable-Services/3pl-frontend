@@ -38,6 +38,8 @@ export class TransferOrderListComponent implements OnInit {
 
   editRowIndex = -1;
 
+  statusList: any[] = ['DRAFT', 'OPEN', 'PUBLISH', 'RECEIVED', 'SHIPPED', 'CANCEL'];
+
   pager = {
     total: 0,
     pageIndex: 1,
@@ -46,6 +48,7 @@ export class TransferOrderListComponent implements OnInit {
 
   searchKeywords:any = {
     id: '',
+    status: ''
   }
 
   columnSize: any = {
@@ -66,6 +69,8 @@ export class TransferOrderListComponent implements OnInit {
   ) {}
 
   ngOnInit() {
+    this.pageParam.pageSize = 20;
+    this.pager.pageSize = 20;
     this.pageParam.pageNo = 0;
     this.transferOrderListDataService.setPageParams(this.pageParam);
     this.getTransferOrderList();
