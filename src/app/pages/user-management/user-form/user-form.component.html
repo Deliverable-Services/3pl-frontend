@@ -29,9 +29,7 @@
                 <d-form-label [required]="true">{{"form.user.fields.userId" | translate}}
                 </d-form-label>
                 <d-form-control>
-                  <input dTextInput autocomplete="off" name="userId"
-                    [ngStyle]="{ opacity: '0.5' }"
-                    readonly
+                  <input dTextInput autocomplete="off" name="userId" [ngStyle]="{ opacity: '0.5' }" readonly
                     [placeholder]="'form.user.fields.userId' | translate" [(ngModel)]="projectFormData.userId"
                     [dValidateRules]="{
                       validators: [{ required: true }]
@@ -44,11 +42,8 @@
                   {{'form.user.fields.email' | translate}}
                 </d-form-label>
                 <d-form-control>
-                  <input dTextInput autocomplete="off" name="email"
-                    [ngStyle]="{ opacity: '0.5' }"
-                    readonly
-                    [placeholder]="'form.user.fields.email' | translate"
-                    [(ngModel)]="projectFormData.email"
+                  <input dTextInput autocomplete="off" name="email" [ngStyle]="{ opacity: '0.5' }" readonly
+                    [placeholder]="'form.user.fields.email' | translate" [(ngModel)]="projectFormData.email"
                     [dValidateRules]="{
                         validators: [{ required: true }]
                       }" />
@@ -61,8 +56,8 @@
                 </d-form-label>
                 <d-form-control>
                   <input dTextInput autocomplete="off" name="department"
-                    [placeholder]="'form.user.fields.department' | translate"
-                    [(ngModel)]="projectFormData.department" [dValidateRules]="{
+                    [placeholder]="'form.user.fields.department' | translate" [(ngModel)]="projectFormData.department"
+                    [dValidateRules]="{
                         validators: [{ required: true }]
                       }" />
                 </d-form-control>
@@ -73,11 +68,9 @@
                   {{'form.user.fields.group' | translate}}
                 </d-form-label>
                 <d-form-control>
-                  <d-select [ngStyle]="{ width: '100%' }"
-                    placeholder="Select a Group" [scrollHight]="'300px'"
-                    (valueChange)="showRole($event)"
-                    [filterKey]="'group'" [appendToBody]="true" [options]="groups" name="group"
-                    [(ngModel)]="projectFormData.group" [dValidateRules]="{
+                  <d-select [ngStyle]="{ width: '100%' }" placeholder="Select a Group" [scrollHight]="'300px'"
+                    (valueChange)="showRole($event)" [filterKey]="'group'" [appendToBody]="true" [options]="groups"
+                    name="group" [(ngModel)]="projectFormData.group" [dValidateRules]="{
                       validators: [{ required: true }]
                     }"></d-select>
                 </d-form-control>
@@ -87,66 +80,45 @@
                   {{'form.user.fields.roles' | translate}}
                 </d-form-label>
                 <d-form-control>
-                      <d-checkbox-group
-                        [(ngModel)]="projectFormData.selectedRoles"
-                        [name]="'roles'"
-                        [options]="rolesName"
-                        [direction]="'row'"
-                        [isShowTitle]="true"
-                        (click)="selected($event)"
-                      >
-                      </d-checkbox-group>
+                  <d-checkbox-group [(ngModel)]="projectFormData.selectedRoles" [name]="'roles'" [options]="rolesName"
+                    [direction]="'column'" [isShowTitle]="true" (click)="selected($event)">
+                  </d-checkbox-group>
+                  <d-form-item [ngStyle]="customStylesDC" *ngIf="projectFormData.selectedRoles?.includes('DC Manager')
+                  && projectFormData.group === 'INTERNAL'">
+                    <d-form-control>
+                      <d-select [ngStyle]="{ width: '100%' }" placeholder="Select a DC" [scrollHight]="'300px'"
+                        (valueChange)="manageVal($event, 'warehouse')" [filterKey]="'nodeName'" [appendToBody]="true"
+                        [options]="connectionLocationListDC" name="dc" [(ngModel)]="projectFormData.warehouseInfo"
+                        [dValidateRules]="{
+                          validators: [{ required: true }]
+                        }"></d-select>
+                    </d-form-control>
+                  </d-form-item>
+
+                  <d-form-item [ngStyle]="customStylesStore" *ngIf="projectFormData.selectedRoles?.includes('Store Manager')
+                    && projectFormData.group === 'INTERNAL'">
+                    <d-form-control>
+                      <d-select [ngStyle]="{ width: '100%' }" placeholder="Select a Store" [scrollHight]="'300px'"
+                        (valueChange)="manageVal($event, 'store')" [filterKey]="'nodeName'" [appendToBody]="true"
+                        [options]="connectionLocationListStore" name="store" [(ngModel)]="projectFormData.storeInfo"
+                        [dValidateRules]="{
+                          validators: [{ required: true }]
+                        }"></d-select>
+                    </d-form-control>
+                  </d-form-item>
+
+                  <d-form-item [ngStyle]="customStyleVendor" *ngIf="projectFormData.selectedRoles?.includes('Vendor')
+                  && projectFormData.group === 'EXTERNAL'">
+                    <d-form-control>
+                      <d-select [ngStyle]="{ width: '100%' }" placeholder="Select a Vendor" [scrollHight]="'300px'"
+                        (valueChange)="manageVal($event, 'vendor')" [filterKey]="'name'" [appendToBody]="true"
+                        [options]="vendorList" name="vendor" [(ngModel)]="projectFormData.vendorInfo" [dValidateRules]="{
+                          validators: [{ required: true }]
+                        }"></d-select>
+                    </d-form-control>
+                  </d-form-item>
                 </d-form-control>
               </d-form-item>
-
-              <d-form-item *ngIf="projectFormData.selectedRoles?.includes('DC Manager')
-              && projectFormData.group === 'INTERNAL'">
-                <d-form-label [required]="true">
-                  {{'form.user.fields.dc' | translate}}
-                </d-form-label>
-                <d-form-control>
-                  <d-select [ngStyle]="{ width: '100%' }"
-                    placeholder="Select a DC" [scrollHight]="'300px'"
-                    (valueChange)="manageVal($event, 'store')"
-                    [filterKey]="'nodeName'" [appendToBody]="true" [options]="connectionLocationListDC" name="dc"
-                    [(ngModel)]="projectFormData.warehouseInfo" [dValidateRules]="{
-                      validators: [{ required: true }]
-                    }"></d-select>
-                </d-form-control>
-              </d-form-item>
-
-              <d-form-item *ngIf="projectFormData.selectedRoles?.includes('Store Manager')
-                && projectFormData.group === 'INTERNAL'">
-                <d-form-label [required]="true">
-                  {{'form.user.fields.store' | translate}}
-                </d-form-label>
-                <d-form-control>
-                  <d-select [ngStyle]="{ width: '100%' }"
-                    placeholder="Select a Store" [scrollHight]="'300px'"
-                    (valueChange)="manageVal($event, 'warehouse')"
-                    [filterKey]="'nodeName'" [appendToBody]="true" [options]="connectionLocationListStore" name="store"
-                    [(ngModel)]="projectFormData.storeInfo" [dValidateRules]="{
-                      validators: [{ required: true }]
-                    }"></d-select>
-                </d-form-control>
-              </d-form-item>
-
-              <d-form-item *ngIf="projectFormData.selectedRoles?.includes('Vendor')
-              && projectFormData.group === 'EXTERNAL'">
-                <d-form-label [required]="true">
-                  {{'form.user.fields.vendor' | translate}}
-                </d-form-label>
-                <d-form-control>
-                  <d-select [ngStyle]="{ width: '100%' }"
-                    placeholder="Select a Vendor" [scrollHight]="'300px'"
-                    (valueChange)="manageVal($event, 'vendor')"
-                    [filterKey]="'name'" [appendToBody]="true" [options]="vendorList" name="vendor"
-                    [(ngModel)]="projectFormData.vendorInfo" [dValidateRules]="{
-                      validators: [{ required: true }]
-                    }"></d-select>
-                </d-form-control>
-              </d-form-item>
-
             </div>
 
             <div [ngStyle]="{ width: '46%' }">
@@ -154,11 +126,8 @@
                 <d-form-label [required]="true">{{'form.user.fields.username' | translate}}
                 </d-form-label>
                 <d-form-control>
-                  <input dTextInput autocomplete="off" name="username"
-                    [ngStyle]="{ opacity: '0.5' }"
-                    readonly
-                    [placeholder]="'form.user.fields.username' | translate"
-                    [(ngModel)]="projectFormData.username"
+                  <input dTextInput autocomplete="off" name="username" [ngStyle]="{ opacity: '0.5' }" readonly
+                    [placeholder]="'form.user.fields.username' | translate" [(ngModel)]="projectFormData.username"
                     [dValidateRules]="{
                       validators: [{ required: true }]
                     }" />
@@ -170,11 +139,10 @@
                   {{'form.user.fields.description' | translate}}
                 </d-form-label>
                 <d-form-control>
-                
-                    <input readonly dTextInput autocomplete="off" name="description"
-                    [ngStyle]="{ opacity: '0.5' }"
-                    [placeholder]="'form.user.fields.description' | translate"
-                    [(ngModel)]="projectFormData.description" [dValidateRules]="{
+
+                  <input readonly dTextInput autocomplete="off" name="description" [ngStyle]="{ opacity: '0.5' }"
+                    [placeholder]="'form.user.fields.description' | translate" [(ngModel)]="projectFormData.description"
+                    [dValidateRules]="{
                       validators: [{ required: true }]
                     }" />
                 </d-form-control>
@@ -185,15 +153,13 @@
                   {{'form.user.fields.title' | translate}}
                 </d-form-label>
                 <d-form-control>
-                  <input dTextInput autocomplete="off" name="title"
-                    [placeholder]="'form.user.fields.title' | translate"
-                    [(ngModel)]="projectFormData.title"
-                    [dValidateRules]="{
+                  <input dTextInput autocomplete="off" name="title" [placeholder]="'form.user.fields.title' | translate"
+                    [(ngModel)]="projectFormData.title" [dValidateRules]="{
                         validators: [{ required: true }]
                       }" />
                 </d-form-control>
               </d-form-item>
-              
+
 
             </div>
           </div>
@@ -222,8 +188,7 @@
             </d-form-operation> -->
 
             <d-form-operation>
-              <d-button class="mr-element-spacing" dTooltip
-                class="mr-element-spacing"
+              <d-button class="mr-element-spacing" dTooltip class="mr-element-spacing"
                 [title]="styleForm.errorMessage || ''" circled="true" style="margin-right: 8px"
                 [showLoading]="styleForm.pending" dFormSubmit [dFormSubmitData]="'submit-button'">
                 {{ "form.common.update" | translate}}

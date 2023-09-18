@@ -20,7 +20,24 @@
               <div class="da-list-header">
                 <div class="da-common-search">
                   <div class="da-left">
-                    
+                    <div class="da-header-left">
+                      <div class="da-list-header">
+                        <div class="da-common-search">
+                          <div class="da-left">
+                            <d-search
+                              [size]="'sm'"
+                              [(ngModel)]="searchKeywords.id"
+                              (input)="startSearch($event)"
+                              class="da-inline"
+                              [placeholder]="'Search with Order No'"
+                            ></d-search>                        
+                          </div>
+                          <!-- <div class="header-right">
+                              <d-button class="mr-element-spacing" routerLink="add">{{"list.creditTerms.buttonTitle" | translate}}</d-button>
+                            </div> -->
+                        </div>
+                      </div>
+                    </div>
                   </div>
   
                   <div class="header-right" routerLink="add">

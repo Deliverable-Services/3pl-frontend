@@ -61,7 +61,7 @@ export class TransferOrderListDataService extends TransferOrderListData {
     );
   }
 
-  getTransferOrderList(): Observable<any> {
+  getTransferOrderList(searchParams:any): Observable<any> {
     const httpOptionsToken = {
       params: new HttpParams({
         fromObject: this.pageParams,
@@ -70,7 +70,7 @@ export class TransferOrderListDataService extends TransferOrderListData {
 
     return this.http.post(
       `${this.baseApiUrl}/transfer-order/list`,
-      this.searchParams,
+      searchParams ? searchParams :this.searchParams,
       httpOptionsToken
     );
   }

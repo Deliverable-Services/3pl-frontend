@@ -2,7 +2,7 @@
   <div class="add-session-btn">
     <d-breadcrumb>
       <d-breadcrumb-item>
-        <a routerLink="/product/category">{{
+        <a routerLink="/business/transfer-order">{{
           "list.transferOrder.title" | translate
           }}</a>
       </d-breadcrumb-item>
@@ -29,6 +29,13 @@
           <div [ngStyle]="{ width: '100%' }">
 
             <d-form-operation>
+              <label [ngStyle]="{ float: 'right' }" for="">Last Modified By: {{projectFormData.lastModifiedBy}} &nbsp;&nbsp;</label>
+              <label [ngStyle]="{ float: 'right' }" for="">Last Modified Date: {{projectFormData.lastModifiedDate}} &nbsp;&nbsp;</label>
+              <label [ngStyle]="{ float: 'right' }" for="">Created By: {{projectFormData.createdBy}} &nbsp;&nbsp;</label>
+              <label [ngStyle]="{ float: 'right' }" for="">Created Date: {{projectFormData.createdDate}} &nbsp;&nbsp;</label>
+              <label [ngStyle]="{ float: 'right' }" for="">Status: {{projectFormData.status}} &nbsp;&nbsp;</label>
+              <br>
+              <br>
               <d-button *ngIf="!paramId" [ngStyle]="{ float: 'right' }" [disabled]="!allowSubmit" dLoading
                 class="mr-element-spacing" [title]="projectForm.errorMessage || ''" circled="true"
                 style="margin-right: 8px" [showLoading]="projectForm.pending" dFormSubmit
@@ -49,28 +56,28 @@
               <d-button *ngIf="projectFormData.status?.toLowerCase() === 'draft'" [ngStyle]="{ float: 'right' }"
                 class="mr-element-spacing" circled="true" style="margin-right: 8px"
                 (btnClick)="updateStatus('publish')">
-                {{ "form.transferOrder.buttons.publish" }}
+                {{ "form.transferOrder.fields.publish" | translate }}
               </d-button>
 
               <d-button *ngIf="projectFormData.status?.toLowerCase() === 'open'
               && projectFormData?.destinationLocation?.nodeType?.toLowerCase() === 'store'"
                 [ngStyle]="{ float: 'right' }" class="mr-element-spacing" circled="true" style="margin-right: 8px"
                 (btnClick)="updateStatus('received')">
-                {{ "form.transferOrder.buttons.confirm" }}
+                {{ "form.transferOrder.fields.confirm" | translate }}
               </d-button>
 
               <d-button *ngIf="projectFormData.status?.toLowerCase() === 'open' 
               && projectFormData?.originLocation?.nodeType?.toLowerCase() === 'store'" [ngStyle]="{ float: 'right' }"
                 class="mr-element-spacing" circled="true" style="margin-right: 8px"
                 (btnClick)="updateStatus('shipped')">
-                {{ "form.transferOrder.buttons.ship" }}
+                {{ "form.transferOrder.fields.ship" | translate }}
               </d-button>
 
               <d-button *ngIf="projectFormData.status?.toLowerCase() === 'open' 
               && projectFormData?.originLocation?.nodeType?.toLowerCase() === 'store'" [ngStyle]="{ float: 'right' }"
                 class="mr-element-spacing" circled="true" style="margin-right: 8px"
                 (btnClick)="updateStatus('cancel')">
-                {{ "form.transferOrder.buttons.cancel" }}
+                {{ "form.transferOrder.fields.cancel" | translate }}
               </d-button>
             </d-form-operation>
           </div>
@@ -101,8 +108,8 @@
               <ng-container *ngIf="mode?.toLowerCase() === 'edit'">
                 <div class="">
                   <d-form-label [required]="true">{{ "form.transferOrder.fields.expectedArrivalDate" | translate }}</d-form-label>
-                  <div style="width: 100%" class="devui-input-group devui-dropdown-origin" dActiveFormControl>
-                    <input [disabled]="projectFormData.status?.toLowerCase() !== 'draft'" class="devui-input devui-form-control" placeholder="'y/MM/dd HH:mm:ss'"
+                  <div style="width: 100%" div class="devui-input-group devui-dropdown-origin" [ngClass]="{ 'devui-disabled': expectedArrivalDateDisabled }" dActiveFormControl>
+                    <input [ngStyle]="{'pointer-events': expectedArrivalDateDisabled ? 'none' : 'auto'}" [disabled]="projectFormData.status?.toLowerCase() !== 'draft'" class="devui-input devui-form-control" placeholder="'y/MM/dd HH:mm:ss'"
                       [dateFormat]="'y/MM/dd HH:mm:ss'" (click)="datePicker1.toggle()" name="dp"
                       [(ngModel)]="projectFormData.expectedArrivalDate" autocomplete="off" dDatepicker
                       #datePicker1="datepicker" [showTime]="true" [minDate]="todayDate"
@@ -113,7 +120,7 @@
                       (click)="datePicker1.clearAll();">
                       <i class="icon icon-close"></i>
                     </div>
-                    <div class="devui-input-group-addon" (click)="datePicker1.toggle()">
+                    <div *ngif="!expectedArrivalDateDisabled" [ngClass]="{ 'devui-disabled': expectedArrivalDateDisabled }"  class="devui-input-group-addon" (click)="datePicker1.toggle()">
                       <i class="icon icon-calendar"></i>
                     </div>
                   </div>
@@ -144,8 +151,8 @@
 
                 <div class="input-setting">
                   <d-form-label  [required]="true">{{ "form.transferOrder.fields.expectedDeliveryDate" | translate }}</d-form-label>
-                  <div style="width: 100%" class="devui-input-group devui-dropdown-origin" dActiveFormControl>
-                    <input [disabled]="projectFormData.status?.toLowerCase() !== 'draft'" class="devui-input devui-form-control" placeholder="'y/MM/dd HH:mm:ss'"
+                  <div style="width: 100%" cdiv class="devui-input-group devui-dropdown-origin" [ngClass]="{ 'devui-disabled': expectedDeliveryDateDisabled }" dActiveFormControl>
+                    <input [ngStyle]="{'pointer-events': expectedDeliveryDateDisabled ? 'none' : 'auto'}" [disabled]="projectFormData.status?.toLowerCase() !== 'draft'" class="devui-input devui-form-control" placeholder="'y/MM/dd HH:mm:ss'"
                       [dateFormat]="'y/MM/dd HH:mm:ss'" (click)="datePicker2.toggle()" name="dp"
                       [(ngModel)]="projectFormData.expectedDeliveryDate" autocomplete="off" dDatepicker
                       #datePicker2="datepicker" [showTime]="true" [minDate]="dDate" [dValidateRules]="{
@@ -155,7 +162,7 @@
                       (click)="datePicker2.clearAll()">
                       <i class="icon icon-close"></i>
                     </div>
-                    <div class="devui-input-group-addon" (click)="datePicker2.toggle()">
+                    <div *ngif="!expectedDeliveryDateDisabled" [ngClass]="{ 'devui-disabled': expectedDeliveryDateDisabled }"  class="devui-input-group-addon" (click)="datePicker2.toggle()">
                       <i class="icon icon-calendar"></i>
                     </div>
                   </div>
@@ -255,14 +262,14 @@
                   <d-button *ngIf="projectFormData.status?.toLowerCase() === 'confirm'"
                     [disabled]="!input.discrepancyFlag" dLoading class="warning" circled="true"
                     style="margin-right: 8px;margin-top: 47px;" (click)="confirmNow(i)">
-                    {{ "form.transferOrder.buttons.confirm" }}
+                    {{ "form.transferOrder.fields.confirm" }}
                   </d-button>
 
                   <d-button *ngIf="projectFormData.status?.toLowerCase() === 'draft'
                   && input.alreadyAdded === false"
                     dLoading class="danger" circled="true"
                     style="margin-right: 8px;margin-top: 47px;" (click)="removeNow(i)">
-                    {{ "form.transferOrder.buttons.remove" }}
+                    {{ "form.transferOrder.fields.remove" }}
                   </d-button>
                 </div>
 

@@ -42,14 +42,11 @@ export class TransferOrderListComponent implements OnInit {
     total: 0,
     pageIndex: 1,
     pageSize: 10,
-  };
+  }; 
 
-  searchWithTransferOrderName: SearchParam = {
-    keyword: "",
-    sort: "asc",
-    columnName: "categoryName",
-    searchType: "match",
-  };
+  searchKeywords:any = {
+    id: '',
+  }
 
   columnSize: any = {
     id: "10%",
@@ -74,9 +71,9 @@ export class TransferOrderListComponent implements OnInit {
     this.getTransferOrderList();
   }
 
-  getTransferOrderList() {
+  getTransferOrderList(searchParams?: any) {
     this.busy = this.transferOrderListDataService
-      .getTransferOrderList()
+      .getTransferOrderList(searchParams)
       .subscribe((res) => {
         this.basicDataSource = res.content;
         console.log('TransferOrderList',this.basicDataSource);        
@@ -118,6 +115,25 @@ export class TransferOrderListComponent implements OnInit {
     searchParam.keyword = e.target.value;
     this.setSearchParams(searchParam);
     this.getTransferOrderList();
+  }
+
+  startSearch(event: any) {
+    let newSearchParams:any = {
+      filters: []
+    }
+    setTimeout(() => {
+      Object.keys(this.searchKeywords).forEach(field => {
+        if(this.searchKeywords[field]) {
+          newSearchParams.filters.push({
+            field: field,
+            operator: "match",
+            value: this.searchKeywords[field],
+          });
+        }
+      });
+
+      this.getTransferOrderList(newSearchParams);
+    }, 500);
   }
 
   multiSortChange(e: SortEventArg[]) {

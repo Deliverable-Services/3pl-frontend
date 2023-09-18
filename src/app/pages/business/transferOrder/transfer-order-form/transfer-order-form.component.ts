@@ -32,6 +32,19 @@ export class TransferOrderFormComponent implements OnInit {
     expectedDeliveryDate: null
   };
   stVariants: any = [];
+  
+  customStylesDC = {
+    position: 'absolute',
+    marginTop: '-222px',
+    marginLeft: '120px',
+    width: '20%',
+  };
+  customStylesStore= {
+    position: 'absolute',
+    width: '20%',
+    marginTop: '-157px',
+    marginLeft: '120px',
+  };
   detailsInputs:any = [
     {
       variantId: 'p?.variantId',
@@ -81,6 +94,8 @@ export class TransferOrderFormComponent implements OnInit {
   connectionLocationList: any[] = [];
   selectedTransferOrder: any = {};
   allowSubmit: boolean = true;
+  expectedDeliveryDateDisabled: boolean = false;
+  expectedArrivalDateDisabled: boolean = false;
 
   constructor(
     private transferOrderService: TransferOrderListDataService,
@@ -123,6 +138,8 @@ export class TransferOrderFormComponent implements OnInit {
       });
   }
 
+
+
   validateSelection() {
     const destinationId = this.projectFormData.destinationLocation.connectionLocationId;
     const originId = this.projectFormData.originLocation.connectionLocationId;
@@ -143,6 +160,12 @@ export class TransferOrderFormComponent implements OnInit {
 
   getTransferOrderById(id: string) {
     this.transferOrderService.getTransferOrderById(id).subscribe((res) => {
+      console.log('res',res);
+      if(res.status?.toLowerCase() !== "draft"){
+        this.expectedDeliveryDateDisabled = true;
+        this.expectedArrivalDateDisabled = true;
+      }
+      
       this.selectedTransferOrder = res;
       this.projectFormData = res;
       this.toTypeLabel = this.projectFormData?.originLocation?.nodeType+ ' To ' +this.projectFormData?.destinationLocation?.nodeType;

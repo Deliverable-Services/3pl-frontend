@@ -17,6 +17,7 @@ export class JwtHandlerService {
     const jwt = this.getJwtFromUrl();
     if (jwt) {
       localStorage.setItem("jwt", jwt);
+      localStorage.removeItem("session-token")
       this.router.navigate(["/product/category"]); // Redirect to desired route after storing the JWT
       // await this.callAnotherApi();
     }

@@ -8,7 +8,7 @@ import {
   HttpClient,
 } from "@angular/common/http";
 import { Observable, from, EMPTY } from "rxjs";
-import { catchError, delay, mergeMap, switchMap, finalize } from "rxjs/operators";
+import { catchError, switchMap, finalize } from "rxjs/operators";
 import { NavigationExtras, Router } from "@angular/router";
 import { environment } from "src/environments/environment";
 
@@ -25,10 +25,14 @@ export class AuthInterceptor implements HttpInterceptor {
     req: HttpRequest<any>,
     next: HttpHandler
   ): Observable<HttpEvent<any>> {
+    const sessionToken = localStorage.getItem("session-token");
 
-    if (!this.refreshTokenInProgress) {
+    console.log('sessionToken', sessionToken);
+    
+
+    if (!this.refreshTokenInProgress && !sessionToken) {
       this.refreshTokenInProgress = true;
-      
+
       return from(this.callAnotherApi()).pipe(
         switchMap(() => {
           const authReq = req.clone({
@@ -52,7 +56,7 @@ export class AuthInterceptor implements HttpInterceptor {
       const authReq = req.clone({
         setHeaders: {
           Authorization: `Bearer ${localStorage.getItem("jwt")}`,
-          "X-Session-Token": `${localStorage.getItem("session-token")}`,
+          "X-Session-Token": `${sessionToken}`, // Use the existing session token
         },
       });
       return next.handle(authReq); // Continue with the original request
@@ -62,7 +66,7 @@ export class AuthInterceptor implements HttpInterceptor {
   async callAnotherApi(): Promise<void> {
     const apiEndpoint = `${localStorage.getItem('API_URL')}/api/v1/generate-session`;
     const jwtToken = localStorage.getItem("jwt");
-    
+
     const requestOptions = {
       headers: new HttpHeaders({
         Authorization: `Bearer ${jwtToken}`,
@@ -72,7 +76,7 @@ export class AuthInterceptor implements HttpInterceptor {
     try {
       const resp: any = await this.http
         .get(apiEndpoint, requestOptions)
-        .toPromise(); // Convert Observable to Promise      
+        .toPromise(); // Convert Observable to Promise
       localStorage.setItem("session-token", resp.sessionToken);
     } catch (error) {
       // Handle error
