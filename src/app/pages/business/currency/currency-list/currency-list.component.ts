@@ -74,6 +74,9 @@ export class CurrencyListComponent implements OnInit {
   ) {}
 
   ngOnInit() {
+    this.pageParam.pageSize = 20;
+    this.pager.pageSize = 20;
+    this.currencyDataService.setPageParams(this.pageParam);
     this.getExchangeRateList();
   }
 

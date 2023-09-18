@@ -72,6 +72,8 @@ export class CategoryListComponent implements OnInit {
 
   ngOnInit() {
     this.pageParam.pageNo = 0;
+    this.pageParam.pageSize = 20;
+    this.pager.pageSize = 20;
     this.categoryListDataService.setPageParams(this.pageParam);
     this.getCategoryList();
   }

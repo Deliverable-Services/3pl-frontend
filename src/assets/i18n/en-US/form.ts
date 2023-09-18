@@ -410,7 +410,7 @@ export default {
       buttonTitle: "Create Transfer Order",
       editButtonTitle: "Edit Transfer Order",
       popupBtn: "Select Product With Style",
-      buttons: {},
+      buttons: { publish: 'Publish', confirm: 'Confirm', ship: 'Ship', cancel: 'Cancel', remove: 'Remove' }
     },
     vendor: {
       title: "Vendor",

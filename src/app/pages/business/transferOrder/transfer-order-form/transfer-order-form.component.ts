@@ -160,7 +160,6 @@ export class TransferOrderFormComponent implements OnInit {
 
   getTransferOrderById(id: string) {
     this.transferOrderService.getTransferOrderById(id).subscribe((res) => {
-      console.log('res',res);
       if(res.status?.toLowerCase() !== "draft"){
         this.expectedDeliveryDateDisabled = true;
         this.expectedArrivalDateDisabled = true;
@@ -168,6 +167,12 @@ export class TransferOrderFormComponent implements OnInit {
       
       this.selectedTransferOrder = res;
       this.projectFormData = res;
+
+      let expectedArrivalDate = this.projectFormData?.expectedArrivalDate?.split('T');
+      let expectedDeliveryDate = this.projectFormData?.expectedDeliveryDate?.split('T');
+      this.projectFormData.expectedArrivalDate = expectedArrivalDate ? expectedArrivalDate[0]:'';
+      this.projectFormData.expectedDeliveryDate = expectedDeliveryDate ? expectedDeliveryDate[0]:'';
+
       this.toTypeLabel = this.projectFormData?.originLocation?.nodeType+ ' To ' +this.projectFormData?.destinationLocation?.nodeType;
       this.detailsInputs = this.projectFormData?.details?.map((d: any) => {
         return {
@@ -215,6 +220,8 @@ export class TransferOrderFormComponent implements OnInit {
           e['lineNumber'] = parseInt(key+1)
         });
         this.projectFormData.details = this.detailsInputs;
+        this.projectFormData.expectedArrivalDate = this.projectFormData.expectedArrivalDate+'T00:00:00Z';
+        this.projectFormData.expectedDeliveryDate = this.projectFormData.expectedDeliveryDate+'T00:00:00Z';
         this.transferOrderService
           .updateTransferOrder(this.paramId, this.projectFormData)
           .subscribe((res) => {
@@ -282,14 +289,17 @@ export class TransferOrderFormComponent implements OnInit {
           disabled: false,
           handler: (variantList: any) => {
             results.modalInstance.hide();
-            this.detailsInputs = this.stVariants?.map((p: any) => {
-              return {
-                variantId: p?.variantId,
-                skuNo: p?.sku,
-                plannedQuantity: null,
-                alreadyAdded: false
+            this.detailsInputs = [];
+            this.stVariants?.forEach((p: any) => {
+              if(p?.selected === true) {
+                this.detailsInputs.push({
+                  variantId: p?.variantId,
+                  skuNo: p?.sku,
+                  plannedQuantity: null,
+                  alreadyAdded: false
+                })
               }
-            })
+            });
           },
         },
         {
