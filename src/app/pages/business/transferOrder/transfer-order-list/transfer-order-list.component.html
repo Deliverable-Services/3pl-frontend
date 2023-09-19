@@ -116,6 +116,26 @@
                     </ng-template>
                   </d-cell>
                 </d-column>
+
+                <d-column [field]="'lastModifiedDate'" header="{{'list.transferOrder.lastModifiedDate' | translate}}" [sortable]="true">
+                  <d-cell>
+                    <ng-template let-cellItem="cellItem">
+                      <span [title]="cellItem" class="over-flow-ellipsis">
+                        {{ cellItem | date: 'dd/MM/yyyy hh:mm' }}
+                      </span>
+                    </ng-template>
+                  </d-cell>
+                </d-column>
+
+                <d-column [field]="'lastModifiedBy'" header="{{'list.transferOrder.lastModifiedBy' | translate}}" [sortable]="true">
+                  <d-cell>
+                    <ng-template let-cellItem="cellItem">
+                      <span [title]="cellItem" class="over-flow-ellipsis">
+                        {{ cellItem }}
+                      </span>
+                    </ng-template>
+                  </d-cell>
+                </d-column>
   
                     
                <d-column field="action" [header]="'list.transferOrder.actions' | translate" [width]="columnSize.action">

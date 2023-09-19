@@ -141,6 +141,8 @@ export default {
         title:"Transfer Order",
         buttonTitle:"Create Transfer Order",
         actions:"Actions",
+        lastModifiedDate: "Updated Date",
+        lastModifiedBy: "Updated By"
     }
   },
 };

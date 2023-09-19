@@ -179,7 +179,7 @@ export class TransferOrderFormComponent implements OnInit {
           variantId: d?.variantId,
           skuNo: d?.skuNo,
           plannedQuantity: d?.plannedQuantity,
-          skuDescription: d?.skuDescription,
+          skuDescription: d?.skuDescription+' '+d?.size+' '+d?.color,
           receivedQuantity: d?.receivedQuantity,
           sentQuantity: d?.sentQuantity,
           discrepancyResolvedTo: d?.discrepancyResolvedTo,
@@ -233,12 +233,12 @@ export class TransferOrderFormComponent implements OnInit {
         console.log("secondsExpectedDelivery",secondsExpectedDelivery);
         
         
-        if (secondsExpectedArrival < secondsToday) {
-          this._showDateToast("Expected arrival date should be greater than or equal to today");
+        if (secondsExpectedDelivery < secondsToday) {
+          this._showDateToast("Expected delivery date should be greater than or equal to today");
           return
         }
-        if( secondsExpectedDelivery < secondsExpectedArrival){
-          this._showDateToast("Expected delivery date should be greater than or equal to expected arrival date");
+        if( secondsExpectedArrival < secondsExpectedDelivery){
+          this._showDateToast("Expected arrival date should be greater than or equal to expected delivery date");
           return
         }
         this.detailsInputs?.forEach((e: any, key: any) => {
@@ -415,6 +415,40 @@ export class TransferOrderFormComponent implements OnInit {
 
   removeNow(rowIndex: number) {
     this.detailsInputs?.splice(rowIndex, 1);
+  }
+
+  confirmDialog(type: string) {
+    let stType = type;
+    const results = this.dialogService.open({
+      id: 'dialog-service',
+      width: '346px',
+      maxHeight: '600px',
+      title: 'Are you sure?',
+      content: '',
+      backdropCloseable: true,
+      dialogtype: '',
+      onClose: () => {
+      },
+      buttons: [
+        {
+          cssClass: 'primary',
+          text: 'Ok',
+          disabled: false,
+          handler: ($event: Event) => {
+            results.modalInstance.hide();
+            this.updateStatus(stType);
+          },
+        },
+        {
+          id: 'btn-cancel',
+          cssClass: 'common',
+          text: 'Cancel',
+          handler: ($event: Event) => {
+            results.modalInstance.hide();
+          },
+        },
+      ]
+    });
   }
   
 }

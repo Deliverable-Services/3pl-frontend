@@ -39,14 +39,7 @@ export class TransferOrderListComponent implements OnInit {
 
   editRowIndex = -1;
 
-  statusList: any[] = [
-    "DRAFT",
-    "OPEN",
-    "PUBLISH",
-    "RECEIVED",
-    "SHIPPED",
-    "CANCEL",
-  ];
+  statusList: any[] = ["ALL", "DRAFT", "OPEN", "IN_TRANSIT", "PROCESSING", "CONFIRMED", "CANCELED"];
 
   pager = {
     total: 0,
@@ -136,6 +129,8 @@ export class TransferOrderListComponent implements OnInit {
     };
     setTimeout(() => {
       Object.keys(this.searchKeywords).forEach((field) => {
+        console.log("field",field);
+        
         if (this.searchKeywords[field]) {
           newSearchParams.filters.push({
             field: field,

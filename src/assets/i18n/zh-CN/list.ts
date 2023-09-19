@@ -28,6 +28,8 @@ export default {
       title:"调令",
       buttonTitle:"创建转移单",
       actions:"行动",
+      lastModifiedDate: "更新日期",
+      lastModifiedBy: "更新者"
     },
     category: {
       title: "类别",
