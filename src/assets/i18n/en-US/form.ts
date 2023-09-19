@@ -408,7 +408,7 @@ export default {
         discrepancyResolvedTo: "Discrepancy Resolved To",
       },
       buttonTitle: "Create Transfer Order",
-      editButtonTitle: "Edit Transfer Order",
+      editButtonTitle: "Transfer Order",
       popupBtn: "Select Product With Style",
       buttons: { publish: 'Publish', confirm: 'Confirm', ship: 'Ship', cancel: 'Cancel', remove: 'Remove' }
     },

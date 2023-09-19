@@ -179,7 +179,7 @@ export class TransferOrderFormComponent implements OnInit {
           variantId: d?.variantId,
           skuNo: d?.skuNo,
           plannedQuantity: d?.plannedQuantity,
-          skuDescription: d?.skuDescription,
+          skuDescription: d?.skuDescription+' '+d?.size+' '+d?.color,
           receivedQuantity: d?.receivedQuantity,
           sentQuantity: d?.sentQuantity,
           discrepancyResolvedTo: d?.discrepancyResolvedTo,
@@ -216,6 +216,31 @@ export class TransferOrderFormComponent implements OnInit {
           });
         }
       } else {
+        const today = new Date();
+        const expectedArrivalDate = new Date(this.projectFormData.expectedArrivalDate);
+        const expectedDeliveryDate = new Date(this.projectFormData.expectedDeliveryDate);
+        
+        // Set the time components to 00:00:00
+        today.setHours(0, 0, 0, 0);
+        expectedArrivalDate.setHours(0, 0, 0, 0);
+        expectedDeliveryDate.setHours(0, 0, 0, 0);
+        
+        const secondsToday = Math.floor(today.getTime() / 1000);
+        const secondsExpectedArrival = Math.floor(expectedArrivalDate.getTime() / 1000);
+        const secondsExpectedDelivery = Math.floor(expectedDeliveryDate.getTime() / 1000);
+        console.log("secondsToday",secondsToday);
+        console.log("secondsExpectedArrival",secondsExpectedArrival);
+        console.log("secondsExpectedDelivery",secondsExpectedDelivery);
+        
+        
+        if (secondsExpectedDelivery < secondsToday) {
+          this._showDateToast("Expected delivery date should be greater than or equal to today");
+          return
+        }
+        if( secondsExpectedArrival < secondsExpectedDelivery){
+          this._showDateToast("Expected arrival date should be greater than or equal to expected delivery date");
+          return
+        }
         this.detailsInputs?.forEach((e: any, key: any) => {
           e['lineNumber'] = parseInt(key+1)
         });
@@ -234,6 +259,13 @@ export class TransferOrderFormComponent implements OnInit {
   _showDuplicatToast(){
     this.toastService.open({
       value: [{ severity: "error", content: "Destionation and Origin Cannot be Same" }],
+      life: 2000,
+    }); 
+  }
+
+  _showDateToast(message: string) {
+    this.toastService.open({
+      value: [{ severity: "error", content: message }],
       life: 2000,
     }); 
   }
@@ -383,6 +415,40 @@ export class TransferOrderFormComponent implements OnInit {
 
   removeNow(rowIndex: number) {
     this.detailsInputs?.splice(rowIndex, 1);
+  }
+
+  confirmDialog(type: string) {
+    let stType = type;
+    const results = this.dialogService.open({
+      id: 'dialog-service',
+      width: '346px',
+      maxHeight: '600px',
+      title: 'Are you sure?',
+      content: '',
+      backdropCloseable: true,
+      dialogtype: '',
+      onClose: () => {
+      },
+      buttons: [
+        {
+          cssClass: 'primary',
+          text: 'Ok',
+          disabled: false,
+          handler: ($event: Event) => {
+            results.modalInstance.hide();
+            this.updateStatus(stType);
+          },
+        },
+        {
+          id: 'btn-cancel',
+          cssClass: 'common',
+          text: 'Cancel',
+          handler: ($event: Event) => {
+            results.modalInstance.hide();
+          },
+        },
+      ]
+    });
   }
   
 }

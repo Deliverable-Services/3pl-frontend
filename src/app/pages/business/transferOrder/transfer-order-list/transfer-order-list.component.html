@@ -32,7 +32,7 @@
                               [placeholder]="'Search with Order No'"
                             ></d-search>
 
-                            <d-select [ngStyle]="{ width: 'calc(100% - 53%)' }"
+                            <d-select [ngStyle]="selectStyle"
                             class="da-inline"
                             placeholder="Select a Group" [scrollHight]="'300px'"
                             (valueChange)="startSearch($event)"
@@ -108,6 +108,26 @@
                 </d-column>
   
                 <d-column [field]="'receiptDiscrepancy'" header="{{'list.transferOrder.receiptDiscrepancy' | translate}}" [sortable]="true" [width]="columnSize.receiptDiscrepancy">
+                  <d-cell>
+                    <ng-template let-cellItem="cellItem">
+                      <span [title]="cellItem" class="over-flow-ellipsis">
+                        {{ cellItem }}
+                      </span>
+                    </ng-template>
+                  </d-cell>
+                </d-column>
+
+                <d-column [field]="'lastModifiedDate'" header="{{'list.transferOrder.lastModifiedDate' | translate}}" [sortable]="true">
+                  <d-cell>
+                    <ng-template let-cellItem="cellItem">
+                      <span [title]="cellItem" class="over-flow-ellipsis">
+                        {{ cellItem | date: 'dd/MM/yyyy hh:mm' }}
+                      </span>
+                    </ng-template>
+                  </d-cell>
+                </d-column>
+
+                <d-column [field]="'lastModifiedBy'" header="{{'list.transferOrder.lastModifiedBy' | translate}}" [sortable]="true">
                   <d-cell>
                     <ng-template let-cellItem="cellItem">
                       <span [title]="cellItem" class="over-flow-ellipsis">
