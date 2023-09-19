@@ -48,6 +48,9 @@ export class ConnectionLocationListComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    this.pageParam.pageSize = 20;
+    this.pager.pageSize = 20;
+    this.connectionLocationService.setPageParams(this.pageParam);
     this.getCreditTermsList();
   }
 

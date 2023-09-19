@@ -89,6 +89,9 @@ export class VendorListComponent implements OnInit {
   ) {}
 
   ngOnInit() {
+    this.pageParam.pageSize = 20;
+    this.pager.pageSize = 20;
+    this.vendorListDataService.setPageParams(this.pageParam);
     this.getVendorList();
   }
 

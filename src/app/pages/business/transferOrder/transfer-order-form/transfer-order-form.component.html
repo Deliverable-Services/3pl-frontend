@@ -87,7 +87,7 @@
             ? "form.transferOrder.buttonTitle"
             : "form.transferOrder.editButtonTitle"
             ) | translate
-            }}
+            }} <span *ngIf="projectFormData.status !== ''">&nbsp;({{ projectFormData.id }})</span>
           </div>
           <div [ngStyle]="{ display: 'flex', justifyContent: 'space-between' }">
             <div [ngStyle]="{ width: '46%' }">
@@ -109,10 +109,10 @@
                 <div class="">
                   <d-form-label [required]="true">{{ "form.transferOrder.fields.expectedArrivalDate" | translate }}</d-form-label>
                   <div style="width: 100%" div class="devui-input-group devui-dropdown-origin" [ngClass]="{ 'devui-disabled': expectedArrivalDateDisabled }" dActiveFormControl>
-                    <input [ngStyle]="{'pointer-events': expectedArrivalDateDisabled ? 'none' : 'auto'}" [disabled]="projectFormData.status?.toLowerCase() !== 'draft'" class="devui-input devui-form-control" placeholder="'y/MM/dd HH:mm:ss'"
+                    <!-- <input [ngStyle]="{'pointer-events': expectedArrivalDateDisabled ? 'none' : 'auto'}" [disabled]="projectFormData.status?.toLowerCase() !== 'draft'" class="devui-input devui-form-control" placeholder="'y/MM/dd HH:mm:ss'"
                       [dateFormat]="'y/MM/dd HH:mm:ss'" (click)="datePicker1.toggle()" name="dp"
                       [(ngModel)]="projectFormData.expectedArrivalDate" autocomplete="off" dDatepicker
-                      #datePicker1="datepicker" [showTime]="true" [minDate]="todayDate"
+                      #datePicker1="datepicker" [showTime]="false" [minDate]="todayDate"
                       (selectedDateChange)="arrivalDate($event)" [dValidateRules]="{
                         validators: [{ required: true }]
                       }" />
@@ -122,7 +122,16 @@
                     </div>
                     <div *ngif="!expectedArrivalDateDisabled" [ngClass]="{ 'devui-disabled': expectedArrivalDateDisabled }"  class="devui-input-group-addon" (click)="datePicker1.toggle()">
                       <i class="icon icon-calendar"></i>
-                    </div>
+                    </div> -->
+                    <input [ngStyle]="{'pointer-events': expectedArrivalDateDisabled ? 'none' : 'auto'}" 
+                    [disabled]="projectFormData.status?.toLowerCase() !== 'draft'" 
+                    class="devui-input devui-form-control" 
+                    [(ngModel)]="projectFormData.expectedArrivalDate" autocomplete="off"
+                    placeholder="y-MM-dd"
+                    [dValidateRules]="{
+                      validators: [{ required: true }]
+                    }" 
+                    type="date" name="expectedArrivalDate">
                   </div>
                 </div>
 
@@ -152,10 +161,10 @@
                 <div class="input-setting">
                   <d-form-label  [required]="true">{{ "form.transferOrder.fields.expectedDeliveryDate" | translate }}</d-form-label>
                   <div style="width: 100%" cdiv class="devui-input-group devui-dropdown-origin" [ngClass]="{ 'devui-disabled': expectedDeliveryDateDisabled }" dActiveFormControl>
-                    <input [ngStyle]="{'pointer-events': expectedDeliveryDateDisabled ? 'none' : 'auto'}" [disabled]="projectFormData.status?.toLowerCase() !== 'draft'" class="devui-input devui-form-control" placeholder="'y/MM/dd HH:mm:ss'"
+                    <!-- <input [ngStyle]="{'pointer-events': expectedDeliveryDateDisabled ? 'none' : 'auto'}" [disabled]="projectFormData.status?.toLowerCase() !== 'draft'" class="devui-input devui-form-control" placeholder="'y/MM/dd HH:mm:ss'"
                       [dateFormat]="'y/MM/dd HH:mm:ss'" (click)="datePicker2.toggle()" name="dp"
                       [(ngModel)]="projectFormData.expectedDeliveryDate" autocomplete="off" dDatepicker
-                      #datePicker2="datepicker" [showTime]="true" [minDate]="dDate" [dValidateRules]="{
+                      #datePicker2="datepicker" [showTime]="false" [minDate]="dDate" [dValidateRules]="{
                         validators: [{ required: true }]
                       }" />
                     <div *ngIf="projectFormData.expectedDeliveryDate" class="devui-input-group-addon close-icon-wrapper"
@@ -164,7 +173,16 @@
                     </div>
                     <div *ngif="!expectedDeliveryDateDisabled" [ngClass]="{ 'devui-disabled': expectedDeliveryDateDisabled }"  class="devui-input-group-addon" (click)="datePicker2.toggle()">
                       <i class="icon icon-calendar"></i>
-                    </div>
+                    </div> -->
+                    <input [ngStyle]="{'pointer-events': expectedArrivalDateDisabled ? 'none' : 'auto'}" 
+                    [disabled]="projectFormData.status?.toLowerCase() !== 'draft'" 
+                    class="devui-input devui-form-control" 
+                    [(ngModel)]="projectFormData.expectedDeliveryDate" autocomplete="off"
+                    placeholder="y-MM-dd"
+                    [dValidateRules]="{
+                      validators: [{ required: true }]
+                    }" 
+                    type="date" name="expectedDeliveryDate">
                   </div>
                 </div>
               </ng-container>
@@ -172,14 +190,12 @@
             </div>
           </div>
 
-          <d-form-item [ngStyle]="{ marginTop: '20px' }">
+          <d-form-item *ngIf="mode?.toLowerCase() === 'edit'" [ngStyle]="{ marginTop: '20px' }">
             <d-form-label [required]="true">{{ "form.transferOrder.fields.remarks" | translate }}</d-form-label>
             <d-form-control>
               <textarea [ngStyle]="{ height: '104px' }" dTextarea resize="vertical" autocomplete="off" name="tradeDesc"
                 [placeholder]="'form.transferOrder.fields.remarks' | translate"
-                [(ngModel)]="projectFormData.remarks" [dValidateRules]="{
-                  validators: [{ required: true }]
-                }"></textarea>
+                [(ngModel)]="projectFormData.remarks"></textarea>
             </d-form-control>
           </d-form-item>
 
@@ -208,12 +224,14 @@
                     </d-form-control>
                   </d-form-item>
 
-                  <d-form-item *ngIf="projectFormData.status?.toLowerCase() === 'open'"
+                  
+
+                  <d-form-item 
                     [ngStyle]="{ margin: '20px 20px 20px 0px' }">
                     <d-form-label [required]="true">{{ "form.transferOrder.fields.description" | translate }}</d-form-label>
                     <d-form-control>
                       <input class="set-width" dTextInput disabled autocomplete="off" name="tradeDesc"
-                        [(ngModel)]="projectFormData.skuDescription">
+                        [(ngModel)]="input.skuDescription">
                     </d-form-control>
                   </d-form-item>
 
@@ -262,14 +280,14 @@
                   <d-button *ngIf="projectFormData.status?.toLowerCase() === 'confirm'"
                     [disabled]="!input.discrepancyFlag" dLoading class="warning" circled="true"
                     style="margin-right: 8px;margin-top: 47px;" (click)="confirmNow(i)">
-                    {{ "form.transferOrder.fields.confirm" }}
+                    {{ "form.transferOrder.buttons.confirm" | translate }}
                   </d-button>
 
                   <d-button *ngIf="projectFormData.status?.toLowerCase() === 'draft'
                   && input.alreadyAdded === false"
                     dLoading class="danger" circled="true"
                     style="margin-right: 8px;margin-top: 47px;" (click)="removeNow(i)">
-                    {{ "form.transferOrder.fields.remove" }}
+                    {{ "form.transferOrder.buttons.remove" | translate }}
                   </d-button>
                 </div>
 

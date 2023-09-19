@@ -64,6 +64,8 @@ export class VendorListDataService extends VendorListData {
       }),
     };
 
+    console.log(':: this.pageParams :: ', this.pageParams)
+
     return this.http.post(`${this.baseApiUrl}/vendors/list`, this.searchParams, httpOptionsToken);
   }
 

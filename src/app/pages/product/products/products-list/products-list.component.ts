@@ -84,6 +84,8 @@ export class ProductsListComponent implements OnInit {
 
   ngOnInit() {
     this.pageParam.pageNo = 0;
+    this.pageParam.pageSize = 20;
+    this.pager.pageSize = 20;
     this.productsListDataService.setPageParams(this.pageParam);
     this.searchWithStyleName.keyword = "";
     console.log('this.searchWithStyleName',this.searchWithStyleName);

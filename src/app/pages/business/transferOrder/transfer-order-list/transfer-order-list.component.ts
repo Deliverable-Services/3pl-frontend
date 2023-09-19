@@ -1,20 +1,19 @@
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
-import { Router } from '@angular/router';
-import { SortEventArg, TableWidthConfig } from 'ng-devui';
-import { Subscription } from 'rxjs';
-import { Brand } from 'src/app/@core/data/brandList';
-import { PageParam, SearchParam } from 'src/app/@core/data/searchFormData';
-import { TransferOrderListDataService } from 'src/app/@core/mock/tranfer-order.service';
-import { TransferOrderFormModalComponent } from '../transfer-order-form-modal/transfer-order-form-modal.component'; // Replace with the correct path to your modal component
+import { Component, OnInit, Output, EventEmitter } from "@angular/core";
+import { Router } from "@angular/router";
+import { SortEventArg, TableWidthConfig } from "ng-devui";
+import { Subscription } from "rxjs";
+import { Brand } from "src/app/@core/data/brandList";
+import { PageParam, SearchParam } from "src/app/@core/data/searchFormData";
+import { TransferOrderListDataService } from "src/app/@core/mock/tranfer-order.service";
+import { TransferOrderFormModalComponent } from "../transfer-order-form-modal/transfer-order-form-modal.component"; // Replace with the correct path to your modal component
 // import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
-  selector: 'app-transfer-order-list',
-  templateUrl: './transfer-order-list.component.html',
-  styleUrls: ['./transfer-order-list.component.scss']
+  selector: "app-transfer-order-list",
+  templateUrl: "./transfer-order-list.component.html",
+  styleUrls: ["./transfer-order-list.component.scss"],
 })
 export class TransferOrderListComponent implements OnInit {
-
   filterAreaShow = false;
   isAdd: string = "ADD";
 
@@ -24,6 +23,8 @@ export class TransferOrderListComponent implements OnInit {
     sortBy: "",
     sortDir: "",
   };
+ 
+  selectStyle = { width: "calc(100% - 53%)", float: "right", margin: "-2px" };
 
   isAddSession: boolean = true;
   @Output() checked = new EventEmitter();
@@ -32,21 +33,31 @@ export class TransferOrderListComponent implements OnInit {
 
   formData = {};
 
-  basicDataSource : any[] = [];
+  basicDataSource: any[] = [];
 
   editForm: any = null;
 
   editRowIndex = -1;
 
+  statusList: any[] = [
+    "DRAFT",
+    "OPEN",
+    "PUBLISH",
+    "RECEIVED",
+    "SHIPPED",
+    "CANCEL",
+  ];
+
   pager = {
     total: 0,
     pageIndex: 1,
     pageSize: 10,
-  }; 
+  };
 
-  searchKeywords:any = {
-    id: '',
-  }
+  searchKeywords: any = {
+    id: "",
+    status: "",
+  };
 
   columnSize: any = {
     id: "10%",
@@ -66,6 +77,8 @@ export class TransferOrderListComponent implements OnInit {
   ) {}
 
   ngOnInit() {
+    this.pageParam.pageSize = 20;
+    this.pager.pageSize = 20;
     this.pageParam.pageNo = 0;
     this.transferOrderListDataService.setPageParams(this.pageParam);
     this.getTransferOrderList();
@@ -76,7 +89,7 @@ export class TransferOrderListComponent implements OnInit {
       .getTransferOrderList(searchParams)
       .subscribe((res) => {
         this.basicDataSource = res.content;
-        console.log('TransferOrderList',this.basicDataSource);        
+        console.log("TransferOrderList", this.basicDataSource);
         this.pager.total = res.totalItems;
       });
   }
@@ -118,12 +131,12 @@ export class TransferOrderListComponent implements OnInit {
   }
 
   startSearch(event: any) {
-    let newSearchParams:any = {
-      filters: []
-    }
+    let newSearchParams: any = {
+      filters: [],
+    };
     setTimeout(() => {
-      Object.keys(this.searchKeywords).forEach(field => {
-        if(this.searchKeywords[field]) {
+      Object.keys(this.searchKeywords).forEach((field) => {
+        if (this.searchKeywords[field]) {
           newSearchParams.filters.push({
             field: field,
             operator: "match",
@@ -149,5 +162,4 @@ export class TransferOrderListComponent implements OnInit {
     // Use the Bootstrap modal service to open the modal
     // const modalRef = this.modalService.open(TransferOrderFormModalComponent);
   }
-
 }

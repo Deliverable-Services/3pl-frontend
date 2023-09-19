@@ -64,6 +64,9 @@ export class ShippingPartnerListComponent implements OnInit {
   ) {}
 
   ngOnInit() {
+    this.pageParam.pageSize = 20;
+    this.pager.pageSize = 20;
+    this.shippingPartnerService.setPageParams(this.pageParam);
     this.getList();
   }
 

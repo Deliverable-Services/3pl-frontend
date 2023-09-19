@@ -30,7 +30,14 @@
                               (input)="startSearch($event)"
                               class="da-inline"
                               [placeholder]="'Search with Order No'"
-                            ></d-search>                        
+                            ></d-search>
+
+                            <d-select [ngStyle]="selectStyle"
+                            class="da-inline"
+                            placeholder="Select a Group" [scrollHight]="'300px'"
+                            (valueChange)="startSearch($event)"
+                            [filterKey]="'status'" [appendToBody]="true" [options]="statusList" name="status"
+                            [(ngModel)]="searchKeywords.status"></d-select>
                           </div>
                           <!-- <div class="header-right">
                               <d-button class="mr-element-spacing" routerLink="add">{{"list.creditTerms.buttonTitle" | translate}}</d-button>
@@ -70,7 +77,7 @@
                   </d-cell>
                 </d-column>
   
-                <d-column [field]="'destinationLocation'"  header="{{'list.transferOrder.nodeName' | translate}}" [sortable]="true" [width]="columnSize.nodeName">
+                <d-column [field]="'originLocation'" header="{{'list.transferOrder.nodeName2' | translate}}" [sortable]="true" [width]="columnSize.nodeName2">
                   <d-cell>
                     <ng-template let-cellItem="cellItem">
                       <span [title]="cellItem" class="over-flow-ellipsis">
@@ -79,8 +86,8 @@
                     </ng-template>
                   </d-cell>
                 </d-column>
-  
-                <d-column [field]="'originLocation'" header="{{'list.transferOrder.nodeName2' | translate}}" [sortable]="true" [width]="columnSize.nodeName2">
+
+                <d-column [field]="'destinationLocation'"  header="{{'list.transferOrder.nodeName' | translate}}" [sortable]="true" [width]="columnSize.nodeName">
                   <d-cell>
                     <ng-template let-cellItem="cellItem">
                       <span [title]="cellItem" class="over-flow-ellipsis">
