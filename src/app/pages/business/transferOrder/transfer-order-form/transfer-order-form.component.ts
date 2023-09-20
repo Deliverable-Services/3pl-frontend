@@ -6,7 +6,6 @@ import { TransferOrderListDataService } from "src/app/@core/mock/tranfer-order.s
 import { MSG } from "src/config/global-var";
 import { ProductsListDataService } from "src/app/@core/mock/products-data.service";
 import { TransferOrderFormModalComponent } from "../transfer-order-form-modal/transfer-order-form-modal.component";
-
 @Component({
   selector: "app-transfer-order-form",
   templateUrl: "./transfer-order-form.component.html",
@@ -15,81 +14,69 @@ import { TransferOrderFormModalComponent } from "../transfer-order-form-modal/tr
 export class TransferOrderFormComponent implements OnInit {
   mode: string = "Add";
   verticalLayout: FormLayout = FormLayout.Vertical;
-  projectFormData:any = {
+  projectFormData: any = {
     destinationLocation: {
       connectionLocationId: "",
       nodeName: "",
-      nodeType: ""
+      nodeType: "",
     },
     originLocation: {
       connectionLocationId: "",
       nodeName: "",
-      nodeType: ""
+      nodeType: "",
     },
     details: [],
     remarks: "",
     expectedArrivalDate: null,
-    expectedDeliveryDate: null
+    expectedDeliveryDate: null,
   };
   stVariants: any = [];
-  
+
   customStylesDC = {
-    position: 'absolute',
-    marginTop: '-222px',
-    marginLeft: '120px',
-    width: '20%',
+    position: "absolute",
+    marginTop: "-222px",
+    marginLeft: "120px",
+    width: "20%",
   };
-  customStylesStore= {
-    position: 'absolute',
-    width: '20%',
-    marginTop: '-157px',
-    marginLeft: '120px',
+  customStylesStore = {
+    position: "absolute",
+    width: "20%",
+    marginTop: "-157px",
+    marginLeft: "120px",
   };
-  detailsInputs:any = [
-    {
-      variantId: 'p?.variantId',
-      skuNo: 'p?.sku',
-      plannedQuantity: null,
-      alreadyAdded: false
-    },
-    {
-      variantId: 'p?.variantId',
-      skuNo: 'p?.sku',
-      plannedQuantity: null,
-      alreadyAdded: false
-    }
-  ];
+  detailsInputs: any = [];
 
-  discrepancyValues:any = ['ORIGIN', 'DESTINATION'];
+  discrepancyValues: any = ["ORIGIN", "DESTINATION"];
 
-  dObj:any = {
+  dObj: any = {
     details: [
       {
         discrepancyFlag: false,
         discrepancyResolvedTo: "",
-        lineNumber: 0
-      }
-    ]
-  }
+        lineNumber: 0,
+      },
+    ],
+  };
 
   config = {
-    id: 'dialog-service',
-    width: '50%',
-    maxHeight: '600px',
-    title: 'Select Produts With Style',
+    id: "dialog-service",
+    width: "50%",
+    maxHeight: "600px",
+    title: "Select Produts With Style",
     content: TransferOrderFormModalComponent,
     backdropCloseable: true,
-    onClose: () => console.log(''),
+    onClose: () => console.log(""),
     data: {
-      name: 'Tom',
+      name: "Tom",
       age: 10,
-      address: 'Chengdu',
+      address: "Chengdu",
     },
   };
 
-  toTypeLabel:string = 'Origin To Destination';
-  todayDate:any = new Date();
-  dDate:any = new Date();
+  toTypeLabel: string = "Origin To Destination";
+  todayDate: any = new Date();
+  addedVariantIds: any = [];
+  dDate: any = new Date();
   paramId: string = "";
   connectionLocationList: any[] = [];
   selectedTransferOrder: any = {};
@@ -103,8 +90,7 @@ export class TransferOrderFormComponent implements OnInit {
     private route: ActivatedRoute,
     private dialogService: DialogService,
     private router: Router,
-    private toastService: ToastService,
-   
+    private toastService: ToastService
   ) {}
 
   ngOnInit(): void {
@@ -116,35 +102,41 @@ export class TransferOrderFormComponent implements OnInit {
     }
 
     this.getConnectionLocationList();
-    
   }
 
   getConnectionLocationList() {
-    this.connectionLocationService
-      .getList()
-      .subscribe((res) => {
+    this.connectionLocationService.getList().subscribe(
+      (res) => {
         this.connectionLocationList.push({
           connectionLocationId: "",
-          nodeName:  "ALL",
-        })
-        this.connectionLocationList = res?.filter((c: any) => c?.nodeType?.toLowerCase() !== 'online');
-        this.connectionLocationList = this.connectionLocationList?.map((c: any) => {
-          return {
-                connectionLocationId: c?.connectionLocationId || "",
-                nodeName: c?.nodeName || "",
-                nodeType: c?.nodeType,
+          nodeName: "ALL",
+        });
+        this.connectionLocationList = res?.filter(
+          (c: any) => c?.nodeType?.toLowerCase() !== "online"
+        );
+        this.connectionLocationList = this.connectionLocationList?.map(
+          (c: any) => {
+            return {
+              connectionLocationId: c?.connectionLocationId || "",
+              nodeName: c?.nodeName || "",
+              nodeType: c?.nodeType,
+            };
           }
-        })
-      });
+        );
+      },
+      (error) => {
+        console.log("error", error);
+        this._showDateToast(error.error.detail);
+      }
+    );
   }
 
-
-
   validateSelection() {
-    const destinationId = this.projectFormData.destinationLocation.connectionLocationId;
+    const destinationId =
+      this.projectFormData.destinationLocation.connectionLocationId;
     const originId = this.projectFormData.originLocation.connectionLocationId;
-    
-    if(destinationId !== "" && originId !== ""){
+
+    if (destinationId !== "" && originId !== "") {
       if (destinationId === originId) {
         // Items are the same, disable the second select box
         return true;
@@ -156,118 +148,161 @@ export class TransferOrderFormComponent implements OnInit {
     return false;
   }
 
-
-
   getTransferOrderById(id: string) {
-    this.transferOrderService.getTransferOrderById(id).subscribe((res) => {
-      if(res.status?.toLowerCase() !== "draft"){
-        this.expectedDeliveryDateDisabled = true;
-        this.expectedArrivalDateDisabled = true;
-      }
-      
-      this.selectedTransferOrder = res;
-      this.projectFormData = res;
-
-      let expectedArrivalDate = this.projectFormData?.expectedArrivalDate?.split('T');
-      let expectedDeliveryDate = this.projectFormData?.expectedDeliveryDate?.split('T');
-      this.projectFormData.expectedArrivalDate = expectedArrivalDate ? expectedArrivalDate[0]:'';
-      this.projectFormData.expectedDeliveryDate = expectedDeliveryDate ? expectedDeliveryDate[0]:'';
-
-      this.toTypeLabel = this.projectFormData?.originLocation?.nodeType+ ' To ' +this.projectFormData?.destinationLocation?.nodeType;
-      this.detailsInputs = this.projectFormData?.details?.map((d: any) => {
-        return {
-          variantId: d?.variantId,
-          skuNo: d?.skuNo,
-          plannedQuantity: d?.plannedQuantity,
-          skuDescription: d?.skuDescription+' '+d?.size+' '+d?.color,
-          receivedQuantity: d?.receivedQuantity,
-          sentQuantity: d?.sentQuantity,
-          discrepancyResolvedTo: d?.discrepancyResolvedTo,
-          lineNumber: d?.lineNumber,
-          discrepancyFlag: d?.discrepancyFlag,
-          alreadyAdded: true
+    this.transferOrderService.getTransferOrderById(id).subscribe(
+      (res) => {
+        if (res.status?.toLowerCase() !== "draft") {
+          this.expectedDeliveryDateDisabled = true;
+          this.expectedArrivalDateDisabled = true;
         }
-      })
 
-      this.detailsInputs?.sort((a: any, b: any) => {
-        let fVal = parseInt(a.lineNumber);
-        let sVal = parseInt(b.lineNumber);
-        return fVal > sVal ? 1 : fVal < sVal ? -1:0;
-      })
-    });
+        this.selectedTransferOrder = res;
+        this.projectFormData = res;
+
+        let expectedArrivalDate =
+          this.projectFormData?.expectedArrivalDate?.split("T");
+        let expectedDeliveryDate =
+          this.projectFormData?.expectedDeliveryDate?.split("T");
+        this.projectFormData.expectedArrivalDate = expectedArrivalDate
+          ? expectedArrivalDate[0]
+          : "";
+        this.projectFormData.expectedDeliveryDate = expectedDeliveryDate
+          ? expectedDeliveryDate[0]
+          : "";
+
+        this.toTypeLabel =
+          this.projectFormData?.originLocation?.nodeType +
+          " To " +
+          this.projectFormData?.destinationLocation?.nodeType;
+        this.detailsInputs = this.projectFormData?.details?.map((d: any) => {
+          return {
+            variantId: d?.variantId,
+            skuNo: d?.skuNo,
+            plannedQuantity: d?.plannedQuantity,
+            skuDescription: d?.skuDescription + " " + d?.size + " " + d?.color,
+            receivedQuantity: d?.receivedQuantity,
+            sentQuantity: d?.sentQuantity,
+            discrepancyResolvedTo: d?.discrepancyResolvedTo,
+            lineNumber: d?.lineNumber,
+            discrepancyFlag: d?.discrepancyFlag,
+            alreadyAdded: true,
+          };
+        });
+
+        this.detailsInputs?.sort((a: any, b: any) => {
+          let fVal = parseInt(a.lineNumber);
+          let sVal = parseInt(b.lineNumber);
+          return fVal > sVal ? 1 : fVal < sVal ? -1 : 0;
+        });
+      },
+      (error) => {
+        console.log("error", error);
+        this._showDateToast(error.error.detail);
+      }
+    );
   }
 
   submitProjectForm(event: any) {
     if (event?.valid) {
+      this.projectFormData.expectedArrivalDate =
+        this.projectFormData.expectedArrivalDate + "T00:00:00Z";
+      this.projectFormData.expectedDeliveryDate =
+        this.projectFormData.expectedDeliveryDate + "T00:00:00Z";
       if (this.mode === "Add") {
-        const destinationId = this.projectFormData.destinationLocation.connectionLocationId;
-        const originId = this.projectFormData.originLocation.connectionLocationId;
+        const destinationId =
+          this.projectFormData.destinationLocation.connectionLocationId;
+        const originId =
+          this.projectFormData.originLocation.connectionLocationId;
 
         delete this.projectFormData.destinationLocation?.nodeType;
         delete this.projectFormData.originLocation?.nodeType;
 
-        if(destinationId == originId){
+        if (destinationId == originId) {
           this._showDuplicatToast();
-        }else{
+        } else {
           this.transferOrderService
-          .addTransferOrder(this.projectFormData)
-          .subscribe((res) => {
-            this._showToast(res);
-          });
+            .addTransferOrder(this.projectFormData)
+            .subscribe(
+              (res) => {
+                this._showToast(res);
+              },
+              (error) => {
+                console.log("error", error);
+                this._showDateToast(error.error.detail);
+              }
+            );
         }
       } else {
         const today = new Date();
-        const expectedArrivalDate = new Date(this.projectFormData.expectedArrivalDate);
-        const expectedDeliveryDate = new Date(this.projectFormData.expectedDeliveryDate);
-        
+        const expectedArrivalDate = new Date(
+          this.projectFormData.expectedArrivalDate
+        );
+        const expectedDeliveryDate = new Date(
+          this.projectFormData.expectedDeliveryDate
+        );
+
         // Set the time components to 00:00:00
         today.setHours(0, 0, 0, 0);
         expectedArrivalDate.setHours(0, 0, 0, 0);
         expectedDeliveryDate.setHours(0, 0, 0, 0);
-        
+
         const secondsToday = Math.floor(today.getTime() / 1000);
-        const secondsExpectedArrival = Math.floor(expectedArrivalDate.getTime() / 1000);
-        const secondsExpectedDelivery = Math.floor(expectedDeliveryDate.getTime() / 1000);
-        console.log("secondsToday",secondsToday);
-        console.log("secondsExpectedArrival",secondsExpectedArrival);
-        console.log("secondsExpectedDelivery",secondsExpectedDelivery);
-        
-        
+        const secondsExpectedArrival = Math.floor(
+          expectedArrivalDate.getTime() / 1000
+        );
+        const secondsExpectedDelivery = Math.floor(
+          expectedDeliveryDate.getTime() / 1000
+        );
+
         if (secondsExpectedDelivery < secondsToday) {
-          this._showDateToast("Expected delivery date should be greater than or equal to today");
-          return
+          this._showDateToast(
+            "Expected delivery date should be greater than or equal to today"
+          );
+          return;
         }
-        if( secondsExpectedArrival < secondsExpectedDelivery){
-          this._showDateToast("Expected arrival date should be greater than or equal to expected delivery date");
-          return
+        if (secondsExpectedArrival < secondsExpectedDelivery) {
+          this._showDateToast(
+            "Expected arrival date should be greater than or equal to expected delivery date"
+          );
+          return;
         }
         this.detailsInputs?.forEach((e: any, key: any) => {
-          e['lineNumber'] = parseInt(key+1)
+          e["lineNumber"] = parseInt(key + 1);
         });
         this.projectFormData.details = this.detailsInputs;
-        this.projectFormData.expectedArrivalDate = this.projectFormData.expectedArrivalDate+'T00:00:00Z';
-        this.projectFormData.expectedDeliveryDate = this.projectFormData.expectedDeliveryDate+'T00:00:00Z';
         this.transferOrderService
           .updateTransferOrder(this.paramId, this.projectFormData)
-          .subscribe((res) => {
-            this._showToast(res);
-          });
+          .subscribe(
+            (res) => {
+              this._showToast(res);
+            },
+            (error) => {
+              console.log('Error updating',error.error.detail);
+              
+              this._showDateToast(error.error.detail);
+            }
+          );
       }
     }
   }
 
-  _showDuplicatToast(){
+  _showDuplicatToast() {
     this.toastService.open({
-      value: [{ severity: "error", content: "Destionation and Origin Cannot be Same" }],
+      value: [
+        {
+          severity: "error",
+          content: "Destionation and Origin Cannot be Same",
+        },
+      ],
       life: 2000,
-    }); 
+    });
   }
 
   _showDateToast(message: string) {
     this.toastService.open({
       value: [{ severity: "error", content: message }],
       life: 2000,
-    }); 
+    });
   }
 
   _showToast(resp: any) {
@@ -275,7 +310,11 @@ export class TransferOrderFormComponent implements OnInit {
     if (resp) {
       type = "success";
       msg = this.mode === "Add" ? MSG.create : MSG.update;
-      this.router.navigate(["/business/transfer-order"]);
+      if (this.mode === "Add") {
+        this.router.navigate(["/business/transfer-order"]);
+      } else {
+        window.location.reload();
+      }
     } else {
       type = "error";
       msg = MSG.error;
@@ -288,21 +327,30 @@ export class TransferOrderFormComponent implements OnInit {
 
   checkNodeType() {
     this.allowSubmit = true;
-    if(this.projectFormData?.originLocation?.nodeType
-      &&this.projectFormData?.destinationLocation?.nodeType) {
-        if(this.projectFormData?.originLocation?.nodeType?.toLowerCase() === 'dc' 
-        && this.projectFormData?.destinationLocation?.nodeType?.toLowerCase() === 'dc') {
-          this.allowSubmit = false;
-          this._showToastMsg("error", "Selected origin to destionation combination is not allowed!")
-        }
+    if (
+      this.projectFormData?.originLocation?.nodeType &&
+      this.projectFormData?.destinationLocation?.nodeType
+    ) {
+      if (
+        this.projectFormData?.originLocation?.nodeType?.toLowerCase() ===
+          "dc" &&
+        this.projectFormData?.destinationLocation?.nodeType?.toLowerCase() ===
+          "dc"
+      ) {
+        this.allowSubmit = false;
+        this._showToastMsg(
+          "error",
+          "Selected origin to destionation combination is not allowed!"
+        );
+      }
     }
   }
 
-  _showToastMsg(type: string, msg: string){
+  _showToastMsg(type: string, msg: string) {
     this.toastService.open({
       value: [{ severity: type, content: msg }],
       life: 2000,
-    }); 
+    });
   }
 
   arrivalDate(event: any) {
@@ -316,28 +364,39 @@ export class TransferOrderFormComponent implements OnInit {
       showAnimation: showAnimation,
       buttons: [
         {
-          cssClass: 'primary',
-          text: 'Ok',
+          cssClass: "primary",
+          text: "Ok",
           disabled: false,
           handler: (variantList: any) => {
             results.modalInstance.hide();
-            this.detailsInputs = [];
+            // this.detailsInputs = [];
             this.stVariants?.forEach((p: any) => {
-              if(p?.selected === true) {
+              if (
+                p?.selected === true &&
+                !this.addedVariantIds.includes(p?.variantId)
+              ) {
+                // Push the object only if the variantId is not in the addedVariantIds array
+
                 this.detailsInputs.push({
                   variantId: p?.variantId,
                   skuNo: p?.sku,
+                  skuDescription: p?.desc
+                    ? p?.desc
+                    : "" + " " + p?.size + " " + p?.color,
                   plannedQuantity: null,
-                  alreadyAdded: false
-                })
+                  alreadyAdded: false,
+                });
+
+                // Add the variantId to the addedVariantIds array
+                this.addedVariantIds.push(p?.variantId);
               }
             });
           },
         },
         {
-          id: 'btn-cancel',
-          cssClass: 'common',
-          text: 'Cancel',
+          id: "btn-cancel",
+          cssClass: "common",
+          text: "Cancel",
           handler: (variantList: any) => {
             this.stVariants = [];
             this.detailsInputs = [];
@@ -348,8 +407,8 @@ export class TransferOrderFormComponent implements OnInit {
       data: {
         vList: (vData: any) => {
           this.stVariants = vData;
-          this.detailsInputs = [];
-        }
+          // this.detailsInputs = [];
+        },
       },
     });
   }
@@ -359,58 +418,84 @@ export class TransferOrderFormComponent implements OnInit {
   }
 
   _checkIfValid() {
-    return this?.detailsInputs?.findIndex((p: any) => (!p?.variantId || !p?.skuNo || !p?.plannedQuantity)) === -1;
+    return (
+      this?.detailsInputs?.findIndex(
+        (p: any) => !p?.variantId || !p?.skuNo || !p?.plannedQuantity
+      ) === -1
+    );
   }
 
   updateStatus(type: string) {
+    let searchString = "T00:00:00Z"; // The string to search for
+    // Check if the searchString exists in the date strings
+    if (!this.projectFormData.expectedArrivalDate.includes(searchString)) {
+      this.projectFormData.expectedArrivalDate =
+        this.projectFormData.expectedArrivalDate + "T00:00:00Z";
+    }
+    if (!this.projectFormData.expectedDeliveryDate.includes(searchString)) {
+      this.projectFormData.expectedDeliveryDate =
+        this.projectFormData.expectedDeliveryDate + "T00:00:00Z";
+    }
+
     this.transferOrderService
-    .updateStatus({
-      id: this.paramId, 
-      formData: this.projectFormData,
-      type: type
-    })
-    .subscribe((res) => {
-      let type;
-      let msg;
-      this.getTransferOrderById(this.paramId)
-      if(res) {
-        type = "success";
-        msg = "Data Updated Successfully"
-        
-      } else {
-        type= "error";
-        msg = MSG.error;
-      }
-      this._showToastMsg(type, msg);
-    });
+      .updateStatus({
+        id: this.paramId,
+        formData: this.projectFormData,
+        type: type,
+      })
+      .subscribe(
+        (res) => {
+          let type;
+          let msg;
+          this.getTransferOrderById(this.paramId);
+          if (res) {
+            type = "success";
+            msg = "Data Updated Successfully";
+          } else {
+            type = "error";
+            msg = MSG.error;
+          }
+          this._showToastMsg(type, msg);
+        },
+        (error) => {
+          console.log("error", error);
+          this._showDateToast(error.error.detail); 
+        }
+      );
   }
 
   confirmNow(rowIndex: number) {
     this.dObj.details = [];
     this.dObj.details.push({
       discrepancyFlag: this.detailsInputs[rowIndex]?.discrepancyFlag,
-      discrepancyResolvedTo: this.detailsInputs[rowIndex]?.discrepancyResolvedTo,
-      lineNumber: this.detailsInputs[rowIndex]?.lineNumber
+      discrepancyResolvedTo:
+        this.detailsInputs[rowIndex]?.discrepancyResolvedTo,
+      lineNumber: this.detailsInputs[rowIndex]?.lineNumber,
     });
     this.transferOrderService
-    .updateStatus({
-      id: this.paramId, 
-      formData: this.dObj
-    })
-    .subscribe((res) => {
-      let type;
-      let msg;
-      this.getTransferOrderById(this.paramId)
-      if(res) {
-        type = "success";
-        msg = MSG.update
-        
-      } else {
-        type= "error";
-        msg = MSG.error;
-      }
-      this._showToastMsg(type, msg);
-    });
+      .updateStatus({
+        id: this.paramId,
+        formData: this.dObj,
+      })
+      .subscribe(
+        (res) => {
+          let type;
+          let msg;
+          this.getTransferOrderById(this.paramId);
+          if (res) {
+            type = "success";
+            msg = MSG.update;
+          } else {
+            type = "error";
+            msg = MSG.error;
+          }
+          this._showToastMsg(type, msg);
+        },
+        (error) => {
+          console.log("error", error);
+          this._showDateToast(error.error.detail);
+        }
+      );
   }
 
   removeNow(rowIndex: number) {
@@ -420,19 +505,18 @@ export class TransferOrderFormComponent implements OnInit {
   confirmDialog(type: string) {
     let stType = type;
     const results = this.dialogService.open({
-      id: 'dialog-service',
-      width: '346px',
-      maxHeight: '600px',
-      title: 'Are you sure?',
-      content: '',
+      id: "dialog-service",
+      width: "346px",
+      maxHeight: "600px",
+      title: "Are you sure?",
+      content: "",
       backdropCloseable: true,
-      dialogtype: '',
-      onClose: () => {
-      },
+      dialogtype: "",
+      onClose: () => {},
       buttons: [
         {
-          cssClass: 'primary',
-          text: 'Ok',
+          cssClass: "primary",
+          text: "Ok",
           disabled: false,
           handler: ($event: Event) => {
             results.modalInstance.hide();
@@ -440,15 +524,22 @@ export class TransferOrderFormComponent implements OnInit {
           },
         },
         {
-          id: 'btn-cancel',
-          cssClass: 'common',
-          text: 'Cancel',
+          id: "btn-cancel",
+          cssClass: "common",
+          text: "Cancel",
           handler: ($event: Event) => {
             results.modalInstance.hide();
           },
         },
-      ]
+      ],
     });
   }
-  
+
+  numberOnly(event: any) {
+    const charCode = event.which ? event.which : event.keyCode;
+    if (charCode > 31 && (charCode < 48 || charCode > 57)) {
+      return false;
+    }
+    return true;
+  }
 }

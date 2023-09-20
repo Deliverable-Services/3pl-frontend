@@ -66,9 +66,16 @@ export class TransferOrderFormModalComponent {
     } else {
       this.selectedItem = itemValue; // Select the clicked item
     } 
+    console.log('selectedItem', itemValue);
+    
     if(this.selectedItem){
       this.productsListDataService.getById(this.selectedItem).subscribe((res) => {
+        res.variants.forEach((variant:any) =>{
+            variant.desc = res.logisticsDesc;
+        });
         this.variantList = res.variants;
+        console.log('variantList', this.variantList);
+        
     }); 
     }   
   }

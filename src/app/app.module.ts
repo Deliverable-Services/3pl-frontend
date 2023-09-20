@@ -16,7 +16,7 @@ import { CheckRequestInterceptor } from "./@core/interceptor/check-request.inter
 import { LocalService } from "./local.service";
 import { environment } from "src/environments/environment";
 import { map } from "rxjs/operators";
-
+import { NumbersOnlyDirective } from "./numbers-only.directive";
 const initEnv = (localService: LocalService) => {
   return () => {
     return new Promise<any>(function (resolve) {
@@ -56,7 +56,7 @@ class I18NLoader implements TranslateLoader {
 }
 
 @NgModule({
-  declarations: [AppComponent],
+  declarations: [AppComponent,NumbersOnlyDirective],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,

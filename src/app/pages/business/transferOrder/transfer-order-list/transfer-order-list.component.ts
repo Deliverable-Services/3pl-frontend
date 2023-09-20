@@ -130,13 +130,14 @@ export class TransferOrderListComponent implements OnInit {
     setTimeout(() => {
       Object.keys(this.searchKeywords).forEach((field) => {
         console.log("field",field);
-        
-        if (this.searchKeywords[field]) {
-          newSearchParams.filters.push({
-            field: field,
-            operator: "match",
-            value: this.searchKeywords[field],
-          });
+        if(this.searchKeywords[field] != "ALL"){
+          if (this.searchKeywords[field]) {
+            newSearchParams.filters.push({
+              field: field,
+              operator: "match",
+              value: this.searchKeywords[field],
+            });
+          }
         }
       });
 
