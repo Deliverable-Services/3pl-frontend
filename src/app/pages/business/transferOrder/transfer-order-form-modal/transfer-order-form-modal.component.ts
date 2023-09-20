@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { ProductsListDataService } from 'src/app/@core/mock/products-data.service';
+import { InventoryService } from 'src/app/@core/mock/inventory.service';
 
 @Component({
   selector: 'app-transfer-order-form-modal',
@@ -23,7 +24,10 @@ export class TransferOrderFormModalComponent {
     searchType: "match",
   };
 
-  constructor( private productsListDataService: ProductsListDataService) {
+  constructor( 
+    private productsListDataService: ProductsListDataService,
+    private inventoryService: InventoryService
+  ) {
     this.handler = () => {}; // Initialize the handler with a default empty function
   }
 
@@ -48,6 +52,9 @@ export class TransferOrderFormModalComponent {
   }
 
   search(e: any) {
+    // return from here if length is not three
+    if(e.target.value?.length < 3) return;
+    
     this.searchWithStyleName.keyword = e.target.value;
     this.productsListDataService.setSearchParams(this.searchWithStyleName)
     this.getProductsList();
@@ -65,8 +72,7 @@ export class TransferOrderFormModalComponent {
       this.selectedItem = null; // Deselect if already selected
     } else {
       this.selectedItem = itemValue; // Select the clicked item
-    } 
-    console.log('selectedItem', itemValue);
+    }
     
     if(this.selectedItem){
       this.productsListDataService.getById(this.selectedItem).subscribe((res) => {
@@ -74,9 +80,19 @@ export class TransferOrderFormModalComponent {
             variant.desc = res.logisticsDesc;
         });
         this.variantList = res.variants;
-        console.log('variantList', this.variantList);
-        
+        // start inventory search
+        this.getInventory(this.variantList?.map((v: any) => v.sku), '');        
     }); 
     }   
+  }
+
+  getInventory($sku: any, originId: string) {
+    let skuList:any[] = [];
+    skuList.push({
+      field: "sku",
+      operator: "in",
+      value: $sku,
+    });
+    this.inventoryService.getList(skuList).subscribe((i: any) => console.log(' inventory => ', i));
   }
 }
