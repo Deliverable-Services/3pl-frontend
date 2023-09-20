@@ -64,8 +64,8 @@ export class InventoryListComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.pageParam.pageSize = 20;
-    this.pager.pageSize = 20;
+    this.pageParam.pageSize = 50;;
+    this.pager.pageSize = 50;;
     this.inventoryService.setPageParams(this.pageParam);
     this.getConnectionLocations();
     setTimeout(() => {

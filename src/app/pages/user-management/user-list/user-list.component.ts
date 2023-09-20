@@ -54,8 +54,8 @@ export class UserListComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.pageParam.pageSize = 20;
-    this.pager.pageSize = 20;
+    this.pageParam.pageSize = 50;;
+    this.pager.pageSize = 50;;
     this.getUserList();
     this.getRoles();
   }

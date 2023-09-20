@@ -49,8 +49,8 @@ export class ShopifyConnectorListComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.pageParam.pageSize = 20;
-    this.pager.pageSize = 20;
+    this.pageParam.pageSize = 50;;
+    this.pager.pageSize = 50;;
     this.shopifyConnectorService.setPageParams(this.pageParam);
     this.getList();
   }

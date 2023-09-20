@@ -437,6 +437,11 @@ export class TransferOrderFormComponent implements OnInit {
         this.projectFormData.expectedDeliveryDate + "T00:00:00Z";
     }
 
+    this.detailsInputs?.forEach((e: any, key: any) => {
+      e["lineNumber"] = parseInt(key + 1);
+    });
+    this.projectFormData.details = this.detailsInputs;
+
     this.transferOrderService
       .updateStatus({
         id: this.paramId,

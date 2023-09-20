@@ -29,7 +29,7 @@
           <div [ngStyle]="{ width: '100%' }">
 
             <d-form-operation>
-              <div *ngif="projectFormData.status">
+              <div *ngIf="projectFormData.status">
                 <label [ngStyle]="{ float: 'right' }" for="">Last Modified By: {{projectFormData.lastModifiedBy}}
                   &nbsp;&nbsp;</label>
                 <label [ngStyle]="{ float: 'right' }" for="">Last Modified Date: {{projectFormData.lastModifiedDate}}
@@ -101,7 +101,7 @@
                   {{ "form.transferOrder.fields.origin" | translate }}
                 </d-form-label>
                 <d-form-control>
-                  <d-select [disabled]="projectFormData.status && projectFormData.status?.toLowerCase() !== 'draft'"
+                  <d-select [disabled]="mode.toLowerCase() === 'edit'"
                     [ngStyle]="{ width: '100%' }" [placeholder]="'form.transferOrder.fields.origin' | translate"
                     [appendToBody]="true" [multiple]="false" [filterKey]="'nodeName'" [options]="connectionLocationList"
                     name="origin" [(ngModel)]="projectFormData.originLocation" (valueChange)="checkNodeType()"
@@ -152,7 +152,7 @@
                   {{ "form.transferOrder.fields.destination" | translate }}
                 </d-form-label>
                 <d-form-control>
-                  <d-select [disabled]="projectFormData.status && projectFormData.status?.toLowerCase() !== 'draft'"
+                  <d-select [disabled]="mode.toLowerCase() === 'edit'"
                     [ngStyle]="{ width: '100%' }" [placeholder]="'form.transferOrder.fields.destination' | translate"
                     [appendToBody]="true" [multiple]="false" [filterKey]="'nodeName'" [options]="connectionLocationList"
                     name="destination" (valueChange)="checkNodeType()" [(ngModel)]="projectFormData.destinationLocation"
@@ -199,7 +199,8 @@
           <d-form-item [ngStyle]="{ marginTop: '20px' }">
             <d-form-label>{{ "form.transferOrder.fields.remarks" | translate }}</d-form-label>
             <d-form-control>
-              <textarea [ngStyle]="{ height: '104px' }" dTextarea resize="vertical" autocomplete="off" name="remarks"
+              <textarea [disabled]="!(mode.toLowerCase() !== 'edit') && projectFormData.status?.toLowerCase() !== 'draft'" 
+              [ngStyle]="{ height: '104px' }" dTextarea resize="vertical" autocomplete="off" name="remarks"
                 [placeholder]="'form.transferOrder.fields.remarks' | translate"
                 [(ngModel)]="projectFormData.remarks"></textarea>
             </d-form-control>
@@ -211,7 +212,7 @@
             </div>
             <div [ngStyle]="{ width: '100%' }">
 
-              <d-form-operation>
+              <d-form-operation *ngIf="mode.toLowerCase() === 'add' || projectFormData.status?.toLowerCase() === 'draft'">
                 <d-button [ngStyle]="{ 'margin-bottom': '12px' }" dLoading class="mr-element-spacing" circled="true"
                   (click)="openDialog()">
                   {{ "form.transferOrder.popupBtn" | translate }}
