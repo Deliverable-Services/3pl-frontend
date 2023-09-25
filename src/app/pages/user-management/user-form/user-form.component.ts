@@ -44,14 +44,14 @@ export class UserFormComponent implements OnInit {
   customStylesDC = {
     position: 'absolute',
     marginTop: '-222px',
-    marginLeft: '120px',
+    marginLeft: '150px',
     width: '20%',
   };
   customStylesStore= {
     position: 'absolute',
     width: '20%',
     marginTop: '-157px',
-    marginLeft: '120px',
+    marginLeft: '150px',
   };
   customStyleVendor = {
     position: "absolute",
@@ -102,11 +102,12 @@ export class UserFormComponent implements OnInit {
       this.projectFormData.warehouse = res?.warehouse || {
         connectionLocationId: "",
       };
-      this.projectFormData.vendor = res?.vendor || { id: "" };
+      this.projectFormData.vendor = res?.vendor || { id: "" }; 
 
       this.projectFormData.storeInfo = res?.store || {};
       this.projectFormData.warehouseInfo = res?.warehouse || {};
       this.projectFormData.vendorInfo = res?.vendor || {};
+      this.showRole(res.group);
     });
   }
 
@@ -161,7 +162,7 @@ export class UserFormComponent implements OnInit {
   submitProjectForm(event: any) {
     let formData = this.projectFormData;
 
-    formData["rfidManager"] = formData.selectedRoles.includes("EPC Manager");
+    formData["rfidManager"] = formData.selectedRoles.includes("RFID Manager");
 
     if (event?.valid) {
       // Create an object to hold the request data with only the desired keys and values
@@ -178,7 +179,7 @@ export class UserFormComponent implements OnInit {
       };
 
       // Only include "store," "vendor," and "warehouse" keys if the "group" conditions are met
-      if (formData.group === "EXTERNAL" && formData.selectedRoles.includes("Vendor")) {
+      if (formData.group === "EXTERNAL" && formData.selectedRoles.includes("Factories")) {
         requestData.vendor = formData.vendor;
       }
 

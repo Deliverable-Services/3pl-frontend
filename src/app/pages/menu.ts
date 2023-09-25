@@ -8,6 +8,10 @@ export default function (values: any) {
         //   link: "/product/brand",
         // },
         {
+          title: "product",
+          link: "/product/products",
+        },
+        {
           title: "category",
           link: "/product/category",
         },
@@ -19,10 +23,7 @@ export default function (values: any) {
         //   title: "Unit",
         //   link: "/product/unit",
         // },
-        {
-          title: "product",
-          link: "/product/products",
-        },
+       
 
         // {
         //   title: "Variant",
@@ -34,16 +35,24 @@ export default function (values: any) {
     },
 
     {
-      title: "resources",
+      title: "purchasing",
       children: [
+
         {
-          title: "company",
-          link: "/business/company",
+          title: "poList",
+          link: "#",
+          disabled: true
+        },       
+        {
+          title: "asnList",
+          link: "#",
+          disabled: true
         },
-        // {
-        //   title: "Department",
-        //   link: "/business/department",
-        // },
+         {
+          title: "payments",
+          link: "#",
+          disabled: true
+        },
         {
           title: "vendor",
           link: "/business/vendor",
@@ -56,14 +65,6 @@ export default function (values: any) {
         //   title: "Trade Terms",
         //   link: "/business/trade-terms",
         // },
-        {
-          title: "currency",
-          link: "/business/currency",
-        },
-        {
-          title: "creditTerms",
-          link: "/credit-terms",
-        },
         {
           title: "connectionLocationList",
           link: "/connection-location",
@@ -82,27 +83,23 @@ export default function (values: any) {
       children:[
         {
           title:"inventoryList",
+          
           link: "/inventory"
         },
         {
           title:"inventoryOnlineList",
           link: "/inventory-online"
-        }
-      ],
-    },
-    {
-      title: "userManagement",
-      menuIcon: "icon icon-go-story",
-      children:[
+        },
         {
-          title:"user",
-          link: "/user-management/user"
+          title:"RfidSearch",
+          link: "#",
+          disabled: true
         }
       ],
     },
 
     {
-      title: "businessCategory",
+      title: "transfers",
       menuIcon: "icon icon-go-story",
       children:[
         {
@@ -111,6 +108,33 @@ export default function (values: any) {
         }
       ],
     },
+    {
+      title: "userManagement",
+      menuIcon: "icon icon-go-story",
+      children:[
+        {
+          title: "company",
+          link: "/business/company",
+        },
+        {
+          title:"user",
+          link: "/user-management/user"
+        },
+        {
+          title: "currency",
+          link: "/business/currency",
+        },
+        {
+          title: "creditTerms",
+          link: "/credit-terms",
+        },
+        {
+          title: "integration",
+          link: "#",
+          disabled:true,
+        },
+      ],
+    }
     // {
     //   title: "Connection Location",
     //   link: "/connection-location",

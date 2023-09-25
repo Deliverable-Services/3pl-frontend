@@ -1,23 +1,43 @@
-<div>
-    <d-search [size]="'sm'" (input)="search($event)" class="da-inline"
-        [placeholder]="'Search with Style Name'"></d-search>
-    <ul *ngIf="filteredData.length > 0">
-        <h3>Product List</h3>
-        <li *ngFor="let item of filteredData" [ngClass]="{'selected': selectedItem === item.productId}"
-            (click)="selectItem(item.productId)">
-            {{ item.styleName }}
-        </li>
-    </ul>
-</div>
+<div class="column-container">
 
-<div *ngIf="selectedItem">
-    <h3>Variant List</h3>
-    <ul class="variant-list">
-        <li *ngFor="let variantItem of variantList" class="variant-item">
-            <label>
-                <input type="checkbox" (change)="storeObjectData(variantItem)" [(ngModel)]="variantItem.selected">
-                {{ variantItem.sku }}
-            </label>
-        </li>
-    </ul>
+    <div class="column-left">
+        <div>
+            <d-search [size]="'sm'" (input)="search($event)" class="da-inline"
+                [placeholder]="'Search with Style Name'"></d-search>
+            <ul *ngIf="filteredData.length > 0">
+                <h3>Product List</h3>
+                <li *ngFor="let item of filteredData" [ngClass]="{'selected': selectedItem === item.productId}"
+                    (click)="selectItem(item.productId)">
+                    {{ item.styleName }}
+                </li>
+            </ul>
+        </div>
+        <div *ngIf="selectedItem">
+            <h3>Variant List</h3>
+            <ul class="variant-list">
+                <li *ngFor="let variantItem of variantList" class="variant-item">
+                    <label [style.color]="variantItem.availableQty === 0 ? 'red' : 'black'">
+                        <input [style.pointer-events]="variantItem.availableQty === 0 ? 'none' : 'auto'"
+                               [disabled]="variantItem.availableQty === 0" type="checkbox"
+                               (change)="storeObjectData(variantItem)" [(ngModel)]="variantItem.selected"
+                               [checked]="variantItem.itemAlreadySelected">
+                        {{ variantItem.custName }}
+                    </label>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div *ngIf="selectedItem" class="column-right m-top">
+        <h3>Selected Variants</h3>
+        <ul class="variant-list">
+            <li *ngFor="let cart of cartItems; let i = index" class="variant-item">
+                <label [style.color]="cart.availableQty === 0 ? 'red' : 'black'">
+                    {{ cart.custName }}
+                </label>
+                <span style="margin-left: 20px;">
+                    <button (click)="removeFromCart(i)" class="remove-button">Remove</button>
+                </span>
+            </li>
+        </ul>
+    </div>
 </div>

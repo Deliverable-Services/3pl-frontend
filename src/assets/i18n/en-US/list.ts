@@ -16,12 +16,12 @@ export default {
       title: 'Company',
     },
     category: {
-      title: 'Category',
+      title: 'Category Setup',
       categoryList: 'Category List',
       buttonTitle: 'Add Category'
     },
     product: {
-      title: 'Product',
+      title: 'Product List',
       list: 'Product List',
       buttonTitle: 'Add Product'
     },
@@ -41,7 +41,7 @@ export default {
       buttonTitle: 'Add Inventory Node'
     },
     vendor: {
-      title: 'Vendor',
+      title: 'Vendor Setup',
       list: 'Vendor List',
       buttonTitle: 'Add'
     },
@@ -69,10 +69,10 @@ export default {
       list: 'Inventory List'
     },
     inventoryList:{
-      title:"Inventory List",
+      title:"Overview",
     },
     inventoryOnlineList: {
-      title: 'Online Cross Check',
+      title: 'Online Stock Cross Check',
       dropdown:"Select a Inventory Node",
       stockOwnerId:"Stock Owner ID",
       color:"Color",
@@ -93,10 +93,31 @@ export default {
       list: 'Inventory Online List'
     },
     userManagement: {
-      title: 'User Management',
+      title: 'Administration',
+    },
+    RfidSearch:{
+      title: 'RFID Search',
+    },
+    integration:{
+      title: 'Integration',
+    },
+    purchasing:{
+      title: 'Purchasing',
+    },
+    poList:{
+      title:"PO List"
+    },
+    asnList:{
+      title: "ASN List"
+    },
+    payments:{
+      title: "Payments",
     },
     businessCategory:{
       title: 'Business'
+    },
+    transfers:{
+      title: "Transfers"
     },
     user: {
       title: 'User',
@@ -123,7 +144,7 @@ export default {
       description: 'Tree table rendering is supported.'
     },
     sPartner: {
-      title: 'Shipping Partner',
+      title: 'Shipping Setup',
       categoryList: 'Shipping Partner List',
       buttonTitle: 'Add'
     },
@@ -137,8 +158,8 @@ export default {
         nodeName:"Destination",
         nodeName2:"Origin",
         receiptDiscrepancy:"Discrepancy",
-        list:"Transfer Order List",
-        title:"Transfer Order",
+        list:"Transfer Order",
+        title:"TO List",
         buttonTitle:"Create Transfer Order",
         actions:"Actions",
         lastModifiedDate: "Updated Date",

@@ -2,10 +2,10 @@
   <div class="add-session-btn">
     <d-breadcrumb>
       <d-breadcrumb-item>
-        <a routerLink="/product/products">{{ "list.product.title" | translate }}</a>
+        <a routerLink="/product/products">{{ "list.user.title" | translate }}</a>
       </d-breadcrumb-item>
       <d-breadcrumb-item>
-        {{ (mode === 'Add' ? "list.product.buttonTitle" : "form.product.edit_product") | translate }}
+        {{ (mode === 'Add' ? "list.user.buttonTitle" : "form.user.edit_user") | translate }}
       </d-breadcrumb-item>
     </d-breadcrumb>
   </div>
@@ -107,7 +107,7 @@
                     </d-form-control>
                   </d-form-item>
 
-                  <d-form-item [ngStyle]="customStyleVendor" *ngIf="projectFormData.selectedRoles?.includes('Vendor')
+                  <d-form-item [ngStyle]="customStyleVendor" *ngIf="projectFormData.selectedRoles?.includes('Factories')
                   && projectFormData.group === 'EXTERNAL'">
                     <d-form-control>
                       <d-select [ngStyle]="{ width: '100%' }" placeholder="Select a Vendor" [scrollHight]="'300px'"

@@ -17,6 +17,8 @@ import { LocalService } from "./local.service";
 import { environment } from "src/environments/environment";
 import { map } from "rxjs/operators";
 import { NumbersOnlyDirective } from "./numbers-only.directive";
+import { CommonModule } from '@angular/common';
+
 const initEnv = (localService: LocalService) => {
   return () => {
     return new Promise<any>(function (resolve) {
@@ -59,6 +61,7 @@ class I18NLoader implements TranslateLoader {
   declarations: [AppComponent,NumbersOnlyDirective],
   imports: [
     BrowserModule,
+    CommonModule,
     BrowserAnimationsModule,
     HttpClientModule,
     AppRoutingModule,

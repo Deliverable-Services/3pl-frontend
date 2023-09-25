@@ -48,3 +48,26 @@ li {
     font-size: 1.2rem;
   }
   
+  .column-container {
+    display: flex;
+    flex-direction: row;
+  }
+  
+  .column-left {
+    width: 70%;
+    padding: 10px;
+    box-sizing: border-box;
+  }
+
+  .column-right {
+    width: 30%;
+    padding: 10px;
+    box-sizing: border-box;
+  }
+
+  .m-top{
+    margin-top: 25px;
+  }
+  .remove-button{
+    color: red;
+  }

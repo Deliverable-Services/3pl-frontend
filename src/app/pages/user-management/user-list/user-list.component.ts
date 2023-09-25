@@ -29,7 +29,7 @@ export class UserListComponent implements OnInit {
   pager = {
     total: 0,
     pageIndex: 1,
-    pageSize: 10,
+    pageSize: 50,
   };
 
   columnSize: any = {
@@ -55,7 +55,8 @@ export class UserListComponent implements OnInit {
 
   ngOnInit(): void {
     this.pageParam.pageSize = 50;;
-    this.pager.pageSize = 50;;
+    this.pager.pageSize = 50;
+    this.userManagementService.setPageParams(this.pageParam)
     this.getUserList();
     this.getRoles();
   }

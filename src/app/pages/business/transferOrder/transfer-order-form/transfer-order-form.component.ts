@@ -6,6 +6,7 @@ import { TransferOrderListDataService } from "src/app/@core/mock/tranfer-order.s
 import { MSG } from "src/config/global-var";
 import { ProductsListDataService } from "src/app/@core/mock/products-data.service";
 import { TransferOrderFormModalComponent } from "../transfer-order-form-modal/transfer-order-form-modal.component";
+
 @Component({
   selector: "app-transfer-order-form",
   templateUrl: "./transfer-order-form.component.html",
@@ -14,6 +15,9 @@ import { TransferOrderFormModalComponent } from "../transfer-order-form-modal/tr
 export class TransferOrderFormComponent implements OnInit {
   mode: string = "Add";
   verticalLayout: FormLayout = FormLayout.Vertical;
+  createdDate? = "";
+  modifiedDate? = "";
+
   projectFormData: any = {
     destinationLocation: {
       connectionLocationId: "",
@@ -31,6 +35,14 @@ export class TransferOrderFormComponent implements OnInit {
     expectedDeliveryDate: null,
   };
   stVariants: any = [];
+  locationID: string = "";
+
+  pageParam: any = {
+    pageNo: "",
+    pageSize: "",
+    sortBy: "nodeType",
+    sortDir: "asc",
+  };
 
   customStylesDC = {
     position: "absolute",
@@ -60,7 +72,7 @@ export class TransferOrderFormComponent implements OnInit {
 
   config = {
     id: "dialog-service",
-    width: "50%",
+    width: "70%",
     maxHeight: "600px",
     title: "Select Produts With Style",
     content: TransferOrderFormModalComponent,
@@ -96,12 +108,12 @@ export class TransferOrderFormComponent implements OnInit {
   ngOnInit(): void {
     this.paramId = this.route.snapshot.params["id"];
     this.mode = this.route.snapshot.params["id"] ? "Edit" : "Add";
-
+    this.getConnectionLocationList();
     if (this.mode === "Edit") {
       this.getTransferOrderById(this.paramId);
     }
 
-    this.getConnectionLocationList();
+    this.connectionLocationService.setPageParams(this.pageParam);
   }
 
   getConnectionLocationList() {
@@ -111,6 +123,7 @@ export class TransferOrderFormComponent implements OnInit {
           connectionLocationId: "",
           nodeName: "ALL",
         });
+
         this.connectionLocationList = res?.filter(
           (c: any) => c?.nodeType?.toLowerCase() !== "online"
         );
@@ -118,14 +131,13 @@ export class TransferOrderFormComponent implements OnInit {
           (c: any) => {
             return {
               connectionLocationId: c?.connectionLocationId || "",
-              nodeName: c?.nodeName || "",
+              nodeName: `${c?.nodeType} - ${c?.nodeName}` || "",
               nodeType: c?.nodeType,
             };
           }
         );
       },
       (error) => {
-        console.log("error", error);
         this._showDateToast(error.error.detail);
       }
     );
@@ -148,6 +160,21 @@ export class TransferOrderFormComponent implements OnInit {
     return false;
   }
 
+  formatDate(dateString: string): string {
+    const date = new Date(dateString);
+    if (isNaN(date.getTime())) {
+      return "Invalid Date"; // Handle invalid date string
+    }
+
+    const day = date.getDate().toString().padStart(2, "0");
+    const month = (date.getMonth() + 1).toString().padStart(2, "0");
+    const year = date.getFullYear();
+    const hours = date.getHours().toString().padStart(2, "0");
+    const minutes = date.getMinutes().toString().padStart(2, "0");
+
+    return `${day}/${month}/${year} ${hours}:${minutes}`;
+  }
+
   getTransferOrderById(id: string) {
     this.transferOrderService.getTransferOrderById(id).subscribe(
       (res) => {
@@ -156,8 +183,13 @@ export class TransferOrderFormComponent implements OnInit {
           this.expectedArrivalDateDisabled = true;
         }
 
+        this.createdDate = this.formatDate(res.createdDate) ?? "";
+        this.modifiedDate = this.formatDate(res.lastModifiedDate) ?? "";
+
         this.selectedTransferOrder = res;
         this.projectFormData = res;
+        this.projectFormData.originLocation.nodeName = `${this.projectFormData.originLocation.nodeType} - ${this.projectFormData.originLocation.nodeName}`;
+        this.projectFormData.destinationLocation.nodeName = `${this.projectFormData.destinationLocation.nodeType} - ${this.projectFormData.destinationLocation.nodeName}`;
 
         let expectedArrivalDate =
           this.projectFormData?.expectedArrivalDate?.split("T");
@@ -179,7 +211,7 @@ export class TransferOrderFormComponent implements OnInit {
             variantId: d?.variantId,
             skuNo: d?.skuNo,
             plannedQuantity: d?.plannedQuantity,
-            skuDescription: d?.skuDescription + " " + d?.size + " " + d?.color,
+            skuDescription: d?.skuDescription,
             receivedQuantity: d?.receivedQuantity,
             sentQuantity: d?.sentQuantity,
             discrepancyResolvedTo: d?.discrepancyResolvedTo,
@@ -196,7 +228,6 @@ export class TransferOrderFormComponent implements OnInit {
         });
       },
       (error) => {
-        console.log("error", error);
         this._showDateToast(error.error.detail);
       }
     );
@@ -204,6 +235,10 @@ export class TransferOrderFormComponent implements OnInit {
 
   submitProjectForm(event: any) {
     if (event?.valid) {
+      this.detailsInputs?.forEach((e: any, key: any) => {
+        e["lineNumber"] = parseInt(key + 1);
+      });
+      this.projectFormData.details = this.detailsInputs;
       this.projectFormData.expectedArrivalDate =
         this.projectFormData.expectedArrivalDate + "T00:00:00Z";
       this.projectFormData.expectedDeliveryDate =
@@ -227,7 +262,6 @@ export class TransferOrderFormComponent implements OnInit {
                 this._showToast(res);
               },
               (error) => {
-                console.log("error", error);
                 this._showDateToast(error.error.detail);
               }
             );
@@ -268,6 +302,9 @@ export class TransferOrderFormComponent implements OnInit {
         }
         this.detailsInputs?.forEach((e: any, key: any) => {
           e["lineNumber"] = parseInt(key + 1);
+          e["sentQuantity"] = parseInt(e["sentQuantity"]);
+          e["plannedQuantity"] = parseInt(e["plannedQuantity"]);
+          e["receivedQuantity"] = parseInt(e["receivedQuantity"]);
         });
         this.projectFormData.details = this.detailsInputs;
         this.transferOrderService
@@ -277,8 +314,6 @@ export class TransferOrderFormComponent implements OnInit {
               this._showToast(res);
             },
             (error) => {
-              console.log('Error updating',error.error.detail);
-              
               this._showDateToast(error.error.detail);
             }
           );
@@ -373,9 +408,13 @@ export class TransferOrderFormComponent implements OnInit {
             this.stVariants?.forEach((p: any) => {
               if (
                 p?.selected === true &&
-                !this.addedVariantIds.includes(p?.variantId)
+                !this.addedVariantIds.includes(p?.variantId) &&
+                !this.detailsInputs.some(
+                  (input: any) => input.variantId === p?.variantId
+                )
               ) {
                 // Push the object only if the variantId is not in the addedVariantIds array
+                // and it's not already in detailsInputs
 
                 this.detailsInputs.push({
                   variantId: p?.variantId,
@@ -398,8 +437,8 @@ export class TransferOrderFormComponent implements OnInit {
           cssClass: "common",
           text: "Cancel",
           handler: (variantList: any) => {
-            this.stVariants = [];
-            this.detailsInputs = [];
+            // this.stVariants = [];
+            // this.detailsInputs = [];
             results.modalInstance.hide();
           },
         },
@@ -407,8 +446,12 @@ export class TransferOrderFormComponent implements OnInit {
       data: {
         vList: (vData: any) => {
           this.stVariants = vData;
+          if (this.mode === "Edit") {
+          }
+          this.detailsInputs;
           // this.detailsInputs = [];
         },
+        origin: this.projectFormData.originLocation.connectionLocationId,
       },
     });
   }
@@ -426,6 +469,10 @@ export class TransferOrderFormComponent implements OnInit {
   }
 
   updateStatus(type: string) {
+    if (type === "publish" && this.detailsInputs.length === 0) {
+      this._showToastMsg("error", "Please add details to publish");
+      return;
+    }
     let searchString = "T00:00:00Z"; // The string to search for
     // Check if the searchString exists in the date strings
     if (!this.projectFormData.expectedArrivalDate.includes(searchString)) {
@@ -439,6 +486,23 @@ export class TransferOrderFormComponent implements OnInit {
 
     this.detailsInputs?.forEach((e: any, key: any) => {
       e["lineNumber"] = parseInt(key + 1);
+      e["plannedQuantity"] = parseInt(e["plannedQuantity"]);
+      e["sentQuantity"] = parseInt(e["sentQuantity"]);
+      e["receivedQuantity"] = parseInt(e["receivedQuantity"]);
+      if (e["sentQuantity"] > e["plannedQuantity"]) {
+        this._showToastMsg(
+          "error",
+          "Sent Quantity should be less than or equal to planned Quantity"
+        );
+        return;
+      }
+      if (e["receivedQuantity"] > e["sentQuantity"]) {
+        this._showToastMsg(
+          "error",
+          "Received Quantity should be less than or equal to sent Quantity"
+        );
+        return;
+      }
     });
     this.projectFormData.details = this.detailsInputs;
 
@@ -463,24 +527,32 @@ export class TransferOrderFormComponent implements OnInit {
           this._showToastMsg(type, msg);
         },
         (error) => {
-          console.log("error", error);
-          this._showDateToast(error.error.detail); 
+          this._showDateToast(error.error.detail);
         }
       );
   }
 
-  confirmNow(rowIndex: number) {
+  confirmNow(rowIndex: number, locationID: any) {
     this.dObj.details = [];
+    if (this.detailsInputs[rowIndex]?.discrepancyResolvedTo === "NONE") {
+      this._showToastMsg(
+        "error",
+        "Please Select Discrepancy Resolved To Other Than None"
+      );
+      return;
+    }
     this.dObj.details.push({
       discrepancyFlag: this.detailsInputs[rowIndex]?.discrepancyFlag,
       discrepancyResolvedTo:
         this.detailsInputs[rowIndex]?.discrepancyResolvedTo,
       lineNumber: this.detailsInputs[rowIndex]?.lineNumber,
+      locationId: locationID ? locationID : null,
     });
     this.transferOrderService
       .updateStatus({
         id: this.paramId,
         formData: this.dObj,
+        type: "resolve-discrepancy",
       })
       .subscribe(
         (res) => {
@@ -497,7 +569,6 @@ export class TransferOrderFormComponent implements OnInit {
           this._showToastMsg(type, msg);
         },
         (error) => {
-          console.log("error", error);
           this._showDateToast(error.error.detail);
         }
       );
@@ -526,6 +597,66 @@ export class TransferOrderFormComponent implements OnInit {
           handler: ($event: Event) => {
             results.modalInstance.hide();
             this.updateStatus(stType);
+          },
+        },
+        {
+          id: "btn-cancel",
+          cssClass: "common",
+          text: "Cancel",
+          handler: ($event: Event) => {
+            results.modalInstance.hide();
+          },
+        },
+      ],
+    });
+  }
+
+  confirm(rowIndex: number) {
+    let stType = rowIndex;
+    let displayContent = "block"; // Default to "block"
+    if (this.detailsInputs[rowIndex]?.discrepancyResolvedTo == "ORIGIN") {
+      if (this.projectFormData.originLocation.nodeType == "Store") {
+        displayContent = "none";
+      }
+    }
+    else if (this.detailsInputs[rowIndex]?.discrepancyResolvedTo == "DESTINATION") {
+      if (this.projectFormData.destinationLocation.nodeType == "Store") {
+        displayContent = "none";
+      }
+    }else{
+      displayContent = "none";
+    }
+  
+    let htmlString = `
+      <div style="display:${displayContent}">
+        <d-form-label [required]="true" [hasHelp]="false" [helpTips]="'This is the Credit Day.'">Enter Location ID</d-form-label>
+        <input type="text" id="inputField" [(ngModel)]="locationID" [dValidateRules]="{
+          validators: [{ required: true }]
+        }" />
+      </div>`;
+  
+    const results = this.dialogService.open({
+      id: "dialog-service",
+      width: "346px",
+      maxHeight: "600px",
+      title: "Are you sure?",
+      content: htmlString,
+      html: true,
+      backdropCloseable: true,
+      dialogtype: "",
+      onClose: () => {},
+      buttons: [
+        {
+          cssClass: "primary",
+          text: "Ok",
+          handler: ($event: Event) => {
+            const inputValue = document.getElementById(
+              "inputField"
+            ) as HTMLInputElement;
+            if (inputValue.value.trim() !== "") { // Check if input is not empty
+              results.modalInstance.hide();
+              this.confirmNow(stType, inputValue.value);
+            }
           },
         },
         {
