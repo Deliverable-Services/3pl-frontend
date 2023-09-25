@@ -155,4 +155,17 @@ export class TransferOrderListDataService extends TransferOrderListData {
       httpOptionsToken
     );
   }
+
+  deleteTransferOrder(id: string): Observable<any> {
+    const httpOptionsToken = {
+      headers: new HttpHeaders({
+      }),
+    };
+
+    return this.http.put(
+      `${this.baseApiUrl}/transfer-order/${id}/delete`,
+      {},
+      httpOptionsToken
+    );
+  }
 }

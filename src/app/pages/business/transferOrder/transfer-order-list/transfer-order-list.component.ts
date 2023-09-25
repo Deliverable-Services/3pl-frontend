@@ -1,11 +1,12 @@
 import { Component, OnInit, Output, EventEmitter } from "@angular/core";
 import { Router } from "@angular/router";
-import { SortEventArg, TableWidthConfig } from "ng-devui";
+import { SortEventArg, TableWidthConfig, ToastService, DialogService } from "ng-devui";
 import { Subscription } from "rxjs";
 import { Brand } from "src/app/@core/data/brandList";
 import { PageParam, SearchParam } from "src/app/@core/data/searchFormData";
 import { TransferOrderListDataService } from "src/app/@core/mock/tranfer-order.service";
 import { TransferOrderFormModalComponent } from "../transfer-order-form-modal/transfer-order-form-modal.component"; // Replace with the correct path to your modal component
+import { MSG } from "src/config/global-var";
 // import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
@@ -65,13 +66,15 @@ export class TransferOrderListComponent implements OnInit {
 
   constructor(
     private transferOrderListDataService: TransferOrderListDataService,
+    private toastService: ToastService,
+    private dialogService: DialogService,
     // protected modalService: NgbModal,
     private router: Router
   ) {}
 
   ngOnInit() {
-    this.pageParam.pageSize = 50;;
-    this.pager.pageSize = 50;;
+    this.pageParam.pageSize = 50;
+    this.pager.pageSize = 50;
     this.pageParam.pageNo = 0;
     this.transferOrderListDataService.setPageParams(this.pageParam);
     this.getTransferOrderList();
@@ -101,6 +104,34 @@ export class TransferOrderListComponent implements OnInit {
     this.isAdd = "EDIT";
     this.editRowIndex = index;
     this.router.navigate([`/business/transfer-order/edit/${rowId}`]);
+  }
+
+  deleteRow(rowId: any, index: number) {
+    this.busy = this.transferOrderListDataService
+      .deleteTransferOrder(rowId)
+      .subscribe((res) => {
+        console.log(':: res :: ', res);
+        let s;
+        let msg;
+        if(res) {
+          s = 'success';
+          msg = 'Transfer Order Deleted Successfully!';
+          this.getTransferOrderList();
+        } else {
+          s = 'error';
+          msg = MSG.error;
+        }
+
+        this.toastService.open({
+          value: [
+            {
+              severity: s,
+              content: msg,
+            },
+          ],
+          life: 2000,
+        });
+      });
   }
 
   onPageChange(e: number) {
@@ -152,6 +183,40 @@ export class TransferOrderListComponent implements OnInit {
       this.transferOrderListDataService.setPageParams(this.pageParam);
       this.getTransferOrderList();
     }
+  }
+
+  confirmDialog(rowId: any, index: number) {
+    let stRowId = rowId;
+    let stIndex = index;
+    const results = this.dialogService.open({
+      id: "dialog-service",
+      width: "346px",
+      maxHeight: "600px",
+      title: "Are you sure?",
+      content: "",
+      backdropCloseable: true,
+      dialogtype: "",
+      onClose: () => {},
+      buttons: [
+        {
+          cssClass: "primary",
+          text: "Ok",
+          disabled: false,
+          handler: ($event: Event) => {
+            results.modalInstance.hide();
+            this.deleteRow(stRowId, stIndex);
+          },
+        },
+        {
+          id: "btn-cancel",
+          cssClass: "common",
+          text: "Cancel",
+          handler: ($event: Event) => {
+            results.modalInstance.hide();
+          },
+        },
+      ],
+    });
   }
 
   openModal() {

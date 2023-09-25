@@ -143,7 +143,9 @@
                   <ng-template let-rowItem="rowItem" let-rowIndex="rowIndex">
                     <div class="btn-group over-flow-ellipsis">
                       <d-button icon="icon-edit" bsStyle="text-dark" title="edit"
-                        (click)="editRow(rowItem.id, rowIndex)"></d-button>
+                        (click)="editRow(rowItem.id, rowIndex)" class="da-inline"></d-button>
+                        <d-button *ngIf="rowItem?.status?.toLowerCase() === 'draft'" icon="icon-delete" bsStyle="danger" title="delete"
+                        (click)="confirmDialog(rowItem.id, rowIndex)" class="da-inline"></d-button>
                     </div>
                   </ng-template>
                 </d-cell>
