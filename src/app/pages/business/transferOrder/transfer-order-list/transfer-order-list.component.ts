@@ -110,23 +110,24 @@ export class TransferOrderListComponent implements OnInit {
     this.busy = this.transferOrderListDataService
       .deleteTransferOrder(rowId)
       .subscribe((res) => {
-        console.log(':: res :: ', res);
-        let s;
-        let msg;
-        if(res) {
-          s = 'success';
-          msg = 'Transfer Order Deleted Successfully!';
-          this.getTransferOrderList();
-        } else {
-          s = 'error';
-          msg = MSG.error;
-        }
+        // console.log(':: res :: ', res);
+        // let s;
+        // let msg;
+        // if(res) {
+        //   s = 'success';
+        //   msg = 'Transfer Order Deleted Successfully!';
+        //   this.getTransferOrderList();
+        // } else {
+        //   s = 'error';
+        //   msg = MSG.error;
+        // }
 
+        this.getTransferOrderList();
         this.toastService.open({
           value: [
             {
-              severity: s,
-              content: msg,
+              severity: 'success',
+              content: 'Transfer Order Deleted Successfully!'
             },
           ],
           life: 2000,
