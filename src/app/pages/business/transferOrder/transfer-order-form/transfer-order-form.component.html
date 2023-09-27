@@ -291,6 +291,7 @@
                       <d-select class="set-width" [disabled]="!input.discrepancyFlag"
                         [placeholder]='"form.transferOrder.fields.discrepancyResolvedTo" | translate'
                         [appendToBody]="true" [multiple]="false" [filterKey]="'discrepancyResolvedTo'"
+                        [name]="'discrepancyResolvedTo'+i"
                         [options]="discrepancyValues"
                         [(ngModel)]="input.discrepancyResolvedTo"></d-select>
                     </d-form-control>
