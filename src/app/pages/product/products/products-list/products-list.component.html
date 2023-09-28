@@ -22,14 +22,14 @@
                     display: 'inline-block',
                     marginRight: '20px'
                   }">
-                    <d-select placeholder="Filter By Status" [scrollHight]="'300px'"
+                    <d-select [placeholder]="'list.product.searchOne' | translate" [scrollHight]="'300px'"
                       [filterKey]="'nodeName'" [appendToBody]="true" [options]="dropdownValues"
                       [(ngModel)]="dropdownSearch.status" (valueChange)="startSearch($event)"></d-select>
                   </div>
                   <div [ngStyle]="{ display: 'inline-block' }">
                     <d-search [size]="'sm'" [(ngModel)]="searchWithStyleName.keyword"
                       (input)="search($event, searchWithStyleName)" class="da-inline"
-                      [placeholder]="'Search with Style Name'"></d-search>
+                      [placeholder]="'list.product.searchTwo' | translate"></d-search>
                   </div>
                   <!-- <d-search [size]="'sm'" [(ngModel)]="searchWithStyleCode.keyword"
                     (input)="search($event, searchWithStyleCode)" class="da-inline"
@@ -50,7 +50,7 @@
           <div class="list-content" dLoading [loading]="busy">
             <d-data-table #datatable [dataSource]="basicDataSource" [scrollable]="true" [onlyOneColumnSort]="true"
               (multiSortChange)="multiSortChange($event)">
-              <d-column field="styleName" header="Style Name" [width]="columnSize.styleName" [sortable]="true">
+              <d-column field="styleName" [header]="'list.product.table.styleName' | translate" [width]="columnSize.styleName" [sortable]="true">
                 <d-cell>
                   <ng-template let-cellItem="cellItem">
                     <span [title]="cellItem" class="over-flow-ellipsis" [style.width]="'200px'">
@@ -60,7 +60,7 @@
                 </d-cell>
               </d-column>
 
-              <d-column field="collection" header="Collection" [width]="columnSize.styleCode" [sortable]="true">
+              <d-column field="collection" [header]="'list.product.table.collection' | translate" [width]="columnSize.styleCode" [sortable]="true">
                 <d-cell>
                   <ng-template let-cellItem="cellItem">
                     <span [title]="cellItem" class="over-flow-ellipsis" [style.width]="'100px'">
@@ -70,7 +70,7 @@
                 </d-cell>
               </d-column>
 
-              <d-column field="logisticsDesc" header="Logistic Description" [sortable]="true">
+              <d-column field="logisticsDesc" [header]="'list.product.table.logisticDescription' | translate" [sortable]="true">
                 <d-cell>
                   <ng-template let-cellItem="cellItem">
                     <span [title]="cellItem" class="over-flow-ellipsis" [style.width]="'200px'">
@@ -80,7 +80,7 @@
                 </d-cell>
               </d-column>
 
-              <d-column [sortable]="true" field="status" header="Active Status" [width]="columnSize.active">
+              <d-column [sortable]="true" field="status" [header]="'list.product.table.activeStatus' | translate" [width]="columnSize.active">
                 <d-cell>
                   <!-- <ng-template let-rowItem="rowItem" let-rowIndex="rowIndex">
                   <d-toggle
@@ -124,7 +124,7 @@
                 </d-cell>
               </d-column> -->
 
-              <d-column field="lastModifiedDate" header="Updated Date" [width]="columnSize.lastModifiedDate"
+              <d-column field="lastModifiedDate" [header]="'list.product.table.updatedDate' | translate" [width]="columnSize.lastModifiedDate"
                 [sortable]="true">
                 <d-cell>
                   <ng-template let-cellItem="cellItem">
@@ -135,7 +135,7 @@
                 </d-cell>
               </d-column>
 
-              <d-column field="lastModifiedBy" header="Last Updated By" [width]="columnSize.lastModifiedBy"
+              <d-column field="lastModifiedBy" [header]="'list.category.table.lastUpdatedBy' | translate" [width]="columnSize.lastModifiedBy"
                 [sortable]="true">
                 <d-cell>
                   <ng-template let-cellItem="cellItem">
@@ -147,7 +147,7 @@
               </d-column>
 
 
-              <d-column field="action" header="Actions" [width]="columnSize.action">
+              <d-column field="action" [header]="'list.transferOrder.actions' | translate" [width]="columnSize.action">
                 <d-cell>
                   <ng-template let-rowItem="rowItem" let-rowIndex="rowIndex">
                     <div class="btn-group over-flow-ellipsis">

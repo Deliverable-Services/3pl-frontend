@@ -25,18 +25,18 @@
                     [(ngModel)]="searchWithVendorName.keyword"
                     (input)="search($event, searchWithVendorName)"
                     class="da-inline"
-                    [placeholder]="'Search with Vendor Name'"
+                    [placeholder]="'list.vendor.searchOne' | translate"
                   ></d-search>
                   <d-search
                     [size]="'sm'"
                     [(ngModel)]="searchWithVendorCode.keyword"
                     (input)="search($event, searchWithVendorCode)"
                     class="da-inline"
-                    [placeholder]="'Search with Vendor Code'"
+                    [placeholder]="'list.vendor.searchTwo' | translate"
                   ></d-search>
                 </div>
                 <div class="header-right">
-                  <d-button routerLink="add">Add Vendor</d-button>
+                  <d-button routerLink="add">{{ 'list.vendor.buttonTitle' | translate }}</d-button>
                 </div>
               </div>
             </div>
@@ -57,7 +57,7 @@
             >
               <d-column
                 field="companyName"
-                header="Company Name"
+                [header]="'list.vendor.table.companyName' | translate"
                 [sortable]="true"
               >
                 <d-cell>
@@ -74,7 +74,7 @@
               </d-column>
               <d-column
                 field="generalPhone"
-                header="General Phone"
+                [header]="'list.vendor.table.generalPhone' | translate"
                 [sortable]="true"
               >
                 <d-cell>
@@ -91,7 +91,7 @@
               </d-column>
               <d-column
                 field="primaryContactName"
-                header="Primary Contact Name"
+                [header]="'list.vendor.table.primaryContactName' | translate"
                 [sortable]="true"
               >
                 <d-cell>
@@ -108,7 +108,7 @@
               </d-column>
               <d-column
                 field="primaryContactPhone1"
-                header="Primary Contact Phone 1"
+                [header]="'list.vendor.table.primaryContactPhone1' | translate"
                 [sortable]="true"
               >
                 <d-cell>
@@ -125,7 +125,7 @@
 
               <d-column
                 field="status"
-                header="Status"
+                [header]="'list.vendor.table.status' | translate"
                 [sortable]="true"
               >
                 <d-cell>
@@ -142,7 +142,7 @@
 
               <d-column
                 field="action"
-                header="Actions"
+                [header]="'list.transferOrder.actions' | translate"
                 [width]="columnSize.action"
                 [sortable]="true"
               >

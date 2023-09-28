@@ -18,12 +18,19 @@ export default {
     category: {
       title: 'Category Setup',
       categoryList: 'Category List',
-      buttonTitle: 'Add Category'
+      buttonTitle: 'Add Category',
+      table: {categoryName: 'Category Name', createdAt: 'Created At', createdBy: 'Created By', 
+      lastUpdatedDateTime: 'Last Updated Date Time', lastUpdatedBy: 'Last Updated By'},
+      search: 'Search with Category Name'
     },
     product: {
       title: 'Product List',
       list: 'Product List',
-      buttonTitle: 'Add Product'
+      buttonTitle: 'Add Product',
+      searchOne: 'Filter By Status',
+      searchTwo: 'Search with Style Name',
+      table: {styleName: 'Style Name', collection: 'Collection', logisticDescription: 'Logistic Description', activeStatus: 'Active Status',
+      updatedDate: 'Updated Date'}
     },
     currency: {
       title: 'Currency',
@@ -43,7 +50,11 @@ export default {
     vendor: {
       title: 'Vendor Setup',
       list: 'Vendor List',
-      buttonTitle: 'Add'
+      buttonTitle: 'Add',
+      searchOne: 'Search with Vendor Name',
+      searchTwo: 'Search with Vendor Code',
+      table: {companyName: 'Company Name', generalPhone: 'General Phone', primaryContactName: 'Primary Contact Name', primaryContactPhone1: 'Primary Contact Phone 1',
+      status: 'Status'}
     },
     shopifyConnector: {
       title: 'Shopify Connector',

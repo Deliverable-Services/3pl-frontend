@@ -23,7 +23,7 @@
                   [(ngModel)]="searchWithFromCurrency.keyword"
                   (input)="search($event, searchWithFromCurrency)"
                   class="da-inline"
-                  [placeholder]="'Search for Currency Code'"
+                  [placeholder]="'list.sPartner.searchOne' | translate"
                 ></d-search>
               </div>
               <div [ngStyle]="{ display: 'flex', justifyContent: 'flex-end' }">
@@ -41,7 +41,7 @@
               >
                 <d-column
                   field="companyName"
-                  header="Company Name"
+                  [header]="'list.sPartner.table.companyName' | translate"
                   [width]="columnSize.companyName"
                   [sortable]="true"
                 >
@@ -60,7 +60,7 @@
   
                 <d-column
                   field="generalEmail"
-                  header="General Email"
+                  [header]="'list.sPartner.table.generalEmail' | translate"
                   [width]="columnSize.generalEmail"
                   [sortable]="true"
                 >
@@ -79,7 +79,7 @@
   
                 <d-column
                   field="generalPhone"
-                  header="General Phone"
+                  [header]="'list.sPartner.table.generalEmail' | translate"
                   [width]="columnSize.rate"
                   [sortable]="true"
                 >
@@ -98,7 +98,7 @@
   
                 <d-column
                   field="primaryContactName"
-                  header="Primary Contact Name"
+                  [header]="'list.sPartner.table.primaryContactName' | translate"
                   [width]="columnSize.primaryContactName"
                   [sortable]="true"
                 >
@@ -116,7 +116,7 @@
   
                 <d-column
                   field="primaryContactEmail"
-                  header="Primary Contact Email"
+                  [header]="'list.sPartner.table.primaryContactEmail' | translate"
                   [width]="columnSize.lastModifiedBy"
                   [sortable]="true"
                 >
@@ -135,7 +135,7 @@
 
                 <d-column
                   field="primaryContactPhone1"
-                  header="Primary Contact Phone1"
+                  [header]="'list.sPartner.table.primaryContactPhone1' | translate"
                   [width]="columnSize.primaryContactPhone1"
                   [sortable]="true"
                 >
@@ -154,7 +154,7 @@
 
                 <d-column
                   field="primaryContactPhone2"
-                  header="Primary Contact Phone2"
+                  [header]="'list.sPartner.table.primaryContactPhone2' | translate"
                   [width]="columnSize.primaryContactPhone2"
                   [sortable]="true"
                 >
@@ -188,7 +188,7 @@
   
                 <d-column
                   field="action"
-                  header="Actions"
+                  [header]="'list.transferOrder.actions' | translate"
                   [width]="columnSize.action"
                   [sortable]="true"
                 >

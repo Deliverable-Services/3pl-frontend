@@ -20,7 +20,7 @@
                 <div class="da-left">
                   <d-search [size]="'sm'" [(ngModel)]="searchWithCategoryName.keyword"
                     (input)="search($event, searchWithCategoryName)" class="da-inline"
-                    [placeholder]="'Search with Category Name'"></d-search>
+                    [placeholder]="'list.category.search' | translate"></d-search>
                 </div>
                 <div class="header-right">
                   <d-button class="mr-element-spacing" routerLink="add">{{ "list.category.buttonTitle" | translate
@@ -33,7 +33,7 @@
           <div class="list-content" dLoading [loading]="busy">
             <d-data-table #datatable [dataSource]="basicDataSource" [scrollable]="true" [onlyOneColumnSort]="true"
               (multiSortChange)="multiSortChange($event)">
-              <d-column [width]="columnSize.categoryName" [field]="'categoryName'" header="Category Name"
+              <d-column [width]="columnSize.categoryName" [field]="'categoryName'" [header]="'list.category.table.categoryName' | translate"
                 [sortable]="true">
                 <d-cell>
                   <ng-template let-cellItem="cellItem">
@@ -44,7 +44,7 @@
                 </d-cell>
               </d-column>
 
-              <d-column [field]="'createdDate'" [width]="columnSize.createdDate" header="Created At" [sortable]="true">
+              <d-column [field]="'createdDate'" [width]="columnSize.createdDate" [header]="'list.category.table.createdAt' | translate" [sortable]="true">
                 <d-cell>
                   <ng-template let-cellItem="cellItem">
                     <span [title]="cellItem" class="over-flow-ellipsis">
@@ -54,7 +54,7 @@
                 </d-cell>
               </d-column>
 
-              <d-column [field]="'createdBy'" [width]="columnSize.createdBy" header="Created By" [sortable]="true">
+              <d-column [field]="'createdBy'" [width]="columnSize.createdBy" [header]="'list.category.table.createdBy' | translate" [sortable]="true">
                 <d-cell>
                   <ng-template let-cellItem="cellItem">
                     <span [title]="cellItem" class="over-flow-ellipsis">
@@ -64,7 +64,7 @@
                 </d-cell>
               </d-column>
 
-              <d-column [field]="'lastModifiedDate'" header="Last Updated Date Time"
+              <d-column [field]="'lastModifiedDate'" [header]="'list.category.table.lastUpdatedDateTime' | translate"
                 [sortable]="true" [width]="columnSize.lastModifiedDate">
                 <d-cell>
                   <ng-template let-cellItem="cellItem">
@@ -75,7 +75,7 @@
                 </d-cell>
               </d-column>
 
-              <d-column [field]="'lastModifiedBy'" header="Last Updated By" [sortable]="true"
+              <d-column [field]="'lastModifiedBy'" [header]="'list.category.table.lastUpdatedBy' | translate" [sortable]="true"
                 [width]="columnSize.lastModifiedBy">
                 <d-cell>
                   <ng-template let-cellItem="cellItem">
@@ -101,7 +101,7 @@
                   </ng-template>
                 </d-cell>
               </d-column> -->
-              <d-column [field]="'action'" header="Actions" [width]="columnSize.action">
+              <d-column [field]="'action'" [header]="'list.transferOrder.actions' | translate" [width]="columnSize.action">
                 <d-cell>
                   <ng-template let-rowItem="rowItem" let-rowIndex="rowIndex">
                     <div class="btn-group over-flow-ellipsis">

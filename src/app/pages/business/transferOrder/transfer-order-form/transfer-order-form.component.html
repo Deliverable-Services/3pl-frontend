@@ -101,13 +101,13 @@
             }} <span *ngIf="projectFormData.status">&nbsp;({{ projectFormData.id }})</span>
           </div>
           <div [ngStyle]="{ display: 'flex', justifyContent: 'space-between' }">
-            <div [ngStyle]="{ width: '46%' }">
+            <div [ngStyle]="{ width: '46%' }" [ngClass]="{'set-cursor': mode.toLowerCase() === 'edit'}">
               <d-form-item>
                 <d-form-label [required]="true" [hasHelp]="false" [helpTips]="'This is the Credit Day.'">
                   {{ "form.transferOrder.fields.origin" | translate }}
                 </d-form-label>
                 <d-form-control>
-                  <d-select [disabled]="mode.toLowerCase() === 'edit'" [ngStyle]="{ width: '100%' }"
+                  <d-select [ngStyle]="{'pointer-events': mode.toLowerCase() === 'edit' ? 'none' : 'auto', width: '100%'}"
                     [placeholder]="'form.transferOrder.fields.origin' | translate" [appendToBody]="true"
                     [multiple]="false" [filterKey]="'nodeName'" [options]="connectionLocationList" name="origin"
                     [(ngModel)]="projectFormData.originLocation" (valueChange)="checkNodeType()" [dValidateRules]="{
@@ -122,7 +122,7 @@
                   <d-form-label [required]="true">{{ "form.transferOrder.fields.expectedDeliveryDate" | translate
                     }}</d-form-label>
                   <div style="width: 100%" cdiv class="devui-input-group devui-dropdown-origin"
-                    [ngClass]="{ 'devui-disabled': expectedDeliveryDateDisabled }" dActiveFormControl>
+                    [ngClass]="{ 'set-cursor': expectedDeliveryDateDisabled }" dActiveFormControl>
                     <!-- <input [ngStyle]="{'pointer-events': expectedDeliveryDateDisabled ? 'none' : 'auto'}" [disabled]="projectFormData.status?.toLowerCase() !== 'draft'" class="devui-input devui-form-control" placeholder="'y/MM/dd HH:mm:ss'"
                       [dateFormat]="'y/MM/dd HH:mm:ss'" (click)="datePicker2.toggle()" name="dp"
                       [(ngModel)]="projectFormData.expectedDeliveryDate" autocomplete="off" dDatepicker
@@ -136,8 +136,8 @@
                     <div *ngif="!expectedDeliveryDateDisabled" [ngClass]="{ 'devui-disabled': expectedDeliveryDateDisabled }"  class="devui-input-group-addon" (click)="datePicker2.toggle()">
                       <i class="icon icon-calendar"></i>
                     </div> -->
-                    <input [ngStyle]="{'pointer-events': expectedArrivalDateDisabled ? 'none' : 'auto'}"
-                      [disabled]="projectFormData.status && projectFormData.status?.toLowerCase() !== 'draft'"
+                    <input
+                      [ngStyle]="{'pointer-events': ((projectFormData.status && projectFormData.status?.toLowerCase() !== 'draft') || expectedDeliveryDateDisabled) ? 'none' : 'auto'}"
                       class="devui-input devui-form-control" [(ngModel)]="projectFormData.expectedDeliveryDate"
                       autocomplete="off" placeholder="y-MM-dd" [dValidateRules]="{
                       validators: [{ required: true }]
@@ -150,14 +150,15 @@
 
             </div>
 
-            <div [ngStyle]="{ width: '46%' }">
+            <div [ngStyle]="{ width: '46%' }" [ngClass]="{'set-cursor': mode.toLowerCase() === 'edit'}">
 
               <d-form-item>
                 <d-form-label [required]="true" [hasHelp]="false" [helpTips]="'This is Terms Subject.'">
                   {{ "form.transferOrder.fields.destination" | translate }}
                 </d-form-label>
                 <d-form-control>
-                  <d-select [disabled]="mode.toLowerCase() === 'edit'" [ngStyle]="{ width: '100%' }"
+                  <d-select 
+                    [ngStyle]="{'pointer-events': mode.toLowerCase() === 'edit' ? 'none' : 'auto', width: '100%'}"
                     [placeholder]="'form.transferOrder.fields.destination' | translate" [appendToBody]="true"
                     [multiple]="false" [filterKey]="'nodeName'" [options]="connectionLocationList" name="destination"
                     (valueChange)="checkNodeType()" [(ngModel)]="projectFormData.destinationLocation" [dValidateRules]="{
@@ -171,7 +172,7 @@
                   <d-form-label [required]="true">{{ "form.transferOrder.fields.expectedArrivalDate" | translate
                     }}</d-form-label>
                   <div style="width: 100%" div class="devui-input-group devui-dropdown-origin"
-                    [ngClass]="{ 'devui-disabled': expectedArrivalDateDisabled }" dActiveFormControl>
+                    [ngClass]="{ 'set-cursor': expectedArrivalDateDisabled }" dActiveFormControl>
                     <!-- <input [ngStyle]="{'pointer-events': expectedArrivalDateDisabled ? 'none' : 'auto'}" [disabled]="projectFormData.status?.toLowerCase() !== 'draft'" class="devui-input devui-form-control" placeholder="'y/MM/dd HH:mm:ss'"
                       [dateFormat]="'y/MM/dd HH:mm:ss'" (click)="datePicker1.toggle()" name="dp"
                       [(ngModel)]="projectFormData.expectedArrivalDate" autocomplete="off" dDatepicker
@@ -186,8 +187,8 @@
                     <div *ngif="!expectedArrivalDateDisabled" [ngClass]="{ 'devui-disabled': expectedArrivalDateDisabled }"  class="devui-input-group-addon" (click)="datePicker1.toggle()">
                       <i class="icon icon-calendar"></i>
                     </div> -->
-                    <input [ngStyle]="{'pointer-events': expectedArrivalDateDisabled ? 'none' : 'auto'}"
-                      [disabled]="projectFormData.status && projectFormData.status?.toLowerCase() !== 'draft'"
+                    <input
+                      [ngStyle]="{'pointer-events': ((projectFormData.status && projectFormData.status?.toLowerCase() !== 'draft') || expectedArrivalDateDisabled) ? 'none' : 'auto'}"
                       class="devui-input devui-form-control" [(ngModel)]="projectFormData.expectedArrivalDate"
                       autocomplete="off" placeholder="y-MM-dd" [dValidateRules]="{
                       validators: [{ required: true }]
@@ -200,12 +201,12 @@
             </div>
           </div>
 
-          <d-form-item [ngStyle]="{ marginTop: '20px' }">
+          <d-form-item [ngStyle]="{ marginTop: '20px' }" [ngClass]="{'set-cursor': !(mode.toLowerCase() !== 'edit') && projectFormData.status?.toLowerCase() !== 'draft'}">
             <d-form-label>{{ "form.transferOrder.fields.remarks" | translate }}</d-form-label>
             <d-form-control>
               <textarea
-                [disabled]="!(mode.toLowerCase() !== 'edit') && projectFormData.status?.toLowerCase() !== 'draft'"
-                [ngStyle]="{ height: '104px' }" dTextarea resize="vertical" autocomplete="off" name="remarks"
+                [ngStyle]="{'pointer-events': !(mode.toLowerCase() !== 'edit') && projectFormData.status?.toLowerCase() !== 'draft' ? 'none' : 'auto', height: '104px'}"
+                dTextarea resize="vertical" autocomplete="off" name="remarks"
                 [placeholder]="'form.transferOrder.fields.remarks' | translate"
                 [(ngModel)]="projectFormData.remarks"></textarea>
             </d-form-control>

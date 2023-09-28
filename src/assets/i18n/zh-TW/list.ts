@@ -16,7 +16,13 @@ export default {
       title: "公司",
     },
     vendor: {
-      list: '供應商名單'
+      list: '供應商名單',
+      title: '供應商設定',
+      buttonTitle: '添加',
+      searchOne: '使用供應商名稱搜尋',
+      searchTwo: '使用供應商代碼搜尋',
+      table: {companyName: '公司名稱', generalPhone: '通用電話', primaryContactName: '主要聯絡人姓名', primaryContactPhone1: '主要聯絡電話 1',
+      status: '地位'}
     },
     transferOrder: {
       status: "地位",
@@ -35,11 +41,18 @@ export default {
       title: "類別",
       categoryList: "類別列表",
       buttonTitle: "添加類別",
+      table: {categoryName: '分類名稱', createdAt: '創建於', createdBy: '由...制作', 
+      lastUpdatedDateTime: '最后更新日期时间', lastUpdatedBy: '最后更新者'},
+      search: '使用類別名稱搜尋'
     },
     product: {
       title: "產品",
       list: "產品列表",
       buttonTitle: "添加產品",
+      searchOne: '按狀態過濾',
+      searchTwo: '使用樣式名稱搜尋',
+      table: {styleName: '款式名稱', collection: '收藏', logisticDescription: '物流說明', activeStatus: '活躍狀態',
+      updatedDate: '更新日期'}
     },
     currency: {
       title: "貨幣",
@@ -105,6 +118,30 @@ export default {
     userManagement: {
       title: '用戶管理',
     },
+    RfidSearch:{
+      title: '射頻識別搜尋',
+    },
+    integration:{
+      title: '一體化',
+    },
+    purchasing:{
+      title: '購買',
+    },
+    poList:{
+      title:"採購訂單列表"
+    },
+    asnList:{
+      title: "ASN 列表"
+    },
+    payments:{
+      title: "付款方式",
+    },
+    businessCategory:{
+      title: '商業'
+    },
+    transfers:{
+      title: "接送服務"
+    },
     user: {
       title: '用戶',
       list: '用戶列表'
@@ -133,7 +170,10 @@ export default {
     sPartner: {
       title: 'Shopify 合作夥伴',
       categoryList: 'Shopify 合作夥伴列表',
-      buttonTitle: '添加'
+      buttonTitle: '添加',
+      searchOne: '搜尋貨幣代碼',
+      table: {companyName: '公司名稱', generalEmail: '一般電子郵件', generalPhone: '通用電話', primaryContactName: '主要聯絡人姓名',
+      primaryContactEmail: '主要聯絡人電子郵件', primaryContactPhone1: '主要聯絡電話 1', primaryContactPhone2: '主要聯絡電話 2'}
     },
     common: {
       buttonTitleAdd: '添加',

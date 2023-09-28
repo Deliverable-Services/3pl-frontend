@@ -17,6 +17,12 @@ export default {
     },
     vendor: {
       list: '供应商名单',
+      title: '供应商设置',
+      buttonTitle: '添加',
+      searchOne: '使用供应商名称搜索',
+      searchTwo: '使用供应商代码搜索',
+      table: {companyName: '公司名称', generalPhone: '通用电话', primaryContactName: '主要联系人姓名', primaryContactPhone1: '主要联系电话 1',
+      status: '地位'}
     },
     transferOrder: {
       status: "地位",
@@ -35,11 +41,18 @@ export default {
       title: "类别",
       categoryList: "类别列表",
       buttonTitle: "添加类别",
+      table: {categoryName: '分类名称', createdAt: '创建于', createdBy: '由...製作', 
+      lastUpdatedDateTime: '最後更新日期時間', lastUpdatedBy: '最後更新者'},
+      search: '使用类别名称搜索'
     },
     product: {
       title: "产品",
       list: "产品列表",
       buttonTitle: "添加产品",
+      searchOne: '按状态过滤',
+      searchTwo: '使用样式名称搜索',
+      table: {styleName: '款式名称', collection: '收藏', logisticDescription: '物流说明', activeStatus: '活跃状态',
+      updatedDate: '更新日期'}
     },
     currency: {
       title: "货币",
@@ -105,6 +118,30 @@ export default {
     userManagement: {
       title: '用户管理',
     },
+    RfidSearch:{
+      title: '射频识别搜索',
+    },
+    integration:{
+      title: '一体化',
+    },
+    purchasing:{
+      title: '购买',
+    },
+    poList:{
+      title:"采购订单列表"
+    },
+    asnList:{
+      title: "ASN 列表"
+    },
+    payments:{
+      title: "付款方式",
+    },
+    businessCategory:{
+      title: '商业'
+    },
+    transfers:{
+      title: "接送服务"
+    },
     user: {
       title: '用户',
       list: '用户列表'
@@ -133,7 +170,10 @@ export default {
     sPartner: {
       title: 'Shopify 合作伙伴',
       categoryList: 'Shopify 合作伙伴列表',
-      buttonTitle: '添加'
+      buttonTitle: '添加',
+      searchOne: '搜索货币代码',
+      table: {companyName: '公司名称', generalEmail: '一般电子邮件', generalPhone: '通用电话', primaryContactName: '主要联系人姓名',
+      primaryContactEmail: '主要联系人电子邮件', primaryContactPhone1: '主要联系电话 1', primaryContactPhone2: '主要联系电话 2'}
     },
     common: {
       buttonTitleAdd: '添加',
