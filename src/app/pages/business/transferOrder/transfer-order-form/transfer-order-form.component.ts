@@ -58,6 +58,11 @@ export class TransferOrderFormComponent implements OnInit {
   };
   detailsInputs: any = [];
 
+  errorCounter = {
+    count:0,
+    ids: [] as string[],
+  };
+
   discrepancyValues: any = ["ORIGIN", "DESTINATION"];
 
   dObj: any = {
@@ -457,7 +462,52 @@ export class TransferOrderFormComponent implements OnInit {
   }
 
   updateValue(event: any, keyName: string, index: number) {
+
+
+
     this.detailsInputs[index][keyName] = event.target.value;
+    let idToCheck = this.detailsInputs[index]['variantId'] as string;
+    if(keyName === "sentQuantity"){
+      console.log('this.detailsInputs[index]', this.detailsInputs[index]);
+      if(parseInt(this.detailsInputs[index][keyName]) > parseInt(this.detailsInputs[index]["plannedQuantity"])){
+        if(!this.errorCounter.ids.includes(idToCheck)){
+          this.errorCounter.ids.push(idToCheck);
+          this.errorCounter.count = this.errorCounter.count + 1;
+        }
+        this.detailsInputs[index]['sentCheck'] = true;
+      }else{
+        if(this.errorCounter.ids.includes(idToCheck)){
+          const index = this.errorCounter.ids.indexOf(idToCheck);
+          if (index !== -1) {
+            this.errorCounter.ids.splice(index, 1);
+          }
+          this.errorCounter.count = this.errorCounter.count - 1;
+        }
+        this.detailsInputs[index]['sentCheck'] = false;
+      }      
+    }
+
+    if(keyName === "receivedQuantity"){
+      console.log('this.detailsInputs[index]', this.detailsInputs[index]);
+      if(parseInt(this.detailsInputs[index][keyName]) > parseInt(this.detailsInputs[index]["sentQuantity"])){
+        if(!this.errorCounter.ids.includes(idToCheck)){
+          this.errorCounter.ids.push(idToCheck);
+          this.errorCounter.count = this.errorCounter.count + 1;
+        }
+        this.detailsInputs[index]['receivedCheck'] = true;
+      }else{
+        if(this.errorCounter.ids.includes(idToCheck)){
+          const index = this.errorCounter.ids.indexOf(idToCheck);
+          if (index !== -1) {
+            this.errorCounter.ids.splice(index, 1);
+          }
+          this.errorCounter.count = this.errorCounter.count - 1;
+        }
+        this.detailsInputs[index]['receivedCheck'] = false;
+      }      
+    }
+    console.log('details',this.errorCounter);
+    
   }
 
   _checkIfValid() {
@@ -506,30 +556,30 @@ export class TransferOrderFormComponent implements OnInit {
     });
     this.projectFormData.details = this.detailsInputs;
 
-    this.transferOrderService
-      .updateStatus({
-        id: this.paramId,
-        formData: this.projectFormData,
-        type: type,
-      })
-      .subscribe(
-        (res) => {
-          let type;
-          let msg;
-          this.getTransferOrderById(this.paramId);
-          if (res) {
-            type = "success";
-            msg = "Data Updated Successfully";
-          } else {
-            type = "error";
-            msg = MSG.error;
-          }
-          this._showToastMsg(type, msg);
-        },
-        (error) => {
-          this._showDateToast(error.error.detail);
-        }
-      );
+    // this.transferOrderService
+    //   .updateStatus({
+    //     id: this.paramId,
+    //     formData: this.projectFormData,
+    //     type: type,
+    //   })
+    //   .subscribe(
+    //     (res) => {
+    //       let type;
+    //       let msg;
+    //       this.getTransferOrderById(this.paramId);
+    //       if (res) {
+    //         type = "success";
+    //         msg = "Data Updated Successfully";
+    //       } else {
+    //         type = "error";
+    //         msg = MSG.error;
+    //       }
+    //       this._showToastMsg(type, msg);
+    //     },
+    //     (error) => {
+    //       this._showDateToast(error.error.detail);
+    //     }
+    //   );
   }
 
   confirmNow(rowIndex: number, locationID: any) {
@@ -625,6 +675,11 @@ export class TransferOrderFormComponent implements OnInit {
       }
     }else{
       displayContent = "none";
+      this._showToastMsg(
+        "error",
+        "Please Select Discrepancy Resolved To Other Than None"
+      );
+      return
     }
   
     let htmlString = `
@@ -653,7 +708,17 @@ export class TransferOrderFormComponent implements OnInit {
             const inputValue = document.getElementById(
               "inputField"
             ) as HTMLInputElement;
-            if (inputValue.value.trim() !== "") { // Check if input is not empty
+            if(displayContent === "block"){
+              if (inputValue.value.trim() !== "") { // Check if input is not empty
+                results.modalInstance.hide();
+                this.confirmNow(stType, inputValue.value);
+              }else{
+                this._showToastMsg(
+                  "error",
+                  "Please Enter Location ID"
+                );
+              } 
+            }else{
               results.modalInstance.hide();
               this.confirmNow(stType, inputValue.value);
             }

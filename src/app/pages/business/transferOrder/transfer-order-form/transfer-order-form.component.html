@@ -44,7 +44,7 @@
                 <label>Last Modified By: {{projectFormData.lastModifiedBy}}</label>
                 <label>Last Modified Date: {{modifiedDate}}</label>
               </div>
-              
+
 
               <br>
               <br>
@@ -73,14 +73,14 @@
 
               <d-button *ngIf="projectFormData.status?.toLowerCase() === 'in_transit'
               && projectFormData?.destinationLocation?.nodeType?.toLowerCase() === 'store'"
-                [ngStyle]="{ float: 'right' }" class="mr-element-spacing" circled="true" style="margin-right: 8px"
-                (btnClick)="confirmDialog('received')">
+                [ngStyle]="{ float: 'right' }" [disabled]="errorCounter.count > 0" class="mr-element-spacing"
+                circled="true" style="margin-right: 8px" (btnClick)="confirmDialog('received')">
                 {{ "form.transferOrder.fields.confirm" | translate }}
               </d-button>
 
               <d-button *ngIf="projectFormData.status?.toLowerCase() === 'open' 
               && projectFormData?.originLocation?.nodeType?.toLowerCase() === 'store'" [ngStyle]="{ float: 'right' }"
-                class="mr-element-spacing" circled="true" style="margin-right: 8px"
+                class="mr-element-spacing" [disabled]="errorCounter.count > 0" circled="true" style="margin-right: 8px"
                 (btnClick)="confirmDialog('shipped')">
                 {{ "form.transferOrder.fields.ship" | translate }}
               </d-button>
@@ -263,7 +263,9 @@
                   <d-form-item *ngIf="projectFormData.status" [ngStyle]="{ margin: '20px 20px 20px 0px' }">
                     <d-form-label [required]="true">{{ "form.transferOrder.fields.sentQty" | translate }}</d-form-label>
                     <d-form-control>
-                      <input class="set-width" [disabled]="!(projectFormData.status?.toLowerCase() === 'open' 
+
+                      <input class="set-width" [ngStyle]="{'borderColor': input.sentCheck ? 'red' : 'initial'}"
+                        [disabled]="!(projectFormData.status?.toLowerCase() === 'open' 
                           && projectFormData?.originLocation?.nodeType?.toLowerCase() === 'store')" dTextInput
                         (keypress)="numberOnly($event)" autocomplete="off"
                         [placeholder]='"form.transferOrder.fields.sentQty" | translate' [value]="input.sentQuantity"
@@ -275,7 +277,8 @@
                     <d-form-label [required]="true">{{ "form.transferOrder.fields.receivedQty" | translate
                       }}</d-form-label>
                     <d-form-control>
-                      <input class="set-width" [disabled]="!(projectFormData.status?.toLowerCase() === 'in_transit' 
+                      <input class="set-width" [ngStyle]="{'borderColor': input.receivedCheck ? 'red' : 'initial'}"
+                        [disabled]="!(projectFormData.status?.toLowerCase() === 'in_transit' 
                           && projectFormData?.destinationLocation?.nodeType?.toLowerCase() === 'store')" dTextInput
                         (keypress)="numberOnly($event)" autocomplete="off"
                         [placeholder]='"form.transferOrder.fields.receivedQty" | translate'
@@ -291,8 +294,7 @@
                       <d-select class="set-width" [disabled]="!input.discrepancyFlag"
                         [placeholder]='"form.transferOrder.fields.discrepancyResolvedTo" | translate'
                         [appendToBody]="true" [multiple]="false" [filterKey]="'discrepancyResolvedTo'"
-                        [name]="'discrepancyResolvedTo'+i"
-                        [options]="discrepancyValues"
+                        [name]="'discrepancyResolvedTo'+i" [options]="discrepancyValues"
                         [(ngModel)]="input.discrepancyResolvedTo"></d-select>
                     </d-form-control>
                   </d-form-item>
@@ -303,8 +305,9 @@
                     {{ "form.transferOrder.buttons.confirm" | translate }}
                   </d-button>
 
-                  <d-button *ngIf="projectFormData.status?.toLowerCase() === 'draft' || mode === 'Add' " dLoading bsStyle="danger" class="danger" circled="true"
-                    style="margin-right: 8px;margin-top: 47px;" (click)="removeNow(i)">
+                  <d-button *ngIf="projectFormData.status?.toLowerCase() === 'draft' || mode === 'Add' " dLoading
+                    bsStyle="danger" class="danger" circled="true" style="margin-right: 8px;margin-top: 47px;"
+                    (click)="removeNow(i)">
                     {{ "form.transferOrder.buttons.remove" | translate }}
                   </d-button>
                 </div>
