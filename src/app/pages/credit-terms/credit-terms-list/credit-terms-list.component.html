@@ -45,7 +45,7 @@
               >
                 <d-column
                   [field]="'creditTermsSubject'"
-                  header="Subject"
+                  [header]="'list.creditTerms.table.subject' | translate"
                   [sortable]="true"
                 >
                   <d-cell>
@@ -59,7 +59,7 @@
 
                 <d-column
                   [field]="'creditTermsDetails'"
-                  header="Details"
+                  [header]="'list.creditTerms.table.details' | translate"
                   [sortable]="true"
                 >
                   <d-cell>
@@ -73,7 +73,7 @@
 
                 <d-column
                   [field]="'creditDay'"
-                  header="Credit Day"
+                  [header]="'list.creditTerms.table.creditDay' | translate"
                   [sortable]="true"
                 >
                   <d-cell>
@@ -87,7 +87,7 @@
 
                 <d-column
                 [field]="'createdDate'"
-                header="Created At"
+                [header]="'list.category.table.createdAt' | translate"
                 [sortable]="true"
               >
                 <d-cell>
@@ -101,7 +101,7 @@
 
               <d-column
                 [field]="'createdBy'"
-                header="Created By"
+                [header]="'list.category.table.createdBy' | translate"
                 [sortable]="true"
              >
                 <d-cell>
@@ -115,7 +115,7 @@
   
                 <d-column
                   [field]="'lastModifiedDate'"
-                  header="Last Updated Date Time"
+                  [header]="'list.category.table.lastUpdatedDateTime' | translate"
                   [sortable]="true"
                   [width]="columnSize.lastModifiedDate"
                 >
@@ -130,7 +130,7 @@
   
                 <d-column
                   [field]="'lastModifiedBy'"
-                  header="Last Updated By"
+                  [header]="'list.category.table.lastUpdatedBy' | translate"
                   [sortable]="true"
                   [width]="columnSize.lastModifiedBy"
                 >
@@ -145,7 +145,7 @@
 
                 <d-column
                   [field]="'status'"
-                  header="Status"
+                  [header]="'list.vendor.table.status' | translate"
                   [sortable]="false"
                   [width]="columnSize.lastModifiedBy"
                 >
@@ -160,7 +160,7 @@
   
                 <d-column
                   [field]="'action'"
-                  header="Actions"
+                  [header]="'list.transferOrder.actions' | translate"
                   [width]="columnSize.action"
                 >
                   <d-cell>

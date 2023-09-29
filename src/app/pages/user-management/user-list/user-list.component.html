@@ -19,13 +19,13 @@
               <div class="da-common-search">
                 <div class="da-left">
                   <d-search [size]="'sm'" [(ngModel)]="searchKeywords.username" (input)="startSearch($event)"
-                    class="da-inline" [placeholder]="'Search with Username'"></d-search>
+                    class="da-inline" [placeholder]="'list.user.searchOne' | translate"></d-search>
                   <d-search [size]="'sm'" [(ngModel)]="searchKeywords.department" (input)="startSearch($event)"
-                    class="da-inline" [placeholder]="'Search with Department'"></d-search>
+                    class="da-inline" [placeholder]="'list.user.searchTwo' | translate"></d-search>
                   <d-search [size]="'sm'" [(ngModel)]="searchKeywords.title" (input)="startSearch($event)"
-                    class="da-inline" [placeholder]="'Search with Title'"></d-search>
+                    class="da-inline" [placeholder]="'list.user.searchThree' | translate"></d-search>
 
-                  <d-select [ngStyle]="{ width: 'calc(100% - 82%)' }" class="da-inline" placeholder="Select a Group"
+                  <d-select [ngStyle]="{ width: 'calc(100% - 82%)' }" class="da-inline" [placeholder]="'list.user.searchFour' | translate"
                     [scrollHight]="'300px'" (valueChange)="startSearch($event)" [filterKey]="'group'"
                     [appendToBody]="true" [options]="groups" name="group" [(ngModel)]="searchKeywords.group"></d-select>
 
@@ -40,7 +40,7 @@
           <div class="list-content" dLoading [loading]="busy">
             <d-data-table #datatable [dataSource]="basicDataSource" [scrollable]="true" [onlyOneColumnSort]="true"
               (multiSortChange)="multiSortChange($event)">
-              <d-column [field]="'userId'" header="User Id" [sortable]="true">
+              <d-column [field]="'userId'" [header]="'list.user.table.userId' | translate" [sortable]="true">
                 <d-cell>
                   <ng-template let-cellItem="cellItem">
                     <span [title]="cellItem" class="over-flow-ellipsis">
@@ -50,7 +50,7 @@
                 </d-cell>
               </d-column>
 
-              <d-column [field]="'username'" header="Username" [sortable]="true">
+              <d-column [field]="'username'" [header]="'list.user.table.username' | translate" [sortable]="true">
                 <d-cell>
                   <ng-template let-cellItem="cellItem">
                     <span [title]="cellItem" class="over-flow-ellipsis">
@@ -60,7 +60,7 @@
                 </d-cell>
               </d-column>
 
-              <d-column [field]="'department'" header="Department" [sortable]="true">
+              <d-column [field]="'department'" [header]="'list.user.table.department' | translate" [sortable]="true">
                 <d-cell>
                   <ng-template let-cellItem="cellItem">
                     <span [title]="cellItem" class="over-flow-ellipsis">
@@ -70,7 +70,7 @@
                 </d-cell>
               </d-column>
 
-              <d-column [field]="'title'" header="Title" [sortable]="true">
+              <d-column [field]="'title'" [header]="'list.user.table.title' | translate" [sortable]="true">
                 <d-cell>
                   <ng-template let-cellItem="cellItem">
                     <span [title]="cellItem" class="over-flow-ellipsis">
@@ -80,7 +80,7 @@
                 </d-cell>
               </d-column>
 
-              <d-column [field]="'group'" header="Group" [sortable]="true">
+              <d-column [field]="'group'" [header]="'list.user.table.group' | translate" [sortable]="true">
                 <d-cell>
                   <ng-template let-cellItem="cellItem">
                     <span [title]="cellItem" class="over-flow-ellipsis">
@@ -90,7 +90,7 @@
                 </d-cell>
               </d-column>
 
-              <d-column [field]="'roles'" header="Roles" [sortable]="true">
+              <d-column [field]="'roles'" [header]="'list.user.table.roles' | translate" [sortable]="true">
                 <d-cell>
                   <ng-template let-cellItem="cellItem">
                     <span [title]="cellItem" class="over-flow-ellipsis">
@@ -100,7 +100,7 @@
                 </d-cell>
               </d-column>
 
-              <d-column [field]="'action'" header="Actions" [width]="columnSize.action">
+              <d-column [field]="'action'" [header]="'list.transferOrder.actions' | translate" [width]="columnSize.action">
                 <d-cell>
                   <ng-template let-rowItem="rowItem" let-rowIndex="rowIndex">
                     <div class="btn-group over-flow-ellipsis">

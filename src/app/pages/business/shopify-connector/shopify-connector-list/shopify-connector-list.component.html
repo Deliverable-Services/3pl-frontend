@@ -37,7 +37,7 @@
           <div class="list-content" dLoading [loading]="busy">
             <d-data-table #datatable [dataSource]="basicDataSource" [scrollable]="true" [onlyOneColumnSort]="true"
               (multiSortChange)="multiSortChange($event)">
-              <d-column [width]="columnSize.connectorName" [field]="'connectorName'" header="Connector Name" [sortable]="true">
+              <d-column [width]="columnSize.connectorName" [field]="'connectorName'" [header]="'list.shopifyConnector.table.connectorName' | translate" [sortable]="true">
                 <d-cell>
                   <ng-template let-cellItem="cellItem">
                     <span [title]="cellItem" class="over-flow-ellipsis">
@@ -47,7 +47,7 @@
                 </d-cell>
               </d-column>
 
-              <d-column [width]="columnSize.baseUrl" [field]="'baseUrl'" header="Base URL" [sortable]="true">
+              <d-column [width]="columnSize.baseUrl" [field]="'baseUrl'" [header]="'list.shopifyConnector.table.baseURL' | translate" [sortable]="true">
                 <d-cell>
                   <ng-template let-cellItem="cellItem">
                     <span [title]="cellItem" class="over-flow-ellipsis">
@@ -57,7 +57,7 @@
                 </d-cell>
               </d-column>
 
-              <d-column [width]="columnSize.token" [field]="'token'" header="Token" [sortable]="true">
+              <d-column [width]="columnSize.token" [field]="'token'" [header]="'list.shopifyConnector.table.token' | translate" [sortable]="true">
                 <d-cell>
                   <ng-template let-cellItem="cellItem">
                     <span [title]="cellItem" class="over-flow-ellipsis">
@@ -95,7 +95,7 @@
                 </d-cell>
               </d-column> -->
 
-              <d-column [width]="columnSize.lastModifiedDate" [field]="'lastModifiedDate'" header="Last Updated Date Time" [sortable]="true"
+              <d-column [width]="columnSize.lastModifiedDate" [field]="'lastModifiedDate'" [header]="'list.category.table.lastUpdatedDateTime' | translate" [sortable]="true"
                 [width]="columnSize.lastModifiedDate">
                 <d-cell>
                   <ng-template let-cellItem="cellItem">
@@ -106,7 +106,7 @@
                 </d-cell>
               </d-column>
 
-              <d-column [width]="columnSize.lastModifiedBy" [field]="'lastModifiedBy'" header="Last Updated By" [sortable]="true"
+              <d-column [width]="columnSize.lastModifiedBy" [field]="'lastModifiedBy'" [header]="'list.category.table.lastUpdatedBy' | translate" [sortable]="true"
                 [width]="columnSize.lastModifiedBy">
                 <d-cell>
                   <ng-template let-cellItem="cellItem">
@@ -117,7 +117,7 @@
                 </d-cell>
               </d-column>
 
-              <d-column [width]="columnSize.action" [field]="'action'" header="Actions" [width]="columnSize.action">
+              <d-column [width]="columnSize.action" [field]="'action'" [header]="'list.transferOrder.actions' | translate" [width]="columnSize.action">
                 <d-cell>
                   <ng-template let-rowItem="rowItem" let-rowIndex="rowIndex">
                     <div class="btn-group over-flow-ellipsis">

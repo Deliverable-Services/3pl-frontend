@@ -35,17 +35,22 @@ export default {
     currency: {
       title: 'Currency',
       list: 'Currency List',
-      buttonTitle: 'Add Currency'
+      buttonTitle: 'Add Currency',
+      searchOne: 'Search for Currency Code',
+      table: {currencyName: 'Currency Name', currencyCode: 'currency Code', rate: 'Rate'}
     },
     creditTerms: {
       title: 'Credit Terms',
       list: 'Credit Terms List',
-      buttonTitle: 'Add Credit Terms'
+      buttonTitle: 'Add Credit Terms',
+      table: {subject: 'Subject', details: 'Details', creditDay: 'Credit Day'}
     },
     connectionLocationList: {
       title: 'Inventory Node',
       list: 'Inventory Node List',
-      buttonTitle: 'Add Inventory Node'
+      buttonTitle: 'Add Inventory Node',
+      table: {nodeName: 'Node Name', nodeType: 'Node Type', lGStoreOwnerId: 'LG Store Owner Id', lGWMSID: 'LG WMS ID', shopifyLocationId: 'Shopify Location Id',
+      lastUpdatedDateTime: 'Last Updated Date Time', lastUpdatedBy: 'Last Updated By'}
     },
     vendor: {
       title: 'Vendor Setup',
@@ -59,7 +64,8 @@ export default {
     shopifyConnector: {
       title: 'Shopify Connector',
       list: 'Shopify Connector List',
-      buttonTitle: 'Add Shopify Connector'
+      buttonTitle: 'Add Shopify Connector',
+      table: {connectorName: 'Connector Name', baseURL: 'Base URL', token: 'Token'}
     },
     inventory: {
       title: 'Inventory',
@@ -132,7 +138,12 @@ export default {
     },
     user: {
       title: 'User',
-      list: 'User List'
+      list: 'User List',
+      searchOne: 'Search with Username',
+      searchTwo: 'Search with Department',
+      searchThree: 'Search with Title',
+      searchFour: 'Select a Group',
+      table: {userId: 'User Id', username: 'Username', department: 'Department', title: 'Title', group: 'Group', roles: 'Roles'}
     },
     basicList: {
       title: 'Basic List',
@@ -157,7 +168,10 @@ export default {
     sPartner: {
       title: 'Shipping Setup',
       categoryList: 'Shipping Partner List',
-      buttonTitle: 'Add'
+      buttonTitle: 'Add',
+      searchOne: 'Search for Currency Code',
+      table: {companyName: 'Company Name', generalEmail: 'General Email', generalPhone: 'General Phone', primaryContactName: 'Primary Contact Name',
+      primaryContactEmail: 'Primary Contact Email', primaryContactPhone1: 'Primary Contact Phone 1', primaryContactPhone2: 'Primary Contact Phone 2'}
     },
     common: {
       buttonTitleAdd: 'Add',

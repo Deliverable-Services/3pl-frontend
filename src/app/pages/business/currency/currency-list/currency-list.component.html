@@ -23,7 +23,7 @@
                 [(ngModel)]="searchWithFromCurrency.keyword"
                 (input)="search($event, searchWithFromCurrency)"
                 class="da-inline"
-                [placeholder]="'Search for Currency Code'"
+                [placeholder]="'list.currency.searchOne' | translate"
               ></d-search>
             </div>
             <div [ngStyle]="{ display: 'flex', justifyContent: 'flex-end' }">
@@ -41,7 +41,7 @@
             >
               <d-column
                 field="currencyName"
-                header="Currency Name"
+                [header]="'list.currency.table.currencyName' | translate"
                 [width]="columnSize.currencyName"
                 [sortable]="true"
               >
@@ -60,7 +60,7 @@
 
               <d-column
                 field="currencyCode"
-                header="Currency Code"
+                [header]="'list.currency.table.currencyCode' | translate"
                 [width]="columnSize.toCurrency"
                 [sortable]="true"
               >
@@ -79,7 +79,7 @@
 
               <d-column
                 field="rate"
-                header="Rate"
+                [header]="'list.currency.table.rate' | translate"
                 [width]="columnSize.rate"
                 [sortable]="true"
               >
@@ -126,7 +126,7 @@
 
               <d-column
                 field="lastModifiedDate"
-                header="Updated Date"
+                [header]="'list.connectionLocationList.table.lastUpdatedDateTime' | translate"
                 [width]="columnSize.lastModifiedDate"
                 [sortable]="true"
               >
@@ -144,7 +144,7 @@
 
               <d-column
                 field="lastModifiedBy"
-                header="Last Updated By"
+                [header]="'list.connectionLocationList.table.lastUpdatedBy' | translate"
                 [width]="columnSize.lastModifiedBy"
                 [sortable]="true"
               >
@@ -163,7 +163,7 @@
 
               <d-column
                   [field]="'status'"
-                  header="Status"
+                  [header]="'list.vendor.table.status' | translate"
                   [sortable]="false"
                   [width]="columnSize.lastModifiedBy"
                 >
@@ -178,7 +178,7 @@
 
               <d-column
                 field="action"
-                header="Actions"
+                [header]="'list.transferOrder.actions' | translate"
                 [width]="columnSize.action"
                 [sortable]="true"
               >

@@ -37,7 +37,7 @@
           <div class="list-content" dLoading [loading]="busy">
             <d-data-table #datatable [dataSource]="basicDataSource" [scrollable]="true" [onlyOneColumnSort]="true"
               (multiSortChange)="multiSortChange($event)">
-              <d-column [width]="columnSize.nodeName" [field]="'nodeName'" header="Node Name">
+              <d-column [width]="columnSize.nodeName" [field]="'nodeName'" [header]="'list.connectionLocationList.table.nodeName' | translate">
                 <d-cell>
                   <ng-template let-cellItem="cellItem">
                     <span [title]="cellItem" class="over-flow-ellipsis">
@@ -47,7 +47,7 @@
                 </d-cell>
               </d-column>
 
-              <d-column [width]="columnSize.nodeType" [field]="'nodeType'" header="Node Type">
+              <d-column [width]="columnSize.nodeType" [field]="'nodeType'" [header]="'list.connectionLocationList.table.nodeType' | translate">
                 <d-cell>
                   <ng-template let-cellItem="cellItem">
                     <span [title]="cellItem" class="over-flow-ellipsis">
@@ -71,7 +71,7 @@
                   </d-cell>
                 </d-column> -->
 
-              <d-column [width]="columnSize.lgStoreOwnerId" [field]="'lgStoreOwnerId'" header="LG Store Owner Id">
+              <d-column [width]="columnSize.lgStoreOwnerId" [field]="'lgStoreOwnerId'" [header]="'list.connectionLocationList.table.lGStoreOwnerId' | translate">
                 <d-cell>
                   <ng-template let-cellItem="cellItem">
                     <span [title]="cellItem" class="over-flow-ellipsis">
@@ -81,7 +81,7 @@
                 </d-cell>
               </d-column>
 
-              <d-column [width]="columnSize.lgStoreWhsId" [field]="'lgStoreWhsId'" header="LG WMS ID ">
+              <d-column [width]="columnSize.lgStoreWhsId" [field]="'lgStoreWhsId'" [header]="'list.connectionLocationList.table.lGWMSID' | translate">
                 <d-cell>
                   <ng-template let-cellItem="cellItem">
                     <span [title]="cellItem" class="over-flow-ellipsis">
@@ -91,7 +91,7 @@
                 </d-cell>
               </d-column>
 
-              <d-column [width]="columnSize.shopifyLocationId" [field]="'shopifyLocationId'" header="Shopify Location Id">
+              <d-column [width]="columnSize.shopifyLocationId" [field]="'shopifyLocationId'" [header]="'list.connectionLocationList.table.shopifyLocationId' | translate">
                 <d-cell>
                   <ng-template let-cellItem="cellItem">
                     <span [title]="cellItem" class="over-flow-ellipsis">
@@ -101,7 +101,7 @@
                 </d-cell>
               </d-column>
 
-              <d-column [width]="columnSize.lastModifiedDate" [field]="'lastModifiedDate'" header="Last Updated Date Time"
+              <d-column [width]="columnSize.lastModifiedDate" [field]="'lastModifiedDate'" [header]="'list.connectionLocationList.table.lastUpdatedDateTime' | translate"
                 [width]="columnSize.lastModifiedDate">
                 <d-cell>
                   <ng-template let-cellItem="cellItem">
@@ -112,7 +112,7 @@
                 </d-cell>
               </d-column>
 
-              <d-column [width]="columnSize.lastModifiedBy" [field]="'lastModifiedBy'" header="Last Updated By"
+              <d-column [width]="columnSize.lastModifiedBy" [field]="'lastModifiedBy'" [header]="'list.connectionLocationList.table.lastUpdatedBy' | translate"
                 [width]="columnSize.lastModifiedBy">
                 <d-cell>
                   <ng-template let-cellItem="cellItem">
@@ -123,7 +123,7 @@
                 </d-cell>
               </d-column>
 
-              <d-column [width]="columnSize.action" [field]="'action'" header="Actions" [width]="columnSize.action">
+              <d-column [width]="columnSize.action" [field]="'action'" [header]="'list.transferOrder.actions' | translate" [width]="columnSize.action">
                 <d-cell>
                   <ng-template let-rowItem="rowItem" let-rowIndex="rowIndex">
                     <div class="btn-group over-flow-ellipsis">

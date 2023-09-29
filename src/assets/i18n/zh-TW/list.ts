@@ -58,21 +58,27 @@ export default {
       title: "貨幣",
       list: "貨幣列表",
       buttonTitle: "添加貨幣",
+      searchOne: '搜尋貨幣代碼',
+      table: {currencyName: '貨幣名稱', currencyCode: '貨幣代碼', rate: '速度'}
     },
     creditTerms: {
       title: "信貸條款",
       list: "信用條款清單",
       buttonTitle: "添加信用條款",
+      table: {subject: '主題', details: '細節', creditDay: '信用日'}
     },
     connectionLocationList: {
       title: "連接位置",
       list: "連接位置列表",
       buttonTitle: "添加連接位置",
+      table: {nodeName: '節點名稱', nodeType: '節點類型', lGStoreOwnerId: 'LG 店主 ID', lGWMSID: 'LG WMS ID', shopifyLocationId: 'Shopify 位置 ID',
+      lastUpdatedDateTime: '最後更新日期時間', lastUpdatedBy: '最後更新者'}
     },
     shopifyConnector: {
       title: "Shopify 連接器",
       list: "Shopify 連接器列表",
       buttonTitle: "添加 Shopify 連接器",
+      table: {connectorName: '连接器名称', baseURL: '基本网址', token: '代币'}
     },
     inventory: {
       title: "庫存",
@@ -144,7 +150,12 @@ export default {
     },
     user: {
       title: '用戶',
-      list: '用戶列表'
+      list: '用戶列表',
+      searchOne: '使用用戶名搜尋',
+      searchTwo: '按部門搜尋',
+      searchThree: '按標題搜尋',
+      searchFour: '選擇一個群組',
+      table: {userId: '使用者身分', username: '使用者名稱', department: '部門', title: '標題', group: '團體', roles: '角色'}
     },
     basicList: {
       title: "基本清單",
