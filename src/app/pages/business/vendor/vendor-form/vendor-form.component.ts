@@ -9,7 +9,8 @@ import { Season } from "src/app/@core/data/season";
 import { BrandListDataService } from "src/app/@core/mock/brand-data.service";
 import { VendorListDataService } from "src/app/@core/mock/vendor-data.service";
 import { FormConfig } from "src/app/@shared/components/admin-form";
-import { CreditTermsService } from 'src/app/@core/mock/credit-terms.service';
+import { CreditTermsService } from "src/app/@core/mock/credit-terms.service";
+import { CurrencyDataService } from "src/app/@core/mock/currency-data.service";
 
 @Component({
   selector: "app-vendor-form",
@@ -20,8 +21,8 @@ export class VendorFormComponent implements OnInit {
   @ViewChild("EditorTemplate", { static: true })
   EditorTemplate!: TemplateRef<any>;
   todayDate: any = new Date();
-  
-  projectFormData:any = {
+
+  projectFormData: any = {
     address: "",
     businessRegNo: "",
     companyName: "",
@@ -41,9 +42,9 @@ export class VendorFormComponent implements OnInit {
       accName: "",
       accNo: "",
       bankName: "",
-      swiftCode: ""
+      swiftCode: "",
     },
-    status: "ACTIVE"
+    status: "ACTIVE",
   };
   mode: string = "Add";
   paramId: string = "";
@@ -53,8 +54,10 @@ export class VendorFormComponent implements OnInit {
   brandList: Brand[] = [];
   formData = {};
   editForm: any = null;
-  creditTerms:any = [];
-  
+  creditTerms: any = [];
+  currencyList: any[] = [];
+  currencyData: any[] = [];
+
   formConfig: FormConfig = {
     layout: FormLayout.Horizontal,
     items: [
@@ -103,6 +106,7 @@ export class VendorFormComponent implements OnInit {
     private dialogService: DialogService,
     private router: Router,
     private route: ActivatedRoute,
+    private currencyDataService: CurrencyDataService,
     private creditTermsService: CreditTermsService
   ) {}
 
@@ -110,6 +114,7 @@ export class VendorFormComponent implements OnInit {
     this.paramId = this.route.snapshot.params["id"];
     this.mode = this.route.snapshot.params["id"] ? "Edit" : "Add";
     this.getCreditTermsList();
+    this.getCurrencyListActive();
 
     if (this.mode === "Edit") {
       this.getVendorById(this.paramId);
@@ -219,6 +224,18 @@ export class VendorFormComponent implements OnInit {
     }
   }
 
+  getCurrencyListActive() {
+    this.currencyDataService
+      .getCurrencyListActive({ perPage: 100 })
+      .subscribe((res: any) => {
+        this.currencyData = res.content;
+        this.currencyList = res.content.map((el: any) => {
+          return el.currencyCode;
+        });
+        console.log("currency list active", this.currencyList);
+      });
+  }
+
   getCreditTermsList() {
     this.busy = this.creditTermsService
       .getList({
@@ -231,10 +248,10 @@ export class VendorFormComponent implements OnInit {
         this.creditTerms = res?.content?.map((data: any) => {
           return {
             creditTermsId: data?.creditTermsId,
-            creditTermsSubject: data?.creditTermsSubject
-          }
-        })
-        console.log(':: : ', res, this.creditTerms);
+            creditTermsSubject: data?.creditTermsSubject,
+          };
+        });
+        console.log(":: : ", res, this.creditTerms);
       });
   }
 

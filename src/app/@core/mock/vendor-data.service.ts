@@ -54,17 +54,15 @@ export class VendorListDataService extends VendorListData {
 
   private seasonList: Season[] = [];
 
-  getVendorList() {
+  getVendorList(pageParams?: any) {
     const httpOptionsToken = {
       headers: new HttpHeaders({
         // "Content-Type": "application/json",
       }),
       params: new HttpParams({
-        fromObject: this.pageParams,
+        fromObject: pageParams ? pageParams:this.pageParams,
       }),
     };
-
-    console.log(':: this.pageParams :: ', this.pageParams)
 
     return this.http.post(`${this.baseApiUrl}/vendors/list`, this.searchParams, httpOptionsToken);
   }

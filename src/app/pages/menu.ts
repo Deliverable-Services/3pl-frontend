@@ -37,12 +37,16 @@ export default function (values: any) {
     {
       title: "purchasing",
       children: [
-
         {
           title: "poList",
-          link: "#",
-          disabled: true
-        },       
+          link: "/business/purchase-order",
+          disabled: false
+        },
+        {
+          title: "shipmentAndShipping",
+          link: "/business/shipment-and-shipping",
+          disabled: false
+        },
         {
           title: "asnList",
           link: "#",
@@ -65,14 +69,6 @@ export default function (values: any) {
         //   title: "Trade Terms",
         //   link: "/business/trade-terms",
         // },
-        {
-          title: "connectionLocationList",
-          link: "/connection-location",
-        },
-        {
-          title: "shopifyConnector",
-          link: "/business/shopify-connector",
-        },
       ],
       link: "/",
       menuIcon: "icon icon-more-func",
@@ -89,6 +85,10 @@ export default function (values: any) {
         {
           title:"inventoryOnlineList",
           link: "/inventory-online"
+        },
+        {
+          title: "connectionLocationList",
+          link: "/connection-location",
         },
         {
           title:"RfidSearch",
@@ -130,8 +130,7 @@ export default function (values: any) {
         },
         {
           title: "integration",
-          link: "#",
-          disabled:true,
+          link: "/business/shopify-connector",
         },
       ],
     }

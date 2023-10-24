@@ -22,7 +22,8 @@
           autocomplete="off">
           <div [ngStyle]="{ display: 'flex', justifyContent: 'space-between' }">
             <div class="da-content-banner-title">
-              {{ ((mode === 'Add' ? 'list.common.buttonTitleAdd':'list.common.buttonTitleEdit') | translate) + " " + ('form.vendor.title' | translate) }}
+              {{ ((mode === 'Add' ? 'list.common.buttonTitleAdd':'list.common.buttonTitleEdit') | translate) + " " +
+              ('form.vendor.title' | translate) }}
             </div>
             <!-- <div *ngIf="paramId">
               <div class="dateWrapper">
@@ -42,7 +43,8 @@
                 <d-form-label [required]="true">{{'form.vendor.fields.businessRegNo' | translate}}
                 </d-form-label>
                 <d-form-control>
-                  <input dTextInput autocomplete="off" name="businessRegNo" [placeholder]="'form.vendor.fields.businessRegNo' | translate"
+                  <input dTextInput autocomplete="off" name="businessRegNo"
+                    [placeholder]="'form.vendor.fields.businessRegNo' | translate"
                     [(ngModel)]="projectFormData.businessRegNo" [dValidateRules]="{
                       validators: [{ required: true }]
                     }" />
@@ -52,7 +54,8 @@
               <d-form-item>
                 <d-form-label [required]="true">{{'form.vendor.fields.companyName' | translate}}</d-form-label>
                 <d-form-control>
-                  <input dTextInput autocomplete="off" name="companyName" [placeholder]="'form.vendor.fields.companyName' | translate"
+                  <input dTextInput autocomplete="off" name="companyName"
+                    [placeholder]="'form.vendor.fields.companyName' | translate"
                     [(ngModel)]="projectFormData.companyName" [dValidateRules]="{
                       validators: [{ required: true }]
                     }" />
@@ -62,37 +65,38 @@
               <d-form-item>
                 <d-form-label [required]="true">{{'form.vendor.fields.generalEmail' | translate}}</d-form-label>
                 <d-form-control>
-                  <input dTextInput autocomplete="off" name="generalEmail" [placeholder]="'form.vendor.fields.generalEmail' | translate"
+                  <input dTextInput autocomplete="off" name="generalEmail"
+                    [placeholder]="'form.vendor.fields.generalEmail' | translate"
                     [(ngModel)]="projectFormData.generalEmail" [dValidateRules]="{
                       validators: [{ required: true }]
-                    }"/>
+                    }" />
                 </d-form-control>
               </d-form-item>
 
               <d-form-item>
                 <d-form-label [required]="true">{{'form.vendor.fields.generalPhone' | translate}}</d-form-label>
                 <d-form-control>
-                  <input dTextInput autocomplete="off" name="generalPhone" [placeholder]="'form.vendor.fields.generalPhone' | translate"
-                    [(ngModel)]="projectFormData.generalPhone"
-                    [dValidateRules]="{
+                  <input dTextInput autocomplete="off" name="generalPhone"
+                    [placeholder]="'form.vendor.fields.generalPhone' | translate"
+                    [(ngModel)]="projectFormData.generalPhone" [dValidateRules]="{
                       validators: [{ required: true }]
-                    }"/>
+                    }" />
                 </d-form-control>
               </d-form-item>
-              
+
               <d-form-item [ngStyle]="{ marginBottom: '35px' }">
                 <d-form-label [required]="true">{{ 'form.vendor.fields.paymentCurrency' | translate }}
                 </d-form-label>
 
                 <d-select [readonly]="true" [filterKey]="'currency'" [extraConfig]="{
                     labelization: { enable: true, overflow: 'multiple-line' }
-                  }" [appendToBody]="true" [placeholder]="'form.vendor.fields.paymentCurrency' | translate"
-                  [options]="['sdf', 'sdg', 'etre', 'ere', 'qwe', 'werweqr']" name="paymentCurrency"
+                  }" [filterKey]="'currencyCode'" [appendToBody]="true" [options]="currencyList"
+                  [placeholder]="'form.vendor.fields.paymentCurrency' | translate" name="paymentCurrency"
                   [(ngModel)]="projectFormData.paymentCurrency" [dValidateRules]="{
                     validators: [{ required: true }]
                   }"></d-select>
               </d-form-item>
-              
+
               <d-form-item>
                 <d-form-label [required]="true">{{ 'form.vendor.fields.creditTermsDTO' | translate }}
                 </d-form-label>
@@ -100,9 +104,9 @@
                 <d-select [readonly]="true" [filterKey]="'creditTermsSubject'" [extraConfig]="{
                     labelization: { enable: true, overflow: 'multiple-line' }
                   }" [appendToBody]="true" [placeholder]="'form.vendor.fields.creditTermsDTO' | translate"
-                  [options]="creditTerms" name="creditTermsId"
-                  [(ngModel)]="projectFormData.termsObj"
-                  (valueChange)="projectFormData.creditTermsDto.creditTermsId = projectFormData.termsObj?.creditTermsId" [dValidateRules]="{
+                  [options]="creditTerms" name="creditTermsId" [(ngModel)]="projectFormData.termsObj"
+                  (valueChange)="projectFormData.creditTermsDto.creditTermsId = projectFormData.termsObj?.creditTermsId"
+                  [dValidateRules]="{
                     validators: [{ required: true }]
                   }"></d-select>
               </d-form-item>
@@ -110,62 +114,71 @@
             <div [ngStyle]="{ width: '46%' }">
 
               <d-form-item>
-                <d-form-label [required]="true">{{ 'form.vendor.fields.primaryContactEmail' | translate }}</d-form-label>
+                <d-form-label [required]="true">{{ 'form.vendor.fields.primaryContactEmail' | translate
+                  }}</d-form-label>
                 <d-form-control>
-                  <input dTextInput autocomplete="off" name="primaryContactEmail" [placeholder]="'form.vendor.fields.primaryContactEmail' | translate"
+                  <input dTextInput autocomplete="off" name="primaryContactEmail"
+                    [placeholder]="'form.vendor.fields.primaryContactEmail' | translate"
                     [(ngModel)]="projectFormData.primaryContactEmail" [dValidateRules]="{
                       validators: [{ required: true }]
-                    }"/>
+                    }" />
                 </d-form-control>
               </d-form-item>
 
               <d-form-item>
                 <d-form-label [required]="true">{{ 'form.vendor.fields.primaryContactName' | translate }}</d-form-label>
                 <d-form-control>
-                  <input dTextInput autocomplete="off" name="primaryContactName" [placeholder]="'form.vendor.fields.primaryContactName' | translate"
+                  <input dTextInput autocomplete="off" name="primaryContactName"
+                    [placeholder]="'form.vendor.fields.primaryContactName' | translate"
                     [(ngModel)]="projectFormData.primaryContactName" [dValidateRules]="{
                       validators: [{ required: true }]
-                    }"/>
+                    }" />
                 </d-form-control>
               </d-form-item>
 
               <d-form-item>
-                <d-form-label [required]="true">{{ 'form.vendor.fields.primaryContactPhone1' | translate }}</d-form-label>
+                <d-form-label [required]="true">{{ 'form.vendor.fields.primaryContactPhone1' | translate
+                  }}</d-form-label>
                 <d-form-control>
-                  <input dTextInput autocomplete="off" name="primaryContactPhone1" [placeholder]="'form.vendor.fields.primaryContactPhone1' | translate"
+                  <input dTextInput autocomplete="off" name="primaryContactPhone1"
+                    [placeholder]="'form.vendor.fields.primaryContactPhone1' | translate"
                     [(ngModel)]="projectFormData.primaryContactPhone1" [dValidateRules]="{
                       validators: [{ required: true }]
-                    }"/>
+                    }" />
                 </d-form-control>
               </d-form-item>
 
               <d-form-item>
-                <d-form-label [required]="true">{{ 'form.vendor.fields.primaryContactPhone2' | translate }}</d-form-label>
+                <d-form-label [required]="true">{{ 'form.vendor.fields.primaryContactPhone2' | translate
+                  }}</d-form-label>
                 <d-form-control>
-                  <input dTextInput autocomplete="off" name="primaryContactPhone2" [placeholder]="'form.vendor.fields.primaryContactPhone2' | translate"
+                  <input dTextInput autocomplete="off" name="primaryContactPhone2"
+                    [placeholder]="'form.vendor.fields.primaryContactPhone2' | translate"
                     [(ngModel)]="projectFormData.primaryContactPhone2" [dValidateRules]="{
                       validators: [{ required: true }]
-                    }"/>
+                    }" />
                 </d-form-control>
               </d-form-item>
 
               <d-form-item>
                 <d-form-label [required]="true">{{ 'form.vendor.fields.website' | translate }}</d-form-label>
                 <d-form-control>
-                  <input dTextInput autocomplete="off" name="website" [placeholder]="'form.vendor.fields.website' | translate"
-                    [(ngModel)]="projectFormData.website" [dValidateRules]="{
+                  <input dTextInput autocomplete="off" name="website"
+                    [placeholder]="'form.vendor.fields.website' | translate" [(ngModel)]="projectFormData.website"
+                    [dValidateRules]="{
                       validators: [{ required: true }]
-                    }"/>
+                    }" />
                 </d-form-control>
               </d-form-item>
 
               <d-form-item>
                 <d-form-label [required]="true">{{ 'form.vendor.fields.address' | translate }}</d-form-label>
                 <d-form-control>
-                  <input dTextInput autocomplete="off" name="address" [placeholder]="'form.vendor.fields.address' | translate"
-                    [(ngModel)]="projectFormData.address" [dValidateRules]="{
+                  <input dTextInput autocomplete="off" name="address"
+                    [placeholder]="'form.vendor.fields.address' | translate" [(ngModel)]="projectFormData.address"
+                    [dValidateRules]="{
                       validators: [{ required: true }]
-                    }"/>
+                    }" />
                 </d-form-control>
               </d-form-item>
             </div>
@@ -183,7 +196,8 @@
                 <d-form-label [required]="true">{{ 'form.vendor.fields.accountName' | translate }}
                 </d-form-label>
                 <d-form-control>
-                  <input dTextInput autocomplete="off" name="accName" [placeholder]="'form.vendor.fields.accountName' | translate"
+                  <input dTextInput autocomplete="off" name="accName"
+                    [placeholder]="'form.vendor.fields.accountName' | translate"
                     [(ngModel)]="projectFormData.bankInfo.accName" [dValidateRules]="{
                       validators: [{ required: true }]
                     }" />
@@ -193,7 +207,8 @@
               <d-form-item>
                 <d-form-label [required]="true">{{ 'form.vendor.fields.bankName' | translate }}</d-form-label>
                 <d-form-control>
-                  <input dTextInput autocomplete="off" name="bankName" [placeholder]="'form.vendor.fields.bankName' | translate"
+                  <input dTextInput autocomplete="off" name="bankName"
+                    [placeholder]="'form.vendor.fields.bankName' | translate"
                     [(ngModel)]="projectFormData.bankInfo.bankName" [dValidateRules]="{
                       validators: [{ required: true }]
                     }" />
@@ -205,20 +220,22 @@
               <d-form-item>
                 <d-form-label [required]="true">{{ 'form.vendor.fields.accountNo' | translate }}</d-form-label>
                 <d-form-control>
-                  <input dTextInput autocomplete="off" name="accNo" [placeholder]="'form.vendor.fields.accountNo' | translate"
+                  <input dTextInput autocomplete="off" name="accNo"
+                    [placeholder]="'form.vendor.fields.accountNo' | translate"
                     [(ngModel)]="projectFormData.bankInfo.accNo" [dValidateRules]="{
                       validators: [{ required: true }]
-                    }"/>
+                    }" />
                 </d-form-control>
               </d-form-item>
 
               <d-form-item>
                 <d-form-label [required]="true">{{ 'form.vendor.fields.swiftCode' | translate }}</d-form-label>
                 <d-form-control>
-                  <input dTextInput autocomplete="off" name="swiftCode" [placeholder]="'form.vendor.fields.swiftCode' | translate"
+                  <input dTextInput autocomplete="off" name="swiftCode"
+                    [placeholder]="'form.vendor.fields.swiftCode' | translate"
                     [(ngModel)]="projectFormData.bankInfo.swiftCode" [dValidateRules]="{
                       validators: [{ required: true }]
-                    }"/>
+                    }" />
                 </d-form-control>
               </d-form-item>
             </div>

@@ -43,14 +43,14 @@ export class UserFormComponent implements OnInit {
   };
   customStylesDC = {
     position: 'absolute',
-    marginTop: '-222px',
+    marginTop: '-277px',
     marginLeft: '150px',
     width: '20%',
   };
   customStylesStore= {
     position: 'absolute',
     width: '20%',
-    marginTop: '-157px',
+    marginTop: '-221px',
     marginLeft: '150px',
   };
   customStyleVendor = {
@@ -145,7 +145,7 @@ export class UserFormComponent implements OnInit {
       this.vendorList = res?.content?.map((c: any) => {
         return {
           id: c?.id || "",
-          name: c?.primaryContactName || "",
+          name: c?.companyName || "",
         };
       });
     });
@@ -163,6 +163,7 @@ export class UserFormComponent implements OnInit {
     let formData = this.projectFormData;
 
     formData["rfidManager"] = formData.selectedRoles.includes("RFID Manager");
+    formData["allStore"] = formData.selectedRoles.includes("All Store Manager");
 
     if (event?.valid) {
       // Create an object to hold the request data with only the desired keys and values
@@ -174,6 +175,7 @@ export class UserFormComponent implements OnInit {
         title: formData.title,
         department: formData.department,
         rfidManager: formData.rfidManager,
+        allStore: formData.allStore,
         group: formData.group,
         roles: formData.roles,
       };

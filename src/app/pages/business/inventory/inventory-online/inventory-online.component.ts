@@ -46,7 +46,7 @@ export class InventoryOnlineComponent implements OnInit {
     list: "10%",
     stockOwnerId: "7%",
     styleName: "12%",
-    sku: "20%",
+    sku: "12%",
     // color: "6%",
     // size: "5%",
     warehouseId: "5%",
@@ -57,6 +57,7 @@ export class InventoryOnlineComponent implements OnInit {
     shpAvlQty: "8%",
     shpCommittedQty: "8%",
     shpReservedQty: "8%",
+    avlQtyDiff: "8%",
   };
 
   constructor(

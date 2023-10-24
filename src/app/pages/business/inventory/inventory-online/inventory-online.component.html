@@ -33,8 +33,7 @@
                                     <div [ngStyle]="{ display: 'inline-block' }">
                                         <d-search [ngStyle]="{
                           marginRight: '20px'
-                        }" [size]="'sm'" [(ngModel)]="setSearch.sku" (input)="startSearch($event)"
-                                            class="da-inline"
+                        }" [size]="'sm'" [(ngModel)]="setSearch.sku" (input)="startSearch($event)" class="da-inline"
                                             placeholder="{{'list.inventoryOnlineList.skuSearch' | translate}}"></d-search>
                                     </div>
                                 </div>
@@ -146,16 +145,17 @@
                                     </ng-template>
                                 </d-cell>
                             </d-column>
-                            <d-column [field]="'wmsLockedQty'" header="{{'list.inventoryOnlineList.wmsLockedQty' | translate}}"
-                            [sortable]="true" [width]="columnSize.wmsLockedQty">
-                            <d-cell>
-                                <ng-template let-cellItem="cellItem">
-                                    <span [title]="cellItem" style="text-align: right;" class="over-flow-ellipsis">
-                                        {{ cellItem }}
-                                    </span>
-                                </ng-template>
-                            </d-cell>
-                        </d-column>
+                            <d-column [field]="'wmsLockedQty'"
+                                header="{{'list.inventoryOnlineList.wmsLockedQty' | translate}}" [sortable]="true"
+                                [width]="columnSize.wmsLockedQty">
+                                <d-cell>
+                                    <ng-template let-cellItem="cellItem">
+                                        <span [title]="cellItem" style="text-align: right;" class="over-flow-ellipsis">
+                                            {{ cellItem }}
+                                        </span>
+                                    </ng-template>
+                                </d-cell>
+                            </d-column>
                             <d-column [field]="'shpSohQty'"
                                 header="{{'list.inventoryOnlineList.shpSohQty' | translate}}" [sortable]="true"
                                 [width]="columnSize.shpSohQty">
@@ -200,6 +200,19 @@
                                     </ng-template>
                                 </d-cell>
                             </d-column>
+
+                            <d-column [field]="'avlQtyDiff'" header="Avl Qty Diff" [sortable]="true"
+                                [width]="columnSize.avlQtyDiff">
+                                <d-cell>
+                                    <ng-template let-cellItem="cellItem">
+                                        <span [title]="cellItem" style="text-align: right;" class="over-flow-ellipsis">
+                                            {{ cellItem }}
+                                        </span>
+                                    </ng-template>
+                                </d-cell>
+                            </d-column>
+
+
                         </d-data-table>
                     </div>
                     <div class="da-list-footer">

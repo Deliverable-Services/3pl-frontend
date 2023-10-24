@@ -59,7 +59,7 @@ export class TransferOrderFormComponent implements OnInit {
   detailsInputs: any = [];
 
   errorCounter = {
-    count:0,
+    count: 0,
     ids: [] as string[],
   };
 
@@ -243,11 +243,17 @@ export class TransferOrderFormComponent implements OnInit {
       this.detailsInputs?.forEach((e: any, key: any) => {
         e["lineNumber"] = parseInt(key + 1);
       });
-      this.projectFormData.details = this.detailsInputs;
-      this.projectFormData.expectedArrivalDate =
-        this.projectFormData.expectedArrivalDate + "T00:00:00Z";
-      this.projectFormData.expectedDeliveryDate =
-        this.projectFormData.expectedDeliveryDate + "T00:00:00Z";
+    
+      let searchString = "T00:00:00Z"; // The string to search for
+      // Check if the searchString exists in the date strings
+      if (!this.projectFormData.expectedArrivalDate.includes(searchString)) {
+        this.projectFormData.expectedArrivalDate =
+          this.projectFormData.expectedArrivalDate + "T00:00:00Z";
+      }
+      if (!this.projectFormData.expectedDeliveryDate.includes(searchString)) {
+        this.projectFormData.expectedDeliveryDate =
+          this.projectFormData.expectedDeliveryDate + "T00:00:00Z";
+      }
       if (this.mode === "Add") {
         const destinationId =
           this.projectFormData.destinationLocation.connectionLocationId;
@@ -411,12 +417,14 @@ export class TransferOrderFormComponent implements OnInit {
             results.modalInstance.hide();
             // this.detailsInputs = [];
             this.stVariants?.forEach((p: any) => {
+              console.log("p?.selected === true",p?.selected === true);
+              console.log("this.addedVariantIds.includes(p?.variantId)",this.addedVariantIds);
+              console.log("this.detailsInputs",this.detailsInputs);
+              
               if (
                 p?.selected === true &&
                 !this.addedVariantIds.includes(p?.variantId) &&
-                !this.detailsInputs.some(
-                  (input: any) => input.variantId === p?.variantId
-                )
+                !this.detailsInputs.some((input: any) => input.variantId === p?.variantId)
               ) {
                 // Push the object only if the variantId is not in the addedVariantIds array
                 // and it's not already in detailsInputs
@@ -462,52 +470,54 @@ export class TransferOrderFormComponent implements OnInit {
   }
 
   updateValue(event: any, keyName: string, index: number) {
-
-
-
     this.detailsInputs[index][keyName] = event.target.value;
-    let idToCheck = this.detailsInputs[index]['variantId'] as string;
-    if(keyName === "sentQuantity"){
-      console.log('this.detailsInputs[index]', this.detailsInputs[index]);
-      if(parseInt(this.detailsInputs[index][keyName]) > parseInt(this.detailsInputs[index]["plannedQuantity"])){
-        if(!this.errorCounter.ids.includes(idToCheck)){
+    let idToCheck = this.detailsInputs[index]["variantId"] as string;
+    if (keyName === "sentQuantity") {
+      console.log("this.detailsInputs[index]", this.detailsInputs[index]);
+      if (
+        parseInt(this.detailsInputs[index][keyName]) >
+        parseInt(this.detailsInputs[index]["plannedQuantity"])
+      ) {
+        if (!this.errorCounter.ids.includes(idToCheck)) {
           this.errorCounter.ids.push(idToCheck);
           this.errorCounter.count = this.errorCounter.count + 1;
         }
-        this.detailsInputs[index]['sentCheck'] = true;
-      }else{
-        if(this.errorCounter.ids.includes(idToCheck)){
+        this.detailsInputs[index]["sentCheck"] = true;
+      } else {
+        if (this.errorCounter.ids.includes(idToCheck)) {
           const index = this.errorCounter.ids.indexOf(idToCheck);
           if (index !== -1) {
             this.errorCounter.ids.splice(index, 1);
           }
           this.errorCounter.count = this.errorCounter.count - 1;
         }
-        this.detailsInputs[index]['sentCheck'] = false;
-      }      
+        this.detailsInputs[index]["sentCheck"] = false;
+      }
     }
 
-    if(keyName === "receivedQuantity"){
-      console.log('this.detailsInputs[index]', this.detailsInputs[index]);
-      if(parseInt(this.detailsInputs[index][keyName]) > parseInt(this.detailsInputs[index]["sentQuantity"])){
-        if(!this.errorCounter.ids.includes(idToCheck)){
+    if (keyName === "receivedQuantity") {
+      console.log("this.detailsInputs[index]", this.detailsInputs[index]);
+      if (
+        parseInt(this.detailsInputs[index][keyName]) >
+        parseInt(this.detailsInputs[index]["sentQuantity"])
+      ) {
+        if (!this.errorCounter.ids.includes(idToCheck)) {
           this.errorCounter.ids.push(idToCheck);
           this.errorCounter.count = this.errorCounter.count + 1;
         }
-        this.detailsInputs[index]['receivedCheck'] = true;
-      }else{
-        if(this.errorCounter.ids.includes(idToCheck)){
+        this.detailsInputs[index]["receivedCheck"] = true;
+      } else {
+        if (this.errorCounter.ids.includes(idToCheck)) {
           const index = this.errorCounter.ids.indexOf(idToCheck);
           if (index !== -1) {
             this.errorCounter.ids.splice(index, 1);
           }
           this.errorCounter.count = this.errorCounter.count - 1;
         }
-        this.detailsInputs[index]['receivedCheck'] = false;
-      }      
+        this.detailsInputs[index]["receivedCheck"] = false;
+      }
     }
-    console.log('details',this.errorCounter);
-    
+    console.log("details", this.errorCounter);
   }
 
   _checkIfValid() {
@@ -556,30 +566,30 @@ export class TransferOrderFormComponent implements OnInit {
     });
     this.projectFormData.details = this.detailsInputs;
 
-    // this.transferOrderService
-    //   .updateStatus({
-    //     id: this.paramId,
-    //     formData: this.projectFormData,
-    //     type: type,
-    //   })
-    //   .subscribe(
-    //     (res) => {
-    //       let type;
-    //       let msg;
-    //       this.getTransferOrderById(this.paramId);
-    //       if (res) {
-    //         type = "success";
-    //         msg = "Data Updated Successfully";
-    //       } else {
-    //         type = "error";
-    //         msg = MSG.error;
-    //       }
-    //       this._showToastMsg(type, msg);
-    //     },
-    //     (error) => {
-    //       this._showDateToast(error.error.detail);
-    //     }
-    //   );
+    this.transferOrderService
+      .updateStatus({
+        id: this.paramId,
+        formData: this.projectFormData,
+        type: type,
+      })
+      .subscribe(
+        (res) => {
+          let type;
+          let msg;
+          this.getTransferOrderById(this.paramId);
+          if (res) {
+            type = "success";
+            msg = "Data Updated Successfully";
+          } else {
+            type = "error";
+            msg = MSG.error;
+          }
+          this._showToastMsg(type, msg);
+        },
+        (error) => {
+          this._showDateToast(error.error.detail);
+        }
+      );
   }
 
   confirmNow(rowIndex: number, locationID: any) {
@@ -626,6 +636,7 @@ export class TransferOrderFormComponent implements OnInit {
 
   removeNow(rowIndex: number) {
     this.detailsInputs?.splice(rowIndex, 1);
+    this.addedVariantIds?.splice(rowIndex,1);
   }
 
   confirmDialog(type: string) {
@@ -668,20 +679,21 @@ export class TransferOrderFormComponent implements OnInit {
       if (this.projectFormData.originLocation.nodeType == "Store") {
         displayContent = "none";
       }
-    }
-    else if (this.detailsInputs[rowIndex]?.discrepancyResolvedTo == "DESTINATION") {
+    } else if (
+      this.detailsInputs[rowIndex]?.discrepancyResolvedTo == "DESTINATION"
+    ) {
       if (this.projectFormData.destinationLocation.nodeType == "Store") {
         displayContent = "none";
       }
-    }else{
+    } else {
       displayContent = "none";
       this._showToastMsg(
         "error",
         "Please Select Discrepancy Resolved To Other Than None"
       );
-      return
+      return;
     }
-  
+
     let htmlString = `
       <div style="display:${displayContent}">
         <d-form-label [required]="true" [hasHelp]="false" [helpTips]="'This is the Credit Day.'">Enter Location ID</d-form-label>
@@ -689,7 +701,7 @@ export class TransferOrderFormComponent implements OnInit {
           validators: [{ required: true }]
         }" />
       </div>`;
-  
+
     const results = this.dialogService.open({
       id: "dialog-service",
       width: "346px",
@@ -708,17 +720,15 @@ export class TransferOrderFormComponent implements OnInit {
             const inputValue = document.getElementById(
               "inputField"
             ) as HTMLInputElement;
-            if(displayContent === "block"){
-              if (inputValue.value.trim() !== "") { // Check if input is not empty
+            if (displayContent === "block") {
+              if (inputValue.value.trim() !== "") {
+                // Check if input is not empty
                 results.modalInstance.hide();
                 this.confirmNow(stType, inputValue.value);
-              }else{
-                this._showToastMsg(
-                  "error",
-                  "Please Enter Location ID"
-                );
-              } 
-            }else{
+              } else {
+                this._showToastMsg("error", "Please Enter Location ID");
+              }
+            } else {
               results.modalInstance.hide();
               this.confirmNow(stType, inputValue.value);
             }

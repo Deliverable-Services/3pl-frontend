@@ -67,7 +67,7 @@
             <div class="list-content" dLoading [loading]="busy">
               <d-data-table #datatable [dataSource]="basicDataSource" [scrollable]="true" [onlyOneColumnSort]="true"
                 (multiSortChange)="multiSortChange($event)">
-                <d-column [field]="'id'" header="{{'list.transferOrder.id' | translate}}" [width]="columnSize.id">
+                <d-column [sortable]="true"  [field]="'id'" header="{{'list.transferOrder.id' | translate}}" [width]="columnSize.id">
                   <d-cell>
                     <ng-template let-cellItem="cellItem">
                       <span [title]="cellItem" class="over-flow-ellipsis">

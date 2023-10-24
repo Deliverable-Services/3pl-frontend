@@ -46,6 +46,8 @@ export class TransferOrderListComponent implements OnInit {
     total: 0,
     pageIndex: 1,
     pageSize: 10,
+    sortDir:"desc",
+    sortBy: "id",    
   };
 
   searchKeywords: any = {
@@ -75,6 +77,11 @@ export class TransferOrderListComponent implements OnInit {
   ngOnInit() {
     this.pageParam.pageSize = 50;
     this.pager.pageSize = 50;
+    this.pager.sortBy = 'id';
+    this.pager.sortDir = 'id';
+    this.pageParam.sortDir= "desc";
+    this.pageParam.sortDir= "desc";
+
     this.pageParam.pageNo = 0;
     this.transferOrderListDataService.setPageParams(this.pageParam);
     this.getTransferOrderList();

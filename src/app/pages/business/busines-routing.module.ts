@@ -109,6 +109,16 @@ const routes: Routes = [
     path: "transfer-order/edit/:id",
     component: TransferOrderFormComponent,
   },
+  {
+    path: "purchase-order",
+    loadChildren: () =>
+      import("./purchase-order/purchase-order.module").then((m) => m.PurchaseOrderModule),
+  },
+  {
+    path: "shipment-and-shipping",
+    loadChildren: () =>
+      import("./shipment-and-shipping/shipment-and-shipping.module").then((m) => m.ShipmentAndShippingModule),
+  },
   // {
   //   path: "inventory",
   //   component: InventoryListComponent,

@@ -46,7 +46,7 @@ export default {
       table: {subject: 'Subject', details: 'Details', creditDay: 'Credit Day'}
     },
     connectionLocationList: {
-      title: 'Inventory Node',
+      title: 'Node Setup',
       list: 'Inventory Node List',
       buttonTitle: 'Add Inventory Node',
       table: {nodeName: 'Node Name', nodeType: 'Node Type', lGStoreOwnerId: 'LG Store Owner Id', lGWMSID: 'LG WMS ID', shopifyLocationId: 'Shopify Location Id',
@@ -124,6 +124,9 @@ export default {
     poList:{
       title:"PO List"
     },
+    shipmentAndShipping:{
+      title:"Shipment & Shipping"
+    },
     asnList:{
       title: "ASN List"
     },
@@ -189,6 +192,32 @@ export default {
         actions:"Actions",
         lastModifiedDate: "Updated Date",
         lastModifiedBy: "Updated By"
-    }
+    },
+    purchaseOrder:{
+      status: "Status",
+      id: "PO No.",
+      nodeName:"Vendor",
+      nodeName2:"Shipping to Department",
+      receiptDiscrepancy:"Sample Status",
+      list:"Transfer Order",
+      title:"PO List",
+      buttonTitle:"Create Purchase Order",
+      actions:"Actions",
+      lastModifiedDate: "Updated Date",
+      lastModifiedBy: "Updated By"
+  },
+  sAndS:{
+    status: "Status",
+    id: "Shipment No.",
+    nodeName:"Vendor",
+    nodeName2:"Shipping to Department",
+    receiptDiscrepancy:"Sample Status",
+    list:"Shipment & Shipping",
+    title:"Shipping Order List",
+    buttonTitle:"Create Shipping Order",
+    actions:"Actions",
+    lastModifiedDate: "Updated Date",
+    lastModifiedBy: "Updated By"
+  }
   },
 };
