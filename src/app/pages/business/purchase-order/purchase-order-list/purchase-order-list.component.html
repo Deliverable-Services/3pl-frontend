@@ -5,11 +5,11 @@
             "list.breadcrumb.home" | translate
             }}</a></d-breadcrumb-item>
         <d-breadcrumb-item>{{
-          "list.transferOrder.title" | translate
+          "list.purchaseOrder.title" | translate
           }}</d-breadcrumb-item>
       </d-breadcrumb>
       <div class="da-content-banner-title">
-        {{ "list.transferOrder.list" | translate }}
+        {{ "list.purchaseOrder.list" | translate }}
       </div>
     </div>
     <div class="da-content-wrapper">
@@ -48,7 +48,7 @@
                   </div>
   
                   <div class="header-right" routerLink="add">
-                    <d-button class="mr-element-spacing">{{"list.transferOrder.buttonTitle" | translate}}</d-button>
+                    <d-button class="mr-element-spacing">{{"list.purchaseOrder.buttonTitle" | translate}}</d-button>
                   </div>
                   <!-- <div>
                     <d-button dLoading (click)="syncShopify()" class="mr-element-spacing primary" circled="true"
@@ -77,7 +77,7 @@
                   </d-cell>
                 </d-column>
   
-                <d-column [field]="'originLocation'" header="{{'list.purchaseOrder.nodeName2' | translate}}" [sortable]="true" [width]="columnSize.nodeName2">
+                <d-column [field]="'shipToLocation'" header="{{'list.purchaseOrder.nodeName2' | translate}}" [sortable]="true" [width]="columnSize.nodeName2">
                   <d-cell>
                     <ng-template let-cellItem="cellItem">
                       <span [title]="cellItem" class="over-flow-ellipsis">
@@ -87,17 +87,17 @@
                   </d-cell>
                 </d-column>
 
-                <d-column [field]="'destinationLocation'"  header="{{'list.purchaseOrder.nodeName' | translate}}" [sortable]="true" [width]="columnSize.nodeName">
+                <d-column [field]="'vendor'"  header="{{'list.purchaseOrder.nodeName' | translate}}" [sortable]="true" [width]="columnSize.nodeName">
                   <d-cell>
                     <ng-template let-cellItem="cellItem">
                       <span [title]="cellItem" class="over-flow-ellipsis">
-                        {{ cellItem.nodeName }}
+                        {{ cellItem.companyName }}
                       </span>
                     </ng-template>
                   </d-cell>
                 </d-column>
   
-                <d-column [field]="'status'" header="{{'list.purchaseOrder.status' | translate}}" [sortable]="true"  [width]="columnSize.status">
+                <d-column [field]="'orderStatus'" header="{{'list.purchaseOrder.status' | translate}}" [sortable]="true"  [width]="columnSize.status">
                   <d-cell>
                     <ng-template let-cellItem="cellItem">
                       <span [title]="cellItem" class="over-flow-ellipsis">
@@ -107,7 +107,7 @@
                   </d-cell>
                 </d-column>
   
-                <d-column [field]="'receiptDiscrepancy'" header="{{'list.purchaseOrder.receiptDiscrepancy' | translate}}" [sortable]="true" [width]="columnSize.receiptDiscrepancy">
+                <d-column [field]="'sampleStatus'" header="{{'list.purchaseOrder.receiptDiscrepancy' | translate}}" [sortable]="true" [width]="columnSize.receiptDiscrepancy">
                   <d-cell>
                     <ng-template let-cellItem="cellItem">
                       <span [title]="cellItem" class="over-flow-ellipsis">

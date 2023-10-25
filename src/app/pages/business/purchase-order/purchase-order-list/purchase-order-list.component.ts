@@ -110,7 +110,7 @@ export class PurchaseOrderListComponent implements OnInit {
   editRow(rowId: any, index: number) {
     this.isAdd = "EDIT";
     this.editRowIndex = index;
-    this.router.navigate([`/business/transfer-order/edit/${rowId}`]);
+    this.router.navigate([`/business/purchase-order/edit/${rowId}`]);
   }
 
   deleteRow(rowId: any, index: number) {

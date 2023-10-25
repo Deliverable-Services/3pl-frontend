@@ -29,13 +29,9 @@
           <div [ngStyle]="{ width: '100%' }">
 
             <d-form-operation>
-              <div *ngIf="projectFormData.status" style="text-align: right;">
+              <div *ngIf="projectFormData.orderStatus" style="text-align: right;">
                 <label><span class="bold-label">Status:</span>
-                  {{projectFormData.status}}
-                </label>
-                <br>
-                <label><span class="bold-label">Receipt Discrepancy:</span>
-                  {{projectFormData.receiptDiscrepancy}}
+                  {{projectFormData.orderStatus}}
                 </label>
                 <br>
                 <label>Created By: {{projectFormData.createdBy}}</label>
@@ -55,7 +51,7 @@
                 {{ ("form.common.create") |translate }}
               </d-button>
 
-              <d-button *ngIf="projectFormData.status?.toLowerCase() === 'draft'" [ngStyle]="{ float: 'right' }"
+              <d-button *ngIf="projectFormData.orderStatus?.toLowerCase() === 'draft'" [ngStyle]="{ float: 'right' }"
                 [disabled]="!allowSubmit" dLoading class="mr-element-spacing" [title]="projectForm.errorMessage || ''"
                 circled="true" style="margin-right: 8px" [showLoading]="projectForm.pending" dFormSubmit
                 [dFormSubmitData]="'submit-button'">
@@ -65,31 +61,30 @@
                 }}
               </d-button>
 
-              <d-button *ngIf="projectFormData.status?.toLowerCase() === 'draft'" [ngStyle]="{ float: 'right' }"
+              <d-button *ngIf="projectFormData.orderStatus?.toLowerCase() === 'draft'" [ngStyle]="{ float: 'right' }"
                 class="mr-element-spacing" circled="true" style="margin-right: 8px"
                 (btnClick)="confirmDialog('publish')">
                 {{ "form.purchaseOrder.fields.publish" | translate }}
               </d-button>
 
-              <d-button *ngIf="projectFormData.status?.toLowerCase() === 'in_transit'
+              <d-button *ngIf="projectFormData.orderStatus?.toLowerCase() === 'in_transit'
               && projectFormData?.shipToLocation?.nodeType?.toLowerCase() === 'store'"
                 [ngStyle]="{ float: 'right' }" [disabled]="errorCounter.count > 0" class="mr-element-spacing"
                 circled="true" style="margin-right: 8px" (btnClick)="confirmDialog('received')">
                 {{ "form.purchaseOrder.fields.confirm" | translate }}
               </d-button>
 
-              <!-- <d-button *ngIf="projectFormData.status?.toLowerCase() === 'open' 
-              && projectFormData?.originLocation?.nodeType?.toLowerCase() === 'store'" [ngStyle]="{ float: 'right' }"
-                class="mr-element-spacing" [disabled]="errorCounter.count > 0" circled="true" style="margin-right: 8px"
-                (btnClick)="confirmDialog('shipped')">
-                {{ "form.purchaseOrder.fields.ship" | translate }}
-              </d-button> -->
-
-              <d-button *ngIf="projectFormData.status?.toLowerCase() === 'open'" bsStyle="danger" class="danger"
-                [ngStyle]="{ float: 'right' }" class="mr-element-spacing" circled="true" style="margin-right: 8px"
+              <d-button *ngIf="mode.toLowerCase() === 'edit' && projectFormData.orderStatus?.toLowerCase() !== 'draft'" bsStyle="danger" class="danger"
+                [ngStyle]="{ float: 'right' }" circled="true" style="margin-right: 8px"
                 (btnClick)="confirmDialog('cancel')">
                 {{ "form.purchaseOrder.fields.cancel" | translate }}
               </d-button>
+
+              <d-button *ngIf="projectFormData.orderStatus?.toLowerCase() === 'confirmed'"
+                  [ngStyle]="{ float: 'right' }" class="mr-element-spacing"
+                  circled="true" style="margin-right: 8px" (btnClick)="confirmDialog('release')">
+                  {{ "form.purchaseOrder.buttons.release" | translate }}
+                </d-button>
             </d-form-operation>
           </div>
           <div class="da-content-banner-title">
@@ -98,9 +93,9 @@
             ? "form.purchaseOrder.buttonTitle"
             : "form.purchaseOrder.editButtonTitle"
             ) | translate
-            }} <span *ngIf="projectFormData.status">&nbsp;({{ projectFormData.id }})</span>
+            }} <span *ngIf="projectFormData.orderStatus">&nbsp;({{ projectFormData.id }})</span>
           </div>
-          {{projectFormData | json}}
+          <!-- {{projectFormData | json}} -->
           <div [ngStyle]="{ display: 'flex', justifyContent: 'space-between' }">
             <div [ngStyle]="{ width: '46%' }" [ngClass]="{'set-cursor': mode.toLowerCase() === 'edit'}">
               <d-form-item>
@@ -111,7 +106,9 @@
                   <d-select [ngStyle]="{'pointer-events': mode.toLowerCase() === 'edit' ? 'none' : 'auto', width: '100%'}"
                     [placeholder]="'form.purchaseOrder.fields.vendor' | translate" [appendToBody]="true"
                     [multiple]="false" [filterKey]="'companyName'" [options]="vendorList" name="vendor"
-                    [(ngModel)]="projectFormData.vendor" (valueChange)="setAddress(projectFormData.vendor.address, 'billToAddress')" [dValidateRules]="{
+                    [(ngModel)]="projectFormData.vendor" 
+                    (valueChange)="setAddress(projectFormData.vendor.address, 'billToAddress');
+                    projectFormData.tradeTerm.creditTermsId = projectFormData.vendor.creditTermsDto.creditTermsId" [dValidateRules]="{
                       validators: [{ required: true }]
                     }"></d-select>
                 </d-form-control>
@@ -194,11 +191,11 @@
             </div>
           </div>
 
-          <d-form-item [ngStyle]="{ marginTop: '20px' }" [ngClass]="{'set-cursor': !(mode.toLowerCase() !== 'edit') && projectFormData.status?.toLowerCase() !== 'draft'}">
+          <d-form-item [ngStyle]="{ marginTop: '20px' }" [ngClass]="{'set-cursor': !(mode.toLowerCase() !== 'edit') && projectFormData.orderStatus?.toLowerCase() !== 'draft'}">
             <d-form-label>{{ "form.purchaseOrder.fields.remarks" | translate }}</d-form-label>
             <d-form-control>
               <textarea
-                [ngStyle]="{'pointer-events': !(mode.toLowerCase() !== 'edit') && projectFormData.status?.toLowerCase() !== 'draft' ? 'none' : 'auto', height: '104px'}"
+                [ngStyle]="{'pointer-events': !(mode.toLowerCase() !== 'edit') && projectFormData.orderStatus?.toLowerCase() !== 'draft' ? 'none' : 'auto', height: '104px'}"
                 dTextarea resize="vertical" autocomplete="off" name="remarks"
                 [placeholder]="'form.purchaseOrder.fields.remarks' | translate"
                 [(ngModel)]="projectFormData.remarks"></textarea>
@@ -209,10 +206,49 @@
             <div class="da-content-banner-title">
               {{"form.purchaseOrder.title2" | translate}}
             </div>
+
+            <div [ngStyle]="{ width: '100%' }">
+
+              <d-form-operation *ngIf="projectFormData.orderStatus?.toLowerCase() !== 'draft'">
+                <!-- <div *ngIf="projectFormData.orderStatus" style="text-align: right;">
+                  <label><span class="bold-label">Status:</span>
+                    {{projectFormData.orderStatus}}
+                  </label>
+                  <br>
+                  <label>Sample Status: Open: {{projectFormData.createdBy}}</label>
+                  <label>Created Date: {{createdDate}}</label>
+                  <br>
+                  <label>Last Modified By: {{projectFormData.lastModifiedBy}}</label>
+                  <label>Last Modified Date: {{modifiedDate}}</label>
+                </div> -->
+  
+                <d-button *ngIf="projectFormData.orderStatus?.toLowerCase() === 'open'" [ngStyle]="{ float: 'right' }"
+                  class="mr-element-spacing" circled="true" style="margin-right: 8px"
+                  (btnClick)="confirmDialog('ready')">
+                  {{ "form.purchaseOrder.buttons.ready" | translate }}
+                </d-button>
+  
+                <d-button *ngIf="projectFormData.orderStatus?.toLowerCase() === 'ready'"
+                  [ngStyle]="{ float: 'right' }" class="mr-element-spacing"
+                  circled="true" style="margin-right: 8px" (btnClick)="confirmDialog('confirm')">
+                  {{ "form.purchaseOrder.fields.confirm" | translate }}
+                </d-button>
+
+                <d-button *ngIf="projectFormData.orderStatus?.toLowerCase() === 'ready'" bsStyle="danger" class="danger"
+                  [ngStyle]="{ float: 'right' }" circled="true" style="margin-right: 8px"
+                  (btnClick)="confirmDialog('reject')">
+                  {{ "form.purchaseOrder.buttons.reject" | translate }}
+                </d-button>
+
+                <label style="float: right; margin: 5px 16px;" *ngIf="projectFormData.orderStatus">
+                  <b>Sample Status:</b> {{projectFormData.orderStatus}}</label>
+              </d-form-operation>
+            </div>
+
             <div [ngStyle]="{ width: '100%' }">
 
               <d-form-operation
-                *ngIf="mode.toLowerCase() === 'add' || projectFormData.status?.toLowerCase() === 'draft'">
+                *ngIf="mode.toLowerCase() === 'add' || projectFormData.orderStatus?.toLowerCase() === 'draft'">
                 <d-button [ngStyle]="{ 'margin-bottom': '12px' }" dLoading class="mr-element-spacing" circled="true"
                   (click)="openDialog()">
                   {{ "form.purchaseOrder.popupBtn" | translate }}
@@ -246,10 +282,11 @@
                       }}</d-form-label>
                     <d-form-control>
                       <input class="set-width"
-                        [disabled]="projectFormData.status && !(projectFormData.status?.toLowerCase() === 'draft')"
+                        [disabled]="projectFormData.orderStatus && !(projectFormData.orderStatus?.toLowerCase() === 'draft')"
                         dTextInput (keypress)="numberOnly($event)" autocomplete="off"
                         [placeholder]='"form.purchaseOrder.fields.plannedQuantity" | translate'
-                        [value]="input.plannedQuantity" (input)="updateValue($event, 'plannedQuantity', i)" />
+                        [value]="input.plannedQuantity" (input)="updateValue($event, 'plannedQuantity', i);
+                        input.productPrice = (input.exwSgdCost*input.plannedQuantity)+' SGD';" />
                     </d-form-control>
                   </d-form-item>
 
@@ -258,39 +295,39 @@
                       }}</d-form-label>
                     <d-form-control>
                       <input class="set-width"
-                        [disabled]="projectFormData.status && !(projectFormData.status?.toLowerCase() === 'draft')"
+                        disabled
                         dTextInput (keypress)="numberOnly($event)" autocomplete="off"
                         [placeholder]='"form.purchaseOrder.fields.productPrice" | translate'
                         [value]="input.productPrice" (input)="updateValue($event, 'productPrice', i)" />
                     </d-form-control>
                   </d-form-item>
 
-                  <d-form-item *ngIf="projectFormData.status" [ngStyle]="{ margin: '20px 20px 20px 0px' }">
+                  <!-- <d-form-item *ngIf="projectFormData.orderStatus" [ngStyle]="{ margin: '20px 20px 20px 0px' }">
                     <d-form-label [required]="true">{{ "form.purchaseOrder.fields.sentQty" | translate }}</d-form-label>
                     <d-form-control>
 
                       <input class="set-width" [ngStyle]="{'borderColor': input.sentCheck ? 'red' : 'initial'}"
-                        [disabled]="!(projectFormData.status?.toLowerCase() === 'open')" dTextInput
+                        [disabled]="!(projectFormData.orderStatus?.toLowerCase() === 'open')" dTextInput
                         (keypress)="numberOnly($event)" autocomplete="off"
                         [placeholder]='"form.purchaseOrder.fields.sentQty" | translate' [value]="input.sentQuantity"
                         (input)="updateValue($event, 'sentQuantity', i)" />
                     </d-form-control>
-                  </d-form-item>
+                  </d-form-item> -->
 
-                  <d-form-item *ngIf="projectFormData.status" [ngStyle]="{ margin: '20px 20px 20px 0px' }">
+                  <!-- <d-form-item *ngIf="projectFormData.orderStatus" [ngStyle]="{ margin: '20px 20px 20px 0px' }">
                     <d-form-label [required]="true">{{ "form.purchaseOrder.fields.receivedQty" | translate
                       }}</d-form-label>
                     <d-form-control>
                       <input class="set-width" [ngStyle]="{'borderColor': input.receivedCheck ? 'red' : 'initial'}"
-                        [disabled]="!(projectFormData.status?.toLowerCase() === 'in_transit' 
+                        [disabled]="!(projectFormData.orderStatus?.toLowerCase() === 'in_transit' 
                           && projectFormData?.shipToLocation?.nodeType?.toLowerCase() === 'store')" dTextInput
                         (keypress)="numberOnly($event)" autocomplete="off"
                         [placeholder]='"form.purchaseOrder.fields.receivedQty" | translate'
                         [value]="input.receivedQuantity" (input)="updateValue($event, 'receivedQuantity', i)" />
                     </d-form-control>
-                  </d-form-item>
+                  </d-form-item> -->
 
-                  <d-form-item *ngIf="projectFormData.status?.toLowerCase() === 'confirmed'"
+                  <d-form-item *ngIf="projectFormData.orderStatus?.toLowerCase() === 'confirmed'"
                     [ngStyle]="{ margin: '20px 20px 20px 0px' }">
                     <d-form-label [required]="true">{{ "form.purchaseOrder.fields.discrepancyResolvedTo" | translate
                       }}</d-form-label>
@@ -303,13 +340,13 @@
                     </d-form-control>
                   </d-form-item>
 
-                  <d-button *ngIf="projectFormData.status?.toLowerCase() === 'confirmed'"
+                  <d-button *ngIf="projectFormData.orderStatus?.toLowerCase() === 'confirmed'"
                     [disabled]="!input.discrepancyFlag" dLoading class="warning" circled="true"
                     style="margin-right: 8px;margin-top: 47px;" (click)="confirm(i)">
                     {{ "form.purchaseOrder.buttons.confirm" | translate }}
                   </d-button>
 
-                  <d-button *ngIf="projectFormData.status?.toLowerCase() === 'draft' || mode === 'Add' " dLoading
+                  <d-button *ngIf="projectFormData.orderStatus?.toLowerCase() === 'draft' || mode === 'Add' " dLoading
                     bsStyle="danger" class="danger" circled="true" style="margin-right: 8px;margin-top: 47px;"
                     (click)="removeNow(i)">
                     {{ "form.purchaseOrder.buttons.remove" | translate }}

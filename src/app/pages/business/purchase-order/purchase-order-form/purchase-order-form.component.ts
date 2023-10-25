@@ -30,7 +30,13 @@ export class PurchaseOrderFormComponent implements OnInit {
     vendor: {
       id: "",
       companyName: "",
-      address: ""
+      address: "",
+      creditTermsDto: {
+        creditTermsId: ""
+      }
+    },
+    tradeTerm: {
+      creditTermsId: ""
     },
     billToAddress: "",
     shipToAddress: "",
@@ -189,25 +195,27 @@ export class PurchaseOrderFormComponent implements OnInit {
   }
 
   getTransferOrderById(id: string) {
-    this.purchaseOrderService.getTransferOrderById(id).subscribe(
+    this.purchaseOrderService.getById(id).subscribe(
       (res) => {
-        if (res.status?.toLowerCase() !== "draft") {
-          this.expectedDeliveryDateDisabled = true;
-          this.expectedArrivalDateDisabled = true;
-        }
+        // if (res?.status?.toLowerCase() !== "draft") {
+        //   this.expectedDeliveryDateDisabled = true;
+        //   this.expectedArrivalDateDisabled = true;
+        // }
+
+        // console.log(':: :: ', res);
 
         this.createdDate = this.formatDate(res.createdDate) ?? "";
         this.modifiedDate = this.formatDate(res.lastModifiedDate) ?? "";
 
         this.selectedTransferOrder = res;
         this.projectFormData = res;
-        this.projectFormData.originLocation.nodeName = `${this.projectFormData.originLocation.nodeType} - ${this.projectFormData.originLocation.nodeName}`;
-        this.projectFormData.destinationLocation.nodeName = `${this.projectFormData.destinationLocation.nodeType} - ${this.projectFormData.destinationLocation.nodeName}`;
+        // this.projectFormData.originLocation.nodeName = `${this.projectFormData.originLocation.nodeType} - ${this.projectFormData.originLocation.nodeName}`;
+        // this.projectFormData.destinationLocation.nodeName = `${this.projectFormData.destinationLocation.nodeType} - ${this.projectFormData.destinationLocation.nodeName}`;
 
         let expectedArrivalDate =
-          this.projectFormData?.expectedArrivalDate?.split("T");
+          this.projectFormData?.dueDate?.split("T");
         let expectedDeliveryDate =
-          this.projectFormData?.expectedDeliveryDate?.split("T");
+          this.projectFormData?.issueDate?.split("T");
         this.projectFormData.dueDate = expectedArrivalDate
           ? expectedArrivalDate[0]
           : "";
@@ -215,15 +223,15 @@ export class PurchaseOrderFormComponent implements OnInit {
           ? expectedDeliveryDate[0]
           : "";
 
-        this.toTypeLabel =
-          this.projectFormData?.originLocation?.nodeType +
-          " To " +
-          this.projectFormData?.destinationLocation?.nodeType;
+        // this.toTypeLabel =
+        //   this.projectFormData?.originLocation?.nodeType +
+        //   " To " +
+        //   this.projectFormData?.destinationLocation?.nodeType;
         this.detailsInputs = this.projectFormData?.details?.map((d: any) => {
           return {
             variantId: d?.variantId,
             skuNo: d?.skuNo,
-            plannedQuantity: d?.plannedQuantity,
+            plannedQuantity: d?.poQuantity,
             productPrice: d?.productPrice,
             skuDescription: d?.skuDescription,
             // receivedQuantity: d?.receivedQuantity,
@@ -240,6 +248,8 @@ export class PurchaseOrderFormComponent implements OnInit {
           let sVal = parseInt(b.lineNumber);
           return fVal > sVal ? 1 : fVal < sVal ? -1 : 0;
         });
+
+        // console.log(':: :: ', this.projectFormData)
       },
       (error) => {
         this._showDateToast(error.error.detail);
@@ -286,7 +296,7 @@ export class PurchaseOrderFormComponent implements OnInit {
           
         // }
 
-        console.log(':: :: ', this.projectFormData);
+        // console.log(':: :: ', this.projectFormData);
 
         // return
 
@@ -441,9 +451,9 @@ export class PurchaseOrderFormComponent implements OnInit {
             results.modalInstance.hide();
             // this.detailsInputs = [];
             this.stVariants?.forEach((p: any) => {
-              console.log("p?.selected === true",p?.selected === true);
-              console.log("this.addedVariantIds.includes(p?.variantId)",this.addedVariantIds);
-              console.log("this.detailsInputs",this.detailsInputs);
+              // console.log("p?.selected === true",p?.selected === true);
+              // console.log("this.addedVariantIds.includes(p?.variantId)",this.addedVariantIds);
+              // console.log("this.detailsInputs",this.detailsInputs);
               
               if (
                 p?.selected === true &&
@@ -460,7 +470,8 @@ export class PurchaseOrderFormComponent implements OnInit {
                     ? p?.desc
                     : "" + " " + p?.size + " " + p?.color,
                   plannedQuantity: null,
-                  productPrice: null
+                  productPrice: null,
+                  exwSgdCost: p.exwSgdCost
                 });
 
                 // Add the variantId to the addedVariantIds array
@@ -497,7 +508,7 @@ export class PurchaseOrderFormComponent implements OnInit {
     this.detailsInputs[index][keyName] = event.target.value;
     let idToCheck = this.detailsInputs[index]["variantId"] as string;
     if (keyName === "sentQuantity") {
-      console.log("this.detailsInputs[index]", this.detailsInputs[index]);
+      // console.log("this.detailsInputs[index]", this.detailsInputs[index]);
       if (
         parseInt(this.detailsInputs[index][keyName]) >
         parseInt(this.detailsInputs[index]["plannedQuantity"])
@@ -520,7 +531,7 @@ export class PurchaseOrderFormComponent implements OnInit {
     }
 
     if (keyName === "receivedQuantity") {
-      console.log("this.detailsInputs[index]", this.detailsInputs[index]);
+      // console.log("this.detailsInputs[index]", this.detailsInputs[index]);
       if (
         parseInt(this.detailsInputs[index][keyName]) >
         parseInt(this.detailsInputs[index]["sentQuantity"])
@@ -541,7 +552,7 @@ export class PurchaseOrderFormComponent implements OnInit {
         this.detailsInputs[index]["receivedCheck"] = false;
       }
     }
-    console.log("details", this.errorCounter);
+    // console.log("details", this.errorCounter);
   }
 
   _checkIfValid() {
@@ -565,28 +576,28 @@ export class PurchaseOrderFormComponent implements OnInit {
     }
     if (!this.projectFormData.issueDate.includes(searchString)) {
       this.projectFormData.issueDate =
-        this.projectFormData.issueDate + "T00:00:00Z";
+      (this.projectFormData.issueDate ? this.projectFormData.issueDate:'2023-10-20') + "T00:00:00Z";
     }
 
     this.detailsInputs?.forEach((e: any, key: any) => {
       e["lineNumber"] = parseInt(key + 1);
       e["plannedQuantity"] = parseInt(e["plannedQuantity"]);
-      e["sentQuantity"] = parseInt(e["sentQuantity"]);
-      e["receivedQuantity"] = parseInt(e["receivedQuantity"]);
-      if (e["sentQuantity"] > e["plannedQuantity"]) {
-        this._showToastMsg(
-          "error",
-          "Sent Quantity should be less than or equal to planned Quantity"
-        );
-        return;
-      }
-      if (e["receivedQuantity"] > e["sentQuantity"]) {
-        this._showToastMsg(
-          "error",
-          "Received Quantity should be less than or equal to sent Quantity"
-        );
-        return;
-      }
+      // e["sentQuantity"] = parseInt(e["sentQuantity"]);
+      // e["receivedQuantity"] = parseInt(e["receivedQuantity"]);
+      // if (e["sentQuantity"] > e["plannedQuantity"]) {
+      //   this._showToastMsg(
+      //     "error",
+      //     "Sent Quantity should be less than or equal to planned Quantity"
+      //   );
+      //   return;
+      // }
+      // if (e["receivedQuantity"] > e["sentQuantity"]) {
+      //   this._showToastMsg(
+      //     "error",
+      //     "Received Quantity should be less than or equal to sent Quantity"
+      //   );
+      //   return;
+      // }
     });
     this.projectFormData.details = this.detailsInputs;
 
@@ -791,7 +802,10 @@ export class PurchaseOrderFormComponent implements OnInit {
           return {
             companyName: v.companyName,
             address: v.address,
-            id: v.id
+            id: v.id,
+            creditTermsDto: {
+              creditTermsId: v.creditTermsDto.creditTermsId
+            }
           }
         })
       });

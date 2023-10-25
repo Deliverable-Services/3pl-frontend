@@ -434,11 +434,13 @@ export default {
         sentQty: "Sent Qty",
         receivedQty: "Received Qty",
         discrepancyResolvedTo: "Discrepancy Resolved To",
+        productPrice: 'Product Price'
       },
       buttonTitle: "Create Purchase Order",
       editButtonTitle: "Purchase Order",
       popupBtn: "Select Product With Style",
-      buttons: { publish: 'Publish', confirm: 'Confirm', ship: 'Ship', cancel: 'Cancel', remove: 'Remove' }
+      buttons: { publish: 'Publish', confirm: 'Confirm', ship: 'Ship', cancel: 'Cancel', remove: 'Remove', 
+      ready: 'Ready', reject: 'Reject', release: 'Release' }
     },
     sAndS: {
       title2: "Details",

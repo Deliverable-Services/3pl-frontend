@@ -16,6 +16,7 @@ export class PurchaseOrderFormModalComponent {
   variantList: any[] = [];
   selectedVariants: any[] = [];
   cartItems: any[] = [];
+  exwSgdCost: any;
   searchWithStyleName: any = {
     keyword: "",
     sort: "asc",
@@ -45,8 +46,14 @@ export class PurchaseOrderFormModalComponent {
     if (obj.selected) {
       if (!variantIdExists) {
         // Store the object's data in the selectedVariants array
-        this.selectedVariants.push(obj);
-        this.cartItems.push(obj);
+        this.selectedVariants.push({
+          ...obj,
+          exwSgdCost: this.exwSgdCost
+        });
+        this.cartItems.push({
+          ...obj,
+          exwSgdCost: this.exwSgdCost
+        });
       }
     } else {
       // Remove the object from the selectedVariants array if deselected
@@ -102,6 +109,7 @@ export class PurchaseOrderFormModalComponent {
           res.variants.forEach((variant: any) => {
             variant.desc = res.logisticsDesc;
           });
+          this.exwSgdCost = res.exwSgdCost;
           this.variantList = res.variants;
           this.getInventory(this.variantList?.map((v: any) => v.sku));
         });

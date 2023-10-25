@@ -199,7 +199,7 @@ export default {
       nodeName:"Vendor",
       nodeName2:"Shipping to Department",
       receiptDiscrepancy:"Sample Status",
-      list:"Transfer Order",
+      list:"Purchase Order",
       title:"PO List",
       buttonTitle:"Create Purchase Order",
       actions:"Actions",
