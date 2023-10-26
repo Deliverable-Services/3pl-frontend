@@ -139,12 +139,13 @@ export class PurchaseOrderFormModalComponent {
         }else{
           v.itemAlreadySelected = false;
         }
+        v.custName = `${v.sku}`;
         if (foundItem) {
-          v.custName = `${v.sku} - Available Qty: ${foundItem.avaiableQty}`;
+          // v.custName = `${v.sku} - Available Qty: ${foundItem.avaiableQty}`;
           v.availableQty = foundItem.avaiableQty ? foundItem.avaiableQty : 0;
         } else {
           v.availableQty = 0;
-          v.custName = `${v.sku} - Available Qty: Not Available`;
+          // v.custName = `${v.sku} - Available Qty: Not Available`;
         }
       });
     });

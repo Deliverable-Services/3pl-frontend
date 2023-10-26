@@ -16,9 +16,8 @@
             <h3>Variant List</h3>
             <ul class="variant-list">
                 <li *ngFor="let variantItem of variantList" class="variant-item">
-                    <label [style.color]="variantItem.availableQty === 0 ? 'red' : 'black'">
-                        <input [style.pointer-events]="variantItem.availableQty === 0 ? 'none' : 'auto'"
-                               [disabled]="variantItem.availableQty === 0" type="checkbox"
+                    <label>
+                        <input type="checkbox"
                                (change)="storeObjectData(variantItem)" [(ngModel)]="variantItem.selected"
                                [checked]="variantItem.itemAlreadySelected">
                         {{ variantItem.custName }}
@@ -31,7 +30,7 @@
         <h3>Selected Variants</h3>
         <ul class="variant-list">
             <li *ngFor="let cart of cartItems; let i = index" class="variant-item">
-                <label [style.color]="cart.availableQty === 0 ? 'red' : 'black'">
+                <label>
                     {{ cart.custName }}
                 </label>
                 <span style="margin-left: 20px;">

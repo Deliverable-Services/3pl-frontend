@@ -110,7 +110,7 @@ export class ShipmentAndShippingListComponent implements OnInit {
   editRow(rowId: any, index: number) {
     this.isAdd = "EDIT";
     this.editRowIndex = index;
-    this.router.navigate([`/business/transfer-order/edit/${rowId}`]);
+    this.router.navigate([`/business/shipment-and-shipping/edit/${rowId}`]);
   }
 
   deleteRow(rowId: any, index: number) {

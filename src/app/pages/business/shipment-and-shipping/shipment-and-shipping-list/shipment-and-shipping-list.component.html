@@ -77,17 +77,17 @@
                   </d-cell>
                 </d-column>
 
-                <d-column [field]="'destinationLocation'"  header="{{'list.sAndS.nodeName' | translate}}" [sortable]="true" [width]="columnSize.nodeName">
+                <d-column [field]="'vendor'"  header="{{'list.sAndS.nodeName' | translate}}" [sortable]="true" [width]="columnSize.nodeName">
                   <d-cell>
                     <ng-template let-cellItem="cellItem">
                       <span [title]="cellItem" class="over-flow-ellipsis">
-                        {{ cellItem.nodeName }}
+                        {{ cellItem.companyName }}
                       </span>
                     </ng-template>
                   </d-cell>
                 </d-column>
 
-                <d-column [field]="'originLocation'" header="{{'list.sAndS.nodeName2' | translate}}" [sortable]="true" [width]="columnSize.nodeName2">
+                <d-column [field]="'shipToLocation'" header="{{'list.sAndS.nodeName2' | translate}}" [sortable]="true" [width]="columnSize.nodeName2">
                   <d-cell>
                     <ng-template let-cellItem="cellItem">
                       <span [title]="cellItem" class="over-flow-ellipsis">
@@ -106,16 +106,6 @@
                     </ng-template>
                   </d-cell>
                 </d-column>
-  
-                <!-- <d-column [field]="'receiptDiscrepancy'" header="{{'list.sAndS.receiptDiscrepancy' | translate}}" [sortable]="true" [width]="columnSize.receiptDiscrepancy">
-                  <d-cell>
-                    <ng-template let-cellItem="cellItem">
-                      <span [title]="cellItem" class="over-flow-ellipsis">
-                        {{ cellItem }}
-                      </span>
-                    </ng-template>
-                  </d-cell>
-                </d-column> -->
 
                 <d-column [field]="'lastModifiedDate'" header="{{'list.sAndS.lastModifiedDate' | translate}}" [sortable]="true">
                   <d-cell>

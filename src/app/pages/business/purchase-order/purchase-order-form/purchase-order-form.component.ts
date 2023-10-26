@@ -319,41 +319,55 @@ export class PurchaseOrderFormComponent implements OnInit {
               }
             );
       } else {
-        const today = new Date();
-        const expectedArrivalDate = new Date(
-          this.projectFormData.dueDate
-        );
-        const expectedDeliveryDate = new Date(
-          this.projectFormData.issueDate
-        );
+        // const today = new Date();
+        // const expectedArrivalDate = new Date(
+        //   this.projectFormData.dueDate
+        // );
+        // const expectedDeliveryDate = new Date(
+        //   this.projectFormData.issueDate
+        // );
 
-        // Set the time components to 00:00:00
-        today.setHours(0, 0, 0, 0);
-        expectedArrivalDate.setHours(0, 0, 0, 0);
-        expectedDeliveryDate.setHours(0, 0, 0, 0);
+        // // Set the time components to 00:00:00
+        // today.setHours(0, 0, 0, 0);
+        // expectedArrivalDate.setHours(0, 0, 0, 0);
+        // expectedDeliveryDate.setHours(0, 0, 0, 0);
 
-        const secondsToday = Math.floor(today.getTime() / 1000);
-        const secondsExpectedArrival = Math.floor(
-          expectedArrivalDate.getTime() / 1000
-        );
-        const secondsExpectedDelivery = Math.floor(
-          expectedDeliveryDate.getTime() / 1000
-        );
+        // const secondsToday = Math.floor(today.getTime() / 1000);
+        // const secondsExpectedArrival = Math.floor(
+        //   expectedArrivalDate.getTime() / 1000
+        // );
+        // const secondsExpectedDelivery = Math.floor(
+        //   expectedDeliveryDate.getTime() / 1000
+        // );
 
-        if (secondsExpectedDelivery < secondsToday) {
-          this._showDateToast(
-            "Expected delivery date should be greater than or equal to today"
-          );
-          return;
-        }
-        if (secondsExpectedArrival < secondsExpectedDelivery) {
-          this._showDateToast(
-            "Expected arrival date should be greater than or equal to expected delivery date"
-          );
-          return;
-        }
+        // if (secondsExpectedDelivery < secondsToday) {
+        //   this._showDateToast(
+        //     "Expected delivery date should be greater than or equal to today"
+        //   );
+        //   return;
+        // }
+        // if (secondsExpectedArrival < secondsExpectedDelivery) {
+        //   this._showDateToast(
+        //     "Expected arrival date should be greater than or equal to expected delivery date"
+        //   );
+        //   return;
+        // }
         this.purchaseOrderService
-          .updateTransferOrder(this.paramId, this.projectFormData)
+          .updateTransferOrder(this.paramId, {
+            ...this.projectFormData,
+            shipToLocation: {
+              connectionLocationId: this.projectFormData.shipToLocation.connectionLocationId
+            },
+            vendor: {
+              id: this.projectFormData.vendor.id
+            },
+            details: this.projectFormData?.details?.map((v: any) => {
+              delete v.exwSgdCost;
+              return {
+                ...v
+              }
+            })
+          })
           .subscribe(
             (res) => {
               this._showToast(res);
@@ -827,5 +841,13 @@ export class PurchaseOrderFormComponent implements OnInit {
         day = '0' + day.toString();
     
     return year + '-' + month + '-' + day;
+  }
+
+  _checkTotalPrice() {
+    let tPrice:any = 0;
+    this.detailsInputs.forEach((v: any) => {
+      tPrice = parseInt(tPrice)+parseInt(v.productPrice);
+    });
+    return tPrice;
   }
 }

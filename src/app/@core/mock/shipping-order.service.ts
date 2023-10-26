@@ -53,7 +53,7 @@ export class ShippingOrderService {
     };
 
     return this.http.post(
-      `${this.baseApiUrl}/transfer-order`,
+      `${this.baseApiUrl}/shipment`,
       data,
       httpOptionsToken
     );
@@ -93,9 +93,9 @@ export class ShippingOrderService {
 
     let catUri;
     if(data) {
-      catUri = `${this.baseApiUrl}/transfer-order/list?pageSize=${data.perPage}`;
+      catUri = `${this.baseApiUrl}/shipment/list?pageSize=${data.perPage}`;
     } else {
-      catUri = `${this.baseApiUrl}/transfer-order/list`;
+      catUri = `${this.baseApiUrl}/shipment/list`;
     }
 
     return this.http.post(
@@ -112,20 +112,20 @@ export class ShippingOrderService {
     };
 
     return this.http.put(
-      `${this.baseApiUrl}/transfer-order/${id}`,
+      `${this.baseApiUrl}/shipment/${id}`,
       data,
       httpOptionsToken
     );
   }
 
-  getTransferOrderById(id: string): Observable<any> {
+  getById(id: string): Observable<any> {
     const httpOptionsToken = {
       headers: new HttpHeaders({
         // "Content-Type": "application/json",
       }),
     };
 
-    return this.http.get(`${this.baseApiUrl}/transfer-order/${id}`, httpOptionsToken);
+    return this.http.get(`${this.baseApiUrl}/shipment/${id}`, httpOptionsToken);
   }
 
   updateStatus(data: any) {
@@ -135,7 +135,7 @@ export class ShippingOrderService {
     };
 
     return this.http.put(
-      `${this.baseApiUrl}/transfer-order/${data?.id}/${data?.type}`,
+      `${this.baseApiUrl}/shipment/${data?.id}/${data?.type}`,
       data?.formData,
       httpOptionsToken
     );
@@ -148,7 +148,7 @@ export class ShippingOrderService {
     };
 
     return this.http.put(
-      `${this.baseApiUrl}/transfer-order/${data?.id}/resolve-discrepancy`,
+      `${this.baseApiUrl}/shipment/${data?.id}/resolve-discrepancy`,
       data?.formData,
       httpOptionsToken
     );
@@ -161,7 +161,7 @@ export class ShippingOrderService {
     };
 
     return this.http.put(
-      `${this.baseApiUrl}/transfer-order/${id}/delete`,
+      `${this.baseApiUrl}/shipment/${id}/delete`,
       {},
       httpOptionsToken
     );

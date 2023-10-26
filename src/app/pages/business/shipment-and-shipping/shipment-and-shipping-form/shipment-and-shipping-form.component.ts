@@ -21,20 +21,23 @@ export class ShipmentAndShippingFormComponent implements OnInit {
   vendorList: any[] = [];
 
   projectFormData: any = {
-    destinationLocation: {
+    shipToLocation: {
       connectionLocationId: "",
       nodeName: "",
       nodeType: "",
+      physicalAddress: ""
     },
-    originLocation: {
-      connectionLocationId: "",
-      nodeName: "",
-      nodeType: "",
+    vendor: {
+      id: "",
+      companyName: "",
+      address: "",
+      creditTermsDto: {
+        creditTermsId: ""
+      }
     },
+    shipToAddress: "",
     details: [],
     remarks: "",
-    expectedArrivalDate: null,
-    expectedDeliveryDate: null,
   };
   stVariants: any = [];
   locationID: string = "";
@@ -125,24 +128,6 @@ export class ShipmentAndShippingFormComponent implements OnInit {
     this.getVendorList();
   }
 
-  getVendorList() {
-    this.vendorListDataService
-      .getVendorList({
-        pageNo: "",
-        pageSize: "100",
-        sortBy: "",
-        sortDir: "",
-      })
-      .subscribe((res: any) => {
-        this.vendorList = res?.content?.map((v: any) => {
-          return {
-            companyName: v.companyName,
-            id: v.id
-          }
-        })
-      });
-  }
-
   getConnectionLocationList() {
     this.connectionLocationService.getList().subscribe(
       (res) => {
@@ -152,7 +137,7 @@ export class ShipmentAndShippingFormComponent implements OnInit {
         });
 
         this.connectionLocationList = res?.filter(
-          (c: any) => c?.nodeType?.toLowerCase() !== "online"
+          (c: any) => c?.nodeType?.toLowerCase() === "dc"
         );
         this.connectionLocationList = this.connectionLocationList?.map(
           (c: any) => {
@@ -160,6 +145,7 @@ export class ShipmentAndShippingFormComponent implements OnInit {
               connectionLocationId: c?.connectionLocationId || "",
               nodeName: `${c?.nodeType} - ${c?.nodeName}` || "",
               nodeType: c?.nodeType,
+              physicalAddress: c.physicalAddress
             };
           }
         );
@@ -203,48 +189,51 @@ export class ShipmentAndShippingFormComponent implements OnInit {
   }
 
   getTransferOrderById(id: string) {
-    this.shippingOrderService.getTransferOrderById(id).subscribe(
+    this.shippingOrderService.getById(id).subscribe(
       (res) => {
-        if (res.status?.toLowerCase() !== "draft") {
-          this.expectedDeliveryDateDisabled = true;
-          this.expectedArrivalDateDisabled = true;
-        }
+        // if (res?.status?.toLowerCase() !== "draft") {
+        //   this.expectedDeliveryDateDisabled = true;
+        //   this.expectedArrivalDateDisabled = true;
+        // }
+
+        // console.log(':: :: ', res);
 
         this.createdDate = this.formatDate(res.createdDate) ?? "";
         this.modifiedDate = this.formatDate(res.lastModifiedDate) ?? "";
 
         this.selectedTransferOrder = res;
         this.projectFormData = res;
-        this.projectFormData.originLocation.nodeName = `${this.projectFormData.originLocation.nodeType} - ${this.projectFormData.originLocation.nodeName}`;
-        this.projectFormData.destinationLocation.nodeName = `${this.projectFormData.destinationLocation.nodeType} - ${this.projectFormData.destinationLocation.nodeName}`;
+        // this.projectFormData.originLocation.nodeName = `${this.projectFormData.originLocation.nodeType} - ${this.projectFormData.originLocation.nodeName}`;
+        // this.projectFormData.destinationLocation.nodeName = `${this.projectFormData.destinationLocation.nodeType} - ${this.projectFormData.destinationLocation.nodeName}`;
 
         let expectedArrivalDate =
-          this.projectFormData?.expectedArrivalDate?.split("T");
+          this.projectFormData?.dueDate?.split("T");
         let expectedDeliveryDate =
-          this.projectFormData?.expectedDeliveryDate?.split("T");
-        this.projectFormData.expectedArrivalDate = expectedArrivalDate
+          this.projectFormData?.issueDate?.split("T");
+        this.projectFormData.dueDate = expectedArrivalDate
           ? expectedArrivalDate[0]
           : "";
-        this.projectFormData.expectedDeliveryDate = expectedDeliveryDate
+        this.projectFormData.issueDate = expectedDeliveryDate
           ? expectedDeliveryDate[0]
           : "";
 
-        this.toTypeLabel =
-          this.projectFormData?.originLocation?.nodeType +
-          " To " +
-          this.projectFormData?.destinationLocation?.nodeType;
+        // this.toTypeLabel =
+        //   this.projectFormData?.originLocation?.nodeType +
+        //   " To " +
+        //   this.projectFormData?.destinationLocation?.nodeType;
         this.detailsInputs = this.projectFormData?.details?.map((d: any) => {
           return {
             variantId: d?.variantId,
             skuNo: d?.skuNo,
-            plannedQuantity: d?.plannedQuantity,
+            plannedQuantity: d?.poQuantity,
+            productPrice: d?.productPrice,
             skuDescription: d?.skuDescription,
-            receivedQuantity: d?.receivedQuantity,
-            sentQuantity: d?.sentQuantity,
-            discrepancyResolvedTo: d?.discrepancyResolvedTo,
+            // receivedQuantity: d?.receivedQuantity,
+            // sentQuantity: d?.sentQuantity,
+            // discrepancyResolvedTo: d?.discrepancyResolvedTo,
             lineNumber: d?.lineNumber,
-            discrepancyFlag: d?.discrepancyFlag,
-            alreadyAdded: true,
+            // discrepancyFlag: d?.discrepancyFlag,
+            // alreadyAdded: true,
           };
         });
 
@@ -253,6 +242,8 @@ export class ShipmentAndShippingFormComponent implements OnInit {
           let sVal = parseInt(b.lineNumber);
           return fVal > sVal ? 1 : fVal < sVal ? -1 : 0;
         });
+
+        // console.log(':: :: ', this.projectFormData)
       },
       (error) => {
         this._showDateToast(error.error.detail);
@@ -262,34 +253,63 @@ export class ShipmentAndShippingFormComponent implements OnInit {
 
   submitProjectForm(event: any) {
     if (event?.valid) {
+      // this.detailsInputs?.forEach((e: any, key: any) => {
+      //   e["lineNumber"] = parseInt(key + 1);
+      // });
+
       this.detailsInputs?.forEach((e: any, key: any) => {
         e["lineNumber"] = parseInt(key + 1);
+        // e["sentQuantity"] = parseInt(e["sentQuantity"]);
+        e["plannedQuantity"] = parseInt(e["plannedQuantity"]);
+        // e["receivedQuantity"] = parseInt(e["receivedQuantity"]);
       });
+      this.projectFormData.details = this.detailsInputs;
     
-      let searchString = "T00:00:00Z"; // The string to search for
+      // let searchString = "T00:00:00Z"; // The string to search for
       // Check if the searchString exists in the date strings
-      if (!this.projectFormData.expectedArrivalDate.includes(searchString)) {
-        this.projectFormData.expectedArrivalDate =
-          this.projectFormData.expectedArrivalDate + "T00:00:00Z";
-      }
-      if (!this.projectFormData.expectedDeliveryDate.includes(searchString)) {
-        this.projectFormData.expectedDeliveryDate =
-          this.projectFormData.expectedDeliveryDate + "T00:00:00Z";
-      }
+      // if (!this.projectFormData?.dueDate?.includes(searchString)) {
+      //   this.projectFormData.dueDate =
+      //     this.projectFormData.dueDate + "T00:00:00Z";
+      // }
+      // if (!this.projectFormData?.issueDate?.includes(searchString)) {
+      //   this.projectFormData.issueDate =
+      //     (this.projectFormData.issueDate ? this.projectFormData.issueDate:'2023-10-20') + "T00:00:00Z";
+      // }
       if (this.mode === "Add") {
-        const destinationId =
-          this.projectFormData.destinationLocation.connectionLocationId;
-        const originId =
-          this.projectFormData.originLocation.connectionLocationId;
+        // const destinationId =
+        //   this.projectFormData.destinationLocation.connectionLocationId;
+        // const originId =
+        //   this.projectFormData.originLocation.connectionLocationId;
 
-        delete this.projectFormData.destinationLocation?.nodeType;
-        delete this.projectFormData.originLocation?.nodeType;
+        // delete this.projectFormData.destinationLocation?.nodeType;
+        // delete this.projectFormData.originLocation?.nodeType;
 
-        if (destinationId == originId) {
-          this._showDuplicatToast();
-        } else {
-          this.shippingOrderService
-            .add(this.projectFormData)
+        // if (destinationId == originId) {
+        //   this._showDuplicatToast();
+        // } else {
+          
+        // }
+
+        // console.log(':: :: ', {
+        //   ...this.projectFormData,
+        //   shipToLocation: {
+        //     connectionLocationId: this.projectFormData.shipToLocation.connectionLocationId
+        //   },
+        //   vendor: {
+        //     id: this.projectFormData.vendor.id
+        //   }
+        // });
+
+        this.shippingOrderService
+            .add({
+              ...this.projectFormData,
+              shipToLocation: {
+                connectionLocationId: this.projectFormData.shipToLocation.connectionLocationId
+              },
+              vendor: {
+                id: this.projectFormData.vendor.id
+              }
+            })
             .subscribe(
               (res) => {
                 this._showToast(res);
@@ -298,14 +318,13 @@ export class ShipmentAndShippingFormComponent implements OnInit {
                 this._showDateToast(error.error.detail);
               }
             );
-        }
       } else {
         const today = new Date();
         const expectedArrivalDate = new Date(
-          this.projectFormData.expectedArrivalDate
+          this.projectFormData.dueDate
         );
         const expectedDeliveryDate = new Date(
-          this.projectFormData.expectedDeliveryDate
+          this.projectFormData.issueDate
         );
 
         // Set the time components to 00:00:00
@@ -333,13 +352,6 @@ export class ShipmentAndShippingFormComponent implements OnInit {
           );
           return;
         }
-        this.detailsInputs?.forEach((e: any, key: any) => {
-          e["lineNumber"] = parseInt(key + 1);
-          e["sentQuantity"] = parseInt(e["sentQuantity"]);
-          e["plannedQuantity"] = parseInt(e["plannedQuantity"]);
-          e["receivedQuantity"] = parseInt(e["receivedQuantity"]);
-        });
-        this.projectFormData.details = this.detailsInputs;
         this.shippingOrderService
           .updateTransferOrder(this.paramId, this.projectFormData)
           .subscribe(
@@ -379,7 +391,7 @@ export class ShipmentAndShippingFormComponent implements OnInit {
       type = "success";
       msg = this.mode === "Add" ? MSG.create : MSG.update;
       if (this.mode === "Add") {
-        this.router.navigate(["/business/transfer-order"]);
+        this.router.navigate(["/business/shipment-and-shipping"]);
       } else {
         window.location.reload();
       }
@@ -439,9 +451,9 @@ export class ShipmentAndShippingFormComponent implements OnInit {
             results.modalInstance.hide();
             // this.detailsInputs = [];
             this.stVariants?.forEach((p: any) => {
-              console.log("p?.selected === true",p?.selected === true);
-              console.log("this.addedVariantIds.includes(p?.variantId)",this.addedVariantIds);
-              console.log("this.detailsInputs",this.detailsInputs);
+              // console.log("p?.selected === true",p?.selected === true);
+              // console.log("this.addedVariantIds.includes(p?.variantId)",this.addedVariantIds);
+              // console.log("this.detailsInputs",this.detailsInputs);
               
               if (
                 p?.selected === true &&
@@ -458,7 +470,8 @@ export class ShipmentAndShippingFormComponent implements OnInit {
                     ? p?.desc
                     : "" + " " + p?.size + " " + p?.color,
                   plannedQuantity: null,
-                  alreadyAdded: false,
+                  productPrice: null,
+                  exwSgdCost: p.exwSgdCost
                 });
 
                 // Add the variantId to the addedVariantIds array
@@ -486,7 +499,7 @@ export class ShipmentAndShippingFormComponent implements OnInit {
           this.detailsInputs;
           // this.detailsInputs = [];
         },
-        origin: this.projectFormData.originLocation.connectionLocationId,
+        // origin: this.projectFormData.originLocation.connectionLocationId,
       },
     });
   }
@@ -495,7 +508,7 @@ export class ShipmentAndShippingFormComponent implements OnInit {
     this.detailsInputs[index][keyName] = event.target.value;
     let idToCheck = this.detailsInputs[index]["variantId"] as string;
     if (keyName === "sentQuantity") {
-      console.log("this.detailsInputs[index]", this.detailsInputs[index]);
+      // console.log("this.detailsInputs[index]", this.detailsInputs[index]);
       if (
         parseInt(this.detailsInputs[index][keyName]) >
         parseInt(this.detailsInputs[index]["plannedQuantity"])
@@ -518,7 +531,7 @@ export class ShipmentAndShippingFormComponent implements OnInit {
     }
 
     if (keyName === "receivedQuantity") {
-      console.log("this.detailsInputs[index]", this.detailsInputs[index]);
+      // console.log("this.detailsInputs[index]", this.detailsInputs[index]);
       if (
         parseInt(this.detailsInputs[index][keyName]) >
         parseInt(this.detailsInputs[index]["sentQuantity"])
@@ -539,7 +552,7 @@ export class ShipmentAndShippingFormComponent implements OnInit {
         this.detailsInputs[index]["receivedCheck"] = false;
       }
     }
-    console.log("details", this.errorCounter);
+    // console.log("details", this.errorCounter);
   }
 
   _checkIfValid() {
@@ -557,34 +570,34 @@ export class ShipmentAndShippingFormComponent implements OnInit {
     }
     let searchString = "T00:00:00Z"; // The string to search for
     // Check if the searchString exists in the date strings
-    if (!this.projectFormData.expectedArrivalDate.includes(searchString)) {
-      this.projectFormData.expectedArrivalDate =
-        this.projectFormData.expectedArrivalDate + "T00:00:00Z";
+    if (!this.projectFormData.dueDate.includes(searchString)) {
+      this.projectFormData.dueDate =
+        this.projectFormData.dueDate + "T00:00:00Z";
     }
-    if (!this.projectFormData.expectedDeliveryDate.includes(searchString)) {
-      this.projectFormData.expectedDeliveryDate =
-        this.projectFormData.expectedDeliveryDate + "T00:00:00Z";
+    if (!this.projectFormData.issueDate.includes(searchString)) {
+      this.projectFormData.issueDate =
+      (this.projectFormData.issueDate ? this.projectFormData.issueDate:'2023-10-20') + "T00:00:00Z";
     }
 
     this.detailsInputs?.forEach((e: any, key: any) => {
       e["lineNumber"] = parseInt(key + 1);
       e["plannedQuantity"] = parseInt(e["plannedQuantity"]);
-      e["sentQuantity"] = parseInt(e["sentQuantity"]);
-      e["receivedQuantity"] = parseInt(e["receivedQuantity"]);
-      if (e["sentQuantity"] > e["plannedQuantity"]) {
-        this._showToastMsg(
-          "error",
-          "Sent Quantity should be less than or equal to planned Quantity"
-        );
-        return;
-      }
-      if (e["receivedQuantity"] > e["sentQuantity"]) {
-        this._showToastMsg(
-          "error",
-          "Received Quantity should be less than or equal to sent Quantity"
-        );
-        return;
-      }
+      // e["sentQuantity"] = parseInt(e["sentQuantity"]);
+      // e["receivedQuantity"] = parseInt(e["receivedQuantity"]);
+      // if (e["sentQuantity"] > e["plannedQuantity"]) {
+      //   this._showToastMsg(
+      //     "error",
+      //     "Sent Quantity should be less than or equal to planned Quantity"
+      //   );
+      //   return;
+      // }
+      // if (e["receivedQuantity"] > e["sentQuantity"]) {
+      //   this._showToastMsg(
+      //     "error",
+      //     "Received Quantity should be less than or equal to sent Quantity"
+      //   );
+      //   return;
+      // }
     });
     this.projectFormData.details = this.detailsInputs;
 
@@ -774,5 +787,45 @@ export class ShipmentAndShippingFormComponent implements OnInit {
       return false;
     }
     return true;
+  }
+
+  getVendorList() {
+    this.vendorListDataService
+      .getVendorList({
+        pageNo: "",
+        pageSize: "100",
+        sortBy: "",
+        sortDir: "",
+      })
+      .subscribe((res: any) => {
+        this.vendorList = res?.content?.map((v: any) => {
+          return {
+            companyName: v.companyName,
+            address: v.address,
+            id: v.id,
+            creditTermsDto: {
+              creditTermsId: v.creditTermsDto.creditTermsId
+            }
+          }
+        })
+      });
+  }
+
+  setAddress(address: string, fValue: string) {
+    this.projectFormData[fValue] = address;
+  }
+
+  _dateVaidationForToday() {
+    let dtToday = new Date();
+    
+    let month:any = dtToday.getMonth() + 1;
+    let day:any = dtToday.getDate();
+    let year = dtToday.getFullYear();
+    if(month < 10)
+        month = '0' + month.toString();
+    if(day < 10)
+        day = '0' + day.toString();
+    
+    return year + '-' + month + '-' + day;
   }
 }
