@@ -1,14 +1,13 @@
 import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
 import { ProductsListDataService } from "src/app/@core/mock/products-data.service";
 import { InventoryService } from "src/app/@core/mock/inventory.service";
-import { PurchaseOrderService } from "src/app/@core/mock/purchase-order.service";
 
 @Component({
-  selector: "app-shipment-and-shipping-form-modal",
-  templateUrl: "./shipment-and-shipping-form-modal.component.html",
-  styleUrls: ["./shipment-and-shipping-form-modal.component.scss"],
+  selector: "app-purchase-order-shipments-modal",
+  templateUrl: "./purchase-order-shipments-modal.component.html",
+  styleUrls: ["./purchase-order-shipments-modal.component.scss"],
 })
-export class ShipmentAndShippingFormModalComponent implements OnInit {
+export class PurchaseOrderShipmentsModalComponent {
   @Input() data: any;
   @Input() handler: Function;
   @Output() modalClosed = new EventEmitter<any>();
@@ -17,40 +16,19 @@ export class ShipmentAndShippingFormModalComponent implements OnInit {
   variantList: any[] = [];
   selectedVariants: any[] = [];
   cartItems: any[] = [];
-  storePoDetails: any;
+  exwSgdCost: any;
   searchWithStyleName: any = {
     keyword: "",
     sort: "asc",
     columnName: "styleName",
     searchType: "match",
   };
-  selectedPoId: any;
 
   constructor(
     private productsListDataService: ProductsListDataService,
-    private inventoryService: InventoryService,
-    private purchaseOrderService: PurchaseOrderService
+    private inventoryService: InventoryService
   ) {
     this.handler = () => {}; // Initialize the handler with a default empty function
-  }
-
-  ngOnInit(): void {
-    this.purchaseOrderService.setPageParams({
-      pageNo: "",
-      pageSize: '100',
-      sortBy: "",
-      sortDir: "",
-    });
-    this.getPoList();
-  }
-
-  getPoList() {
-    this.purchaseOrderService.getTransferOrderList()
-      .subscribe((res) => {
-        this.storePoDetails = res?.content?.filter((p: any) => (this.data.info.vendor.id === p.vendor.id
-          && this.data.info.shipToLocation.connectionLocationId === p.shipToLocation.connectionLocationId));
-          console.log(':: :: ', this.storePoDetails);
-      });
   }
 
   close($event: any) {
@@ -68,10 +46,14 @@ export class ShipmentAndShippingFormModalComponent implements OnInit {
     if (obj.selected) {
       if (!variantIdExists) {
         // Store the object's data in the selectedVariants array
-        this.selectedVariants.push(obj);
+        this.selectedVariants.push({
+          ...obj,
+          exwSgdCost: this.exwSgdCost
+        });
         this.cartItems.push({
-          selectedPoId: this.selectedPoId,
-          ...obj});
+          ...obj,
+          exwSgdCost: this.exwSgdCost
+        });
       }
     } else {
       // Remove the object from the selectedVariants array if deselected
@@ -127,6 +109,7 @@ export class ShipmentAndShippingFormModalComponent implements OnInit {
           res.variants.forEach((variant: any) => {
             variant.desc = res.logisticsDesc;
           });
+          this.exwSgdCost = res.exwSgdCost;
           this.variantList = res.variants;
           this.getInventory(this.variantList?.map((v: any) => v.sku));
         });
@@ -156,18 +139,15 @@ export class ShipmentAndShippingFormModalComponent implements OnInit {
         }else{
           v.itemAlreadySelected = false;
         }
+        v.custName = `${v.sku}`;
         if (foundItem) {
-          v.custName = `${v.sku} - Available Qty: ${foundItem.avaiableQty}`;
+          // v.custName = `${v.sku} - Available Qty: ${foundItem.avaiableQty}`;
           v.availableQty = foundItem.avaiableQty ? foundItem.avaiableQty : 0;
         } else {
           v.availableQty = 0;
-          v.custName = `${v.sku} - Available Qty: Not Available`;
+          // v.custName = `${v.sku} - Available Qty: Not Available`;
         }
       });
     });
-  }
-
-  _getFilteredVariants() {
-    return this.storePoDetails?.find((p: any) => p.id === this.selectedPoId)?.details;
   }
 }

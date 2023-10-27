@@ -433,14 +433,15 @@ export default {
         plannedQuantity: "Planned Quantity",
         sentQty: "Sent Qty",
         receivedQty: "Received Qty",
-        discrepancyResolvedTo: "Discrepancy Resolved To",
-        productPrice: 'Product Price'
+        lockedQuantity: "Locked Qty",
+        receivedQuantity: "Received Qty",
+        productPrice: 'Price'
       },
       buttonTitle: "Create Purchase Order",
       editButtonTitle: "Purchase Order",
       popupBtn: "Select Product With Style",
       buttons: { publish: 'Publish', confirm: 'Confirm', ship: 'Ship', cancel: 'Cancel', remove: 'Remove', 
-      ready: 'Ready', reject: 'Reject', release: 'Release' }
+      ready: 'Ready', reject: 'Reject', release: 'Release', close: 'Close', shipmentDetails: 'Shipment Details' }
     },
     sAndS: {
       title2: "Details",
@@ -460,10 +461,12 @@ export default {
         remarks: "Remarks",
         sku: "SKU",
         description: "Description",
-        plannedQuantity: "Planned Quantity",
+        plannedShipQuantity: "Planned Ship Quantity",
         sentQty: "Sent Qty",
         receivedQty: "Received Qty",
         discrepancyResolvedTo: "Discrepancy Resolved To",
+        poNo: 'PO No.',
+        remainingQuantity: 'PO Remaining Quantity'
       },
       buttonTitle: "Create Purchase Order",
       editButtonTitle: "Purchase Order",

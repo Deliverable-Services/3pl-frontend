@@ -249,7 +249,7 @@
             <div [ngStyle]="{ width: '100%' }">
 
               <d-form-operation
-                *ngIf="mode.toLowerCase() === 'add' || projectFormData.orderStatus?.toLowerCase() === 'draft'">
+                *ngIf="mode.toLowerCase() === 'add' || projectFormData.status?.toLowerCase() === 'draft'">
                 <d-button [ngStyle]="{ 'margin-bottom': '12px' }" dLoading class="mr-element-spacing" circled="true"
                   (click)="openDialog()">
                   {{ "form.sAndS.popupBtn" | translate }}
@@ -260,6 +260,14 @@
               <div *ngFor="let input of detailsInputs; let i = index"
                 [ngStyle]="{ display: 'flex', justifyContent: 'space-between' }">
                 <div [ngStyle]="{ display: 'flex' }">
+                  <d-form-item [ngStyle]="{ margin: '20px 20px 20px 0px' }">
+                    <d-form-label [required]="true">{{"form.sAndS.fields.poNo" | translate}}</d-form-label>
+                    <d-form-control>
+                      <input class="set-width" disabled dTextInput autocomplete="off" [value]="input.selectedPoId"
+                        (input)="updateValue($event, 'selectedPoId', i)" />
+                    </d-form-control>
+                  </d-form-item>
+
                   <d-form-item [ngStyle]="{ margin: '20px 20px 20px 0px' }">
                     <d-form-label [required]="true">{{"form.sAndS.fields.sku" | translate}}</d-form-label>
                     <d-form-control>
@@ -279,54 +287,28 @@
                   </d-form-item>
 
                   <d-form-item [ngStyle]="{ margin: '20px 20px 20px 0px' }">
-                    <d-form-label [required]="true">{{ "form.sAndS.fields.plannedQuantity" | translate
-                      }}</d-form-label>
-                    <d-form-control>
-                      <input class="set-width"
-                        [disabled]="projectFormData.orderStatus && !(projectFormData.orderStatus?.toLowerCase() === 'draft')"
-                        dTextInput (keypress)="numberOnly($event)" autocomplete="off"
-                        [placeholder]='"form.sAndS.fields.plannedQuantity" | translate'
-                        [value]="input.plannedQuantity" (input)="updateValue($event, 'plannedQuantity', i);
-                        input.productPrice = (input.exwSgdCost*input.plannedQuantity)+' SGD';" />
-                    </d-form-control>
-                  </d-form-item>
-
-                  <d-form-item [ngStyle]="{ margin: '20px 20px 20px 0px' }">
-                    <d-form-label [required]="true">{{ "form.sAndS.fields.productPrice" | translate
+                    <d-form-label [required]="true">{{ "form.sAndS.fields.remainingQuantity" | translate
                       }}</d-form-label>
                     <d-form-control>
                       <input class="set-width"
                         disabled
                         dTextInput (keypress)="numberOnly($event)" autocomplete="off"
-                        [placeholder]='"form.sAndS.fields.productPrice" | translate'
-                        [value]="input.productPrice" (input)="updateValue($event, 'productPrice', i)" />
+                        [placeholder]='"form.sAndS.fields.remainingQuantity" | translate'
+                        [value]="input.remainingQuantity" (input)="updateValue($event, 'remainingQuantity', i);" />
                     </d-form-control>
                   </d-form-item>
 
-                  <!-- <d-form-item *ngIf="projectFormData.orderStatus" [ngStyle]="{ margin: '20px 20px 20px 0px' }">
-                    <d-form-label [required]="true">{{ "form.sAndS.fields.sentQty" | translate }}</d-form-label>
-                    <d-form-control>
-
-                      <input class="set-width" [ngStyle]="{'borderColor': input.sentCheck ? 'red' : 'initial'}"
-                        [disabled]="!(projectFormData.orderStatus?.toLowerCase() === 'open')" dTextInput
-                        (keypress)="numberOnly($event)" autocomplete="off"
-                        [placeholder]='"form.sAndS.fields.sentQty" | translate' [value]="input.sentQuantity"
-                        (input)="updateValue($event, 'sentQuantity', i)" />
-                    </d-form-control>
-                  </d-form-item> -->
-
-                  <!-- <d-form-item *ngIf="projectFormData.orderStatus" [ngStyle]="{ margin: '20px 20px 20px 0px' }">
-                    <d-form-label [required]="true">{{ "form.sAndS.fields.receivedQty" | translate
+                  <d-form-item [ngStyle]="{ margin: '20px 20px 20px 0px' }">
+                    <d-form-label [required]="true">{{ "form.sAndS.fields.plannedShipQuantity" | translate
                       }}</d-form-label>
                     <d-form-control>
-                      <input class="set-width" [ngStyle]="{'borderColor': input.receivedCheck ? 'red' : 'initial'}"
-                        [disabled]="!(projectFormData.orderStatus?.toLowerCase() === 'in_transit' 
-                          && projectFormData?.shipToLocation?.nodeType?.toLowerCase() === 'store')" dTextInput
-                        (keypress)="numberOnly($event)" autocomplete="off"
-                        [placeholder]='"form.sAndS.fields.receivedQty" | translate'
-                        [value]="input.receivedQuantity" (input)="updateValue($event, 'receivedQuantity', i)" />
+                      <input class="set-width"
+                        disabled
+                        dTextInput (keypress)="numberOnly($event)" autocomplete="off"
+                        [placeholder]='"form.sAndS.fields.plannedShipQuantity" | translate'
+                        [value]="input.plannedShipQuantity" (input)="updateValue($event, 'plannedShipQuantity', i);" />
                     </d-form-control>
-                  </d-form-item> -->
+                  </d-form-item>
 
                   <d-form-item *ngIf="projectFormData.orderStatus?.toLowerCase() === 'confirmed'"
                     [ngStyle]="{ margin: '20px 20px 20px 0px' }">

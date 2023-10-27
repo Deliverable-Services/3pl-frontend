@@ -7,6 +7,7 @@ import { VendorListDataService } from "src/app/@core/mock/vendor-data.service";
 import { MSG } from "src/config/global-var";
 import { ProductsListDataService } from "src/app/@core/mock/products-data.service";
 import { PurchaseOrderFormModalComponent } from "../purchase-order-form-modal/purchase-order-form-modal.component";
+import { PurchaseOrderShipmentsModalComponent } from "../purchase-order-shipments-modal/purchase-order-shipments-modal.component";
 
 @Component({
   selector: "app-purchase-order-form",
@@ -92,6 +93,21 @@ export class PurchaseOrderFormComponent implements OnInit {
     maxHeight: "600px",
     title: "Select Produts With Style",
     content: PurchaseOrderFormModalComponent,
+    backdropCloseable: true,
+    onClose: () => console.log(""),
+    data: {
+      name: "Tom",
+      age: 10,
+      address: "Chengdu",
+    },
+  };
+
+  shipmentConfig = {
+    id: "dialog-service",
+    width: "30%",
+    maxHeight: "600px",
+    title: "Select Produts With Style",
+    content: PurchaseOrderShipmentsModalComponent,
     backdropCloseable: true,
     onClose: () => console.log(""),
     data: {
@@ -233,6 +249,8 @@ export class PurchaseOrderFormComponent implements OnInit {
             skuNo: d?.skuNo,
             plannedQuantity: d?.poQuantity,
             productPrice: d?.productPrice,
+            lockedQuantity: d?.lockedQuantity,
+            receivedQuantity: d?.receivedQuantity,
             skuDescription: d?.skuDescription,
             // receivedQuantity: d?.receivedQuantity,
             // sentQuantity: d?.sentQuantity,
@@ -264,6 +282,7 @@ export class PurchaseOrderFormComponent implements OnInit {
       // });
 
       this.detailsInputs?.forEach((e: any, key: any) => {
+        delete e["productPrice"];
         e["lineNumber"] = parseInt(key + 1);
         // e["sentQuantity"] = parseInt(e["sentQuantity"]);
         e["plannedQuantity"] = parseInt(e["plannedQuantity"]);
@@ -514,6 +533,36 @@ export class PurchaseOrderFormComponent implements OnInit {
           // this.detailsInputs = [];
         },
         // origin: this.projectFormData.originLocation.connectionLocationId,
+      },
+    });
+  }
+
+  shipmentDialog(dialogtype?: string, showAnimation?: boolean) {
+    const results = this.dialogService.open({
+      ...this.shipmentConfig,
+      dialogtype: dialogtype,
+      showAnimation: showAnimation,
+      buttons: [
+        {
+          cssClass: "primary",
+          text: "Ok",
+          disabled: false,
+          handler: (variantList: any) => {
+            results.modalInstance.hide();
+          },
+        },
+        {
+          id: "btn-cancel",
+          cssClass: "common",
+          text: "Cancel",
+          handler: (variantList: any) => {
+            results.modalInstance.hide();
+          },
+        },
+      ],
+      data: {
+        vList: (vData: any) => {
+        },
       },
     });
   }

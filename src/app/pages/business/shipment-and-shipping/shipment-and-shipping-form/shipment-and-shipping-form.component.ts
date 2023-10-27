@@ -84,15 +84,15 @@ export class ShipmentAndShippingFormComponent implements OnInit {
     id: "dialog-service",
     width: "70%",
     maxHeight: "600px",
-    title: "Select Produts With Style",
+    title: "Select Produts from PO",
     content: ShipmentAndShippingFormModalComponent,
     backdropCloseable: true,
     onClose: () => console.log(""),
-    data: {
-      name: "Tom",
-      age: 10,
-      address: "Chengdu",
-    },
+    // data: {
+    //   name: "Tom",
+    //   age: 10,
+    //   address: "Chengdu",
+    // },
   };
 
   toTypeLabel: string = "Origin To Destination";
@@ -450,25 +450,20 @@ export class ShipmentAndShippingFormComponent implements OnInit {
           handler: (variantList: any) => {
             results.modalInstance.hide();
             // this.detailsInputs = [];
+            console.log(':: this.stVariants ', this.stVariants)
             this.stVariants?.forEach((p: any) => {
-              // console.log("p?.selected === true",p?.selected === true);
-              // console.log("this.addedVariantIds.includes(p?.variantId)",this.addedVariantIds);
-              // console.log("this.detailsInputs",this.detailsInputs);
-              
               if (
                 p?.selected === true &&
                 !this.addedVariantIds.includes(p?.variantId) &&
                 !this.detailsInputs.some((input: any) => input.variantId === p?.variantId)
               ) {
-                // Push the object only if the variantId is not in the addedVariantIds array
-                // and it's not already in detailsInputs
-
                 this.detailsInputs.push({
                   variantId: p?.variantId,
-                  skuNo: p?.sku,
-                  skuDescription: p?.desc
-                    ? p?.desc
-                    : "" + " " + p?.size + " " + p?.color,
+                  skuNo: p?.skuNo,
+                  selectedPoId: p?.selectedPoId,
+                  remainingQuantity: p?.poQuantity ? (p.poQuantity - (p.lockedQuantity+p.receivedQuantity)):0,
+                  plannedShipQuantity: 0,
+                  skuDescription: p?.skuDescription,
                   plannedQuantity: null,
                   productPrice: null,
                   exwSgdCost: p.exwSgdCost
@@ -492,6 +487,7 @@ export class ShipmentAndShippingFormComponent implements OnInit {
         },
       ],
       data: {
+        info: this.projectFormData,
         vList: (vData: any) => {
           this.stVariants = vData;
           if (this.mode === "Edit") {

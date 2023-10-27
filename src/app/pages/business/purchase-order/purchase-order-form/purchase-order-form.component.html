@@ -69,7 +69,8 @@
 
               <d-button *ngIf="mode.toLowerCase() === 'edit' 
               && projectFormData.orderStatus?.toLowerCase() !== 'draft'
-              && projectFormData.orderStatus?.toLowerCase() !== 'released'" bsStyle="danger" class="danger"
+              && projectFormData.orderStatus?.toLowerCase() !== 'released'
+              && projectFormData.orderStatus?.toLowerCase() !== 'closed'" bsStyle="danger" class="danger"
                 [ngStyle]="{ float: 'right' }" circled="true" style="margin-right: 8px"
                 (btnClick)="confirmDialog('cancel')">
                 {{ "form.purchaseOrder.fields.cancel" | translate }}
@@ -83,8 +84,8 @@
 
                 <d-button *ngIf="projectFormData.orderStatus?.toLowerCase() === 'released'"
                   [ngStyle]="{ float: 'right' }" class="mr-element-spacing"
-                  circled="true" style="margin-right: 8px" (btnClick)="confirmDialog('release')">
-                  {{ "form.purchaseOrder.buttons.release" | translate }}
+                  circled="true" style="margin-right: 8px" (btnClick)="confirmDialog('close')">
+                  {{ "form.purchaseOrder.buttons.close" | translate }}
                 </d-button>
             </d-form-operation>
           </div>
@@ -292,23 +293,43 @@
                     </d-form-control>
                   </d-form-item>
 
-                  <d-form-item *ngIf="projectFormData.orderStatus?.toLowerCase() === 'confirmed'"
-                    [ngStyle]="{ margin: '20px 20px 20px 0px' }">
-                    <d-form-label [required]="true">{{ "form.purchaseOrder.fields.discrepancyResolvedTo" | translate
+                  <d-form-item *ngIf="projectFormData.orderStatus?.toLowerCase() === 'released'
+                  || projectFormData.orderStatus?.toLowerCase() === 'closed'" [ngStyle]="{ margin: '20px 20px 20px 0px' }">
+                    <d-form-label [required]="true">{{ "form.purchaseOrder.fields.lockedQuantity" | translate
                       }}</d-form-label>
                     <d-form-control>
-                      <d-select class="set-width" [disabled]="!input.discrepancyFlag"
-                        [placeholder]='"form.purchaseOrder.fields.discrepancyResolvedTo" | translate'
-                        [appendToBody]="true" [multiple]="false" [filterKey]="'discrepancyResolvedTo'"
-                        [name]="'discrepancyResolvedTo'+i" [options]="discrepancyValues"
-                        [(ngModel)]="input.discrepancyResolvedTo"></d-select>
+                      <input class="set-width"
+                        disabled
+                        dTextInput (keypress)="numberOnly($event)" autocomplete="off"
+                        [placeholder]='"form.purchaseOrder.fields.lockedQuantity" | translate'
+                        [value]="input.lockedQuantity" (input)="updateValue($event, 'lockedQuantity', i)" />
+                    </d-form-control>
+                  </d-form-item>
+
+                  <d-form-item *ngIf="projectFormData.orderStatus?.toLowerCase() === 'released'
+                  || projectFormData.orderStatus?.toLowerCase() === 'closed'" [ngStyle]="{ margin: '20px 20px 20px 0px' }">
+                    <d-form-label [required]="true">{{ "form.purchaseOrder.fields.receivedQuantity" | translate
+                      }}</d-form-label>
+                    <d-form-control>
+                      <input class="set-width"
+                        disabled
+                        dTextInput (keypress)="numberOnly($event)" autocomplete="off"
+                        [placeholder]='"form.purchaseOrder.fields.receivedQuantity" | translate'
+                        [value]="input.receivedQuantity" (input)="updateValue($event, 'receivedQuantity', i)" />
                     </d-form-control>
                   </d-form-item>
 
                   <d-button *ngIf="projectFormData.orderStatus?.toLowerCase() === 'confirmed'"
-                    [disabled]="!input.discrepancyFlag" dLoading class="warning" circled="true"
+                    dLoading class="warning" circled="true"
                     style="margin-right: 8px;margin-top: 47px;" (click)="confirm(i)">
                     {{ "form.purchaseOrder.buttons.confirm" | translate }}
+                  </d-button>
+
+                  <d-button *ngIf="projectFormData.orderStatus?.toLowerCase() === 'released'
+                  || projectFormData.orderStatus?.toLowerCase() === 'closed'"
+                    dLoading bsStyle="primary" class="primary" circled="true"
+                    style="margin-right: 8px;margin-top: 47px;" (click)="shipmentDialog()">
+                    {{ "form.purchaseOrder.buttons.shipmentDetails" | translate }}
                   </d-button>
 
                   <d-button *ngIf="projectFormData.orderStatus?.toLowerCase() === 'draft' || mode === 'Add' " dLoading

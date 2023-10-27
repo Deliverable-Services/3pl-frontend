@@ -14,12 +14,14 @@ import { SharedModule } from "src/app/@shared/shared.module";
 import { PurchaseOrderListComponent } from "./purchase-order-list/purchase-order-list.component";
 import { PurchaseOrderFormComponent } from "./purchase-order-form/purchase-order-form.component";
 import { PurchaseOrderFormModalComponent } from "./purchase-order-form-modal/purchase-order-form-modal.component";
+import { PurchaseOrderShipmentsModalComponent } from "./purchase-order-shipments-modal/purchase-order-shipments-modal.component";
 
 @NgModule({
   declarations: [
     PurchaseOrderListComponent,
     PurchaseOrderFormComponent,
-    PurchaseOrderFormModalComponent
+    PurchaseOrderFormModalComponent,
+    PurchaseOrderShipmentsModalComponent
   ],
   imports: [
     CommonModule,
