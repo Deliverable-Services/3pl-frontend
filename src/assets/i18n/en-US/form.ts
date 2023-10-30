@@ -444,7 +444,8 @@ export default {
       ready: 'Ready', reject: 'Reject', release: 'Release', close: 'Close', shipmentDetails: 'Shipment Details' }
     },
     sAndS: {
-      title2: "Details",
+      title2: "Shipment Details",
+      title3: "Packing Details",
       fields: {
         vendor: "Vendor",
         destination: "Destination",
@@ -470,8 +471,9 @@ export default {
       },
       buttonTitle: "Create Purchase Order",
       editButtonTitle: "Purchase Order",
-      popupBtn: "Select Product With Style",
-      buttons: { publish: 'Publish', confirm: 'Confirm', ship: 'Ship', cancel: 'Cancel', remove: 'Remove' }
+      popupBtn: "Select Product from PO",
+      popupBtn2: "Create New Carton",
+      buttons: { publish: 'Publish', confirm: 'Confirmed', ship: 'Ship', cancel: 'Cancel', remove: 'Remove' }
     },
     vendor: {
       title: "Vendor",

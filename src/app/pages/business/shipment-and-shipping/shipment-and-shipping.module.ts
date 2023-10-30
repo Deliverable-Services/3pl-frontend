@@ -14,12 +14,14 @@ import { SharedModule } from "src/app/@shared/shared.module";
 import { ShipmentAndShippingListComponent } from "./shipment-and-shipping-list/shipment-and-shipping-list.component";
 import { ShipmentAndShippingFormComponent } from "./shipment-and-shipping-form/shipment-and-shipping-form.component";
 import { ShipmentAndShippingFormModalComponent } from "./shipment-and-shipping-form-modal/shipment-and-shipping-form-modal.component";
+import { PackagesFormModalComponent } from "./packages-form-modal/packages-form-modal.component";
 
 @NgModule({
   declarations: [
     ShipmentAndShippingListComponent,
     ShipmentAndShippingFormComponent,
-    ShipmentAndShippingFormModalComponent
+    ShipmentAndShippingFormModalComponent,
+    PackagesFormModalComponent
   ],
   imports: [
     CommonModule,

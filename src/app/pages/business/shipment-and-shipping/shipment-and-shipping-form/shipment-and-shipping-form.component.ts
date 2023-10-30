@@ -7,6 +7,7 @@ import { VendorListDataService } from "src/app/@core/mock/vendor-data.service";
 import { MSG } from "src/config/global-var";
 import { ProductsListDataService } from "src/app/@core/mock/products-data.service";
 import { ShipmentAndShippingFormModalComponent } from "../shipment-and-shipping-form-modal/shipment-and-shipping-form-modal.component";
+import { PackagesFormModalComponent } from "../packages-form-modal/packages-form-modal.component";
 
 @Component({
   selector: "app-shipment-and-shipping-form",
@@ -42,6 +43,8 @@ export class ShipmentAndShippingFormComponent implements OnInit {
   stVariants: any = [];
   locationID: string = "";
 
+  packageInfo: any[] = [];
+  packageDetailsInfo: any[] = [];
   pageParam: any = {
     pageNo: "",
     pageSize: "",
@@ -88,11 +91,16 @@ export class ShipmentAndShippingFormComponent implements OnInit {
     content: ShipmentAndShippingFormModalComponent,
     backdropCloseable: true,
     onClose: () => console.log(""),
-    // data: {
-    //   name: "Tom",
-    //   age: 10,
-    //   address: "Chengdu",
-    // },
+  };
+
+  packageConfig = {
+    id: "dialog-service",
+    width: "70%",
+    maxHeight: "600px",
+    title: "Carton Details",
+    content: PackagesFormModalComponent,
+    backdropCloseable: true,
+    onClose: () => console.log("")
   };
 
   toTypeLabel: string = "Origin To Destination";
@@ -217,23 +225,15 @@ export class ShipmentAndShippingFormComponent implements OnInit {
           ? expectedDeliveryDate[0]
           : "";
 
-        // this.toTypeLabel =
-        //   this.projectFormData?.originLocation?.nodeType +
-        //   " To " +
-        //   this.projectFormData?.destinationLocation?.nodeType;
         this.detailsInputs = this.projectFormData?.details?.map((d: any) => {
           return {
+            poId: d?.poId,
             variantId: d?.variantId,
             skuNo: d?.skuNo,
-            plannedQuantity: d?.poQuantity,
-            productPrice: d?.productPrice,
+            remainingQuantity: d?.poQuantity ? (d.poQuantity - (d.lockedQuantity+d.receivedQuantity)):0,
             skuDescription: d?.skuDescription,
-            // receivedQuantity: d?.receivedQuantity,
-            // sentQuantity: d?.sentQuantity,
-            // discrepancyResolvedTo: d?.discrepancyResolvedTo,
-            lineNumber: d?.lineNumber,
-            // discrepancyFlag: d?.discrepancyFlag,
-            // alreadyAdded: true,
+            shippedQuantity: d?.shippedQuantity,
+            poDetailsId: d?.poDetailsId
           };
         });
 
@@ -449,8 +449,6 @@ export class ShipmentAndShippingFormComponent implements OnInit {
           disabled: false,
           handler: (variantList: any) => {
             results.modalInstance.hide();
-            // this.detailsInputs = [];
-            console.log(':: this.stVariants ', this.stVariants)
             this.stVariants?.forEach((p: any) => {
               if (
                 p?.selected === true &&
@@ -458,15 +456,13 @@ export class ShipmentAndShippingFormComponent implements OnInit {
                 !this.detailsInputs.some((input: any) => input.variantId === p?.variantId)
               ) {
                 this.detailsInputs.push({
+                  poId: p?.selectedPoId,
+                  poDetailsId: p?.id,
                   variantId: p?.variantId,
                   skuNo: p?.skuNo,
-                  selectedPoId: p?.selectedPoId,
                   remainingQuantity: p?.poQuantity ? (p.poQuantity - (p.lockedQuantity+p.receivedQuantity)):0,
-                  plannedShipQuantity: 0,
                   skuDescription: p?.skuDescription,
-                  plannedQuantity: null,
-                  productPrice: null,
-                  exwSgdCost: p.exwSgdCost
+                  shippedQuantity: null
                 });
 
                 // Add the variantId to the addedVariantIds array
@@ -494,6 +490,54 @@ export class ShipmentAndShippingFormComponent implements OnInit {
           }
           this.detailsInputs;
           // this.detailsInputs = [];
+        },
+        // origin: this.projectFormData.originLocation.connectionLocationId,
+      },
+    });
+  }
+
+  openPackageDialog(dialogtype?: string, showAnimation?: boolean) {
+    const results = this.dialogService.open({
+      ...this.packageConfig,
+      dialogtype: dialogtype,
+      showAnimation: showAnimation,
+      buttons: [
+        {
+          cssClass: "primary",
+          text: "Ok",
+          disabled: false,
+          handler: (variantList: any) => {
+            results.modalInstance.hide();
+            // this.detailsInputs = [];
+            console.log(':: this.stVariants ', this.packageInfo)
+            this.packageDetailsInfo = this.packageInfo?.map((p: any) => {
+              return {
+                ctnCode: null,
+                ctnNo: null,
+                length: null,
+                width: null,
+                height: null,
+                grossWeight: null,
+                netWeight: null,
+                productDetails: p
+              }
+            }) 
+          },
+        },
+        {
+          id: "btn-cancel",
+          cssClass: "common",
+          text: "Cancel",
+          handler: (variantList: any) => {
+            results.modalInstance.hide();
+          },
+        },
+      ],
+      data: {
+        info: this.projectFormData,
+        vList: (vData: any) => {
+          console.log(':: vData :: ', vData);
+          this.packageInfo = vData;
         },
         // origin: this.projectFormData.originLocation.connectionLocationId,
       },
