@@ -25,6 +25,15 @@ export class PackagesFormModalComponent implements OnInit {
     searchType: "match",
   };
   selectedPoId: any;
+  cartonDetails:any = {
+    ctnCode: null,
+    ctnNo: null,
+    length: null,
+    width: null,
+    height: null,
+    grossWeight: null,
+    netWeight: null,
+  }
 
   constructor(
     private productsListDataService: ProductsListDataService,
@@ -56,7 +65,6 @@ export class PackagesFormModalComponent implements OnInit {
             addtionalDetails: findMoreDetails.find((ad: any) => ad.id === d.poDetailsId)
           }
         })
-          console.log(':: :: HERE ', this.data.info, this.storePoDetails);
       });
   }
 
@@ -182,5 +190,9 @@ export class PackagesFormModalComponent implements OnInit {
   updateValue(event: any, keyName: string, index: number) {
     this.cartItems[index][keyName] = event.target.value;
     this.data.vList(this.cartItems);
+  }
+
+  updateCarton() {
+    this.data.cartonDetails(this.cartonDetails);
   }
 }

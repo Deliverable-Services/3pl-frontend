@@ -455,7 +455,7 @@ export default {
         expectedArrivalDate: "Due Date",
         expectedDeliveryDate: "Issued Date",
         publish: "Publish",
-        confirm: "Confirm",
+        confirm: "Confirmed",
         ship: "Ship",
         cancel: "Cancel",
         remove: "Remove",
@@ -473,7 +473,7 @@ export default {
       editButtonTitle: "Purchase Order",
       popupBtn: "Select Product from PO",
       popupBtn2: "Create New Carton",
-      buttons: { publish: 'Publish', confirm: 'Confirmed', ship: 'Ship', cancel: 'Cancel', remove: 'Remove' }
+      buttons: { publish: 'Publish', confirm: 'Confirmed', ship: 'Ship', cancel: 'Cancel', remove: 'Remove', dispatching: 'Dispatching' }
     },
     vendor: {
       title: "Vendor",

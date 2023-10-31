@@ -1,21 +1,55 @@
 <div class="manage-main-head">
     <h2>*From Vendor:{{data.info.vendor.companyName}} Ship to: {{data.info.shipToLocation.nodeName}}</h2>
 </div>
-<div class="column-container">
 
-    <div class="column-left">
-        <!-- <div class="first-list">
-            <h3>PO List</h3>
-            <ul class="variant-list">
-                <li *ngFor="let po of storePoDetails" class="variant-item">
-                    <label (click)="selectedPoId = po.id" [ngClass]="{'selectedPoId': selectedPoId === po.id}">
-                        <span class="manage-po-id">
-                            {{ po.id }}
-                        </span>
-                    </label>
-                </li>
-            </ul>
-        </div> -->
+<div [ngStyle]="{ display: 'flex', justifyContent: 'space-between' }">
+    <div [ngStyle]="{ display: 'flex' }">
+    <d-form-item [ngStyle]="{ margin: '20px 20px 20px 0px' }">
+        <d-form-label [required]="true">Carton No.</d-form-label>
+        <d-form-control>
+        <input (blur)="updateCarton()" class="set-width" dTextInput autocomplete="off" [(ngModel)]="cartonDetails.ctnNo"/>
+        </d-form-control>
+    </d-form-item>
+
+    <d-form-item [ngStyle]="{ margin: '20px 20px 20px 0px' }">
+        <d-form-label [required]="true">Length (cm)</d-form-label>
+        <d-form-control>
+        <input (blur)="updateCarton()" class="set-width" dTextInput autocomplete="off" [(ngModel)]="cartonDetails.length"/>
+        </d-form-control>
+    </d-form-item>
+
+    <d-form-item [ngStyle]="{ margin: '20px 20px 20px 0px' }">
+        <d-form-label [required]="true">Width (cm)</d-form-label>
+        <d-form-control>
+        <input (blur)="updateCarton()" class="set-width" dTextInput autocomplete="off" [(ngModel)]="cartonDetails.width">
+        </d-form-control>
+    </d-form-item>
+
+    <d-form-item [ngStyle]="{ margin: '20px 20px 20px 0px' }">
+        <d-form-label [required]="true">Height (cm)</d-form-label>
+        <d-form-control>
+        <input (blur)="updateCarton()" class="set-width" dTextInput autocomplete="off" [(ngModel)]="cartonDetails.height"/>
+        </d-form-control>
+    </d-form-item>
+
+    <d-form-item [ngStyle]="{ margin: '20px 20px 20px 0px' }">
+        <d-form-label [required]="true">Gross Weight (kg)</d-form-label>
+        <d-form-control>
+        <input (blur)="updateCarton()" class="set-width" dTextInput autocomplete="off" [(ngModel)]="cartonDetails.grossWeight"/>
+        </d-form-control>
+    </d-form-item>
+
+    <d-form-item [ngStyle]="{ margin: '20px 20px 20px 0px' }">
+        <d-form-label [required]="true">Net Weight (kg)</d-form-label>
+        <d-form-control>
+        <input (blur)="updateCarton()" class="set-width" dTextInput autocomplete="off" [(ngModel)]="cartonDetails.netWeight"/>
+        </d-form-control>
+    </d-form-item>
+    </div>
+</div>
+
+<div class="column-container">
+    <div class="column-left">        
         <div class="manage-variants" *ngIf="storePoDetails">
             <h3>Select Product from Shipment</h3>
             <h4>PO No. and SKU</h4>

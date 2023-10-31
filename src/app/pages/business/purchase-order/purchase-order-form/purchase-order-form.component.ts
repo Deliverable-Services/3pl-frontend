@@ -373,19 +373,31 @@ export class PurchaseOrderFormComponent implements OnInit {
         // }
         this.purchaseOrderService
           .updateTransferOrder(this.paramId, {
-            ...this.projectFormData,
-            shipToLocation: {
-              connectionLocationId: this.projectFormData.shipToLocation.connectionLocationId
+            "vendor": {
+              "id": "a183174d-fd0a-46ac-a6f2-4d12538fef64"
             },
-            vendor: {
-              id: this.projectFormData.vendor.id
+            "billToAddress": "address",
+            "shipToAddress": "822 Lyda Island",
+            "dueDate": "2023-11-01T00:00:00Z",
+            "tradeTerm": {
+              "creditTermsId": "e44546aa-8d10-452a-9500-6d9f065362b8"
             },
-            details: this.projectFormData?.details?.map((v: any) => {
-              delete v.exwSgdCost;
-              return {
-                ...v
+            "orderStatus": "DRAFT",
+            "sampleStatus": null,
+            "remarks": "",
+            "details": [
+              {
+                "variantId": "f3e5df7b-34d5-4e9e-b784-8b2766eee9d3",
+                "plannedQuantity": 2
+              },
+              {
+                "variantId": "2a7300c8-d153-4c15-acd3-77cb0729a14f",
+                "plannedQuantity": 8
               }
-            })
+            ],
+            "shipToLocation": {
+              "connectionLocationId": "3be9bf45-c447-45c2-8555-3e30209c336a"
+            }
           })
           .subscribe(
             (res) => {

@@ -44,6 +44,7 @@ export class ShipmentAndShippingFormComponent implements OnInit {
   locationID: string = "";
 
   packageInfo: any[] = [];
+  cartonInfo: any = {};
   packageDetailsInfo: any[] = [];
   pageParam: any = {
     pageNo: "",
@@ -508,20 +509,26 @@ export class ShipmentAndShippingFormComponent implements OnInit {
           disabled: false,
           handler: (variantList: any) => {
             results.modalInstance.hide();
-            // this.detailsInputs = [];
-            console.log(':: this.stVariants ', this.packageInfo)
             this.packageDetailsInfo = this.packageInfo?.map((p: any) => {
               return {
-                ctnCode: null,
-                ctnNo: null,
-                length: null,
-                width: null,
-                height: null,
-                grossWeight: null,
-                netWeight: null,
-                productDetails: p
+                ctnCode: this.cartonInfo?.ctnCode,
+                ctnNo: this.cartonInfo?.ctnNo,
+                length: this.cartonInfo?.length,
+                width: this.cartonInfo?.width,
+                height: this.cartonInfo?.height,
+                grossWeight: this.cartonInfo?.grossWeight,
+                netWeight: this.cartonInfo?.netWeight,
+                productDetails: p,
+                details: [{
+                  packageQuantity: p?.packageQuantity,
+                  variant: {
+                    sku: p?.addtionalDetails?.skuNo,
+                    variantId: p?.variantId
+                  }
+                }]
               }
-            }) 
+            });
+            console.log(':: this.stVariants ', this.packageDetailsInfo)
           },
         },
         {
@@ -536,12 +543,18 @@ export class ShipmentAndShippingFormComponent implements OnInit {
       data: {
         info: this.projectFormData,
         vList: (vData: any) => {
-          console.log(':: vData :: ', vData);
           this.packageInfo = vData;
+        },
+        cartonDetails: (cData: any) => {
+          this.cartonInfo = cData;
         },
         // origin: this.projectFormData.originLocation.connectionLocationId,
       },
     });
+  }
+
+  updateCartonDetails(event: any, keyName: string, index: number) {
+    this.packageDetailsInfo[index][keyName] = event.target.value;
   }
 
   updateValue(event: any, keyName: string, index: number) {
