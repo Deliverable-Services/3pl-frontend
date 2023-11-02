@@ -2,7 +2,7 @@
   <div class="add-session-btn">
     <d-breadcrumb>
       <d-breadcrumb-item>
-        <a routerLink="/business/transfer-order">{{
+        <a routerLink="/business/purchase-order/">{{
           "list.purchaseOrder.title" | translate
           }}</a>
       </d-breadcrumb-item>
@@ -70,7 +70,8 @@
               <d-button *ngIf="mode.toLowerCase() === 'edit' 
               && projectFormData.orderStatus?.toLowerCase() !== 'draft'
               && projectFormData.orderStatus?.toLowerCase() !== 'released'
-              && projectFormData.orderStatus?.toLowerCase() !== 'closed'" bsStyle="danger" class="danger"
+              && projectFormData.orderStatus?.toLowerCase() !== 'closed'
+              && projectFormData.orderStatus?.toLowerCase() !== 'canceled'" bsStyle="danger" class="danger"
                 [ngStyle]="{ float: 'right' }" circled="true" style="margin-right: 8px"
                 (btnClick)="confirmDialog('cancel')">
                 {{ "form.purchaseOrder.fields.cancel" | translate }}
@@ -277,13 +278,13 @@
                         dTextInput (keypress)="numberOnly($event)" autocomplete="off"
                         [placeholder]='"form.purchaseOrder.fields.plannedQuantity" | translate'
                         [value]="input.plannedQuantity" (input)="updateValue($event, 'plannedQuantity', i);
-                        input.productPrice = (input.exwSgdCost*input.plannedQuantity)+' SGD';" />
+                        input.productPrice = (input.exwSgdCost ? input.exwSgdCost : input.productPriceFront * input.plannedQuantity);" />
                     </d-form-control>
                   </d-form-item>
 
                   <d-form-item [ngStyle]="{ margin: '20px 20px 20px 0px' }">
                     <d-form-label [required]="true">{{ "form.purchaseOrder.fields.productPrice" | translate
-                      }}</d-form-label>
+                      }} (SGD)</d-form-label>
                     <d-form-control>
                       <input class="set-width"
                         disabled

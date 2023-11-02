@@ -18,7 +18,7 @@ export class CategoryListDataService extends CategoryListData {
     super();
     console.log('burl',environment.baseUrl);
     
-    this.baseApiUrl = 'http://btv-private-module-backend-logicloud-qa.apps.nonprod2-openshift-cluster.internal.logi-cloud.com/api/v1';
+    this.baseApiUrl = environment.baseUrl;
   }
 
   private searchParams = {

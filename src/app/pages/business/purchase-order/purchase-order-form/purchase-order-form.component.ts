@@ -249,6 +249,7 @@ export class PurchaseOrderFormComponent implements OnInit {
             skuNo: d?.skuNo,
             plannedQuantity: d?.poQuantity,
             productPrice: d?.productPrice,
+            productPriceFront: d?.productPrice,
             lockedQuantity: d?.lockedQuantity,
             receivedQuantity: d?.receivedQuantity,
             skuDescription: d?.skuDescription,
@@ -285,7 +286,7 @@ export class PurchaseOrderFormComponent implements OnInit {
         delete e["productPrice"];
         e["lineNumber"] = parseInt(key + 1);
         // e["sentQuantity"] = parseInt(e["sentQuantity"]);
-        e["plannedQuantity"] = parseInt(e["plannedQuantity"]);
+        e["poQuantity"] = parseInt(e["plannedQuantity"]);
         // e["receivedQuantity"] = parseInt(e["receivedQuantity"]);
       });
       this.projectFormData.details = this.detailsInputs;
@@ -372,33 +373,7 @@ export class PurchaseOrderFormComponent implements OnInit {
         //   return;
         // }
         this.purchaseOrderService
-          .updateTransferOrder(this.paramId, {
-            "vendor": {
-              "id": "a183174d-fd0a-46ac-a6f2-4d12538fef64"
-            },
-            "billToAddress": "address",
-            "shipToAddress": "822 Lyda Island",
-            "dueDate": "2023-11-01T00:00:00Z",
-            "tradeTerm": {
-              "creditTermsId": "e44546aa-8d10-452a-9500-6d9f065362b8"
-            },
-            "orderStatus": "DRAFT",
-            "sampleStatus": null,
-            "remarks": "",
-            "details": [
-              {
-                "variantId": "f3e5df7b-34d5-4e9e-b784-8b2766eee9d3",
-                "plannedQuantity": 2
-              },
-              {
-                "variantId": "2a7300c8-d153-4c15-acd3-77cb0729a14f",
-                "plannedQuantity": 8
-              }
-            ],
-            "shipToLocation": {
-              "connectionLocationId": "3be9bf45-c447-45c2-8555-3e30209c336a"
-            }
-          })
+          .updateTransferOrder(this.paramId, this.projectFormData)
           .subscribe(
             (res) => {
               this._showToast(res);
@@ -656,7 +631,7 @@ export class PurchaseOrderFormComponent implements OnInit {
 
     this.detailsInputs?.forEach((e: any, key: any) => {
       e["lineNumber"] = parseInt(key + 1);
-      e["plannedQuantity"] = parseInt(e["plannedQuantity"]);
+      e["poQuantity"] = parseInt(e["plannedQuantity"]);
       // e["sentQuantity"] = parseInt(e["sentQuantity"]);
       // e["receivedQuantity"] = parseInt(e["receivedQuantity"]);
       // if (e["sentQuantity"] > e["plannedQuantity"]) {
