@@ -359,7 +359,7 @@ export class TransferOrderFormComponent implements OnInit {
       if (this.mode === "Add") {
         this.router.navigate(["/business/transfer-order"]);
       } else {
-        window.location.reload();
+        // window.location.reload();
       }
     } else {
       type = "error";

@@ -4,11 +4,11 @@ import { InventoryService } from "src/app/@core/mock/inventory.service";
 import { PurchaseOrderService } from "src/app/@core/mock/purchase-order.service";
 
 @Component({
-  selector: "app-packages-form-modal",
-  templateUrl: "./packages-form-modal.component.html",
-  styleUrls: ["./packages-form-modal.component.scss"],
+  selector: "app-bulk-pack-form-modal",
+  templateUrl: "./bulk-pack-form-modal.component.html",
+  styleUrls: ["./bulk-pack-form-modal.component.scss"],
 })
-export class PackagesFormModalComponent implements OnInit {
+export class BulkPackFormModalComponent implements OnInit {
   @Input() data: any;
   @Input() handler: Function;
   @Output() modalClosed = new EventEmitter<any>();
@@ -45,6 +45,7 @@ export class PackagesFormModalComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    console.log(':: :: ', this.data.packageDetailsInfo)
     this.purchaseOrderService.setPageParams({
       pageNo: "",
       pageSize: '100',

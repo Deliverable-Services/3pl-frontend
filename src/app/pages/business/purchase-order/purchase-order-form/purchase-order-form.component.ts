@@ -248,7 +248,7 @@ export class PurchaseOrderFormComponent implements OnInit {
             variantId: d?.variantId,
             skuNo: d?.skuNo,
             plannedQuantity: d?.poQuantity,
-            productPrice: d?.productPrice,
+            productPrice: d?.poQuantity ? d?.productPrice:0,
             productPriceFront: d?.productPrice,
             lockedQuantity: d?.lockedQuantity,
             receivedQuantity: d?.receivedQuantity,
@@ -413,7 +413,8 @@ export class PurchaseOrderFormComponent implements OnInit {
       if (this.mode === "Add") {
         this.router.navigate(["/business/purchase-order"]);
       } else {
-        window.location.reload();
+        // window.location.reload();
+        // this.getTransferOrderById(this.paramId);
       }
     } else {
       type = "error";

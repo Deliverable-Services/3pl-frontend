@@ -289,6 +289,10 @@
                   (click)="openPackageDialog()">
                   {{ "form.sAndS.popupBtn2" | translate }}
                 </d-button>
+                <d-button [ngStyle]="{ 'margin-bottom': '12px', 'margin-left': '12px' }" dLoading class="mr-element-spacing" circled="true"
+                  (click)="openBulkPack()">
+                  {{ "form.sAndS.popupBtn3" | translate }}
+                </d-button>
               </d-form-operation>
             </div>
             <ng-container *ngIf="packageDetailsInfo?.length">
@@ -337,6 +341,15 @@
                   </d-form-item>
 
                   <d-form-item [ngStyle]="{ margin: '20px 20px 20px 0px' }">
+                    <d-form-label [required]="true">CBM</d-form-label>
+                    <d-form-control>
+                      <input class="set-width"
+                        dTextInput autocomplete="off"
+                        [value]="input.cbm" (input)="updateCartonDetails($event, 'cbm', i);" />
+                    </d-form-control>
+                  </d-form-item>
+
+                  <d-form-item [ngStyle]="{ margin: '20px 20px 20px 0px' }">
                     <d-form-label [required]="true">Gross Weight (kg)</d-form-label>
                     <d-form-control>
                       <input class="set-width"
@@ -346,7 +359,7 @@
                   </d-form-item>
 
                   <d-form-item [ngStyle]="{ margin: '20px 20px 20px 0px' }">
-                    <d-form-label [required]="true">Height (cm)</d-form-label>
+                    <d-form-label [required]="true">Net Weight (kg)</d-form-label>
                     <d-form-control>
                       <input class="set-width"
                         dTextInput autocomplete="off"

@@ -473,6 +473,7 @@ export default {
       editButtonTitle: "Purchase Order",
       popupBtn: "Select Product from PO",
       popupBtn2: "Create New Carton",
+      popupBtn3: "Bulk Pack",
       buttons: { publish: 'Publish', confirm: 'Confirmed', ship: 'Ship', cancel: 'Cancel', remove: 'Remove', dispatching: 'Dispatching' }
     },
     vendor: {

@@ -107,6 +107,7 @@
                 </d-form-label>
                 <d-form-control>
                   <d-select [ngStyle]="{'pointer-events': mode.toLowerCase() === 'edit' ? 'none' : 'auto', width: '100%'}"
+                  [disabled]="mode.toLowerCase() === 'edit'"
                     [placeholder]="'form.purchaseOrder.fields.vendor' | translate" [appendToBody]="true"
                     [multiple]="false" [filterKey]="'companyName'" [options]="vendorList" name="vendor"
                     [(ngModel)]="projectFormData.vendor" 
@@ -121,7 +122,7 @@
 
                 <div class="input-setting">
                   <d-form-item>
-                    <d-form-label [required]="true" [hasHelp]="false" [helpTips]="'This is Bill Address.'">
+                    <d-form-label [hasHelp]="false" [helpTips]="'This is Bill Address.'">
                       {{'form.purchaseOrder.fields.billAddress' | translate}}
                     </d-form-label>
                     <d-form-control>
@@ -155,6 +156,7 @@
                 </d-form-label>
                 <d-form-control>
                   <d-select 
+                  [disabled]="mode.toLowerCase() === 'edit'"
                     [ngStyle]="{'pointer-events': mode.toLowerCase() === 'edit' ? 'none' : 'auto', width: '100%'}"
                     [placeholder]="'form.purchaseOrder.fields.shippingToDepartment' | translate" [appendToBody]="true"
                     [multiple]="false" [filterKey]="'nodeName'" [options]="connectionLocationList" name="shipToLocation"
@@ -167,7 +169,7 @@
 
               <ng-container>
                 <d-form-item>
-                  <d-form-label [required]="true" [hasHelp]="false" [helpTips]="'This is Shipping Address.'">
+                  <d-form-label [hasHelp]="false" [helpTips]="'This is Shipping Address.'">
                     {{'form.purchaseOrder.fields.shippingAddress' | translate}}
                   </d-form-label>
                   <d-form-control>

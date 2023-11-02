@@ -8,6 +8,7 @@ import { MSG } from "src/config/global-var";
 import { ProductsListDataService } from "src/app/@core/mock/products-data.service";
 import { ShipmentAndShippingFormModalComponent } from "../shipment-and-shipping-form-modal/shipment-and-shipping-form-modal.component";
 import { PackagesFormModalComponent } from "../packages-form-modal/packages-form-modal.component";
+import { BulkPackFormModalComponent } from "../bulk-pack-form-modal/bulk-pack-form-modal.component";
 
 @Component({
   selector: "app-shipment-and-shipping-form",
@@ -96,10 +97,20 @@ export class ShipmentAndShippingFormComponent implements OnInit {
 
   packageConfig = {
     id: "dialog-service",
-    width: "70%",
+    width: "50%",
     maxHeight: "600px",
     title: "Carton Details",
     content: PackagesFormModalComponent,
+    backdropCloseable: true,
+    onClose: () => console.log("")
+  };
+
+  bulkConfig = {
+    id: "dialog-service",
+    width: "50%",
+    maxHeight: "600px",
+    title: "Select Product from Shipment",
+    content: BulkPackFormModalComponent,
     backdropCloseable: true,
     onClose: () => console.log("")
   };
@@ -516,6 +527,7 @@ export class ShipmentAndShippingFormComponent implements OnInit {
                 length: this.cartonInfo?.length,
                 width: this.cartonInfo?.width,
                 height: this.cartonInfo?.height,
+                cbm: this.cartonInfo?.cbm,
                 grossWeight: this.cartonInfo?.grossWeight,
                 netWeight: this.cartonInfo?.netWeight,
                 productDetails: p,
@@ -547,6 +559,43 @@ export class ShipmentAndShippingFormComponent implements OnInit {
         },
         cartonDetails: (cData: any) => {
           this.cartonInfo = cData;
+        },
+        // origin: this.projectFormData.originLocation.connectionLocationId,
+      },
+    });
+  }
+
+  openBulkPack(dialogtype?: string, showAnimation?: boolean) {
+    const results = this.dialogService.open({
+      ...this.bulkConfig,
+      dialogtype: dialogtype,
+      showAnimation: showAnimation,
+      buttons: [
+        {
+          cssClass: "primary",
+          text: "Ok",
+          disabled: false,
+          handler: (variantList: any) => {
+            results.modalInstance.hide();
+          },
+        },
+        {
+          id: "btn-cancel",
+          cssClass: "common",
+          text: "Cancel",
+          handler: (variantList: any) => {
+            results.modalInstance.hide();
+          },
+        },
+      ],
+      data: {
+        info: this.projectFormData,
+        packageDetailsInfo: this.packageDetailsInfo,
+        vList: (vData: any) => {
+          // this.packageInfo = vData;
+        },
+        cartonDetails: (cData: any) => {
+          // this.cartonInfo = cData;
         },
         // origin: this.projectFormData.originLocation.connectionLocationId,
       },
