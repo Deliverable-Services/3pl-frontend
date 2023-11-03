@@ -1,103 +1,240 @@
-<div [ngStyle]="{ display: 'flex', justifyContent: 'space-between' }">
-    <div [ngStyle]="{ display: 'flex' }">
-    <!-- <d-form-item [ngStyle]="{ margin: '20px 20px 20px 0px' }">
-        <d-form-label [required]="true">Carton No.</d-form-label>
-        <d-form-control>
-        <input (blur)="updateCarton()" class="set-width" dTextInput autocomplete="off" [(ngModel)]="cartonDetails.ctnNo"/>
-        </d-form-control>
-    </d-form-item> -->
-
-    <d-form-item [ngStyle]="{ margin: '20px 20px 20px 0px' }">
-        <d-form-label [required]="true">Length (cm)</d-form-label>
-        <d-form-control>
-        <input (blur)="updateCarton()" class="set-width" dTextInput autocomplete="off" [(ngModel)]="cartonDetails.length"/>
-        </d-form-control>
-    </d-form-item>
-
-    <span class="set-mrgn">
-        <svg width="15" height="18" viewBox="0 0 15 18" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M3.45455 0.545454L7.63636 7.68182L11.8182 0.545454H14.9091L9.27273 9.27273L14.9091 18H11.8182L7.63636 11.2273L3.45455 18H0.363636L5.90909 9.27273L0.363636 0.545454H3.45455Z" fill="black"/>
-            </svg>
-    </span>
-
-    <d-form-item [ngStyle]="{ margin: '20px 20px 20px 0px' }">
-        <d-form-label [required]="true">Width (cm)</d-form-label>
-        <d-form-control>
-        <input (blur)="updateCarton()" class="set-width" dTextInput autocomplete="off" [(ngModel)]="cartonDetails.width">
-        </d-form-control>
-    </d-form-item>
-
-    <span class="set-mrgn">
-        <svg width="15" height="18" viewBox="0 0 15 18" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M3.45455 0.545454L7.63636 7.68182L11.8182 0.545454H14.9091L9.27273 9.27273L14.9091 18H11.8182L7.63636 11.2273L3.45455 18H0.363636L5.90909 9.27273L0.363636 0.545454H3.45455Z" fill="black"/>
-            </svg>
-    </span>
-
-    <d-form-item [ngStyle]="{ margin: '20px 20px 20px 0px' }">
-        <d-form-label [required]="true">Height (cm)</d-form-label>
-        <d-form-control>
-        <input (blur)="updateCarton()" class="set-width" dTextInput autocomplete="off" [(ngModel)]="cartonDetails.height"/>
-        </d-form-control>
-    </d-form-item>
-
-    <span class="set-mrgn">
-        <svg width="15" height="10" viewBox="0 0 15 10" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M0.545455 2.77273V0.318181H14.5455V2.77273H0.545455ZM0.545455 9.5V7.04545H14.5455V9.5H0.545455Z" fill="black"/>
-            </svg>
-    </span>
-
-    <d-form-item [ngStyle]="{ margin: '20px 20px 20px 0px' }">
-        <d-form-label>CBM</d-form-label>
-        <d-form-control>
-        <input disabled class="set-width" dTextInput autocomplete="off" [(ngModel)]="cartonDetails.cbm"/>
-        </d-form-control>
-    </d-form-item>
-    </div>
-</div>
-
-<div [ngStyle]="{ display: 'flex', justifyContent: 'space-between' }">
-    <div [ngStyle]="{ display: 'flex' }">
-    <d-form-item [ngStyle]="{ margin: '20px 20px 20px 0px' }">
-        <d-form-label [required]="true">Gross Weight (kg)</d-form-label>
-        <d-form-control>
-        <input (blur)="updateCarton()" class="set-width" dTextInput autocomplete="off" [(ngModel)]="cartonDetails.grossWeight"/>
-        </d-form-control>
-    </d-form-item>
-
-    <d-form-item [ngStyle]="{ margin: '20px 20px 20px 0px' }">
-        <d-form-label [required]="true">Net Weight (kg)</d-form-label>
-        <d-form-control>
-        <input (blur)="updateCarton()" class="set-width" dTextInput autocomplete="off" [(ngModel)]="cartonDetails.netWeight"/>
-        </d-form-control>
-    </d-form-item>
-    </div>
-</div>
-
 <div class="column-container">
-    <div class="column-left">        
-        <div class="manage-variants" *ngIf="storePoDetails">
-            <h3>Select Product from Shipment</h3>
-            <h4>PO No. and SKU</h4>
-            <ul class="variant-list">
-                <li *ngFor="let v of storePoDetails" class="variant-item">
-                    <label>
-                        <input type="checkbox"
-                               (change)="storeObjectData(v)" [(ngModel)]="v.selected"
-                               [checked]="v.itemAlreadySelected">
-                        {{ v.addtionalDetails.skuNo }} Shipment Remaining Qty - {{v?.addtionalDetails?.poQuantity ? (v.addtionalDetails.poQuantity - (v.addtionalDetails.lockedQuantity+v.addtionalDetails.receivedQuantity)):0}}
-                    </label>
-                </li>
-            </ul>
+    <div class="column-left">
+      <div class="manage-variants" *ngIf="storePoDetails">
+        <h3>Select Product from Shipment</h3>
+        <div>
+          <d-form-item>
+            <d-form-label> PO No. and SKU </d-form-label>
+            <d-form-control>
+              <d-select
+                [appendToBody]="true"
+                [multiple]="false"
+                [filterKey]="'valueToShow'"
+                [options]="storePoDetails"
+                name="valueToShow"
+                (valueChange)="data.vList(selectedPoValue)"
+                [(ngModel)]="selectedPoValue"
+              ></d-select>
+            </d-form-control>
+          </d-form-item>
         </div>
-        <div class="manage-variants" *ngIf="cartItems?.length">
-            <h3></h3>
-            <h4>Qty</h4>
-            <ul class="variant-list">
-                <li *ngFor="let cart of cartItems; let i = index" class="variant-item">
-                    <input class="set-width" dTextInput autocomplete="off" [value]="cart.packageQuantity"
-                        (input)="updateValue($event, 'packageQuantity', i)" />
-                </li>
-            </ul>
-        </div>
+      </div>
     </div>
+  </div>
+  
+  
+  <div *ngIf="selectedPoValue" class="sub-header">
+      <label>
+          Packing Details ({{selectedPoValue.poId}} : {{ selectedPoValue.addtionalDetails.skuNo }} - Max Pack - {{selectedPoValue?.addtionalDetails?.poQuantity ? (selectedPoValue.addtionalDetails.poQuantity - (selectedPoValue.addtionalDetails.lockedQuantity+selectedPoValue.addtionalDetails.receivedQuantity)):0}})
+      </label>
+  </div>
+
+  <div *ngIf="selectedPoValue" [ngStyle]="{ display: 'flex', justifyContent: 'space-between' }">
+    <div [ngStyle]="{ display: 'flex' }">
+      <d-form-item [ngStyle]="{ margin: '20px 20px 20px 0px' }">
+        <d-form-label [required]="true">Number of Cartons</d-form-label>
+        <d-form-control>
+          <input
+            (blur)="updateCarton()"
+            class="set-width"
+            dTextInput
+            autocomplete="off"
+            [(ngModel)]="cartonDetails.noOfCarton"
+          />
+        </d-form-control>
+      </d-form-item>
+  
+      <span class="set-mrgn">
+        <svg
+          width="15"
+          height="18"
+          viewBox="0 0 15 18"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M3.45455 0.545454L7.63636 7.68182L11.8182 0.545454H14.9091L9.27273 9.27273L14.9091 18H11.8182L7.63636 11.2273L3.45455 18H0.363636L5.90909 9.27273L0.363636 0.545454H3.45455Z"
+            fill="black"
+          />
+        </svg>
+      </span>
+  
+      <d-form-item [ngStyle]="{ margin: '20px 20px 20px 0px' }">
+        <d-form-label [required]="true">Qty in one cartons</d-form-label>
+        <d-form-control>
+          <input
+            (blur)="updateCarton()"
+            class="set-width"
+            dTextInput
+            autocomplete="off"
+            [(ngModel)]="cartonDetails.qtyInOne"
+          />
+        </d-form-control>
+      </d-form-item>
+  
+      <span class="set-mrgn">
+        <svg
+          width="15"
+          height="10"
+          viewBox="0 0 15 10"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M0.545455 2.77273V0.318181H14.5455V2.77273H0.545455ZM0.545455 9.5V7.04545H14.5455V9.5H0.545455Z"
+            fill="black"
+          />
+        </svg>
+      </span>
+  
+      <d-form-item [ngStyle]="{ margin: '20px 20px 20px 0px' }">
+        <d-form-label>Total packed qty</d-form-label>
+        <d-form-control>
+          <input
+            disabled
+            class="set-width"
+            dTextInput
+            autocomplete="off"
+            [(ngModel)]="cartonDetails.totalPackedQty"
+          />
+        </d-form-control>
+      </d-form-item>
+    </div>
+  </div>
+
+  <div *ngIf="selectedPoValue" class="sub-header">
+    <label>
+        Each Carton Details
+    </label>
+</div>
+
+<div *ngIf="selectedPoValue" [ngStyle]="{ display: 'flex', justifyContent: 'space-between' }">
+  <div [ngStyle]="{ display: 'flex' }">
+    <d-form-item [ngStyle]="{ margin: '20px 20px 20px 0px' }">
+      <d-form-label [required]="true">Length (cm)</d-form-label>
+      <d-form-control>
+        <input
+          (blur)="updateCarton()"
+          class="set-width"
+          dTextInput
+          autocomplete="off"
+          [(ngModel)]="cartonDetails.length"
+        />
+      </d-form-control>
+    </d-form-item>
+
+    <span class="set-mrgn">
+      <svg
+        width="15"
+        height="18"
+        viewBox="0 0 15 18"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          d="M3.45455 0.545454L7.63636 7.68182L11.8182 0.545454H14.9091L9.27273 9.27273L14.9091 18H11.8182L7.63636 11.2273L3.45455 18H0.363636L5.90909 9.27273L0.363636 0.545454H3.45455Z"
+          fill="black"
+        />
+      </svg>
+    </span>
+
+    <d-form-item [ngStyle]="{ margin: '20px 20px 20px 0px' }">
+      <d-form-label [required]="true">Width (cm)</d-form-label>
+      <d-form-control>
+        <input
+          (blur)="updateCarton()"
+          class="set-width"
+          dTextInput
+          autocomplete="off"
+          [(ngModel)]="cartonDetails.width"
+        />
+      </d-form-control>
+    </d-form-item>
+
+    <span class="set-mrgn">
+      <svg
+        width="15"
+        height="18"
+        viewBox="0 0 15 18"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          d="M3.45455 0.545454L7.63636 7.68182L11.8182 0.545454H14.9091L9.27273 9.27273L14.9091 18H11.8182L7.63636 11.2273L3.45455 18H0.363636L5.90909 9.27273L0.363636 0.545454H3.45455Z"
+          fill="black"
+        />
+      </svg>
+    </span>
+
+    <d-form-item [ngStyle]="{ margin: '20px 20px 20px 0px' }">
+      <d-form-label [required]="true">Height (cm)</d-form-label>
+      <d-form-control>
+        <input
+          (blur)="updateCarton()"
+          class="set-width"
+          dTextInput
+          autocomplete="off"
+          [(ngModel)]="cartonDetails.height"
+        />
+      </d-form-control>
+    </d-form-item>
+
+    <span class="set-mrgn">
+      <svg
+        width="15"
+        height="10"
+        viewBox="0 0 15 10"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          d="M0.545455 2.77273V0.318181H14.5455V2.77273H0.545455ZM0.545455 9.5V7.04545H14.5455V9.5H0.545455Z"
+          fill="black"
+        />
+      </svg>
+    </span>
+
+    <d-form-item [ngStyle]="{ margin: '20px 20px 20px 0px' }">
+      <d-form-label>CBM</d-form-label>
+      <d-form-control>
+        <input
+          disabled
+          class="set-width"
+          dTextInput
+          autocomplete="off"
+          [(ngModel)]="cartonDetails.cbm"
+        />
+      </d-form-control>
+    </d-form-item>
+  </div>
+</div>
+
+<div *ngIf="selectedPoValue" [ngStyle]="{ display: 'flex', justifyContent: 'space-between' }">
+  <div [ngStyle]="{ display: 'flex' }">
+    <d-form-item [ngStyle]="{ margin: '20px 20px 20px 0px' }">
+      <d-form-label [required]="true">Gross Weight (kg)</d-form-label>
+      <d-form-control>
+        <input
+          (blur)="updateCarton()"
+          class="set-width"
+          dTextInput
+          autocomplete="off"
+          [(ngModel)]="cartonDetails.grossWeight"
+        />
+      </d-form-control>
+    </d-form-item>
+
+    <d-form-item [ngStyle]="{ margin: '20px 20px 20px 0px' }">
+      <d-form-label [required]="true">Net Weight (kg)</d-form-label>
+      <d-form-control>
+        <input
+          (blur)="updateCarton()"
+          class="set-width"
+          dTextInput
+          autocomplete="off"
+          [(ngModel)]="cartonDetails.netWeight"
+        />
+      </d-form-control>
+    </d-form-item>
+  </div>
 </div>

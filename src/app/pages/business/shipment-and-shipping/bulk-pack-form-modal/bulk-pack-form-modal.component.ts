@@ -24,8 +24,12 @@ export class BulkPackFormModalComponent implements OnInit {
     columnName: "styleName",
     searchType: "match",
   };
+  selectedPoValue: any;
   selectedPoId: any;
   cartonDetails:any = {
+    noOfCarton: null,
+    qtyInOne: null,
+    totalPackedQty: null,
     ctnCode: null,
     ctnNo: null,
     length: null,
@@ -45,7 +49,6 @@ export class BulkPackFormModalComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    console.log(':: :: ', this.data.packageDetailsInfo)
     this.purchaseOrderService.setPageParams({
       pageNo: "",
       pageSize: '100',
@@ -66,7 +69,14 @@ export class BulkPackFormModalComponent implements OnInit {
             ...d,
             addtionalDetails: findMoreDetails.find((ad: any) => ad.id === d.poDetailsId)
           }
-        })
+        });
+        this.storePoDetails = this.storePoDetails?.map((s: any) => {
+          return {
+            ...s,
+            valueToShow: `${s.poId} : ${s.addtionalDetails.skuNo} Shipment Remaining Qty - ${s?.addtionalDetails?.poQuantity ? (s.addtionalDetails.poQuantity - (s.addtionalDetails.lockedQuantity+s.addtionalDetails.receivedQuantity)):0}`
+          }
+        });
+        console.log('::  :: ', this.storePoDetails);
       });
   }
 
@@ -199,6 +209,10 @@ export class BulkPackFormModalComponent implements OnInit {
 
     if(this.cartonDetails.length && this.cartonDetails.width && this.cartonDetails.height) {
       this.cartonDetails.cbm = this.cartonDetails.length * this.cartonDetails.width * this.cartonDetails.height;
+    }
+
+    if(this.cartonDetails.noOfCarton && this.cartonDetails.qtyInOne) {
+      this.cartonDetails.totalPackedQty = this.cartonDetails.noOfCarton * this.cartonDetails.qtyInOne;
     }
   }
 }

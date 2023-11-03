@@ -141,6 +141,19 @@ export class ShippingOrderService {
     );
   }
 
+  addPackage(data: any, sId: any) {
+    const httpOptionsToken = {
+      headers: new HttpHeaders({
+      }),
+    };
+
+    return this.http.put(
+      `${this.baseApiUrl}/shipment/${sId}/add-packages`,
+      data,
+      httpOptionsToken
+    );
+  }
+
   resolveDiscrepancy(data: any) {
     const httpOptionsToken = {
       headers: new HttpHeaders({

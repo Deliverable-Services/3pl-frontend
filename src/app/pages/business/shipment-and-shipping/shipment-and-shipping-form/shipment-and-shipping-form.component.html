@@ -345,7 +345,7 @@
                     <d-form-control>
                       <input class="set-width"
                         dTextInput autocomplete="off"
-                        [value]="input.cbm" (input)="updateCartonDetails($event, 'cbm', i);" />
+                        [value]="input.length*input.width*input.height" (input)="updateCartonDetails($event, 'cbm', i);" />
                     </d-form-control>
                   </d-form-item>
 

@@ -45,8 +45,10 @@ export class ShipmentAndShippingFormComponent implements OnInit {
   locationID: string = "";
 
   packageInfo: any[] = [];
+  bulkDetailsInfo: any;
+  selectedPoDetails: any;
   cartonInfo: any = {};
-  packageDetailsInfo: any[] = [];
+  packageDetailsInfo: any;
   pageParam: any = {
     pageNo: "",
     pageSize: "",
@@ -109,7 +111,7 @@ export class ShipmentAndShippingFormComponent implements OnInit {
     id: "dialog-service",
     width: "50%",
     maxHeight: "600px",
-    title: "Select Product from Shipment",
+    title: "Bulk Pack",
     content: BulkPackFormModalComponent,
     backdropCloseable: true,
     onClose: () => console.log("")
@@ -254,6 +256,8 @@ export class ShipmentAndShippingFormComponent implements OnInit {
           let sVal = parseInt(b.lineNumber);
           return fVal > sVal ? 1 : fVal < sVal ? -1 : 0;
         });
+
+        this.packageDetailsInfo = this.projectFormData.packages;
 
         // console.log(':: :: ', this.projectFormData)
       },
@@ -405,7 +409,7 @@ export class ShipmentAndShippingFormComponent implements OnInit {
       if (this.mode === "Add") {
         this.router.navigate(["/business/shipment-and-shipping"]);
       } else {
-        window.location.reload();
+        this.getTransferOrderById(this.paramId);
       }
     } else {
       type = "error";
@@ -520,27 +524,17 @@ export class ShipmentAndShippingFormComponent implements OnInit {
           disabled: false,
           handler: (variantList: any) => {
             results.modalInstance.hide();
-            this.packageDetailsInfo = this.packageInfo?.map((p: any) => {
+            this.packageDetailsInfo = this.cartonInfo;
+            this.packageDetailsInfo['details'] = this.packageInfo?.map((p: any) => {
               return {
-                ctnCode: this.cartonInfo?.ctnCode,
-                ctnNo: this.cartonInfo?.ctnNo,
-                length: this.cartonInfo?.length,
-                width: this.cartonInfo?.width,
-                height: this.cartonInfo?.height,
-                cbm: this.cartonInfo?.cbm,
-                grossWeight: this.cartonInfo?.grossWeight,
-                netWeight: this.cartonInfo?.netWeight,
-                productDetails: p,
-                details: [{
-                  packageQuantity: p?.packageQuantity,
-                  variant: {
-                    sku: p?.addtionalDetails?.skuNo,
-                    variantId: p?.variantId
-                  }
-                }]
+                packageQuantity: p?.packageQuantity,
+                variant: {
+                  sku: p?.addtionalDetails?.skuNo,
+                  variantId: p?.variantId
+                }
               }
             });
-            console.log(':: this.stVariants ', this.packageDetailsInfo)
+            this.addPackage([this.packageDetailsInfo]);
           },
         },
         {
@@ -577,6 +571,29 @@ export class ShipmentAndShippingFormComponent implements OnInit {
           disabled: false,
           handler: (variantList: any) => {
             results.modalInstance.hide();
+            let preparePayload = [];
+            for (let i=0; i<this.bulkDetailsInfo.noOfCarton; i++) {
+              preparePayload.push({
+                ctnCode: this.bulkDetailsInfo?.ctnCode,
+                ctnNo: this.bulkDetailsInfo?.ctnNo,
+                length: this.bulkDetailsInfo?.length,
+                width: this.bulkDetailsInfo?.width,
+                height: this.bulkDetailsInfo?.height,
+                cbm: this.bulkDetailsInfo?.cbm,
+                grossWeight: this.bulkDetailsInfo?.grossWeight,
+                netWeight: this.bulkDetailsInfo?.netWeight,
+                details: [{
+                  packageQuantity: this.bulkDetailsInfo?.qtyInOne,
+                  variant: {
+                    sku: this.selectedPoDetails?.skuNo,
+                    variantId: this.selectedPoDetails?.variantId
+                  }
+                }]
+              });
+            }
+
+            // console.log(':: preparePayload :: ', preparePayload);
+            this.addPackage(preparePayload);
           },
         },
         {
@@ -592,10 +609,10 @@ export class ShipmentAndShippingFormComponent implements OnInit {
         info: this.projectFormData,
         packageDetailsInfo: this.packageDetailsInfo,
         vList: (vData: any) => {
-          // this.packageInfo = vData;
+          this.selectedPoDetails = vData;
         },
         cartonDetails: (cData: any) => {
-          // this.cartonInfo = cData;
+          this.bulkDetailsInfo = cData;
         },
         // origin: this.projectFormData.originLocation.connectionLocationId,
       },
@@ -929,5 +946,17 @@ export class ShipmentAndShippingFormComponent implements OnInit {
         day = '0' + day.toString();
     
     return year + '-' + month + '-' + day;
+  }
+
+  addPackage(formData: any) {
+    this.shippingOrderService.addPackage(formData, this.paramId)
+    .subscribe(
+      (res) => {
+        this._showToast(res);
+      },
+      (error) => {
+        this._showDateToast(error.error.detail);
+      }
+    );
   }
 }
