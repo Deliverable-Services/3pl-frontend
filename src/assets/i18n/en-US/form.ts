@@ -469,8 +469,8 @@ export default {
         poNo: 'PO No.',
         remainingQuantity: 'PO Remaining Quantity'
       },
-      buttonTitle: "Create Purchase Order",
-      editButtonTitle: "Purchase Order",
+      buttonTitle: "Create Shipping Order",
+      editButtonTitle: "Shipping Order",
       popupBtn: "Select Product from PO",
       popupBtn2: "Create New Carton",
       popupBtn3: "Bulk Pack",

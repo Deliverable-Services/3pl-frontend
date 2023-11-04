@@ -208,7 +208,7 @@ export class BulkPackFormModalComponent implements OnInit {
     this.data.cartonDetails(this.cartonDetails);
 
     if(this.cartonDetails.length && this.cartonDetails.width && this.cartonDetails.height) {
-      this.cartonDetails.cbm = this.cartonDetails.length * this.cartonDetails.width * this.cartonDetails.height;
+      this.cartonDetails.cbm = (this.cartonDetails.length * this.cartonDetails.width * this.cartonDetails.height)/1000000;
     }
 
     if(this.cartonDetails.noOfCarton && this.cartonDetails.qtyInOne) {

@@ -292,7 +292,7 @@
                         disabled
                         dTextInput (keypress)="numberOnly($event)" autocomplete="off"
                         [placeholder]='"form.purchaseOrder.fields.productPrice" | translate'
-                        [value]="input.productPrice * input.plannedQuantity" (input)="updateValue($event, 'productPrice', i)" />
+                        [value]="input?.productPrice * input?.plannedQuantity" (input)="updateValue($event, 'productPrice', i)" />
                     </d-form-control>
                   </d-form-item>
 

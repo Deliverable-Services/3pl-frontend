@@ -7,13 +7,15 @@
         <div class="first-list">
             <h3>PO List</h3>
             <ul class="variant-list">
-                <li *ngFor="let po of storePoDetails" class="variant-item">
-                    <label (click)="selectedPoId = po.id" [ngClass]="{'selectedPoId': selectedPoId === po.id}">
-                        <span class="manage-po-id">
-                            {{ po.id }}
-                        </span>
-                    </label>
-                </li>
+                <ng-container *ngFor="let po of storePoDetails">
+                    <li class="variant-item" [ngClass]="{'selectedPoId': selectedPoId === po.id}">
+                        <label (click)="selectedPoId = po.id">
+                            <span class="manage-po-id">
+                                {{ po.id }}
+                            </span>
+                        </label>
+                    </li>
+                </ng-container>
             </ul>
         </div>
         <div class="manage-variants" *ngIf="selectedPoId">
@@ -24,7 +26,7 @@
                         <input type="checkbox"
                                (change)="storeObjectData(v)" [(ngModel)]="v.selected"
                                [checked]="v.itemAlreadySelected">
-                        {{ v.skuNo }} Remaining Qty - {{v?.poQuantity ? (v.poQuantity - (v.lockedQuantity+v.receivedQuantity)):0}}
+                        {{ v.skuNo }} Remaining Qty: {{v?.poQuantity ? (v.poQuantity - (v.lockedQuantity+v.receivedQuantity)):0}}
                     </label>
                 </li>
             </ul>

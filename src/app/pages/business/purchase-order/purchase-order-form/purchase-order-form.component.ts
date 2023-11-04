@@ -283,7 +283,7 @@ export class PurchaseOrderFormComponent implements OnInit {
       // });
 
       this.detailsInputs?.forEach((e: any, key: any) => {
-        delete e["productPrice"];
+        // delete e["productPrice"];
         e["lineNumber"] = parseInt(key + 1);
         // e["sentQuantity"] = parseInt(e["sentQuantity"]);
         e["poQuantity"] = parseInt(e["plannedQuantity"]);
@@ -413,8 +413,7 @@ export class PurchaseOrderFormComponent implements OnInit {
       if (this.mode === "Add") {
         this.router.navigate(["/business/purchase-order"]);
       } else {
-        // window.location.reload();
-        // this.getTransferOrderById(this.paramId);
+        this.getTransferOrderById(this.paramId);
       }
     } else {
       type = "error";

@@ -47,9 +47,10 @@ export class ShipmentAndShippingFormModalComponent implements OnInit {
   getPoList() {
     this.purchaseOrderService.getTransferOrderList()
       .subscribe((res) => {
-        this.storePoDetails = res?.content?.filter((p: any) => (this.data.info.vendor.id === p.vendor.id
+        this.storePoDetails = res?.content?.filter((p: any) => (p.orderStatus === 'RELEASED'
+          && this.data.info.vendor.id === p.vendor.id
           && this.data.info.shipToLocation.connectionLocationId === p.shipToLocation.connectionLocationId));
-          console.log(':: :: ', this.storePoDetails);
+          // console.log(':: :: ', this.storePoDetails);
       });
   }
 
@@ -61,25 +62,27 @@ export class ShipmentAndShippingFormModalComponent implements OnInit {
   storeObjectData(obj: any) {
     // Check if the object is selected or deselected
 
-    const variantIdExists = this.selectedVariants.some(
-      (item) => item.variantId === obj.variantId
+    // console.log(':: obj :: ', obj, this.cartItems)
+
+    const variantIdExists = this.cartItems.some(
+      (item) => (item.variantId === obj.variantId && this.selectedPoId === item?.selectedPoId)
     );
 
     if (obj.selected) {
       if (!variantIdExists) {
         // Store the object's data in the selectedVariants array
-        this.selectedVariants.push(obj);
+        // this.selectedVariants.push(obj);
         this.cartItems.push({
           selectedPoId: this.selectedPoId,
           ...obj});
       }
     } else {
       // Remove the object from the selectedVariants array if deselected
-      const index = this.selectedVariants.findIndex(
-        (item) => item.variantId === obj.variantId
+      const index = this.cartItems.findIndex(
+        (item) => (item.variantId === obj.variantId && this.selectedPoId === item?.selectedPoId)
       );
       if (index !== -1) {
-        this.selectedVariants.splice(index, 1);
+        // this.selectedVariants.splice(index, 1);
         this.cartItems.splice(index, 1);
       }
     }
@@ -92,8 +95,7 @@ export class ShipmentAndShippingFormModalComponent implements OnInit {
       const removedItem = this.variantList[index];
       removedItem.selected = false; // Deselect the item
       this.cartItems.splice(index, 1);
-      this.selectedVariants.splice(index, 1);
-      
+      // this.selectedVariants.splice(index, 1);
     }
   }
 

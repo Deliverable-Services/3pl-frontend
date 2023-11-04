@@ -97,6 +97,7 @@
                 </d-form-label>
                 <d-form-control>
                   <d-select [ngStyle]="{'pointer-events': mode.toLowerCase() === 'edit' ? 'none' : 'auto', width: '100%'}"
+                  [disabled]="projectFormData.status?.toLowerCase() === 'draft'"
                     [placeholder]="'form.sAndS.fields.vendor' | translate" [appendToBody]="true"
                     [multiple]="false" [filterKey]="'companyName'" [options]="vendorList" name="vendor"
                     [(ngModel)]="projectFormData.vendor" 
@@ -109,36 +110,13 @@
               <ng-container>
 
                 <div class="input-setting">
-                  <!-- <d-form-item>
-                    <d-form-label [required]="true" [hasHelp]="false" [helpTips]="'This is Bill Address.'">
-                      {{'form.sAndS.fields.billAddress' | translate}}
-                    </d-form-label>
-                    <d-form-control>
-                      <input [(ngModel)]="projectFormData.billToAddress" 
-                      disabled dTextInput autocomplete="off" name="billToAddress" [placeholder]="'form.sAndS.fields.billAddress' | translate"/>
-                    </d-form-control>
-                  </d-form-item>
-                  
-                  <d-form-label>{{ "form.sAndS.fields.expectedDeliveryDate" | translate
-                    }}</d-form-label>
-                  <div style="width: 100%" cdiv class="devui-input-group devui-dropdown-origin"
-                    dActiveFormControl>
-                    <input
-                      disabled
-                      class="devui-input devui-form-control" [(ngModel)]="projectFormData.issueDate"
-                      autocomplete="off" placeholder="y-MM-dd"
-                      type="date" [min]="_dateVaidationForToday()" name="issueDate">
-                  </div> -->
                   <d-form-item>
-                    <d-form-label [required]="true" [hasHelp]="false" [helpTips]="'This is Shipping Address.'">
+                    <d-form-label [hasHelp]="false" [helpTips]="'This is Shipping Address.'">
                       {{'form.sAndS.fields.shippingAddress' | translate}}
                     </d-form-label>
                     <d-form-control>
-                      <input [(ngModel)]="projectFormData.shipToAddress" dTextInput autocomplete="off" 
-                      name="shipToAddress" [placeholder]="'form.sAndS.fields.shippingAddress' | translate"
-                      [dValidateRules]="{
-                        validators: [{ required: true }]
-                      }"/>
+                      <input disabled [(ngModel)]="projectFormData.shipToAddress" dTextInput autocomplete="off" 
+                      name="shipToAddress" [placeholder]="'form.sAndS.fields.shippingAddress' | translate"/>
                     </d-form-control>
                   </d-form-item>
                 </div>
@@ -157,6 +135,7 @@
                 <d-form-control>
                   <d-select 
                     [ngStyle]="{'pointer-events': mode.toLowerCase() === 'edit' ? 'none' : 'auto', width: '100%'}"
+                    [disabled]="projectFormData.status?.toLowerCase() === 'draft'"
                     [placeholder]="'form.sAndS.fields.shippingToDepartment' | translate" [appendToBody]="true"
                     [multiple]="false" [filterKey]="'nodeName'" [options]="connectionLocationList" name="shipToLocation"
                     (valueChange)="setAddress(projectFormData.shipToLocation.physicalAddress, 'shipToAddress')"
@@ -186,11 +165,10 @@
             </div>
           </div>
 
-          <d-form-item [ngStyle]="{ marginTop: '20px' }" [ngClass]="{'set-cursor': !(mode.toLowerCase() !== 'edit') && projectFormData.status?.toLowerCase() !== 'draft'}">
+          <d-form-item [ngStyle]="{ marginTop: '20px' }">
             <d-form-label>{{ "form.sAndS.fields.remarks" | translate }}</d-form-label>
             <d-form-control>
               <textarea
-                [ngStyle]="{'pointer-events': !(mode.toLowerCase() !== 'edit') && projectFormData.status?.toLowerCase() !== 'draft' ? 'none' : 'auto', height: '104px'}"
                 dTextarea resize="vertical" autocomplete="off" name="remarks"
                 [placeholder]="'form.sAndS.fields.remarks' | translate"
                 [(ngModel)]="projectFormData.remarks"></textarea>
@@ -297,7 +275,7 @@
             </div>
             <ng-container *ngIf="packageDetailsInfo?.length">
               <div *ngFor="let input of packageDetailsInfo; let i = index"
-                [ngStyle]="{ display: 'flex', justifyContent: 'space-between' }">
+                [ngStyle]="{ justifyContent: 'space-between' }">
                 <div [ngStyle]="{ display: 'flex' }">
                   <d-form-item [ngStyle]="{ margin: '20px 20px 20px 0px' }">
                     <d-form-label [required]="true">Carton Tracking No.</d-form-label>
@@ -345,7 +323,7 @@
                     <d-form-control>
                       <input class="set-width"
                         dTextInput autocomplete="off"
-                        [value]="input.length*input.width*input.height" (input)="updateCartonDetails($event, 'cbm', i);" />
+                        [value]="(input.length*input.width*input.height)/1000000" (input)="updateCartonDetails($event, 'cbm', i);" />
                     </d-form-control>
                   </d-form-item>
 
@@ -366,6 +344,12 @@
                         [value]="input.netWeight" (input)="updateCartonDetails($event, 'netWeight', i);" />
                     </d-form-control>
                   </d-form-item>
+                </div>
+
+                <div class="">
+                  <label *ngFor="let d of input.details; let in = index">
+                    {{d.variant.sku}} - Qty: {{d.packageQuantity}}
+                  </label>
                 </div>
 
               </div>

@@ -213,21 +213,12 @@ export class ShipmentAndShippingFormComponent implements OnInit {
   getTransferOrderById(id: string) {
     this.shippingOrderService.getById(id).subscribe(
       (res) => {
-        // if (res?.status?.toLowerCase() !== "draft") {
-        //   this.expectedDeliveryDateDisabled = true;
-        //   this.expectedArrivalDateDisabled = true;
-        // }
-
-        // console.log(':: :: ', res);
-
         this.createdDate = this.formatDate(res.createdDate) ?? "";
         this.modifiedDate = this.formatDate(res.lastModifiedDate) ?? "";
 
         this.selectedTransferOrder = res;
         this.projectFormData = res;
-        // this.projectFormData.originLocation.nodeName = `${this.projectFormData.originLocation.nodeType} - ${this.projectFormData.originLocation.nodeName}`;
-        // this.projectFormData.destinationLocation.nodeName = `${this.projectFormData.destinationLocation.nodeType} - ${this.projectFormData.destinationLocation.nodeName}`;
-
+        
         let expectedArrivalDate =
           this.projectFormData?.dueDate?.split("T");
         let expectedDeliveryDate =
@@ -259,6 +250,8 @@ export class ShipmentAndShippingFormComponent implements OnInit {
 
         this.packageDetailsInfo = this.projectFormData.packages;
 
+        console.log(':: this.packageDetailsInfo :: ', this.packageDetailsInfo)
+
         // console.log(':: :: ', this.projectFormData)
       },
       (error) => {
@@ -267,55 +260,34 @@ export class ShipmentAndShippingFormComponent implements OnInit {
     );
   }
 
+  _validateFormInputs() {
+    if(this.detailsInputs?.filter((p: any) => !p.shippedQuantity)?.length) {
+      this._showError();
+      return false;
+    }
+    return true;
+  }
+
+  _showError() {
+    this.toastService.open({
+      value: [{
+          severity: "error",
+          content: "One or more field is required!",
+        }],
+      life: 2000,
+    });
+  }
+
   submitProjectForm(event: any) {
     if (event?.valid) {
-      // this.detailsInputs?.forEach((e: any, key: any) => {
-      //   e["lineNumber"] = parseInt(key + 1);
-      // });
-
+      if(!this._validateFormInputs()) return;
       this.detailsInputs?.forEach((e: any, key: any) => {
         e["lineNumber"] = parseInt(key + 1);
-        // e["sentQuantity"] = parseInt(e["sentQuantity"]);
         e["plannedQuantity"] = parseInt(e["plannedQuantity"]);
-        // e["receivedQuantity"] = parseInt(e["receivedQuantity"]);
       });
       this.projectFormData.details = this.detailsInputs;
     
-      // let searchString = "T00:00:00Z"; // The string to search for
-      // Check if the searchString exists in the date strings
-      // if (!this.projectFormData?.dueDate?.includes(searchString)) {
-      //   this.projectFormData.dueDate =
-      //     this.projectFormData.dueDate + "T00:00:00Z";
-      // }
-      // if (!this.projectFormData?.issueDate?.includes(searchString)) {
-      //   this.projectFormData.issueDate =
-      //     (this.projectFormData.issueDate ? this.projectFormData.issueDate:'2023-10-20') + "T00:00:00Z";
-      // }
       if (this.mode === "Add") {
-        // const destinationId =
-        //   this.projectFormData.destinationLocation.connectionLocationId;
-        // const originId =
-        //   this.projectFormData.originLocation.connectionLocationId;
-
-        // delete this.projectFormData.destinationLocation?.nodeType;
-        // delete this.projectFormData.originLocation?.nodeType;
-
-        // if (destinationId == originId) {
-        //   this._showDuplicatToast();
-        // } else {
-          
-        // }
-
-        // console.log(':: :: ', {
-        //   ...this.projectFormData,
-        //   shipToLocation: {
-        //     connectionLocationId: this.projectFormData.shipToLocation.connectionLocationId
-        //   },
-        //   vendor: {
-        //     id: this.projectFormData.vendor.id
-        //   }
-        // });
-
         this.shippingOrderService
             .add({
               ...this.projectFormData,
@@ -523,6 +495,12 @@ export class ShipmentAndShippingFormComponent implements OnInit {
           text: "Ok",
           disabled: false,
           handler: (variantList: any) => {
+            if(!this.cartonInfo.length || !this.cartonInfo.width
+              || !this.cartonInfo.height || !this.cartonInfo.grossWeight
+              || !this.cartonInfo.netWeight) {
+                this._showError();
+                return;
+              }
             results.modalInstance.hide();
             this.packageDetailsInfo = this.cartonInfo;
             this.packageDetailsInfo['details'] = this.packageInfo?.map((p: any) => {
@@ -570,6 +548,12 @@ export class ShipmentAndShippingFormComponent implements OnInit {
           text: "Ok",
           disabled: false,
           handler: (variantList: any) => {
+            if(!this.bulkDetailsInfo?.length || !this.bulkDetailsInfo?.width
+              || !this.bulkDetailsInfo?.height || !this.bulkDetailsInfo?.grossWeight
+              || !this.bulkDetailsInfo?.netWeight) {
+                this._showError();
+                return;
+              }
             results.modalInstance.hide();
             let preparePayload = [];
             for (let i=0; i<this.bulkDetailsInfo.noOfCarton; i++) {
@@ -794,6 +778,7 @@ export class ShipmentAndShippingFormComponent implements OnInit {
   }
 
   confirmDialog(type: string) {
+    if(!this._validateFormInputs()) return;
     let stType = type;
     const results = this.dialogService.open({
       id: "dialog-service",
