@@ -1,6 +1,6 @@
 <form dForm [layout]="layout" (dSubmit)="submitShipmentDetail($event)">
   <d-form-item>
-    <d-form-label [required]="true">Purchase Order：</d-form-label>
+    <d-form-label [required]="true">Purchase Order:</d-form-label>
     <d-form-control>
       <d-select
         [appendToBody]="true"
@@ -16,7 +16,7 @@
     </d-form-control>
   </d-form-item>
   <d-form-item>
-    <d-form-label [required]="true">Purchase Order Detail：</d-form-label>
+    <d-form-label [required]="true">Purchase Order Detail:</d-form-label>
     <d-form-control>
       <d-select
         [disabled]="poDetailList.length === 0"
