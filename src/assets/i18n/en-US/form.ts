@@ -435,7 +435,9 @@ export default {
         receivedQty: "Received Qty",
         lockedQuantity: "Locked Qty",
         receivedQuantity: "Received Qty",
-        productPrice: 'Price'
+        productPrice: 'Price (SGD)',
+        sampleStatus: 'Sample Status',
+        totalProductPrice: 'Total Product Price'
       },
       buttonTitle: "Create Purchase Order",
       editButtonTitle: "Purchase Order",
@@ -469,11 +471,17 @@ export default {
         poNo: 'PO No.',
         remainingQuantity: 'PO Remaining Quantity'
       },
+      extraFields: { cartonTrackingNo: 'Carton Tracking No.', cartonNo: 'Carton No.', length: 'Length (cm)', width: 'Width (cm)', height: 'Height (cm)',
+      cbm: 'CBM', grossWeight: 'Gross Weight (kg)', netWeight: 'Net Weight (kg)', numberOfCartons: 'Number of Cartons', 
+      qtyInOneCartons: 'Qty in one cartons', totalPackedQty: 'Total packed qty' },
       buttonTitle: "Create Shipping Order",
       editButtonTitle: "Shipping Order",
       popupBtn: "Select Product from PO",
       popupBtn2: "Create New Carton",
       popupBtn3: "Bulk Pack",
+      pTitleOne: '從出貨中選擇產品',
+      pTitleTwo: '採購訂單號碼和 SKU',
+      pTitleThree: 'Each Carton Details',
       buttons: { publish: 'Publish', confirm: 'Confirmed', ship: 'Ship', cancel: 'Cancel', remove: 'Remove', dispatching: 'Dispatching' }
     },
     vendor: {

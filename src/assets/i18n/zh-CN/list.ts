@@ -37,6 +37,34 @@ export default {
       lastModifiedDate: "更新日期",
       lastModifiedBy: "更新者"
     },
+    purchaseOrder:{
+      status: "地位",
+      id: "PO No.",
+      nodeName:"小贩",
+      nodeName2:"运送至部门",
+      receiptDiscrepancy:"样品状态",
+      list:"采购订单",
+      title:"采购订单列表",
+      buttonTitle:"创建采购订单",
+      actions:"行动",
+      lastModifiedDate: "更新日期",
+      lastModifiedBy: "更新者",
+      searchWithOrder: "使用订单号搜索",
+      searchWithStatus: "选择状态"
+    },
+    sAndS:{
+      status: "地位",
+      id: "发货编号",
+      nodeName:"小贩",
+      nodeName2:"运送至部门",
+      receiptDiscrepancy:"样品状态",
+      list:"运输与运输",
+      title:"发货订单清单",
+      buttonTitle:"创建装运订单",
+      actions:"行动",
+      lastModifiedDate: "更新日期",
+      lastModifiedBy: "更新者"
+    },
     category: {
       title: "类别",
       categoryList: "类别列表",

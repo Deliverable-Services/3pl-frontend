@@ -29,12 +29,12 @@
                               [(ngModel)]="searchKeywords.id"
                               (input)="startSearch($event)"
                               class="da-inline"
-                              [placeholder]="'Search with Order No'"
+                              [placeholder]='"list.purchaseOrder.searchWithOrder" | translate'
                             ></d-search>
 
                             <d-select [ngStyle]="selectStyle"
                             class="da-inline"
-                            placeholder="Select a Status" [scrollHight]="'300px'"
+                            [placeholder]='"list.purchaseOrder.searchWithStatus" | translate' [scrollHight]="'300px'"
                             (valueChange)="startSearch($event)"
                             [filterKey]="'status'" [appendToBody]="true" [options]="statusList" name="status"
                             [(ngModel)]="searchKeywords.status"></d-select>

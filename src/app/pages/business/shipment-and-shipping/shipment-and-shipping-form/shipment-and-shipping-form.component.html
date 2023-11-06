@@ -30,7 +30,9 @@
 
             <d-form-operation>
               <div *ngIf="projectFormData.status" style="text-align: right;">
-                <label><span class="bold-label">Status:</span>
+                <label><span class="bold-label">{{
+                  "list.sAndS.status" | translate
+                  }}:</span>
                   {{projectFormData.status}}
                 </label>
                 <br>
@@ -278,7 +280,7 @@
                 [ngStyle]="{ justifyContent: 'space-between' }">
                 <div [ngStyle]="{ display: 'flex' }">
                   <d-form-item [ngStyle]="{ margin: '20px 20px 20px 0px' }">
-                    <d-form-label [required]="true">Carton Tracking No.</d-form-label>
+                    <d-form-label [required]="true">{{ "form.sAndS.extraFields.cartonTrackingNo" | translate }}</d-form-label>
                     <d-form-control>
                       <input class="set-width" dTextInput autocomplete="off" [value]="input.ctnCode"
                         (input)="updateCartonDetails($event, 'ctnCode', i)" />
@@ -286,7 +288,7 @@
                   </d-form-item>
 
                   <d-form-item [ngStyle]="{ margin: '20px 20px 20px 0px' }">
-                    <d-form-label [required]="true">Carton No.</d-form-label>
+                    <d-form-label [required]="true">{{ "form.sAndS.extraFields.cartonNo" | translate }}</d-form-label>
                     <d-form-control>
                       <input class="set-width" dTextInput autocomplete="off" [value]="input.ctnNo"
                         (input)="updateCartonDetails($event, 'ctnNo', i)" />
@@ -294,14 +296,14 @@
                   </d-form-item>
 
                   <d-form-item [ngStyle]="{ margin: '20px 20px 20px 0px' }">
-                    <d-form-label [required]="true">Length (cm)</d-form-label>
+                    <d-form-label [required]="true">{{ "form.sAndS.extraFields.length" | translate }}</d-form-label>
                     <d-form-control>
                       <input class="set-width" (input)="updateCartonDetails($event, 'length', i)" dTextInput autocomplete="off" [value]="input.length">
                     </d-form-control>
                   </d-form-item>
 
                   <d-form-item [ngStyle]="{ margin: '20px 20px 20px 0px' }">
-                    <d-form-label [required]="true">Width (cm)</d-form-label>
+                    <d-form-label [required]="true">{{ "form.sAndS.extraFields.width" | translate }}</d-form-label>
                     <d-form-control>
                       <input class="set-width"
                         dTextInput autocomplete="off"
@@ -310,7 +312,7 @@
                   </d-form-item>
 
                   <d-form-item [ngStyle]="{ margin: '20px 20px 20px 0px' }">
-                    <d-form-label [required]="true">Height (cm)</d-form-label>
+                    <d-form-label [required]="true">{{ "form.sAndS.extraFields.height" | translate }}</d-form-label>
                     <d-form-control>
                       <input class="set-width"
                         dTextInput autocomplete="off"
@@ -319,7 +321,7 @@
                   </d-form-item>
 
                   <d-form-item [ngStyle]="{ margin: '20px 20px 20px 0px' }">
-                    <d-form-label [required]="true">CBM</d-form-label>
+                    <d-form-label [required]="true">{{ "form.sAndS.extraFields.cbm" | translate }}</d-form-label>
                     <d-form-control>
                       <input class="set-width"
                         dTextInput autocomplete="off"
@@ -328,7 +330,7 @@
                   </d-form-item>
 
                   <d-form-item [ngStyle]="{ margin: '20px 20px 20px 0px' }">
-                    <d-form-label [required]="true">Gross Weight (kg)</d-form-label>
+                    <d-form-label [required]="true">{{ "form.sAndS.extraFields.grossWeight" | translate }}</d-form-label>
                     <d-form-control>
                       <input class="set-width"
                         dTextInput autocomplete="off"
@@ -337,7 +339,7 @@
                   </d-form-item>
 
                   <d-form-item [ngStyle]="{ margin: '20px 20px 20px 0px' }">
-                    <d-form-label [required]="true">Net Weight (kg)</d-form-label>
+                    <d-form-label [required]="true">{{ "form.sAndS.extraFields.netWeight" | translate }}</d-form-label>
                     <d-form-control>
                       <input class="set-width"
                         dTextInput autocomplete="off"

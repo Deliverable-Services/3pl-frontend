@@ -37,6 +37,34 @@ export default {
       lastModifiedDate: "更新日期",
       lastModifiedBy: "更新者"
     },
+    purchaseOrder:{
+      status: "地位",
+      id: "PO No.",
+      nodeName:"小販",
+      nodeName2:"運送至部門",
+      receiptDiscrepancy:"樣品狀態",
+      list:"採購訂單",
+      title:"採購訂單列表",
+      buttonTitle:"建立採購訂單",
+      actions:"行動",
+      lastModifiedDate: "更新日期",
+      lastModifiedBy: "更新者",
+      searchWithOrder: "使用訂單編號搜尋",
+      searchWithStatus: "選擇狀態"
+    },
+    sAndS:{
+      status: "地位",
+      id: "出貨編號",
+      nodeName:"小販",
+      nodeName2:"運送至部門",
+      receiptDiscrepancy:"樣品狀態",
+      list:"運輸與運輸",
+      title:"出貨訂單清單",
+      buttonTitle:"建立出貨訂單",
+      actions:"行動",
+      lastModifiedDate: "更新日期",
+      lastModifiedBy: "更新者"
+    },
     category: {
       title: "類別",
       categoryList: "類別列表",

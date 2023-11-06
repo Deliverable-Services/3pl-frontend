@@ -1,10 +1,10 @@
 <div class="column-container">
     <div class="column-left">
       <div class="manage-variants" *ngIf="storePoDetails">
-        <h3>Select Product from Shipment</h3>
+        <h3>{{ "form.sAndS.pTitleOne" | translate }}</h3>
         <div>
           <d-form-item>
-            <d-form-label> PO No. and SKU </d-form-label>
+            <d-form-label> {{ "form.sAndS.pTitleTwo" | translate }} </d-form-label>
             <d-form-control>
               <d-select
                 [appendToBody]="true"
@@ -25,14 +25,14 @@
   
   <div *ngIf="selectedPoValue" class="sub-header">
       <label>
-          Packing Details ({{selectedPoValue.poId}} : {{ selectedPoValue.addtionalDetails.skuNo }} - Max Pack - {{selectedPoValue?.addtionalDetails?.poQuantity ? (selectedPoValue.addtionalDetails.poQuantity - (selectedPoValue.addtionalDetails.lockedQuantity+selectedPoValue.addtionalDetails.receivedQuantity)):0}})
+        {{ "form.sAndS.title3" | translate }} ({{selectedPoValue.poId}} : {{ selectedPoValue.addtionalDetails.skuNo }} - Max Pack - {{selectedPoValue?.addtionalDetails?.poQuantity ? (selectedPoValue.addtionalDetails.poQuantity - (selectedPoValue.addtionalDetails.lockedQuantity+selectedPoValue.addtionalDetails.receivedQuantity)):0}})
       </label>
   </div>
 
   <div *ngIf="selectedPoValue" [ngStyle]="{ display: 'flex', justifyContent: 'space-between' }">
     <div [ngStyle]="{ display: 'flex' }">
       <d-form-item [ngStyle]="{ margin: '20px 20px 20px 0px' }">
-        <d-form-label [required]="true">Number of Cartons</d-form-label>
+        <d-form-label [required]="true">{{ "form.sAndS.extraFields.numberOfCartons" | translate }}</d-form-label>
         <d-form-control>
           <input
             (blur)="updateCarton()"
@@ -60,7 +60,7 @@
       </span>
   
       <d-form-item [ngStyle]="{ margin: '20px 20px 20px 0px' }">
-        <d-form-label [required]="true">Qty in one cartons</d-form-label>
+        <d-form-label [required]="true">{{ "form.sAndS.extraFields.qtyInOneCartons" | translate }}</d-form-label>
         <d-form-control>
           <input
             (blur)="updateCarton()"
@@ -88,7 +88,7 @@
       </span>
   
       <d-form-item [ngStyle]="{ margin: '20px 20px 20px 0px' }">
-        <d-form-label>Total packed qty</d-form-label>
+        <d-form-label>{{ "form.sAndS.extraFields.totalPackedQty" | translate }}</d-form-label>
         <d-form-control>
           <input
             disabled
@@ -104,14 +104,14 @@
 
   <div *ngIf="selectedPoValue" class="sub-header">
     <label>
-        Each Carton Details
+      {{ "form.sAndS.pTitleThree" | translate }}
     </label>
 </div>
 
 <div *ngIf="selectedPoValue" [ngStyle]="{ display: 'flex', justifyContent: 'space-between' }">
   <div [ngStyle]="{ display: 'flex' }">
     <d-form-item [ngStyle]="{ margin: '20px 20px 20px 0px' }">
-      <d-form-label [required]="true">Length (cm)</d-form-label>
+      <d-form-label [required]="true">{{ "form.sAndS.extraFields.length" | translate }}</d-form-label>
       <d-form-control>
         <input
           (blur)="updateCarton()"
@@ -139,7 +139,7 @@
     </span>
 
     <d-form-item [ngStyle]="{ margin: '20px 20px 20px 0px' }">
-      <d-form-label [required]="true">Width (cm)</d-form-label>
+      <d-form-label [required]="true">{{ "form.sAndS.extraFields.width" | translate }}</d-form-label>
       <d-form-control>
         <input
           (blur)="updateCarton()"
@@ -167,7 +167,7 @@
     </span>
 
     <d-form-item [ngStyle]="{ margin: '20px 20px 20px 0px' }">
-      <d-form-label [required]="true">Height (cm)</d-form-label>
+      <d-form-label [required]="true">{{ "form.sAndS.extraFields.height" | translate }}</d-form-label>
       <d-form-control>
         <input
           (blur)="updateCarton()"
@@ -195,7 +195,7 @@
     </span>
 
     <d-form-item [ngStyle]="{ margin: '20px 20px 20px 0px' }">
-      <d-form-label>CBM</d-form-label>
+      <d-form-label>{{ "form.sAndS.extraFields.cbm" | translate }}</d-form-label>
       <d-form-control>
         <input
           disabled
@@ -212,7 +212,7 @@
 <div *ngIf="selectedPoValue" [ngStyle]="{ display: 'flex', justifyContent: 'space-between' }">
   <div [ngStyle]="{ display: 'flex' }">
     <d-form-item [ngStyle]="{ margin: '20px 20px 20px 0px' }">
-      <d-form-label [required]="true">Gross Weight (kg)</d-form-label>
+      <d-form-label [required]="true">{{ "form.sAndS.extraFields.grossWeight" | translate }}</d-form-label>
       <d-form-control>
         <input
           (blur)="updateCarton()"
@@ -225,7 +225,7 @@
     </d-form-item>
 
     <d-form-item [ngStyle]="{ margin: '20px 20px 20px 0px' }">
-      <d-form-label [required]="true">Net Weight (kg)</d-form-label>
+      <d-form-label [required]="true">{{ "form.sAndS.extraFields.netWeight" | translate }}</d-form-label>
       <d-form-control>
         <input
           (blur)="updateCarton()"

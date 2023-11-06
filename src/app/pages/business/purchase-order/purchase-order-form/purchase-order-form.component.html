@@ -30,7 +30,9 @@
 
             <d-form-operation>
               <div *ngIf="projectFormData.orderStatus" style="text-align: right;">
-                <label><span class="bold-label">Status:</span>
+                <label><span class="bold-label">{{
+                  "list.purchaseOrder.status" | translate
+                  }}:</span>
                   {{projectFormData.orderStatus}}
                 </label>
                 <br>
@@ -235,7 +237,7 @@
                 </d-button>
 
                 <label style="float: right; margin: 5px 16px;" *ngIf="projectFormData.orderStatus">
-                  <b>Sample Status:</b> {{projectFormData.sampleStatus}}</label>
+                  <b>{{ "form.purchaseOrder.fields.sampleStatus" | translate }}:</b> {{projectFormData.sampleStatus}}</label>
               </d-form-operation>
             </div>
 
@@ -286,7 +288,7 @@
 
                   <d-form-item [ngStyle]="{ margin: '20px 20px 20px 0px' }">
                     <d-form-label [required]="true">{{ "form.purchaseOrder.fields.productPrice" | translate
-                      }} (SGD)</d-form-label>
+                      }}</d-form-label>
                     <d-form-control>
                       <input class="set-width"
                         disabled
@@ -347,7 +349,7 @@
 
             <div [ngStyle]="{ width: '100%' }">
               <label style="float: right; margin: 5px 16px;" *ngIf="projectFormData.orderStatus">
-                <b>Total Product Price: </b> {{_checkTotalPrice()}} SGD</label>
+                <b>{{ "form.purchaseOrder.fields.totalProductPrice" | translate }}: </b> {{_checkTotalPrice()}} SGD</label>
             </div>
           </ng-container>
         </form>

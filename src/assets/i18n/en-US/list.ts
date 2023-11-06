@@ -204,7 +204,9 @@ export default {
       buttonTitle:"Create Purchase Order",
       actions:"Actions",
       lastModifiedDate: "Updated Date",
-      lastModifiedBy: "Updated By"
+      lastModifiedBy: "Updated By",
+      searchWithOrder: "Search with Order No",
+      searchWithStatus: "Select a Status"
   },
   sAndS:{
     status: "Status",
