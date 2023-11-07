@@ -261,18 +261,21 @@ export class ShipmentAndShippingFormComponent implements OnInit {
   }
 
   _validateFormInputs() {
-    if(this.detailsInputs?.filter((p: any) => !p.shippedQuantity)?.length) {
-      this._showError();
+    if(!this.detailsInputs?.length) {
+      this._showError('Please add atleast one product!');
+      return false;
+    } else if(this.detailsInputs?.filter((p: any) => !p.shippedQuantity)?.length) {
+      this._showError('One or more field is required!');
       return false;
     }
     return true;
   }
 
-  _showError() {
+  _showError(eMsg: string) {
     this.toastService.open({
       value: [{
           severity: "error",
-          content: "One or more field is required!",
+          content: eMsg,
         }],
       life: 2000,
     });
@@ -498,7 +501,7 @@ export class ShipmentAndShippingFormComponent implements OnInit {
             if(!this.cartonInfo.length || !this.cartonInfo.width
               || !this.cartonInfo.height || !this.cartonInfo.grossWeight
               || !this.cartonInfo.netWeight) {
-                this._showError();
+                this._showError('One or more field is required!');
                 return;
               }
             results.modalInstance.hide();
@@ -551,7 +554,7 @@ export class ShipmentAndShippingFormComponent implements OnInit {
             if(!this.bulkDetailsInfo?.length || !this.bulkDetailsInfo?.width
               || !this.bulkDetailsInfo?.height || !this.bulkDetailsInfo?.grossWeight
               || !this.bulkDetailsInfo?.netWeight) {
-                this._showError();
+                this._showError('One or more field is required!');
                 return;
               }
             results.modalInstance.hide();
@@ -780,35 +783,7 @@ export class ShipmentAndShippingFormComponent implements OnInit {
   confirmDialog(type: string) {
     if(!this._validateFormInputs()) return;
     let stType = type;
-    const results = this.dialogService.open({
-      id: "dialog-service",
-      width: "346px",
-      maxHeight: "600px",
-      title: "Are you sure?",
-      content: "",
-      backdropCloseable: true,
-      dialogtype: "",
-      onClose: () => {},
-      buttons: [
-        {
-          cssClass: "primary",
-          text: "Ok",
-          disabled: false,
-          handler: ($event: Event) => {
-            results.modalInstance.hide();
-            this.updateStatus(stType);
-          },
-        },
-        {
-          id: "btn-cancel",
-          cssClass: "common",
-          text: "Cancel",
-          handler: ($event: Event) => {
-            results.modalInstance.hide();
-          },
-        },
-      ],
-    });
+    this.showConfirmation('updateDetails', stType);
   }
 
   confirm(rowIndex: number) {
@@ -943,5 +918,58 @@ export class ShipmentAndShippingFormComponent implements OnInit {
         this._showDateToast(error.error.detail);
       }
     );
+  }
+
+  deletePackage(ctnCode: string) {
+    this.showConfirmation('deletePackage', ctnCode);
+  }
+
+  showConfirmation(cTYpe: string, stType: any) {
+    const results = this.dialogService.open({
+      id: "dialog-service",
+      width: "346px",
+      maxHeight: "600px",
+      title: "Are you sure?",
+      content: "",
+      backdropCloseable: true,
+      dialogtype: "",
+      onClose: () => {},
+      buttons: [
+        {
+          cssClass: "primary",
+          text: "Ok",
+          disabled: false,
+          handler: ($event: Event) => {
+            results.modalInstance.hide();
+            if(cTYpe = 'deletePackage') {
+              this._removePackage(stType);
+            } else {
+              this.updateStatus(stType);
+            }
+          },
+        },
+        {
+          id: "btn-cancel",
+          cssClass: "common",
+          text: "Cancel",
+          handler: ($event: Event) => {
+            results.modalInstance.hide();
+          },
+        },
+      ],
+    });
+  }
+
+  _removePackage(ctnCode: string) {
+    this.shippingOrderService
+    .removePackage(ctnCode)
+          .subscribe(
+            (res) => {
+              this._showToast(res);
+            },
+            (error) => {
+              this._showDateToast(error.error.detail);
+            }
+          );
   }
 }

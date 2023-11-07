@@ -293,10 +293,10 @@ export class PurchaseOrderFormComponent implements OnInit {
     
       let searchString = "T00:00:00Z"; // The string to search for
       // Check if the searchString exists in the date strings
-      if (!this.projectFormData?.dueDate?.includes(searchString)) {
-        this.projectFormData.dueDate =
-          this.projectFormData.dueDate + "T00:00:00Z";
-      }
+      // if (!this.projectFormData?.dueDate?.includes(searchString)) {
+      //   this.projectFormData.dueDate =
+      //     this.projectFormData.dueDate + "T00:00:00Z";
+      // }
       if (!this.projectFormData?.issueDate?.includes(searchString)) {
         this.projectFormData.issueDate =
           (this.projectFormData.issueDate ? this.projectFormData.issueDate:'2023-10-20') + "T00:00:00Z";
@@ -323,6 +323,7 @@ export class PurchaseOrderFormComponent implements OnInit {
         this.purchaseOrderService
             .add({
               ...this.projectFormData,
+              dueDate: this.projectFormData.dueDate + "T00:00:00Z",
               shipToLocation: {
                 connectionLocationId: this.projectFormData.shipToLocation.connectionLocationId
               },
@@ -373,7 +374,10 @@ export class PurchaseOrderFormComponent implements OnInit {
         //   return;
         // }
         this.purchaseOrderService
-          .updateTransferOrder(this.paramId, this.projectFormData)
+          .updateTransferOrder(this.paramId, {
+            ...this.projectFormData,
+            dueDate: this.projectFormData.dueDate + "T00:00:00Z",
+          })
           .subscribe(
             (res) => {
               this._showToast(res);
@@ -724,7 +728,29 @@ export class PurchaseOrderFormComponent implements OnInit {
     this.addedVariantIds?.splice(rowIndex,1);
   }
 
+  _validateFormInputs() {
+    if(!this.detailsInputs?.length) {
+      this._showError('Please add atleast one product!');
+      return false;
+    } else if(this.detailsInputs?.filter((p: any) => !p.plannedQuantity)?.length) {
+      this._showError('One or more field is required!');
+      return false;
+    }
+    return true;
+  }
+
+  _showError(eMsg: string) {
+    this.toastService.open({
+      value: [{
+          severity: "error",
+          content: eMsg,
+        }],
+      life: 2000,
+    });
+  }
+
   confirmDialog(type: string) {
+    if(!this._validateFormInputs()) return;
     let stType = type;
     const results = this.dialogService.open({
       id: "dialog-service",
@@ -882,7 +908,7 @@ export class PurchaseOrderFormComponent implements OnInit {
   _checkTotalPrice() {
     let tPrice:any = 0;
     this.detailsInputs.forEach((v: any) => {
-      tPrice = parseInt(tPrice)+parseInt(v.productPrice);
+      tPrice = tPrice+(v.plannedQuantity * v.productPrice);
     });
     return tPrice;
   }

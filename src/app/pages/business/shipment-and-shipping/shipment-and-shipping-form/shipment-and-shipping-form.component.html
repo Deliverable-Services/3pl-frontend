@@ -117,7 +117,7 @@
                       {{'form.sAndS.fields.shippingAddress' | translate}}
                     </d-form-label>
                     <d-form-control>
-                      <input disabled [(ngModel)]="projectFormData.shipToAddress" dTextInput autocomplete="off" 
+                      <input style="color: #a79898 !important" disabled [(ngModel)]="projectFormData.shipToAddress" dTextInput autocomplete="off" 
                       name="shipToAddress" [placeholder]="'form.sAndS.fields.shippingAddress' | translate"/>
                     </d-form-control>
                   </d-form-item>
@@ -171,6 +171,7 @@
             <d-form-label>{{ "form.sAndS.fields.remarks" | translate }}</d-form-label>
             <d-form-control>
               <textarea
+                rows="4" [disabled]="mode.toLowerCase() === 'edit'"
                 dTextarea resize="vertical" autocomplete="off" name="remarks"
                 [placeholder]="'form.sAndS.fields.remarks' | translate"
                 [(ngModel)]="projectFormData.remarks"></textarea>
@@ -346,6 +347,8 @@
                         [value]="input.netWeight" (input)="updateCartonDetails($event, 'netWeight', i);" />
                     </d-form-control>
                   </d-form-item>
+                  <d-button (click)="deletePackage(input.ctnCode)" style="margin-top: 3%;" *ngIf="input.ctnCode" 
+                  icon="icon-delete" bsStyle="danger" title="delete" class="da-inline"></d-button>
                 </div>
 
                 <div class="">

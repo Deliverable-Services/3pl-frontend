@@ -179,4 +179,16 @@ export class ShippingOrderService {
       httpOptionsToken
     );
   }
+
+  removePackage(ctnCode: string): Observable<any> {
+    const httpOptionsToken = {
+      headers: new HttpHeaders({
+      }),
+    };
+
+    return this.http.delete(
+      `${this.baseApiUrl}/shipment/delete-package?ctnCode=${ctnCode}`,
+      httpOptionsToken
+    );
+  }
 }
