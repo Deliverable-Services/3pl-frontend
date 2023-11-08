@@ -461,7 +461,7 @@ export default {
         ship: "Ship",
         cancel: "Cancel",
         remove: "Remove",
-        remarks: "Remarks",
+        remarks: "Remark",
         sku: "SKU",
         description: "Description",
         plannedShipQuantity: "Planned Ship Quantity",

@@ -5,7 +5,7 @@ import { ConnectionLocationService } from "src/app/@core/mock/connection-locatio
 import { ShippingOrderService } from "src/app/@core/mock/shipping-order.service";
 import { VendorListDataService } from "src/app/@core/mock/vendor-data.service";
 import { MSG } from "src/config/global-var";
-import { ProductsListDataService } from "src/app/@core/mock/products-data.service";
+import { PurchaseOrderService } from "src/app/@core/mock/purchase-order.service";
 import { ShipmentAndShippingFormModalComponent } from "../shipment-and-shipping-form-modal/shipment-and-shipping-form-modal.component";
 import { PackagesFormModalComponent } from "../packages-form-modal/packages-form-modal.component";
 import { BulkPackFormModalComponent } from "../bulk-pack-form-modal/bulk-pack-form-modal.component";
@@ -39,7 +39,7 @@ export class ShipmentAndShippingFormComponent implements OnInit {
     },
     shipToAddress: "",
     details: [],
-    remarks: "",
+    remark: "",
   };
   stVariants: any = [];
   locationID: string = "";
@@ -89,7 +89,7 @@ export class ShipmentAndShippingFormComponent implements OnInit {
 
   config = {
     id: "dialog-service",
-    width: "70%",
+    width: "50%",
     maxHeight: "600px",
     title: "Select Produts from PO",
     content: ShipmentAndShippingFormModalComponent,
@@ -135,7 +135,8 @@ export class ShipmentAndShippingFormComponent implements OnInit {
     private route: ActivatedRoute,
     private dialogService: DialogService,
     private router: Router,
-    private toastService: ToastService
+    private toastService: ToastService,
+    private purchaseOrderService: PurchaseOrderService
   ) {}
 
   ngOnInit(): void {
@@ -148,6 +149,30 @@ export class ShipmentAndShippingFormComponent implements OnInit {
 
     this.connectionLocationService.setPageParams(this.pageParam);
     this.getVendorList();
+
+    this.purchaseOrderService.setPageParams({
+      pageNo: "",
+      pageSize: '100',
+      sortBy: "",
+      sortDir: "",
+    });
+  }
+
+  getPoList(poIds: any) {
+    this.purchaseOrderService.getTransferOrderList({
+      filters: [{
+        field: 'id',
+        operator: "in",
+        value: poIds,
+      }]
+    })
+      .subscribe((res) => {
+        this.detailsInputs.forEach((d: any) => {
+          let getPoInfo = res?.content?.find((p: any) => p.id === d.poId);
+          let skuInfo = getPoInfo?.details?.find((s: any) => (s.variantId === d.variantId && s.skuNo === d.skuNo));
+          d.remainingQuantity = skuInfo?.poQuantity ? (skuInfo.poQuantity - (skuInfo.lockedQuantity+skuInfo.receivedQuantity)):0
+        })
+      });
   }
 
   getConnectionLocationList() {
@@ -242,6 +267,9 @@ export class ShipmentAndShippingFormComponent implements OnInit {
           };
         });
 
+        let stPoIds = this.detailsInputs?.map((d: any) => d.poId);
+        this.getPoList(stPoIds);
+
         this.detailsInputs?.sort((a: any, b: any) => {
           let fVal = parseInt(a.lineNumber);
           let sVal = parseInt(b.lineNumber);
@@ -249,10 +277,6 @@ export class ShipmentAndShippingFormComponent implements OnInit {
         });
 
         this.packageDetailsInfo = this.projectFormData.packages;
-
-        console.log(':: this.packageDetailsInfo :: ', this.packageDetailsInfo)
-
-        // console.log(':: :: ', this.projectFormData)
       },
       (error) => {
         this._showDateToast(error.error.detail);
@@ -578,8 +602,6 @@ export class ShipmentAndShippingFormComponent implements OnInit {
                 }]
               });
             }
-
-            // console.log(':: preparePayload :: ', preparePayload);
             this.addPackage(preparePayload);
           },
         },
@@ -614,7 +636,6 @@ export class ShipmentAndShippingFormComponent implements OnInit {
     this.detailsInputs[index][keyName] = event.target.value;
     let idToCheck = this.detailsInputs[index]["variantId"] as string;
     if (keyName === "sentQuantity") {
-      // console.log("this.detailsInputs[index]", this.detailsInputs[index]);
       if (
         parseInt(this.detailsInputs[index][keyName]) >
         parseInt(this.detailsInputs[index]["plannedQuantity"])
@@ -637,7 +658,6 @@ export class ShipmentAndShippingFormComponent implements OnInit {
     }
 
     if (keyName === "receivedQuantity") {
-      // console.log("this.detailsInputs[index]", this.detailsInputs[index]);
       if (
         parseInt(this.detailsInputs[index][keyName]) >
         parseInt(this.detailsInputs[index]["sentQuantity"])
@@ -658,7 +678,6 @@ export class ShipmentAndShippingFormComponent implements OnInit {
         this.detailsInputs[index]["receivedCheck"] = false;
       }
     }
-    // console.log("details", this.errorCounter);
   }
 
   _checkIfValid() {
