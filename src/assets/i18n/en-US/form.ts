@@ -479,8 +479,8 @@ export default {
       popupBtn: "Select Product from PO",
       popupBtn2: "Create New Carton",
       popupBtn3: "Bulk Pack",
-      pTitleOne: '從出貨中選擇產品',
-      pTitleTwo: '採購訂單號碼和 SKU',
+      pTitleOne: 'Select Product From Shipment',
+      pTitleTwo: 'PO NO. and SKU',
       pTitleThree: 'Each Carton Details',
       buttons: { publish: 'Publish', confirm: 'Confirmed', ship: 'Ship', cancel: 'Cancel', remove: 'Remove', dispatching: 'Dispatching' }
     },

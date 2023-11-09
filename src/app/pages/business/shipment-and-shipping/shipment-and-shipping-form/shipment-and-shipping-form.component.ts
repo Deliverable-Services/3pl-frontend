@@ -263,6 +263,7 @@ export class ShipmentAndShippingFormComponent implements OnInit {
             remainingQuantity: d?.poQuantity ? (d.poQuantity - (d.lockedQuantity+d.receivedQuantity)):0,
             skuDescription: d?.skuDescription,
             shippedQuantity: d?.shippedQuantity,
+            receivedQuantity: d?.receivedQuantity ? d?.receivedQuantity : 0,
             poDetailsId: d?.poDetailsId
           };
         });
@@ -960,7 +961,7 @@ export class ShipmentAndShippingFormComponent implements OnInit {
           disabled: false,
           handler: ($event: Event) => {
             results.modalInstance.hide();
-            if(cTYpe = 'deletePackage') {
+            if(cTYpe == 'deletePackage') {
               this._removePackage(stType);
             } else {
               this.updateStatus(stType);

@@ -12,6 +12,20 @@ li {
   border: 1px solid #ccc;
 }
 
+.modal-header[_ngcontent-rco-c199] .standard-title[_ngcontent-rco-c199] {
+  height: 26px;
+  line-height: 26px;
+  color: #252b3a;
+  color: var(--devui-text, #252b3a);
+  letter-spacing: 0;
+  font-size: 18px;
+  font-size: var(--devui-font-size-modal-title, 18px);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  margin-left: 350px !important;
+}
+
 .selected {
   background-color: #007bff; /* Customize the background color */
   color: #fff; /* Customize the text color */

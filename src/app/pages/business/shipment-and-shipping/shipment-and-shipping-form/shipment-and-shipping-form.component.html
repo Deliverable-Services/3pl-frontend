@@ -223,7 +223,7 @@
                     </d-form-control>
                   </d-form-item>
 
-                  <d-form-item [ngStyle]="{ margin: '20px 20px 20px 0px' }">
+                  <d-form-item [ngStyle]="{ margin: '20px 20px 20px 0px' }" *ngIf="projectFormData.status?.toLowerCase() !== 'draft' || !projectFormData.status">
                     <d-form-label [required]="true">{{ "form.sAndS.fields.remainingQuantity" | translate
                       }}</d-form-label>
                     <d-form-control>
@@ -240,11 +240,25 @@
                       }}</d-form-label>
                     <d-form-control>
                       <input class="set-width"
+                        [disabled]="projectFormData.status?.toLowerCase() !== 'draft' && projectFormData.status"
                         dTextInput (keypress)="numberOnly($event)" autocomplete="off"
                         [placeholder]='"form.sAndS.fields.plannedShipQuantity" | translate'
                         [value]="input.shippedQuantity" (input)="updateValue($event, 'shippedQuantity', i);" />
                     </d-form-control>
                   </d-form-item>
+
+                  <d-form-item [ngStyle]="{ margin: '20px 20px 20px 0px' }" *ngIf="projectFormData.status?.toLowerCase() !== 'draft' && projectFormData.status">
+                    <d-form-label [required]="true">Packed Quantity</d-form-label>
+                    <d-form-control>
+                      <input class="set-width"
+                        [disabled]="true"
+                        dTextInput (keypress)="numberOnly($event)" autocomplete="off"
+                        [placeholder]='"form.sAndS.fields.receivedQuantity" | translate'
+                        [value]="input.receivedQuantity" />
+                    </d-form-control>
+                  </d-form-item>
+
+
 
                   <d-button *ngIf="projectFormData.status?.toLowerCase() === 'draft' || mode === 'Add' " dLoading
                     bsStyle="danger" class="danger" circled="true" style="margin-right: 8px;margin-top: 47px;"
@@ -279,6 +293,7 @@
             <ng-container *ngIf="packageDetailsInfo?.length">
               <div *ngFor="let input of packageDetailsInfo; let i = index"
                 [ngStyle]="{ justifyContent: 'space-between' }">
+                <label for="">{{i + 1}}.</label>
                 <div [ngStyle]="{ display: 'flex' }">
                   <d-form-item [ngStyle]="{ margin: '20px 20px 20px 0px' }">
                     <d-form-label [required]="true">{{ "form.sAndS.extraFields.cartonTrackingNo" | translate }}</d-form-label>
