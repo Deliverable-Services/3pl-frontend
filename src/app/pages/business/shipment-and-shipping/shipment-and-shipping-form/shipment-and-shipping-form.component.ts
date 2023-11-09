@@ -170,6 +170,7 @@ export class ShipmentAndShippingFormComponent implements OnInit {
         this.detailsInputs.forEach((d: any) => {
           let getPoInfo = res?.content?.find((p: any) => p.id === d.poId);
           let skuInfo = getPoInfo?.details?.find((s: any) => (s.variantId === d.variantId && s.skuNo === d.skuNo));
+          console.log(':: skuInfo :: ', skuInfo)
           d.remainingQuantity = skuInfo?.poQuantity ? (skuInfo.poQuantity - (skuInfo.lockedQuantity+skuInfo.receivedQuantity)):0
         })
       });
@@ -288,6 +289,10 @@ export class ShipmentAndShippingFormComponent implements OnInit {
   _validateFormInputs() {
     if(!this.detailsInputs?.length) {
       this._showError('Please add atleast one product!');
+      return false;
+    } else if((!this.projectFormData.status || this.projectFormData.status?.toLowerCase() === 'draft')
+      && this.detailsInputs?.filter((p: any) => p.shippedQuantity > p.remainingQuantity)?.length) {
+      this._showError('Planned Ship Qty cannot be greater than Remaining Qty!');
       return false;
     } else if(this.detailsInputs?.filter((p: any) => !p.shippedQuantity)?.length) {
       this._showError('One or more field is required!');

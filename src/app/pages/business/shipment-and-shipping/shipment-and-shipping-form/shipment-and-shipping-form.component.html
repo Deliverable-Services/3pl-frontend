@@ -117,7 +117,7 @@
                       {{'form.sAndS.fields.shippingAddress' | translate}}
                     </d-form-label>
                     <d-form-control>
-                      <input style="color: #a79898 !important" disabled [(ngModel)]="projectFormData.shipToAddress" dTextInput autocomplete="off" 
+                      <input style="pointer-events: none" [(ngModel)]="projectFormData.shipToAddress" dTextInput autocomplete="off" 
                       name="shipToAddress" [placeholder]="'form.sAndS.fields.shippingAddress' | translate"/>
                     </d-form-control>
                   </d-form-item>
@@ -171,7 +171,8 @@
             <d-form-label>{{ "form.sAndS.fields.remarks" | translate }}</d-form-label>
             <d-form-control>
               <textarea
-                rows="4" [disabled]="mode.toLowerCase() === 'edit'"
+                rows="4"
+                [ngStyle]="{'pointer-events': (mode.toLowerCase() === 'edit') ? 'none' : 'auto'}"
                 dTextarea resize="vertical" autocomplete="off" name="remarks"
                 [placeholder]="'form.sAndS.fields.remarks' | translate"
                 [(ngModel)]="projectFormData.remark"></textarea>
@@ -223,7 +224,7 @@
                     </d-form-control>
                   </d-form-item>
 
-                  <d-form-item [ngStyle]="{ margin: '20px 20px 20px 0px' }" *ngIf="projectFormData.status?.toLowerCase() !== 'draft' || !projectFormData.status">
+                  <d-form-item [ngStyle]="{ margin: '20px 20px 20px 0px' }" *ngIf="mode.toLowerCase() === 'add' || projectFormData.status?.toLowerCase() === 'draft'">
                     <d-form-label [required]="true">{{ "form.sAndS.fields.remainingQuantity" | translate
                       }}</d-form-label>
                     <d-form-control>
@@ -271,7 +272,7 @@
             </ng-container>
           </ng-container>
 
-          <ng-container *ngIf="projectFormData.status?.toLowerCase() === 'ready'">
+          <ng-container *ngIf="mode.toLowerCase() === 'edit' && projectFormData.status?.toLowerCase() !== 'draft'">
             <div class="da-content-banner-title">
               {{"form.sAndS.title3" | translate}}
             </div>

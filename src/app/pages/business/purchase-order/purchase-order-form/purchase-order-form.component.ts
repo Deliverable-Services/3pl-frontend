@@ -257,6 +257,7 @@ export class PurchaseOrderFormComponent implements OnInit {
             // sentQuantity: d?.sentQuantity,
             // discrepancyResolvedTo: d?.discrepancyResolvedTo,
             lineNumber: d?.lineNumber,
+            shipments: d?.shipments
             // discrepancyFlag: d?.discrepancyFlag,
             // alreadyAdded: true,
           };
@@ -528,11 +529,11 @@ export class PurchaseOrderFormComponent implements OnInit {
     });
   }
 
-  shipmentDialog(dialogtype?: string, showAnimation?: boolean) {
+  shipmentDialog(shipments: any) {
     const results = this.dialogService.open({
       ...this.shipmentConfig,
-      dialogtype: dialogtype,
-      showAnimation: showAnimation,
+      // dialogtype: dialogtype,
+      // showAnimation: showAnimation,
       buttons: [
         {
           cssClass: "primary",
@@ -552,6 +553,7 @@ export class PurchaseOrderFormComponent implements OnInit {
         },
       ],
       data: {
+        shipments: shipments,
         vList: (vData: any) => {
         },
       },

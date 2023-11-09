@@ -109,7 +109,6 @@
                 </d-form-label>
                 <d-form-control>
                   <d-select [ngStyle]="{'pointer-events': mode.toLowerCase() === 'edit' ? 'none' : 'auto', width: '100%'}"
-                  [disabled]="mode.toLowerCase() === 'edit'"
                     [placeholder]="'form.purchaseOrder.fields.vendor' | translate" [appendToBody]="true"
                     [multiple]="false" [filterKey]="'companyName'" [options]="vendorList" name="vendor"
                     [(ngModel)]="projectFormData.vendor" 
@@ -129,7 +128,7 @@
                     </d-form-label>
                     <d-form-control>
                       <input style="color: #a79898 !important" [(ngModel)]="projectFormData.billToAddress" 
-                      disabled dTextInput autocomplete="off" name="billToAddress" [placeholder]="'form.purchaseOrder.fields.billAddress' | translate"/>
+                      style="pointer-events: none" dTextInput autocomplete="off" name="billToAddress" [placeholder]="'form.purchaseOrder.fields.billAddress' | translate"/>
                     </d-form-control>
                   </d-form-item>
                   
@@ -138,7 +137,7 @@
                   <div style="width: 100%" cdiv class="devui-input-group devui-dropdown-origin"
                     dActiveFormControl>
                     <input
-                      disabled
+                      style="pointer-events: none"
                       class="devui-input devui-form-control" [(ngModel)]="projectFormData.issueDate"
                       autocomplete="off" placeholder="y-MM-dd"
                       type="date" [min]="_dateVaidationForToday()" name="issueDate">
@@ -158,7 +157,6 @@
                 </d-form-label>
                 <d-form-control>
                   <d-select 
-                  [disabled]="mode.toLowerCase() === 'edit'"
                     [ngStyle]="{'pointer-events': mode.toLowerCase() === 'edit' ? 'none' : 'auto', width: '100%'}"
                     [placeholder]="'form.purchaseOrder.fields.shippingToDepartment' | translate" [appendToBody]="true"
                     [multiple]="false" [filterKey]="'nodeName'" [options]="connectionLocationList" name="shipToLocation"
@@ -175,7 +173,7 @@
                     {{'form.purchaseOrder.fields.shippingAddress' | translate}}
                   </d-form-label>
                   <d-form-control>
-                    <input style="color: #a79898 !important" [(ngModel)]="projectFormData.shipToAddress" disabled dTextInput autocomplete="off" 
+                    <input style="pointer-events: none" [(ngModel)]="projectFormData.shipToAddress" dTextInput autocomplete="off" 
                     name="shipToAddress" [placeholder]="'form.purchaseOrder.fields.shippingAddress' | translate"/>
                   </d-form-control>
                 </d-form-item>
@@ -333,7 +331,7 @@
                   <d-button *ngIf="projectFormData.orderStatus?.toLowerCase() === 'released'
                   || projectFormData.orderStatus?.toLowerCase() === 'closed'"
                     dLoading bsStyle="primary" class="primary" circled="true"
-                    style="margin-right: 8px;margin-top: 47px;" (click)="shipmentDialog()">
+                    style="margin-right: 8px;margin-top: 47px;" (click)="shipmentDialog(input.shipments)">
                     {{ "form.purchaseOrder.buttons.shipmentDetails" | translate }}
                   </d-button>
 

@@ -7,7 +7,7 @@ import { InventoryService } from "src/app/@core/mock/inventory.service";
   templateUrl: "./purchase-order-shipments-modal.component.html",
   styleUrls: ["./purchase-order-shipments-modal.component.scss"],
 })
-export class PurchaseOrderShipmentsModalComponent {
+export class PurchaseOrderShipmentsModalComponent implements OnInit {
   @Input() data: any;
   @Input() handler: Function;
   @Output() modalClosed = new EventEmitter<any>();
@@ -23,12 +23,17 @@ export class PurchaseOrderShipmentsModalComponent {
     columnName: "styleName",
     searchType: "match",
   };
+  shipmentList:any = [];
 
   constructor(
     private productsListDataService: ProductsListDataService,
     private inventoryService: InventoryService
   ) {
     this.handler = () => {}; // Initialize the handler with a default empty function
+  }
+
+  ngOnInit(): void {
+    this.shipmentList = this.data.shipments;
   }
 
   close($event: any) {
