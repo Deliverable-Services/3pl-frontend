@@ -111,7 +111,6 @@ export class ShipmentAndShippingFormComponent implements OnInit {
     id: "dialog-service",
     width: "50%",
     maxHeight: "600px",
-    title: "Bulk Pack",
     content: BulkPackFormModalComponent,
     backdropCloseable: true,
     onClose: () => console.log("")
@@ -279,6 +278,8 @@ export class ShipmentAndShippingFormComponent implements OnInit {
         });
 
         this.packageDetailsInfo = this.projectFormData.packages;
+
+        // console.log(':: this.packageDetailsInfo :: ', this.packageDetailsInfo)
       },
       (error) => {
         this._showDateToast(error.error.detail);

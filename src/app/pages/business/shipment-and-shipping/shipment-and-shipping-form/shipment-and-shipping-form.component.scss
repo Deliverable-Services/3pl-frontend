@@ -110,3 +110,14 @@ form {
   justify-content: flex-end;
   margin-bottom: 50px;
 }
+button.manage-btn-color {
+  background: #AC7C00;
+  color: #fff;
+  padding: 5px 20px;
+  border-radius: 4px;
+  font-weight: bold;
+}
+.manage-svg svg {
+  width: 26px;
+  margin-top: 40px;
+}
