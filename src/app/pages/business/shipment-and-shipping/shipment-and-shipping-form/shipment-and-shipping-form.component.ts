@@ -89,7 +89,7 @@ export class ShipmentAndShippingFormComponent implements OnInit {
 
   config = {
     id: "dialog-service",
-    width: "50%",
+    width: "60%",
     maxHeight: "600px",
     title: "Select Produts from PO",
     content: ShipmentAndShippingFormModalComponent,
@@ -264,6 +264,7 @@ export class ShipmentAndShippingFormComponent implements OnInit {
             skuDescription: d?.skuDescription,
             shippedQuantity: d?.shippedQuantity,
             receivedQuantity: d?.receivedQuantity ? d?.receivedQuantity : 0,
+            packedQuantity: d?.packedQuantity ? d?.packedQuantity : 0,
             poDetailsId: d?.poDetailsId
           };
         });
@@ -844,7 +845,7 @@ export class ShipmentAndShippingFormComponent implements OnInit {
 
     const results = this.dialogService.open({
       id: "dialog-service",
-      width: "346px",
+      width: "450px",
       maxHeight: "600px",
       title: "Are you sure?",
       content: htmlString,

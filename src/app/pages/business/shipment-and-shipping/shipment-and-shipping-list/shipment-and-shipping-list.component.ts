@@ -198,7 +198,7 @@ export class ShipmentAndShippingListComponent implements OnInit {
     let stIndex = index;
     const results = this.dialogService.open({
       id: "dialog-service",
-      width: "346px",
+      width: "400px",
       maxHeight: "600px",
       title: "Are you sure?",
       content: "",
