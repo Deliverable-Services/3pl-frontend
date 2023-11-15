@@ -246,14 +246,14 @@ export class TransferOrderFormComponent implements OnInit {
     
       let searchString = "T00:00:00Z"; // The string to search for
       // Check if the searchString exists in the date strings
-      if (!this.projectFormData.expectedArrivalDate.includes(searchString)) {
-        this.projectFormData.expectedArrivalDate =
-          this.projectFormData.expectedArrivalDate + "T00:00:00Z";
-      }
-      if (!this.projectFormData.expectedDeliveryDate.includes(searchString)) {
-        this.projectFormData.expectedDeliveryDate =
-          this.projectFormData.expectedDeliveryDate + "T00:00:00Z";
-      }
+      // if (!this.projectFormData.expectedArrivalDate.includes(searchString)) {
+      //   this.projectFormData.expectedArrivalDate =
+      //     this.projectFormData.expectedArrivalDate + "T00:00:00Z";
+      // }
+      // if (!this.projectFormData.expectedDeliveryDate.includes(searchString)) {
+      //   this.projectFormData.expectedDeliveryDate =
+      //     this.projectFormData.expectedDeliveryDate + "T00:00:00Z";
+      // }
       if (this.mode === "Add") {
         const destinationId =
           this.projectFormData.destinationLocation.connectionLocationId;
@@ -267,7 +267,11 @@ export class TransferOrderFormComponent implements OnInit {
           this._showDuplicatToast();
         } else {
           this.transferOrderService
-            .addTransferOrder(this.projectFormData)
+            .addTransferOrder({
+              ...this.projectFormData,
+              expectedArrivalDate: this.projectFormData.expectedArrivalDate + "T00:00:00Z",
+              expectedDeliveryDate: this.projectFormData.expectedDeliveryDate + "T00:00:00Z",
+            })
             .subscribe(
               (res) => {
                 this._showToast(res);
@@ -319,7 +323,11 @@ export class TransferOrderFormComponent implements OnInit {
         });
         this.projectFormData.details = this.detailsInputs;
         this.transferOrderService
-          .updateTransferOrder(this.paramId, this.projectFormData)
+          .updateTransferOrder(this.paramId, {
+            ...this.projectFormData,
+            expectedArrivalDate: this.projectFormData.expectedArrivalDate + "T00:00:00Z",
+            expectedDeliveryDate: this.projectFormData.expectedDeliveryDate + "T00:00:00Z",
+          })
           .subscribe(
             (res) => {
               this._showToast(res);

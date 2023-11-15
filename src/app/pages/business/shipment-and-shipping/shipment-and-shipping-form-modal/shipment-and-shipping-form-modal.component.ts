@@ -92,8 +92,6 @@ export class ShipmentAndShippingFormModalComponent implements OnInit {
   removeFromCart(index: number) {
     // Remove the item at the specified index from cartItems
     if (index >= 0 && index < this.cartItems.length) {
-      const removedItem = this.variantList[index];
-      removedItem.selected = false; // Deselect the item
       this.cartItems.splice(index, 1);
       // this.selectedVariants.splice(index, 1);
     }
@@ -170,6 +168,15 @@ export class ShipmentAndShippingFormModalComponent implements OnInit {
   }
 
   _getFilteredVariants() {
+    let getSelectedVariants = this.storePoDetails?.find((p: any) => p.id === this.selectedPoId)?.details;
+    getSelectedVariants?.forEach((v: any) => {
+      const fItem = this.cartItems.find((item: any) => item.skuNo === v.skuNo);
+      if(fItem){
+        v['itemAlreadySelected'] = true;
+      } else {
+        v['itemAlreadySelected'] = false;
+      }
+    });
     return this.storePoDetails?.find((p: any) => p.id === this.selectedPoId)?.details;
   }
 }

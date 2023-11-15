@@ -96,7 +96,8 @@
                 </d-form-label>
                 <d-form-control>
                   <d-select
-                    [ngStyle]="{'pointer-events': mode.toLowerCase() === 'edit' ? 'none' : 'auto', width: '100%'}"
+                    [ngClass]="{'manage-fields': (mode.toLowerCase() === 'edit' && projectFormData.status?.toLowerCase() !== 'draft')}"
+                    [ngStyle]="{'pointer-events': (mode.toLowerCase() === 'edit' && projectFormData.status?.toLowerCase() !== 'draft') ? 'none' : 'auto', width: '100%'}"
                     [placeholder]="'form.sAndS.fields.vendor' | translate" [appendToBody]="true" [multiple]="false"
                     [filterKey]="'companyName'" [options]="vendorList" name="vendor"
                     [(ngModel)]="projectFormData.vendor"
@@ -114,7 +115,7 @@
                       {{'form.sAndS.fields.shippingAddress' | translate}}
                     </d-form-label>
                     <d-form-control>
-                      <input style="pointer-events: none" [(ngModel)]="projectFormData.shipToAddress" dTextInput
+                      <input class="manage-fields" style="pointer-events: none" [(ngModel)]="projectFormData.shipToAddress" dTextInput
                         autocomplete="off" name="shipToAddress"
                         [placeholder]="'form.sAndS.fields.shippingAddress' | translate" />
                     </d-form-control>
@@ -134,7 +135,8 @@
                 </d-form-label>
                 <d-form-control>
                   <d-select
-                    [ngStyle]="{'pointer-events': mode.toLowerCase() === 'edit' ? 'none' : 'auto', width: '100%'}"
+                    [ngClass]="{'manage-fields': (mode.toLowerCase() === 'edit' && projectFormData.status?.toLowerCase() !== 'draft')}"
+                    [ngStyle]="{'pointer-events': (mode.toLowerCase() === 'edit' && projectFormData.status?.toLowerCase() !== 'draft') ? 'none' : 'auto', width: '100%'}"
                     [placeholder]="'form.sAndS.fields.shippingToDepartment' | translate" [appendToBody]="true"
                     [multiple]="false" [filterKey]="'nodeName'" [options]="connectionLocationList" name="shipToLocation"
                     (valueChange)="setAddress(projectFormData.shipToLocation.physicalAddress, 'shipToAddress')"
@@ -167,7 +169,8 @@
           <d-form-item [ngStyle]="{ marginTop: '20px' }">
             <d-form-label>{{ "form.sAndS.fields.remarks" | translate }}</d-form-label>
             <d-form-control>
-              <textarea rows="4" [ngStyle]="{'pointer-events': (mode.toLowerCase() === 'edit') ? 'none' : 'auto'}"
+              <textarea rows="4" [ngStyle]="{'pointer-events': (mode.toLowerCase() === 'edit' && projectFormData.status?.toLowerCase() !== 'draft') ? 'none' : 'auto'}"
+                [ngClass]="{'manage-fields': (mode.toLowerCase() === 'edit' && projectFormData.status?.toLowerCase() !== 'draft')}"
                 dTextarea resize="vertical" autocomplete="off" name="remarks"
                 [placeholder]="'form.sAndS.fields.remarks' | translate" [(ngModel)]="projectFormData.remark"></textarea>
             </d-form-control>
@@ -244,7 +247,7 @@
 
                   <d-form-item [ngStyle]="{ margin: '20px 20px 20px 0px' }"
                     *ngIf="projectFormData.status?.toLowerCase() !== 'draft' && projectFormData.status">
-                    <d-form-label [required]="true">Packed Quantity</d-form-label>
+                    <d-form-label [required]="true">{{ "form.sAndS.fields.packedQuantity" | translate }}</d-form-label>
                     <d-form-control>
                       <input class="set-width" [disabled]="true" dTextInput (keypress)="numberOnly($event)"
                         autocomplete="off" [placeholder]='"form.sAndS.fields.packedQuantity" | translate'
@@ -253,11 +256,13 @@
                   </d-form-item>
 
                   <d-form-item [ngStyle]="{ margin: '20px 20px 20px 0px' }"
-                    *ngIf="projectFormData.status?.toLowerCase() !== 'draft' && projectFormData.status?.toLowerCase() !== 'ready' && projectFormData.status?.toLowerCase() !== 'confirmed' && projectFormData.status">
-                    <d-form-label [required]="true">Received Quantity</d-form-label>
+                    *ngIf="projectFormData.status 
+                    && projectFormData.status?.toLowerCase() !== 'ready'
+                    && projectFormData.status?.toLowerCase() !== 'draft'">
+                    <d-form-label [required]="true"> {{ "form.sAndS.fields.receivedQty" | translate }} </d-form-label>
                     <d-form-control>
                       <input class="set-width" [disabled]="true" dTextInput (keypress)="numberOnly($event)"
-                        autocomplete="off" [placeholder]='"form.sAndS.fields.receivedQuantity" | translate'
+                        autocomplete="off" [placeholder]='"form.sAndS.fields.receivedQty" | translate'
                         [value]="input.receivedQuantity" />
                     </d-form-control>
                   </d-form-item>
@@ -290,6 +295,18 @@
           <ng-container *ngIf="mode.toLowerCase() === 'edit' && projectFormData.status?.toLowerCase() !== 'draft'">
             <div class="da-content-banner-title">
               {{"form.sAndS.title3" | translate}}
+
+              <div *ngIf="projectFormData.status 
+              && projectFormData.status?.toLowerCase() !== 'ready'
+              && projectFormData.status?.toLowerCase() !== 'draft'" class="manage-total-cost">
+                <d-form-item [ngStyle]="{ margin: '20px 20px 20px 0px' }">
+                  <d-form-label [required]="true">Total Shipping Cost:
+                </d-form-label>
+                  <d-form-control>
+                    <input [disabled]="true" value="{{projectFormData.costs ? projectFormData.costs : 0}}" class="set-width" dTextInput autocomplete="off"/>
+                  </d-form-control>
+                </d-form-item>
+              </div>
             </div>
 
             <div [ngStyle]="{ width: '100%' }">
@@ -304,10 +321,10 @@
                   {{ "form.sAndS.popupBtn3" | translate }}
                 </button>
               </d-form-operation>
-              <div *ngIf="projectFormData.status?.toLowerCase() !== 'draft' && projectFormData.status?.toLowerCase() !== 'ready' && projectFormData.status?.toLowerCase() !== 'confirmed' && projectFormData.status" style="text-align: right;">
+              <!-- <div *ngIf="projectFormData.status?.toLowerCase() !== 'draft' && projectFormData.status?.toLowerCase() !== 'ready' && projectFormData.status?.toLowerCase() !== 'confirmed' && projectFormData.status" style="text-align: right;">
                 <p  class="bold-label" for="">Total Shipping Cost:</p>
                 <input class="devui-form-controls" [disabled]="true" value="{{projectFormData.costs ? projectFormData.costs : 0}}" type="text">
-              </div>
+              </div> -->
             </div>
             <ng-container *ngIf="packageDetailsInfo?.length">
               <div *ngFor="let input of packageDetailsInfo; let i = index"
@@ -381,7 +398,10 @@
                         (input)="updateCartonDetails($event, 'netWeight', i);" />
                     </d-form-control>
                   </d-form-item>
-                  <d-button (click)="deletePackage(input.ctnCode)" style="margin-top: 3%;" *ngIf="input.ctnCode"
+                  <d-button (click)="deletePackage(input.ctnCode)" style="margin-top: 3%;" *ngIf="input.ctnCode
+                  && projectFormData.status 
+                  && projectFormData.status?.toLowerCase() === 'ready'
+                  && projectFormData.status?.toLowerCase() === 'draft'"
                     icon="icon-delete" bsStyle="danger" title="delete" class="da-inline"></d-button>
                 </div>
 

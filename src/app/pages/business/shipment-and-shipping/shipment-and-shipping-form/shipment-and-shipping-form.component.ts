@@ -315,7 +315,6 @@ export class ShipmentAndShippingFormComponent implements OnInit {
 
   submitProjectForm(event: any) {
     if (event?.valid) {
-      if(!this._validateFormInputs()) return;
       this.detailsInputs?.forEach((e: any, key: any) => {
         e["lineNumber"] = parseInt(key + 1);
         e["plannedQuantity"] = parseInt(e["plannedQuantity"]);

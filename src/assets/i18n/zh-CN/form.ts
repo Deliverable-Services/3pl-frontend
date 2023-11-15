@@ -368,6 +368,7 @@ export default {
         description: "描述",
         plannedShipQuantity: "计划船舶数量",
         sentQty: "发送数量",
+        packedQuantity: "包装数量",
         receivedQty: "收到数量",
         poNo: 'PO No.',
         remainingQuantity: '采购订单剩余数量'
@@ -380,6 +381,9 @@ export default {
       popupBtn: "从采购订单中选择产品",
       popupBtn2: "创建新纸箱",
       popupBtn3: "散装",
+      pOneTitleOne: "采购订单列表",
+      pOneTitleTwo: "采购订单详情",
+      pOneTitleThree: "选定的变体",
       pTitleOne: '从发货中选择产品',
       pTitleTwo: '采购订单号和 SKU',
       pTitleThree: '每个纸箱详细信息',

@@ -372,6 +372,7 @@ export default {
         description: "描述",
         plannedShipQuantity: "計劃船舶數量",
         sentQty: "發送數量",
+        packedQuantity: "包裝數量",
         receivedQty: "收到數量",
         poNo: 'PO No.',
         remainingQuantity: '採購訂單剩餘數量'
@@ -384,6 +385,9 @@ export default {
       popupBtn: "從採購訂單中選擇產品",
       popupBtn2: "建立新紙箱",
       popupBtn3: "散裝",
+      pOneTitleOne: "採購訂單列表",
+      pOneTitleTwo: "採購訂單詳情",
+      pOneTitleThree: "選定的變體",
       pTitleOne: '從出貨中選擇產品',
       pTitleTwo: '採購訂單號碼和 SKU',
       pTitleThree: '每個紙箱詳細信息',

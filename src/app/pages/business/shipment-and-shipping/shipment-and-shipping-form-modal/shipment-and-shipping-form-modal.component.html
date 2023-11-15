@@ -5,7 +5,7 @@
 
     <div class="column-left">
         <div class="first-list">
-            <h3>PO List</h3>
+            <h3>{{ "form.sAndS.pOneTitleOne" | translate }}</h3>
             <ul class="variant-list">
                 <ng-container *ngFor="let po of storePoDetails">
                     <li class="variant-item" [ngClass]="{'selectedPoId': selectedPoId === po.id}">
@@ -19,7 +19,7 @@
             </ul>
         </div>
         <div class="manage-variants" *ngIf="selectedPoId">
-            <h3>PO Details</h3>
+            <h3>{{ "form.sAndS.pOneTitleTwo" | translate }}</h3>
             <ul class="variant-list">
                 <li *ngFor="let v of _getFilteredVariants()" class="variant-item">
                     <label>
@@ -32,7 +32,7 @@
             </ul>
         </div>
         <div class="manage-variants" *ngIf="cartItems?.length">
-            <h3>Selected Variants</h3>
+            <h3>{{ "form.sAndS.pOneTitleThree" | translate }}</h3>
             <ul class="variant-list">
                 <li *ngFor="let cart of cartItems; let i = index" class="variant-item">
                     <label class="set-po-no">
