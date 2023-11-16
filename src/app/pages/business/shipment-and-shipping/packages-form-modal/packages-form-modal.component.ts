@@ -65,7 +65,7 @@ export class PackagesFormModalComponent implements OnInit {
             ...d,
             addtionalDetails: findMoreDetails.find((ad: any) => ad.id === d.poDetailsId)
           }
-        })
+        });
       });
   }
 

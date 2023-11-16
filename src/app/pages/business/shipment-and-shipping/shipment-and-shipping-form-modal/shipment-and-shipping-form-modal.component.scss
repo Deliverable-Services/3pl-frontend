@@ -55,7 +55,7 @@ li {
   
   .column-left {
     width: 100%;
-    padding: 10px;
+    padding: 5px;
     box-sizing: border-box;
     display: inline-flex;
   }
@@ -82,7 +82,7 @@ li {
   }
 
   .manage-variants {
-    margin-left: 10%;
+    margin-left: 5%;
     max-width: 3500px;
     min-width: 350px;
   }
@@ -102,3 +102,7 @@ li {
     background: #0073FA;
     color: #fff;
   }
+
+  // .manage-rmng-qty {
+  //   margin-left: calc(100% - 87%);
+  // }

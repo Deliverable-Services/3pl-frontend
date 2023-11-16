@@ -89,7 +89,7 @@ export class ShipmentAndShippingFormComponent implements OnInit {
 
   config = {
     id: "dialog-service",
-    width: "60%",
+    width: "50%",
     maxHeight: "600px",
     title: "Select Produts from PO",
     content: ShipmentAndShippingFormModalComponent,
@@ -169,7 +169,6 @@ export class ShipmentAndShippingFormComponent implements OnInit {
         this.detailsInputs.forEach((d: any) => {
           let getPoInfo = res?.content?.find((p: any) => p.id === d.poId);
           let skuInfo = getPoInfo?.details?.find((s: any) => (s.variantId === d.variantId && s.skuNo === d.skuNo));
-          console.log(':: skuInfo :: ', skuInfo)
           d.remainingQuantity = skuInfo?.poQuantity ? (skuInfo.poQuantity - (skuInfo.lockedQuantity+skuInfo.receivedQuantity)):0
         })
       });
@@ -255,7 +254,16 @@ export class ShipmentAndShippingFormComponent implements OnInit {
           ? expectedDeliveryDate[0]
           : "";
 
+          // console.log(':: this.projectFormData.packages :: ', this.projectFormData.details, this.projectFormData.packages);
+
         this.detailsInputs = this.projectFormData?.details?.map((d: any) => {
+          let totalAdded: number = 0;
+          this.projectFormData.packages?.forEach((p: any) => {
+            let findPackageDetails = p?.details?.find((dm: any) => (dm?.poId === d?.poId && dm?.variant?.sku === d?.skuNo));
+            if(findPackageDetails) {
+              totalAdded = totalAdded + parseInt(findPackageDetails?.packageQuantity);
+            }
+          });
           return {
             poId: d?.poId,
             variantId: d?.variantId,
@@ -265,7 +273,8 @@ export class ShipmentAndShippingFormComponent implements OnInit {
             shippedQuantity: d?.shippedQuantity,
             receivedQuantity: d?.receivedQuantity ? d?.receivedQuantity : 0,
             packedQuantity: d?.packedQuantity ? d?.packedQuantity : 0,
-            poDetailsId: d?.poDetailsId
+            poDetailsId: d?.poDetailsId,
+            totalAddedInPackage: totalAdded
           };
         });
 
@@ -296,7 +305,7 @@ export class ShipmentAndShippingFormComponent implements OnInit {
       && this.detailsInputs?.filter((p: any) => p.shippedQuantity > p.remainingQuantity)?.length) {
       this._showError('Planned Ship Qty cannot be greater than Remaining Qty!');
       return false;
-    } else if(this.detailsInputs?.filter((p: any) => !p.shippedQuantity)?.length) {
+    } else if(this.detailsInputs?.filter((p: any) => (!p.shippedQuantity || parseInt(p.shippedQuantity) === 0))?.length) {
       this._showError('One or more field is required!');
       return false;
     }
@@ -540,6 +549,7 @@ export class ShipmentAndShippingFormComponent implements OnInit {
             this.packageDetailsInfo['details'] = this.packageInfo?.map((p: any) => {
               return {
                 packageQuantity: p?.packageQuantity,
+                poId: p?.poId,
                 variant: {
                   sku: p?.addtionalDetails?.skuNo,
                   variantId: p?.variantId
@@ -602,6 +612,7 @@ export class ShipmentAndShippingFormComponent implements OnInit {
                 netWeight: this.bulkDetailsInfo?.netWeight,
                 details: [{
                   packageQuantity: this.bulkDetailsInfo?.qtyInOne,
+                  poId: this.selectedPoDetails?.poId,
                   variant: {
                     sku: this.selectedPoDetails?.skuNo,
                     variantId: this.selectedPoDetails?.variantId
