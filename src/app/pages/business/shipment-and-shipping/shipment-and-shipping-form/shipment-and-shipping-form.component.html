@@ -297,14 +297,18 @@
             <div class="da-content-banner-title">
               {{"form.sAndS.title3" | translate}}
 
-              <div style="display: none;" *ngIf="projectFormData.status 
+              <div *ngIf="projectFormData.status 
               && projectFormData.status?.toLowerCase() !== 'ready'
               && projectFormData.status?.toLowerCase() !== 'draft'" class="manage-total-cost">
                 <d-form-item [ngStyle]="{ margin: '20px 20px 20px 0px' }">
-                  <d-form-label [required]="true">Total Shipping Cost:
+                  <d-form-label [required]="true">Shipping Cost Details
                 </d-form-label>
                   <d-form-control>
-                    <input [disabled]="true" value="{{projectFormData.costs ? projectFormData.costs : 0}}" class="set-width" dTextInput autocomplete="off"/>
+                    <d-button [ngStyle]="{ float: 'right' }"
+                      class="mr-element-spacing" circled="true" style="margin-right: 8px"
+                      (btnClick)="addViewSCost()">
+                      View
+                    </d-button>
                   </d-form-control>
                 </d-form-item>
               </div>

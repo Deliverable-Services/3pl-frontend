@@ -1,0 +1,108 @@
+<ng-container>
+  <ng-container *ngIf="formArray?.length">
+    <div
+      *ngFor="let input of formArray; let i = index"
+      [ngStyle]="{ display: 'flex', justifyContent: 'space-between' }"
+    >
+      <div [ngStyle]="{ display: 'flex' }">
+        <d-form-item [ngStyle]="{ margin: '20px 20px 20px 0px' }">
+          <d-form-label [required]="true">Type</d-form-label>
+          <d-form-control>
+            <input
+              class="set-width"
+              dTextInput
+              autocomplete="off"
+              [(ngModel)]="input.type"
+            />
+          </d-form-control>
+        </d-form-item>
+
+        <d-form-item [ngStyle]="{ margin: '20px 20px 20px 0px' }">
+          <d-form-label [required]="true">Description</d-form-label>
+          <d-form-control>
+            <input
+              class="set-width"
+              dTextInput
+              autocomplete="off"
+              [(ngModel)]="input.description"
+            />
+          </d-form-control>
+        </d-form-item>
+
+        <d-form-item [ngStyle]="{ margin: '20px 20px 20px 0px' }">
+          <d-form-label [required]="true">Price($)</d-form-label>
+          <d-form-control>
+            <input
+              class="set-width"
+              dTextInput
+              autocomplete="off"
+              [(ngModel)]="input.costPrice"
+              (keypress)="numberOnly($event)"
+            />
+          </d-form-control>
+        </d-form-item>
+
+        <d-form-item [ngStyle]="{ margin: '20px 20px 20px 0px' }">
+          <d-form-label [required]="true">*Payment Currency</d-form-label>
+          <d-form-control>
+            <d-select
+              [ngStyle]="{ width: '100%' }"
+              placeholder="Please select the currency"
+              [scrollHight]="'300px'"
+              [filterKey]="'currencyCode'"
+              [appendToBody]="true"
+              [options]="currencyList"
+              name="currency"
+              [isSearch]="true"
+              [(ngModel)]="input.currency"
+              [dValidateRules]="{
+                validators: [{ required: true }]
+              }"
+            ></d-select>
+          </d-form-control>
+        </d-form-item>
+
+        <d-form-item [ngStyle]="{ margin: '20px 20px 20px 0px' }">
+          <d-form-label [required]="true">*Credit Terms</d-form-label>
+          <d-form-control>
+            <d-select
+              [ngStyle]="{ width: '100%' }"
+              placeholder="Please select credit terms"
+              [scrollHight]="'300px'"
+              [filterKey]="'creditTermsSubject'"
+              [appendToBody]="true"
+              [options]="creditTermsData"
+              name="terms"
+              [isSearch]="true"
+              [(ngModel)]="input.terms"
+              [dValidateRules]="{
+                validators: [{ required: true }]
+              }"
+            ></d-select>
+          </d-form-control>
+        </d-form-item>
+
+        <d-button
+          dLoading
+          *ngIf="i !== 0"
+          bsStyle="danger"
+          class="danger"
+          circled="true"
+          style="margin-right: 8px; margin-top: 38px"
+          (click)="removeNow(i)"
+        >
+          {{ "form.sAndS.buttons.remove" | translate }}
+        </d-button>
+      </div>
+    </div>
+
+    <d-button
+      class="mr-element-spacing"
+      circled="true"
+      style="margin-right: 8px"
+      (btnClick)="addMore()"
+    >
+    + Add New
+    </d-button>
+  </ng-container>
+</ng-container>

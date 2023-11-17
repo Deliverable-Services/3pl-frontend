@@ -44,8 +44,8 @@ export class CreditTermsListComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.pageParam.pageSize = 50;;
-    this.pager.pageSize = 50;;
+    this.pageParam.pageSize = 50;
+    this.pager.pageSize = 50;
     this.creditTermsService.setPageParams(this.pageParam);
     this.getCreditTermsList();
   }

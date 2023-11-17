@@ -9,6 +9,7 @@ import { PurchaseOrderService } from "src/app/@core/mock/purchase-order.service"
 import { ShipmentAndShippingFormModalComponent } from "../shipment-and-shipping-form-modal/shipment-and-shipping-form-modal.component";
 import { PackagesFormModalComponent } from "../packages-form-modal/packages-form-modal.component";
 import { BulkPackFormModalComponent } from "../bulk-pack-form-modal/bulk-pack-form-modal.component";
+import { AddShippingCostModalComponent } from "../add-shipping-cost-modal/add-shipping-cost-modal.component";
 
 @Component({
   selector: "app-shipment-and-shipping-form",
@@ -117,6 +118,16 @@ export class ShipmentAndShippingFormComponent implements OnInit {
     onClose: () => console.log("")
   };
 
+  addShippingCostConfig = {
+    id: "dialog-service",
+    width: "50%",
+    maxHeight: "600px",
+    title: "Shipping Cost Details",
+    content: AddShippingCostModalComponent,
+    backdropCloseable: true,
+    onClose: () => console.log("")
+  };
+
   toTypeLabel: string = "Origin To Destination";
   todayDate: any = new Date();
   addedVariantIds: any = [];
@@ -171,10 +182,6 @@ export class ShipmentAndShippingFormComponent implements OnInit {
         this.detailsInputs.forEach((d: any) => {
           let getPoInfo = res?.content?.find((p: any) => p.id === d.poId);
           let skuInfo = getPoInfo?.details?.find((s: any) => (s.variantId === d.variantId && s.skuNo === d.skuNo));
-          console.log('skuInfo.poQuantity',skuInfo.poQuantity);
-          console.log('skuInfo.lockedQuantity',skuInfo.lockedQuantity);
-          console.log('skuInfo.receivedQuantity',skuInfo.receivedQuantity);
-          
           d.remainingQuantity = skuInfo?.poQuantity ? (skuInfo.poQuantity - (skuInfo.lockedQuantity+skuInfo.receivedQuantity)):0
         })
       });
@@ -260,8 +267,6 @@ export class ShipmentAndShippingFormComponent implements OnInit {
           ? expectedDeliveryDate[0]
           : "";
 
-          // console.log(':: this.projectFormData.packages :: ', this.projectFormData.details, this.projectFormData.packages);
-
         this.detailsInputs = this.projectFormData?.details?.map((d: any) => {
           let totalAdded: number = 0;
           this.projectFormData.packages?.forEach((p: any) => {
@@ -297,8 +302,6 @@ export class ShipmentAndShippingFormComponent implements OnInit {
         });
 
         this.packageDetailsInfo = this.projectFormData.packages;
-
-        // console.log(':: this.packageDetailsInfo :: ', this.packageDetailsInfo)
       },
       (error) => {
         this._showDateToast(error.error.detail);
@@ -651,6 +654,39 @@ export class ShipmentAndShippingFormComponent implements OnInit {
           this.bulkDetailsInfo = cData;
         },
         // origin: this.projectFormData.originLocation.connectionLocationId,
+      },
+    });
+  }
+
+  addViewSCost(dialogtype?: string, showAnimation?: boolean) {
+    const results = this.dialogService.open({
+      ...this.addShippingCostConfig,
+      dialogtype: dialogtype,
+      showAnimation: showAnimation,
+      buttons: [
+        {
+          cssClass: "primary",
+          text: "Update",
+          disabled: false,
+          handler: (variantList: any) => {
+            
+          },
+        },
+        {
+          id: "btn-cancel",
+          cssClass: "common",
+          text: "Cancel",
+          handler: (variantList: any) => {
+            results.modalInstance.hide();
+          },
+        },
+      ],
+      data: {
+        info: this.projectFormData,
+        packageDetailsInfo: this.packageDetailsInfo,
+        vList: (vData: any) => {
+          this.selectedPoDetails = vData;
+        },
       },
     });
   }

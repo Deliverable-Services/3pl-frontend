@@ -1,0 +1,134 @@
+ul {
+  list-style: none;
+  padding: 0;
+}
+
+li {
+  display: flex;
+  align-items: center;
+  margin-bottom: 8px;
+  cursor: pointer;
+  padding: 8px;
+  border: 1px solid #ccc;
+}
+
+.modal-header[_ngcontent-rco-c199] .standard-title[_ngcontent-rco-c199] {
+  height: 26px;
+  line-height: 26px;
+  color: #252b3a;
+  color: var(--devui-text, #252b3a);
+  letter-spacing: 0;
+  font-size: 18px;
+  font-size: var(--devui-font-size-modal-title, 18px);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  margin-left: 350px !important;
+}
+
+.selected {
+  background-color: #007bff; /* Customize the background color */
+  color: #fff; /* Customize the text color */
+}
+
+/* Styles for the Variant List */
+.variant-list {
+    list-style: none;
+    padding: 0;
+  }
+  
+  .variant-item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 8px;
+    cursor: pointer;
+    padding: 8px;
+    border: 1px solid #ccc;
+    background-color: #f7f7f7; /* Background color for each item */
+  }
+  
+  .variant-item:hover {
+    background-color: #e0e0e0; /* Background color on hover */
+  }
+  
+  /* Styles for checkboxes */
+  .variant-item input[type="checkbox"] {
+    margin-right: 8px;
+  }
+  
+  /* Heading style */
+  h3 {
+    margin-top: 16px;
+    font-size: 1.2rem;
+  }
+  
+  .column-container {
+    display: flex;
+    flex-direction: row;
+  }
+  
+  .column-left {
+    width: 70%;
+    padding: 10px;
+    box-sizing: border-box;
+    display: inline-flex;
+  }
+
+  .column-right {
+    width: 30%;
+    padding: 10px;
+    box-sizing: border-box;
+  }
+
+  .m-top{
+    margin-top: 25px;
+  }
+  .remove-button{
+    color: red;
+  }
+
+  .first-list {
+    max-width: 14%;
+  }
+
+  .selectedPoId {
+    // background-color: #0073FA;
+  }
+
+  .manage-variants {
+    margin-left: 2%;
+  }
+
+  .manage-main-head {
+    text-align: center;
+    color: red;
+    font-size: 10px;
+    margin-top: -20px;
+  }
+
+  .set-po-no {
+    color: #0073FA;
+  }
+
+  .set-mrgn {
+    margin: 35px 18px;
+  }
+
+  .sub-header {
+    font-size: 17px;
+    font-weight: bold;
+  }
+
+  .main-title {
+    text-align: center;
+
+    h1 {
+      font-size: 20px;
+      margin: 0px;
+      color: #AC7C00;
+    }
+  }
+
+  .manage-sec-two {
+    margin-left: 3%;
+  }

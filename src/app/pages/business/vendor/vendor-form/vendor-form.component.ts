@@ -232,7 +232,7 @@ export class VendorFormComponent implements OnInit {
         this.currencyList = res.content.map((el: any) => {
           return el.currencyCode;
         });
-        console.log("currency list active", this.currencyList);
+        // console.log("currency list active", this.currencyList);
       });
   }
 

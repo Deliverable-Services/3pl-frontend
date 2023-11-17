@@ -530,6 +530,7 @@ export class PurchaseOrderFormComponent implements OnInit {
   }
 
   shipmentDialog(shipments: any) {
+    console.log(':: shipments :: ', shipments);
     const results = this.dialogService.open({
       ...this.shipmentConfig,
       // dialogtype: dialogtype,
