@@ -104,6 +104,7 @@ export class ShipmentAndShippingFormComponent implements OnInit {
     title: "Carton Details",
     content: PackagesFormModalComponent,
     backdropCloseable: true,
+    data: this.detailsInputs,
     onClose: () => console.log("")
   };
 
@@ -124,6 +125,7 @@ export class ShipmentAndShippingFormComponent implements OnInit {
   connectionLocationList: any[] = [];
   selectedTransferOrder: any = {};
   allowSubmit: boolean = true;
+  confirmedCheck: boolean = true;
   expectedDeliveryDateDisabled: boolean = false;
   expectedArrivalDateDisabled: boolean = false;
 
@@ -169,6 +171,10 @@ export class ShipmentAndShippingFormComponent implements OnInit {
         this.detailsInputs.forEach((d: any) => {
           let getPoInfo = res?.content?.find((p: any) => p.id === d.poId);
           let skuInfo = getPoInfo?.details?.find((s: any) => (s.variantId === d.variantId && s.skuNo === d.skuNo));
+          console.log('skuInfo.poQuantity',skuInfo.poQuantity);
+          console.log('skuInfo.lockedQuantity',skuInfo.lockedQuantity);
+          console.log('skuInfo.receivedQuantity',skuInfo.receivedQuantity);
+          
           d.remainingQuantity = skuInfo?.poQuantity ? (skuInfo.poQuantity - (skuInfo.lockedQuantity+skuInfo.receivedQuantity)):0
         })
       });
@@ -264,6 +270,9 @@ export class ShipmentAndShippingFormComponent implements OnInit {
               totalAdded = totalAdded + parseInt(findPackageDetails?.packageQuantity);
             }
           });
+          if(totalAdded !== d?.shippedQuantity){
+            this.confirmedCheck = false;
+          }          
           return {
             poId: d?.poId,
             variantId: d?.variantId,
@@ -707,6 +716,10 @@ export class ShipmentAndShippingFormComponent implements OnInit {
   }
 
   updateStatus(type: string) {
+    if(type === 'confirm' && this.confirmedCheck === false) {
+      this._showToastMsg("error", "Please Add all planned ship quantity to packed quantity first");
+      return;
+    }
     if (type === "publish" && this.detailsInputs.length === 0) {
       this._showToastMsg("error", "Please add details to publish");
       return;

@@ -251,7 +251,7 @@
                     <d-form-control>
                       <input class="set-width" [disabled]="true" dTextInput (keypress)="numberOnly($event)"
                         autocomplete="off" [placeholder]='"form.sAndS.fields.packedQuantity" | translate'
-                        [value]="input.packedQuantity" />
+                        [value]="input.totalAddedInPackage" />
                     </d-form-control>
                   </d-form-item>
 
@@ -297,7 +297,7 @@
             <div class="da-content-banner-title">
               {{"form.sAndS.title3" | translate}}
 
-              <div *ngIf="projectFormData.status 
+              <div style="display: none;" *ngIf="projectFormData.status 
               && projectFormData.status?.toLowerCase() !== 'ready'
               && projectFormData.status?.toLowerCase() !== 'draft'" class="manage-total-cost">
                 <d-form-item [ngStyle]="{ margin: '20px 20px 20px 0px' }">
@@ -399,10 +399,7 @@
                         (input)="updateCartonDetails($event, 'netWeight', i);" />
                     </d-form-control>
                   </d-form-item>
-                  <d-button (click)="deletePackage(input.ctnCode)" style="margin-top: 3%;" *ngIf="input.ctnCode
-                  && projectFormData.status 
-                  && projectFormData.status?.toLowerCase() === 'ready'
-                  && projectFormData.status?.toLowerCase() === 'draft'"
+                  <d-button (click)="deletePackage(input.ctnCode)" style="margin-top: 3%;" *ngIf="projectFormData.status?.toLowerCase() === 'ready'"
                     icon="icon-delete" bsStyle="danger" title="delete" class="da-inline"></d-button>
                 </div>
 

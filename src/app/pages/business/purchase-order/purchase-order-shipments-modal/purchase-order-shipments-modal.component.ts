@@ -34,6 +34,8 @@ export class PurchaseOrderShipmentsModalComponent implements OnInit {
 
   ngOnInit(): void {
     this.shipmentList = this.data.shipments;
+    console.log('this.data.shipments', this.data);
+    
   }
 
   close($event: any) {

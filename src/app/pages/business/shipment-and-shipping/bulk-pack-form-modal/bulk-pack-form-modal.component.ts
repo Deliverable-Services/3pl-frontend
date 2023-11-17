@@ -17,6 +17,7 @@ export class BulkPackFormModalComponent implements OnInit {
   variantList: any[] = [];
   selectedVariants: any[] = [];
   cartItems: any[] = [];
+  detailsInputs: any[] = [];
   storePoDetails: any;
   searchWithStyleName: any = {
     keyword: "",
@@ -56,6 +57,29 @@ export class BulkPackFormModalComponent implements OnInit {
       sortDir: "",
     });
     this.getPoList();
+
+    this.detailsInputs = this.data.info?.details?.map((d: any) => {
+      let totalAdded: number = 0;
+      this.data.info.packages?.forEach((p: any) => {
+        let findPackageDetails = p?.details?.find((dm: any) => (dm?.poId === d?.poId && dm?.variant?.sku === d?.skuNo));
+        if(findPackageDetails) {
+          totalAdded = totalAdded + parseInt(findPackageDetails?.packageQuantity);
+        }
+      });
+               
+      return {
+        poId: d?.poId,
+        variantId: d?.variantId,
+        skuNo: d?.skuNo,
+        remainingQuantity: d?.poQuantity ? (d.poQuantity - (d.lockedQuantity+d.receivedQuantity)):0,
+        skuDescription: d?.skuDescription,
+        shippedQuantity: d?.shippedQuantity,
+        receivedQuantity: d?.receivedQuantity ? d?.receivedQuantity : 0,
+        packedQuantity: d?.packedQuantity ? d?.packedQuantity : 0,
+        poDetailsId: d?.poDetailsId,
+        totalAddedInPackage: totalAdded
+      };
+    });
   }
 
   getPoList() {
@@ -63,7 +87,7 @@ export class BulkPackFormModalComponent implements OnInit {
       .subscribe((res) => {
         // this.storePoDetails = res?.content?.filter((p: any) => (this.data.info.vendor.id === p.vendor.id
         //   && this.data.info.shipToLocation.connectionLocationId === p.shipToLocation.connectionLocationId));
-        this.storePoDetails = this.data.info?.details?.map((d: any) => {
+        this.storePoDetails = this.detailsInputs?.map((d: any) => {
           let findMoreDetails = res?.content?.find((p: any) => p.id === d.poId)?.details;
           return {
             ...d,

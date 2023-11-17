@@ -102,9 +102,9 @@
     </div>
 </div> -->
 
-<div class="column-container">
+<div [ngStyle]="{ display: 'flex',marginLeft: '-44px'}">
 
-    <div class="column-left">
+    <div style="flex: 1;">
         <!-- <h3>{{ "form.sAndS.pTitleOne" | translate }}</h3> -->
         <div class="manage-variants">
             <h4>{{ "form.sAndS.pTitleTwo" | translate }}</h4>
@@ -114,18 +114,21 @@
                         <input type="checkbox"
                                (change)="storeObjectData(v)" [(ngModel)]="v.selected"
                                [checked]="v.itemAlreadySelected">
-                        {{ v.addtionalDetails.skuNo }} Shipment Remaining Qty - {{v?.addtionalDetails?.lockedQuantity}}
+                        {{ v.addtionalDetails.skuNo }} Shipment Remaining Qty - {{v?.shippedQuantity - v?.totalAddedInPackage}}
                     </label>
                 </li>
             </ul>
         </div>
+    </div>
+
+    <div style="flex: 1;">
         <div class="manage-variants">
             <h4>Qty</h4>
             <ul class="variant-list" *ngIf="cartItems?.length">
-                <li *ngFor="let cart of cartItems; let i = index" class="variant-item">
-                    <input class="set-width" dTextInput autocomplete="off" [value]="cart.packageQuantity"
-                        (input)="updateValue($event, 'packageQuantity', i)" />
-                </li>
+                    <li *ngFor="let cart of storePoDetails; let i = index" [ngStyle]="{ visibility: cart.checked ? 'visible' : 'hidden' }" class="variant-item">
+                        <input class="set-width" dTextInput autocomplete="off" [value]="cart.packageQuantity"
+                            (input)="updateValue($event, 'packageQuantity', cart.id)" />
+                    </li>
             </ul>
         </div>
     </div>

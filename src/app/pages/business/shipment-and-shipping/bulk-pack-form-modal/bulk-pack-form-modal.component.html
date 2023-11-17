@@ -28,7 +28,7 @@
   <div class="manage-sec-two">
     <div *ngIf="selectedPoValue" class="sub-header">
         <label>
-          {{ "form.sAndS.title3" | translate }} ({{selectedPoValue.poId}} : {{ selectedPoValue.addtionalDetails.skuNo }} - Max Pack - {{selectedPoValue?.addtionalDetails?.poQuantity ? (selectedPoValue.addtionalDetails.poQuantity - (selectedPoValue.addtionalDetails.lockedQuantity+selectedPoValue.addtionalDetails.receivedQuantity)):0}})
+          {{ "form.sAndS.title3" | translate }} ({{selectedPoValue.poId}} : {{ selectedPoValue.addtionalDetails.skuNo }} - Max Pack - {{selectedPoValue?.shippedQuantity - selectedPoValue?.totalAddedInPackage}})
         </label>
     </div>
 

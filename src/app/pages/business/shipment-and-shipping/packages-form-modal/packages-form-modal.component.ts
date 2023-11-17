@@ -17,6 +17,8 @@ export class PackagesFormModalComponent implements OnInit {
   variantList: any[] = [];
   selectedVariants: any[] = [];
   cartItems: any[] = [];
+  storePOID: any[] = []; //
+  detailsInputs: any[] = [];
   storePoDetails: any;
   searchWithStyleName: any = {
     keyword: "",
@@ -52,6 +54,33 @@ export class PackagesFormModalComponent implements OnInit {
       sortDir: "",
     });
     this.getPoList();
+    // console.log('this.data',this.data.info);
+    this.detailsInputs = this.data.info?.details?.map((d: any) => {
+      let totalAdded: number = 0;
+      this.data.info.packages?.forEach((p: any) => {
+        let findPackageDetails = p?.details?.find((dm: any) => (dm?.poId === d?.poId && dm?.variant?.sku === d?.skuNo));
+        if(findPackageDetails) {
+          totalAdded = totalAdded + parseInt(findPackageDetails?.packageQuantity);
+        }
+      });
+               
+      return {
+        poId: d?.poId,
+        variantId: d?.variantId,
+        skuNo: d?.skuNo,
+        remainingQuantity: d?.poQuantity ? (d.poQuantity - (d.lockedQuantity+d.receivedQuantity)):0,
+        skuDescription: d?.skuDescription,
+        shippedQuantity: d?.shippedQuantity,
+        receivedQuantity: d?.receivedQuantity ? d?.receivedQuantity : 0,
+        packedQuantity: d?.packedQuantity ? d?.packedQuantity : 0,
+        poDetailsId: d?.poDetailsId,
+        totalAddedInPackage: totalAdded
+      };
+    });
+
+    // console.log('this.details',this.detailsInputs);,
+    
+    
   }
 
   getPoList() {
@@ -59,13 +88,18 @@ export class PackagesFormModalComponent implements OnInit {
       .subscribe((res) => {
         // this.storePoDetails = res?.content?.filter((p: any) => (this.data.info.vendor.id === p.vendor.id
         //   && this.data.info.shipToLocation.connectionLocationId === p.shipToLocation.connectionLocationId));
-        this.storePoDetails = this.data.info?.details?.map((d: any) => {
+        this.storePoDetails = this.detailsInputs?.map((d: any) => {
           let findMoreDetails = res?.content?.find((p: any) => p.id === d.poId)?.details;
+          console.log('d',d);
+          console.log('findMoreDetails',findMoreDetails);
+          
           return {
             ...d,
             addtionalDetails: findMoreDetails.find((ad: any) => ad.id === d.poDetailsId)
           }
         });
+        console.log('storePoDetails', this.storePoDetails);
+        
       });
   }
 
@@ -76,11 +110,13 @@ export class PackagesFormModalComponent implements OnInit {
 
   storeObjectData(obj: any) {
     // Check if the object is selected or deselected
-
+    console.log('obj',obj);
+    
     const variantIdExists = this.selectedVariants.some(
       (item) => item.variantId === obj.variantId
     );
-
+    console.log('variantIdExists', variantIdExists);
+    
     if (obj.selected) {
       if (!variantIdExists) {
         // Store the object's data in the selectedVariants array
@@ -89,6 +125,9 @@ export class PackagesFormModalComponent implements OnInit {
           selectedPoId: this.selectedPoId,
           packageQuantity: null,
           ...obj});
+          console.log('this.selectedPoId',this.selectedPoId);
+          
+        this.storePOID.push(obj.id);
       }
     } else {
       // Remove the object from the selectedVariants array if deselected
@@ -98,8 +137,21 @@ export class PackagesFormModalComponent implements OnInit {
       if (index !== -1) {
         this.selectedVariants.splice(index, 1);
         this.cartItems.splice(index, 1);
+        this.storePOID.splice(index, 1);
       }
     }
+
+
+    this.storePoDetails.forEach((ele:any)=>{
+      if(this.storePOID.includes(ele.id)) {
+        ele.checked = true;
+        ele.packageQuantity = null
+      }else{
+        ele.checked = false;
+        ele.packageQuantity = null
+      }
+    })    
+    console.log('cartItems',  this.storePoDetails);
     this.data.vList(this.cartItems);
   }
 
@@ -189,7 +241,15 @@ export class PackagesFormModalComponent implements OnInit {
   }
 
   updateValue(event: any, keyName: string, index: number) {
-    this.cartItems[index][keyName] = event.target.value;
+    console.log('event', event);
+    console.log('keyName', keyName);
+    console.log('index', index);
+    this.cartItems.forEach((ela:any)=>{
+      if(ela.id === index){
+        ela[keyName] = event.target.value;
+      }
+    })
+    // this.cartItems[index][keyName] = event.target.value;
     this.data.vList(this.cartItems);
   }
 

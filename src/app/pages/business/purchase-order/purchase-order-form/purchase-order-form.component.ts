@@ -106,7 +106,7 @@ export class PurchaseOrderFormComponent implements OnInit {
     id: "dialog-service",
     width: "30%",
     maxHeight: "600px",
-    title: "Select Produts With Style",
+    title: "Shipment Details",
     content: PurchaseOrderShipmentsModalComponent,
     backdropCloseable: true,
     onClose: () => console.log(""),
