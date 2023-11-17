@@ -115,7 +115,7 @@ export class ShipmentAndShippingListComponent implements OnInit {
 
   deleteRow(rowId: any, index: number) {
     this.busy = this.shippingOrderService
-      .deleteTransferOrder(rowId)
+      .delete(rowId)
       .subscribe((res) => {
         // console.log(':: res :: ', res);
         // let s;

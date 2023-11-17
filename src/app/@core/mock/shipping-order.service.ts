@@ -167,15 +167,14 @@ export class ShippingOrderService {
     );
   }
 
-  deleteTransferOrder(id: string): Observable<any> {
+  delete(id: string): Observable<any> {
     const httpOptionsToken = {
       headers: new HttpHeaders({
       }),
     };
 
-    return this.http.put(
+    return this.http.delete(
       `${this.baseApiUrl}/shipment/${id}/delete`,
-      {},
       httpOptionsToken
     );
   }
