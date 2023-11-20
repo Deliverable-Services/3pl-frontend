@@ -187,6 +187,7 @@
                     dActiveFormControl>
                     <input
                       [ngClass]="{'manage-fields': (mode.toLowerCase() === 'edit' && projectFormData.orderStatus?.toLowerCase() !== 'draft')}"
+                      [ngStyle]="{'pointer-events': (mode.toLowerCase() === 'edit' && projectFormData.orderStatus?.toLowerCase() !== 'draft') ? 'none' : 'auto'}"
                       class="devui-input devui-form-control" [(ngModel)]="projectFormData.dueDate"
                       autocomplete="off" placeholder="y-MM-dd" [dValidateRules]="{
                       validators: [{ required: true }]

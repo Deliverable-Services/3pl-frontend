@@ -543,14 +543,14 @@ export class TransferOrderFormComponent implements OnInit {
     }
     let searchString = "T00:00:00Z"; // The string to search for
     // Check if the searchString exists in the date strings
-    if (!this.projectFormData.expectedArrivalDate.includes(searchString)) {
-      this.projectFormData.expectedArrivalDate =
-        this.projectFormData.expectedArrivalDate + "T00:00:00Z";
-    }
-    if (!this.projectFormData.expectedDeliveryDate.includes(searchString)) {
-      this.projectFormData.expectedDeliveryDate =
-        this.projectFormData.expectedDeliveryDate + "T00:00:00Z";
-    }
+    // if (!this.projectFormData.expectedArrivalDate.includes(searchString)) {
+    //   this.projectFormData.expectedArrivalDate =
+    //     this.projectFormData.expectedArrivalDate + "T00:00:00Z";
+    // }
+    // if (!this.projectFormData.expectedDeliveryDate.includes(searchString)) {
+    //   this.projectFormData.expectedDeliveryDate =
+    //     this.projectFormData.expectedDeliveryDate + "T00:00:00Z";
+    // }
 
     this.detailsInputs?.forEach((e: any, key: any) => {
       e["lineNumber"] = parseInt(key + 1);
@@ -577,7 +577,11 @@ export class TransferOrderFormComponent implements OnInit {
     this.transferOrderService
       .updateStatus({
         id: this.paramId,
-        formData: this.projectFormData,
+        formData: {
+          ...this.projectFormData,
+          expectedArrivalDate: this.projectFormData.expectedArrivalDate + "T00:00:00Z",
+          expectedDeliveryDate: this.projectFormData.expectedDeliveryDate + "T00:00:00Z",
+        },
         type: type,
       })
       .subscribe(

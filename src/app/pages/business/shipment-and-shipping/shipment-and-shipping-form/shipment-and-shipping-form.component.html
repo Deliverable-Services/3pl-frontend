@@ -166,7 +166,7 @@
             </div>
           </div>
 
-          <d-form-item [ngStyle]="{ marginTop: '20px' }">
+          <d-form-item>
             <d-form-label>{{ "form.sAndS.fields.remarks" | translate }}</d-form-label>
             <d-form-control>
               <textarea rows="4"
@@ -215,7 +215,7 @@
                   <d-form-item [ngStyle]="{ margin: '20px 20px 20px 0px' }">
                     <d-form-label [required]="true">{{"form.sAndS.fields.poNo" | translate}}</d-form-label>
                     <d-form-control>
-                      <input class="set-width" disabled dTextInput autocomplete="off" [value]="input.poId"
+                      <input class="set-width manage-fields" style="pointer-events: none" dTextInput autocomplete="off" [value]="input.poId"
                         (input)="updateValue($event, 'poId', i)" />
                     </d-form-control>
                   </d-form-item>
@@ -223,7 +223,7 @@
                   <d-form-item [ngStyle]="{ margin: '20px 20px 20px 0px' }">
                     <d-form-label [required]="true">{{"form.sAndS.fields.sku" | translate}}</d-form-label>
                     <d-form-control>
-                      <input class="set-width" disabled dTextInput autocomplete="off" [value]="input.skuNo"
+                      <input class="set-width manage-fields" style="pointer-events: none" dTextInput autocomplete="off" [value]="input.skuNo"
                         (input)="updateValue($event, 'skuNo', i)" />
                     </d-form-control>
                   </d-form-item>
@@ -234,7 +234,7 @@
                     <d-form-label [required]="true">{{ "form.sAndS.fields.description" | translate
                       }}</d-form-label>
                     <d-form-control>
-                      <input class="set-width" dTextInput disabled autocomplete="off" [value]="input.skuDescription">
+                      <input class="set-width manage-fields" style="pointer-events: none" dTextInput autocomplete="off" [value]="input.skuDescription">
                     </d-form-control>
                   </d-form-item>
 
@@ -243,7 +243,7 @@
                     <d-form-label [required]="true">{{ "form.sAndS.fields.remainingQuantity" | translate
                       }}</d-form-label>
                     <d-form-control>
-                      <input class="set-width" disabled dTextInput (keypress)="numberOnly($event)" autocomplete="off"
+                      <input class="set-width manage-fields" style="pointer-events: none" dTextInput (keypress)="numberOnly($event)" autocomplete="off"
                         [placeholder]='"form.sAndS.fields.remainingQuantity" | translate'
                         [value]="input.remainingQuantity" (input)="updateValue($event, 'remainingQuantity', i);" />
                     </d-form-control>
@@ -254,7 +254,8 @@
                       }}</d-form-label>
                     <d-form-control>
                       <input class="set-width"
-                        [disabled]="projectFormData.status?.toLowerCase() !== 'draft' && projectFormData.status"
+                        [ngClass]="{'manage-fields': (projectFormData.status && projectFormData.status?.toLowerCase() !== 'draft')}"
+                        [ngStyle]="{'pointer-events': (projectFormData.status && projectFormData.status?.toLowerCase() !== 'draft') ? 'none' : 'auto'}"
                         dTextInput (keypress)="numberOnly($event)" autocomplete="off"
                         [placeholder]='"form.sAndS.fields.plannedShipQuantity" | translate'
                         [value]="input.shippedQuantity" (input)="updateValue($event, 'shippedQuantity', i);" />
@@ -265,7 +266,7 @@
                     *ngIf="projectFormData.status?.toLowerCase() !== 'draft' && projectFormData.status">
                     <d-form-label [required]="true">{{ "form.sAndS.fields.packedQuantity" | translate }}</d-form-label>
                     <d-form-control>
-                      <input class="set-width" [disabled]="true" dTextInput (keypress)="numberOnly($event)"
+                      <input class="set-width manage-fields" style="pointer-events: none" dTextInput (keypress)="numberOnly($event)"
                         autocomplete="off" [placeholder]='"form.sAndS.fields.packedQuantity" | translate'
                         [value]="input.totalAddedInPackage" />
                     </d-form-control>
@@ -276,7 +277,7 @@
                     && projectFormData.status?.toLowerCase() !== 'draft'">
                     <d-form-label [required]="true"> {{ "form.sAndS.fields.receivedQty" | translate }} </d-form-label>
                     <d-form-control>
-                      <input class="set-width" [disabled]="true" dTextInput (keypress)="numberOnly($event)"
+                      <input class="set-width manage-fields" style="pointer-events: none" dTextInput (keypress)="numberOnly($event)"
                         autocomplete="off" [placeholder]='"form.sAndS.fields.receivedQty" | translate'
                         [value]="input.receivedQuantity" />
                     </d-form-control>
@@ -344,7 +345,7 @@
                     <d-form-label [required]="true">{{ "form.sAndS.extraFields.cartonTrackingNo" | translate }}
                     </d-form-label>
                     <d-form-control>
-                      <input [disabled]="true" class="set-width" dTextInput autocomplete="off" [value]="input.ctnCode"
+                      <input class="set-width manage-fields" style="pointer-events: none" dTextInput autocomplete="off" [value]="input.ctnCode"
                         (input)="updateCartonDetails($event, 'ctnCode', i)" />
                     </d-form-control>
                   </d-form-item>
@@ -352,7 +353,7 @@
                   <d-form-item [ngStyle]="{ margin: '20px 20px 20px 0px' }">
                     <d-form-label [required]="true">{{ "form.sAndS.extraFields.cartonNo" | translate }}</d-form-label>
                     <d-form-control>
-                      <input [disabled]="true" class="set-width" dTextInput autocomplete="off" [value]="input.ctnNo"
+                      <input class="set-width manage-fields" style="pointer-events: none" dTextInput autocomplete="off" [value]="input.ctnNo"
                         (input)="updateCartonDetails($event, 'ctnNo', i)" />
                     </d-form-control>
                   </d-form-item>
@@ -360,7 +361,7 @@
                   <d-form-item [ngStyle]="{ margin: '20px 20px 20px 0px' }">
                     <d-form-label [required]="true">{{ "form.sAndS.extraFields.length" | translate }}</d-form-label>
                     <d-form-control>
-                      <input [disabled]="true" class="set-width" (input)="updateCartonDetails($event, 'length', i)"
+                      <input class="set-width manage-fields" style="pointer-events: none" (input)="updateCartonDetails($event, 'length', i)"
                         dTextInput autocomplete="off" [value]="input.length">
                     </d-form-control>
                   </d-form-item>
@@ -368,7 +369,7 @@
                   <d-form-item [ngStyle]="{ margin: '20px 20px 20px 0px' }">
                     <d-form-label [required]="true">{{ "form.sAndS.extraFields.width" | translate }}</d-form-label>
                     <d-form-control>
-                      <input [disabled]="true" class="set-width" dTextInput autocomplete="off" [value]="input.width"
+                      <input class="set-width manage-fields" style="pointer-events: none" dTextInput autocomplete="off" [value]="input.width"
                         (input)="updateCartonDetails($event, 'width', i);" />
                     </d-form-control>
                   </d-form-item>
@@ -376,7 +377,7 @@
                   <d-form-item [ngStyle]="{ margin: '20px 20px 20px 0px' }">
                     <d-form-label [required]="true">{{ "form.sAndS.extraFields.height" | translate }}</d-form-label>
                     <d-form-control>
-                      <input [disabled]="true" class="set-width" dTextInput autocomplete="off" [value]="input.height"
+                      <input class="set-width manage-fields" style="pointer-events: none" dTextInput autocomplete="off" [value]="input.height"
                         (input)="updateCartonDetails($event, 'height', i);" />
                     </d-form-control>
                   </d-form-item>
@@ -384,7 +385,7 @@
                   <d-form-item [ngStyle]="{ margin: '20px 20px 20px 0px' }">
                     <d-form-label [required]="true">{{ "form.sAndS.extraFields.cbm" | translate }}</d-form-label>
                     <d-form-control>
-                      <input [disabled]="true" class="set-width" dTextInput autocomplete="off"
+                      <input class="set-width manage-fields" style="pointer-events: none" dTextInput autocomplete="off"
                         [value]="(input.length*input.width*input.height)/1000000"
                         (input)="updateCartonDetails($event, 'cbm', i);" />
                     </d-form-control>
@@ -394,7 +395,7 @@
                     <d-form-label [required]="true">{{ "form.sAndS.extraFields.grossWeight" | translate }}
                     </d-form-label>
                     <d-form-control>
-                      <input [disabled]="true" class="set-width" dTextInput autocomplete="off"
+                      <input class="set-width manage-fields" style="pointer-events: none" dTextInput autocomplete="off"
                         [value]="input.grossWeight" (input)="updateCartonDetails($event, 'grossWeight', i);" />
                     </d-form-control>
                   </d-form-item>
@@ -402,7 +403,7 @@
                   <d-form-item [ngStyle]="{ margin: '20px 20px 20px 0px' }">
                     <d-form-label [required]="true">{{ "form.sAndS.extraFields.netWeight" | translate }}</d-form-label>
                     <d-form-control>
-                      <input [disabled]="true" class="set-width" dTextInput autocomplete="off" [value]="input.netWeight"
+                      <input class="set-width manage-fields" style="pointer-events: none" dTextInput autocomplete="off" [value]="input.netWeight"
                         (input)="updateCartonDetails($event, 'netWeight', i);" />
                     </d-form-control>
                   </d-form-item>

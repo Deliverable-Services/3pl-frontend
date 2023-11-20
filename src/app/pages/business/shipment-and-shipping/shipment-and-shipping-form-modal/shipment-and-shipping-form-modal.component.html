@@ -18,9 +18,9 @@
                 </ng-container>
             </ul>
         </div>
-        <div class="manage-variants" *ngIf="selectedPoId">
+        <div class="manage-variants">
             <h3>{{ "form.sAndS.pOneTitleTwo" | translate }}</h3>
-            <ul class="variant-list">
+            <ul class="variant-list" *ngIf="selectedPoId">
                 <li *ngFor="let v of _getFilteredVariants()" class="variant-item">
                     <label>
                         <input type="checkbox"
@@ -31,9 +31,9 @@
                 </li>
             </ul>
         </div>
-        <div class="manage-variants" *ngIf="cartItems?.length">
+        <div class="manage-variants">
             <h3>{{ "form.sAndS.pOneTitleThree" | translate }}</h3>
-            <ul class="variant-list">
+            <ul class="variant-list" *ngIf="cartItems?.length">
                 <li *ngFor="let cart of cartItems; let i = index" class="variant-item">
                     <label class="set-po-no">
                         {{ cart.selectedPoId }} : 

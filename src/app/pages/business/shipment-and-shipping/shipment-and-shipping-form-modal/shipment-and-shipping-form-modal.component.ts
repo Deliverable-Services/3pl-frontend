@@ -47,10 +47,16 @@ export class ShipmentAndShippingFormModalComponent implements OnInit {
   getPoList() {
     this.purchaseOrderService.getTransferOrderList()
       .subscribe((res) => {
-        this.storePoDetails = res?.content?.filter((p: any) => (p.orderStatus === 'RELEASED'
+        this.storePoDetails = res?.content?.filter((p: any) => {
+          let dInfo = p?.details?.filter((v: any) => {
+            let rQty = v?.poQuantity ? (v.poQuantity - (v.lockedQuantity+v.receivedQuantity)):0;
+            return rQty !== 0;
+          });
+          return (p.orderStatus === 'RELEASED'
           && this.data.info.vendor.id === p.vendor.id
-          && this.data.info.shipToLocation.connectionLocationId === p.shipToLocation.connectionLocationId));
-          // console.log(':: :: ', this.storePoDetails);
+          && this.data.info.shipToLocation.connectionLocationId === p.shipToLocation.connectionLocationId
+          && dInfo?.length)
+        });
       });
   }
 

@@ -111,7 +111,7 @@ li {
   }
 
   .set-mrgn {
-    margin: 35px 18px;
+    margin: 40px 18px 0px 0px;
   }
 
   .sub-header {
@@ -131,4 +131,16 @@ li {
 
   .manage-sec-two {
     margin-left: 3%;
+  }
+
+  .manage-po-no {
+    color: #007bff;
+  }
+
+  .manage-max-qty {
+    color: red;
+  }
+
+  .manage-fields {
+    background: #f3f3f3 !important;
   }

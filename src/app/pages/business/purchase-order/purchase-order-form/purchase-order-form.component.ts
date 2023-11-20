@@ -627,14 +627,14 @@ export class PurchaseOrderFormComponent implements OnInit {
     }
     let searchString = "T00:00:00Z"; // The string to search for
     // Check if the searchString exists in the date strings
-    if (!this.projectFormData.dueDate.includes(searchString)) {
-      this.projectFormData.dueDate =
-        this.projectFormData.dueDate + "T00:00:00Z";
-    }
-    if (!this.projectFormData.issueDate.includes(searchString)) {
-      this.projectFormData.issueDate =
-      (this.projectFormData.issueDate ? this.projectFormData.issueDate:'2023-10-20') + "T00:00:00Z";
-    }
+    // if (!this.projectFormData.dueDate.includes(searchString)) {
+    //   this.projectFormData.dueDate =
+    //     this.projectFormData.dueDate + "T00:00:00Z";
+    // }
+    // if (!this.projectFormData.issueDate.includes(searchString)) {
+    //   this.projectFormData.issueDate =
+    //   (this.projectFormData.issueDate ? this.projectFormData.issueDate:'2023-10-20') + "T00:00:00Z";
+    // }
 
     this.detailsInputs?.forEach((e: any, key: any) => {
       e["lineNumber"] = parseInt(key + 1);
@@ -661,7 +661,10 @@ export class PurchaseOrderFormComponent implements OnInit {
     this.purchaseOrderService
       .updateStatus({
         id: this.paramId,
-        formData: this.projectFormData,
+        formData: {
+          ...this.projectFormData,
+          dueDate: this.projectFormData.dueDate + "T00:00:00Z",
+        },
         type: type,
       })
       .subscribe(

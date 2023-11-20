@@ -91,7 +91,7 @@ export class ShipmentAndShippingFormComponent implements OnInit {
 
   config = {
     id: "dialog-service",
-    width: "50%",
+    width: "55%",
     maxHeight: "600px",
     title: "Select Produts from PO",
     content: ShipmentAndShippingFormModalComponent,
@@ -551,9 +551,14 @@ export class ShipmentAndShippingFormComponent implements OnInit {
           text: "Ok",
           disabled: false,
           handler: (variantList: any) => {
+            console.log(this.packageInfo,
+              this.packageInfo?.filter((pack: any) => (!pack?.packageQuantity || pack?.packageQuantity === '0')),
+            this.packageInfo?.filter((pack: any) => (!pack?.packageQuantity || pack?.packageQuantity === '0'))?.length)
             if(!this.cartonInfo.length || !this.cartonInfo.width
               || !this.cartonInfo.height || !this.cartonInfo.grossWeight
-              || !this.cartonInfo.netWeight) {
+              || !this.cartonInfo.netWeight
+              || !this.packageInfo?.length
+              || this.packageInfo?.filter((pack: any) => (!pack?.packageQuantity || pack?.packageQuantity === '0'))?.length) {
                 this._showError('One or more field is required!');
                 return;
               }
