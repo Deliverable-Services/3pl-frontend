@@ -11,6 +11,7 @@
             <input
               class="set-width"
               dTextInput
+              (input)="updateValue($event, 'type', i)"
               autocomplete="off"
               [(ngModel)]="input.type"
             />
@@ -21,8 +22,9 @@
           <d-form-label [required]="true">Description</d-form-label>
           <d-form-control>
             <input
-              class="set-width"
+              class="set-width-des"
               dTextInput
+              (input)="updateValue($event, 'description', i)"
               autocomplete="off"
               [(ngModel)]="input.description"
             />
@@ -35,13 +37,14 @@
             <input
               class="set-width"
               dTextInput
+              (input)="updateValue($event, 'costPrice', i)"
               autocomplete="off"
               [(ngModel)]="input.costPrice"
               (keypress)="numberOnly($event)"
             />
           </d-form-control>
         </d-form-item>
-
+<!-- 
         <d-form-item [ngStyle]="{ margin: '20px 20px 20px 0px' }">
           <d-form-label [required]="true">*Payment Currency</d-form-label>
           <d-form-control>
@@ -80,7 +83,7 @@
               }"
             ></d-select>
           </d-form-control>
-        </d-form-item>
+        </d-form-item> -->
 
         <d-button
           dLoading

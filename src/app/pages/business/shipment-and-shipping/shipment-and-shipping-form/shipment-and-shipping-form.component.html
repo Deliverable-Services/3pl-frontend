@@ -115,8 +115,8 @@
                       {{'form.sAndS.fields.shippingAddress' | translate}}
                     </d-form-label>
                     <d-form-control>
-                      <input class="manage-fields" style="pointer-events: none" [(ngModel)]="projectFormData.shipToAddress" dTextInput
-                        autocomplete="off" name="shipToAddress"
+                      <input class="manage-fields" style="pointer-events: none"
+                        [(ngModel)]="projectFormData.shipToAddress" dTextInput autocomplete="off" name="shipToAddress"
                         [placeholder]="'form.sAndS.fields.shippingAddress' | translate" />
                     </d-form-control>
                   </d-form-item>
@@ -169,7 +169,8 @@
           <d-form-item [ngStyle]="{ marginTop: '20px' }">
             <d-form-label>{{ "form.sAndS.fields.remarks" | translate }}</d-form-label>
             <d-form-control>
-              <textarea rows="4" [ngStyle]="{'pointer-events': (mode.toLowerCase() === 'edit' && projectFormData.status?.toLowerCase() !== 'draft') ? 'none' : 'auto'}"
+              <textarea rows="4"
+                [ngStyle]="{'pointer-events': (mode.toLowerCase() === 'edit' && projectFormData.status?.toLowerCase() !== 'draft') ? 'none' : 'auto'}"
                 [ngClass]="{'manage-fields': (mode.toLowerCase() === 'edit' && projectFormData.status?.toLowerCase() !== 'draft')}"
                 dTextarea resize="vertical" autocomplete="off" name="remarks"
                 [placeholder]="'form.sAndS.fields.remarks' | translate" [(ngModel)]="projectFormData.remark"></textarea>
@@ -192,6 +193,21 @@
               </d-form-operation>
             </div>
             <ng-container *ngIf="detailsInputs?.length">
+              <div *ngIf="projectFormData.status 
+              && projectFormData.status?.toLowerCase() !== 'ready'
+              && projectFormData.status?.toLowerCase() !== 'draft'" class="manage-total-cost">
+                <!-- <d-form-item [ngStyle]="{ margin: '20px 20px 20px 0px' }"> -->
+                <div class="da-content-banner-title">
+                  Shipping Cost Details
+                </div>
+                <!-- <d-form-control> -->
+                <d-button [ngStyle]="{ float: 'right' }" class="mr-element-spacing shipping-cost-button" circled="true"
+                  style="margin-right: 20px;width: 150px;" (btnClick)="addViewSCost()">
+                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;View&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                </d-button>
+                <!-- </d-form-control> -->
+                <!-- </d-form-item> -->
+              </div>
               <div *ngFor="let input of detailsInputs; let i = index"
                 [ngStyle]="{ display: 'flex', justifyContent: 'space-between' }">
                 <div [ngStyle]="{ display: 'flex' }">
@@ -255,8 +271,7 @@
                     </d-form-control>
                   </d-form-item>
 
-                  <d-form-item [ngStyle]="{ margin: '20px 20px 20px 0px' }"
-                    *ngIf="projectFormData.status 
+                  <d-form-item [ngStyle]="{ margin: '20px 20px 20px 0px' }" *ngIf="projectFormData.status 
                     && projectFormData.status?.toLowerCase() !== 'ready'
                     && projectFormData.status?.toLowerCase() !== 'draft'">
                     <d-form-label [required]="true"> {{ "form.sAndS.fields.receivedQty" | translate }} </d-form-label>
@@ -271,12 +286,16 @@
                   && (input.shippedQuantity === input.totalAddedInPackage)" class="manage-svg">
                     <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 40 40" fill="none">
                       <g clip-path="url(#clip0_152_13149)">
-                        <path d="M20 40C31.0457 40 40 31.0457 40 20C40 8.9543 31.0457 0 20 0C8.9543 0 0 8.9543 0 20C0 31.0457 8.9543 40 20 40Z" fill="#00BA00"/>
-                        <path fill-rule="evenodd" clip-rule="evenodd" d="M13.755 29.7536L6.44033 21.9248C5.43891 20.853 5.49639 19.1572 6.5682 18.1558C7.64001 17.1544 9.33576 17.212 10.3372 18.2837L15.9794 24.3224L24.9102 15.978C24.9906 15.9029 25.0745 15.8341 25.1613 15.7708L29.3611 11.8468C30.4329 10.8454 32.1288 10.9031 33.1301 11.9749C34.1315 13.0465 34.0739 14.7424 33.0022 15.7438L20.1748 27.7289L20.1611 27.7142L15.7239 31.8601L13.755 29.7536Z" fill="white"/>
+                        <path
+                          d="M20 40C31.0457 40 40 31.0457 40 20C40 8.9543 31.0457 0 20 0C8.9543 0 0 8.9543 0 20C0 31.0457 8.9543 40 20 40Z"
+                          fill="#00BA00" />
+                        <path fill-rule="evenodd" clip-rule="evenodd"
+                          d="M13.755 29.7536L6.44033 21.9248C5.43891 20.853 5.49639 19.1572 6.5682 18.1558C7.64001 17.1544 9.33576 17.212 10.3372 18.2837L15.9794 24.3224L24.9102 15.978C24.9906 15.9029 25.0745 15.8341 25.1613 15.7708L29.3611 11.8468C30.4329 10.8454 32.1288 10.9031 33.1301 11.9749C34.1315 13.0465 34.0739 14.7424 33.0022 15.7438L20.1748 27.7289L20.1611 27.7142L15.7239 31.8601L13.755 29.7536Z"
+                          fill="white" />
                       </g>
                       <defs>
                         <clipPath id="clip0_152_13149">
-                          <rect width="40" height="40" fill="white"/>
+                          <rect width="40" height="40" fill="white" />
                         </clipPath>
                       </defs>
                     </svg>
@@ -296,22 +315,6 @@
           <ng-container *ngIf="mode.toLowerCase() === 'edit' && projectFormData.status?.toLowerCase() !== 'draft'">
             <div class="da-content-banner-title">
               {{"form.sAndS.title3" | translate}}
-
-              <div *ngIf="projectFormData.status 
-              && projectFormData.status?.toLowerCase() !== 'ready'
-              && projectFormData.status?.toLowerCase() !== 'draft'" class="manage-total-cost">
-                <d-form-item [ngStyle]="{ margin: '20px 20px 20px 0px' }">
-                  <d-form-label [required]="true">Shipping Cost Details
-                </d-form-label>
-                  <d-form-control>
-                    <d-button [ngStyle]="{ float: 'right' }"
-                      class="mr-element-spacing" circled="true" style="margin-right: 8px"
-                      (btnClick)="addViewSCost()">
-                      View
-                    </d-button>
-                  </d-form-control>
-                </d-form-item>
-              </div>
             </div>
 
             <div [ngStyle]="{ width: '100%' }">
@@ -321,8 +324,8 @@
                   (click)="openPackageDialog()">
                   {{ "form.sAndS.popupBtn2" | translate }}
                 </d-button>
-                <button [ngStyle]="{ 'margin-bottom': '12px', 'margin-left': '12px' }"
-                  class="manage-btn-color" circled="true" (click)="openBulkPack()">
+                <button [ngStyle]="{ 'margin-bottom': '12px', 'margin-left': '12px' }" class="manage-btn-color"
+                  circled="true" (click)="openBulkPack()">
                   {{ "form.sAndS.popupBtn3" | translate }}
                 </button>
               </d-form-operation>
@@ -334,14 +337,14 @@
             <ng-container *ngIf="packageDetailsInfo?.length">
               <div *ngFor="let input of packageDetailsInfo; let i = index"
                 [ngStyle]="{ justifyContent: 'space-between' }">
-                
+
                 <div [ngStyle]="{ display: 'flex' }">
                   <div style="margin:52px 20px 0 0">{{ i + 1 }}.</div>
                   <d-form-item [ngStyle]="{ margin: '20px 20px 20px 0px' }">
                     <d-form-label [required]="true">{{ "form.sAndS.extraFields.cartonTrackingNo" | translate }}
-                  </d-form-label>
+                    </d-form-label>
                     <d-form-control>
-                      <input [disabled]="true"  class="set-width" dTextInput autocomplete="off" [value]="input.ctnCode"
+                      <input [disabled]="true" class="set-width" dTextInput autocomplete="off" [value]="input.ctnCode"
                         (input)="updateCartonDetails($event, 'ctnCode', i)" />
                     </d-form-control>
                   </d-form-item>
@@ -357,8 +360,8 @@
                   <d-form-item [ngStyle]="{ margin: '20px 20px 20px 0px' }">
                     <d-form-label [required]="true">{{ "form.sAndS.extraFields.length" | translate }}</d-form-label>
                     <d-form-control>
-                      <input [disabled]="true" class="set-width" (input)="updateCartonDetails($event, 'length', i)" dTextInput
-                        autocomplete="off" [value]="input.length">
+                      <input [disabled]="true" class="set-width" (input)="updateCartonDetails($event, 'length', i)"
+                        dTextInput autocomplete="off" [value]="input.length">
                     </d-form-control>
                   </d-form-item>
 
@@ -391,8 +394,8 @@
                     <d-form-label [required]="true">{{ "form.sAndS.extraFields.grossWeight" | translate }}
                     </d-form-label>
                     <d-form-control>
-                      <input [disabled]="true" class="set-width" dTextInput autocomplete="off" [value]="input.grossWeight"
-                        (input)="updateCartonDetails($event, 'grossWeight', i);" />
+                      <input [disabled]="true" class="set-width" dTextInput autocomplete="off"
+                        [value]="input.grossWeight" (input)="updateCartonDetails($event, 'grossWeight', i);" />
                     </d-form-control>
                   </d-form-item>
 
@@ -403,8 +406,9 @@
                         (input)="updateCartonDetails($event, 'netWeight', i);" />
                     </d-form-control>
                   </d-form-item>
-                  <d-button (click)="deletePackage(input.ctnCode)" style="margin-top: 3%;" *ngIf="projectFormData.status?.toLowerCase() === 'ready'"
-                    icon="icon-delete" bsStyle="danger" title="delete" class="da-inline"></d-button>
+                  <d-button (click)="deletePackage(input.ctnCode)" style="margin-top: 3%;"
+                    *ngIf="projectFormData.status?.toLowerCase() === 'ready'" icon="icon-delete" bsStyle="danger"
+                    title="delete" class="da-inline"></d-button>
                 </div>
 
                 <div class="">

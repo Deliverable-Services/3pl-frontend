@@ -127,7 +127,7 @@ export class PackagesFormModalComponent implements OnInit {
           ...obj});
           console.log('this.selectedPoId',this.selectedPoId);
           
-        this.storePOID.push(obj.id);
+        this.storePOID.push(obj.poDetailsId);
       }
     } else {
       // Remove the object from the selectedVariants array if deselected
@@ -141,9 +141,11 @@ export class PackagesFormModalComponent implements OnInit {
       }
     }
 
+    console.log('this.storePOID',this.storePOID);
+    
 
     this.storePoDetails.forEach((ele:any)=>{
-      if(this.storePOID.includes(ele.id)) {
+      if(this.storePOID.includes(ele.poDetailsId)) {
         ele.checked = true;
         ele.packageQuantity = null
       }else{
@@ -245,7 +247,7 @@ export class PackagesFormModalComponent implements OnInit {
     console.log('keyName', keyName);
     console.log('index', index);
     this.cartItems.forEach((ela:any)=>{
-      if(ela.id === index){
+      if(ela.poDetailsId === index){
         ela[keyName] = event.target.value;
       }
     })

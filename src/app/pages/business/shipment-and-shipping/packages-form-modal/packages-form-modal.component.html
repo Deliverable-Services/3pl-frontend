@@ -127,7 +127,7 @@
             <ul class="variant-list" *ngIf="cartItems?.length">
                     <li *ngFor="let cart of storePoDetails; let i = index" [ngStyle]="{ visibility: cart.checked ? 'visible' : 'hidden' }" class="variant-item">
                         <input class="set-width" dTextInput autocomplete="off" [value]="cart.packageQuantity"
-                            (input)="updateValue($event, 'packageQuantity', cart.id)" />
+                            (input)="updateValue($event, 'packageQuantity', cart.poDetailsId)" />
                     </li>
             </ul>
         </div>

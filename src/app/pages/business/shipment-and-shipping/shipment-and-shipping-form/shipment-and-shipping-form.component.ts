@@ -48,6 +48,7 @@ export class ShipmentAndShippingFormComponent implements OnInit {
   packageInfo: any[] = [];
   bulkDetailsInfo: any;
   selectedPoDetails: any;
+  shippinCostDetail: any;
   cartonInfo: any = {};
   packageDetailsInfo: any;
   pageParam: any = {
@@ -668,7 +669,29 @@ export class ShipmentAndShippingFormComponent implements OnInit {
           cssClass: "primary",
           text: "Update",
           disabled: false,
-          handler: (variantList: any) => {
+          handler: (details: any) => {
+            if(!this.shippinCostDetail){
+              this._showError('One or more field is required!');
+              return;
+            }
+            let error = 0;
+            this.shippinCostDetail.forEach((shipDetails: any) => {
+              console.log('shippinCostDetail', shipDetails);
+              console.log(shipDetails.costPrice === "" || shipDetails.description === "" || shipDetails.type === "");
+                            
+              if(shipDetails.costPrice === "" || shipDetails.description === "" || shipDetails.type === ""){
+                error++;
+              }              
+            });
+            if(error === 0){
+              results.modalInstance.hide();
+              this.updateShippingCost(this.shippinCostDetail)            
+              console.log('details',this.shippinCostDetail);
+            }else{
+              this._showError('One or more field is required!');
+                return;
+            }
+           
             
           },
         },
@@ -685,7 +708,8 @@ export class ShipmentAndShippingFormComponent implements OnInit {
         info: this.projectFormData,
         packageDetailsInfo: this.packageDetailsInfo,
         vList: (vData: any) => {
-          this.selectedPoDetails = vData;
+          this.shippinCostDetail = vData;
+          console.log('details',vData);
         },
       },
     });
@@ -996,6 +1020,18 @@ export class ShipmentAndShippingFormComponent implements OnInit {
 
   addPackage(formData: any) {
     this.shippingOrderService.addPackage(formData, this.paramId)
+    .subscribe(
+      (res) => {
+        this._showToast(res);
+      },
+      (error) => {
+        this._showDateToast(error.error.detail);
+      }
+    );
+  }
+
+  updateShippingCost(formData: any) {
+    this.shippingOrderService.updateShippingCost(formData, this.paramId)
     .subscribe(
       (res) => {
         this._showToast(res);

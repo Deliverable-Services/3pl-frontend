@@ -18,6 +18,10 @@
   color: $devui-brand-active;
 }
 
+.shipping-cost-button .devui-btn-default {
+  width: 150px;
+}
+
 .close-icon-wrapper {
   padding: 0;
 }
@@ -93,7 +97,7 @@ form {
   width: 100%;
 }
 
-.bold-label{
+.bold-label {
   font-size: 14px;
   font-weight: bolder;
 }
@@ -105,13 +109,13 @@ form {
 .input-setting {
   margin-bottom: 30px;
 }
-.create-btn{
+.create-btn {
   display: flex;
   justify-content: flex-end;
   margin-bottom: 50px;
 }
 button.manage-btn-color {
-  background: #AC7C00;
+  background: #ac7c00;
   color: #fff;
   padding: 5px 20px;
   border-radius: 4px;
@@ -124,9 +128,11 @@ button.manage-btn-color {
 
 .manage-total-cost {
   float: right;
-  margin-left: 10px;
+  border: 1px dotted gray;
+  margin: 0px;
+  padding: 54px 20px;
 }
 
 .manage-fields {
-  background: #F3F3F3 !important;
+  background: #f3f3f3 !important;
 }

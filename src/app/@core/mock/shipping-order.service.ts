@@ -154,6 +154,19 @@ export class ShippingOrderService {
     );
   }
 
+  updateShippingCost(data: any, sId: any) {
+    const httpOptionsToken = {
+      headers: new HttpHeaders({
+      }),
+    };
+
+    return this.http.put(
+      `${this.baseApiUrl}/shipment/${sId}/update-shipping-cost`,
+      data,
+      httpOptionsToken
+    );
+  }
+
   resolveDiscrepancy(data: any) {
     const httpOptionsToken = {
       headers: new HttpHeaders({

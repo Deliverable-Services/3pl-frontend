@@ -17,7 +17,9 @@ export class AddShippingCostModalComponent implements OnInit {
     description: "",
     costPrice: "",
     currency: "",
-    terms: {}
+    terms: {
+      creditTermsId:"e44546aa-8d10-452a-9500-6d9f065362b8"
+    }
   }
 
   formArray: any[] = [];
@@ -48,19 +50,28 @@ export class AddShippingCostModalComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.formArray.push({
-      type: "",
-      description: "",
-      costPrice: "",
-      currency: "",
-      terms: {}
-    });
-    this.getCurrencyListActive();
+    
+    console.log('this.data.info',this.data.info);
+    if(this.data.info.costs.length == 0){
+      this.formArray.push({
+        type: "",
+        description: "",
+        costPrice: "",
+        currency: "SGD",
+        terms: {
+          creditTermsId:"e44546aa-8d10-452a-9500-6d9f065362b8"
+        }
+      });
+    }else{
+      this.formArray = this.data.info.costs;
+    }
+    
+    // this.getCurrencyListActive();
 
-    this.pageParam.pageSize = 100;
-    this.pager.pageSize = 100;
-    this.creditTermsService.setPageParams(this.pageParam);
-    this.getCreditTermsList();
+    // this.pageParam.pageSize = 100;
+    // this.pager.pageSize = 100;
+    // this.creditTermsService.setPageParams(this.pageParam);
+    // this.getCreditTermsList();
   }
 
   close($event: any) {
@@ -74,10 +85,12 @@ export class AddShippingCostModalComponent implements OnInit {
 
   updateValue(event: any, keyName: string, index: number) {
     this.formArray[index][keyName] = event.target.value;
+    this.data.vList(this.formArray);
   }
 
   removeNow(rowIndex: number) {
     this.formArray?.splice(rowIndex,1);
+    this.data.vList(this.formArray)
   }
 
   addMore() {
@@ -85,9 +98,12 @@ export class AddShippingCostModalComponent implements OnInit {
       type: "",
       description: "",
       costPrice: "",
-      currency: "",
-      terms: {}
+      currency: "SGD",
+      terms: {
+        creditTermsId:"e44546aa-8d10-452a-9500-6d9f065362b8"
+      }
     });
+    this.data.vList(this.formArray)
   }
 
   numberOnly(event: any) {
