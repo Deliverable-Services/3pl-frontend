@@ -4,6 +4,7 @@
 <div class="column-container">
 
     <div class="column-left">
+
         <div class="first-list">
             <h3>{{ "form.sAndS.pOneTitleOne" | translate }}</h3>
             <ul class="variant-list">
@@ -20,25 +21,31 @@
         </div>
         <div class="manage-variants">
             <h3>{{ "form.sAndS.pOneTitleTwo" | translate }}</h3>
+            <h2 *ngif="_getFilteredVariants().length === '0'">No Product Available</h2>
             <ul class="variant-list" *ngIf="selectedPoId">
+
                 <li *ngFor="let v of _getFilteredVariants()" class="variant-item">
-                    <label>
-                        <input type="checkbox"
-                               (change)="storeObjectData(v)" [(ngModel)]="v.selected"
-                               [checked]="v.itemAlreadySelected">
-                        {{ v.skuNo }} Remaining Qty: {{v?.poQuantity ? (v.poQuantity - (v.lockedQuantity+v.receivedQuantity)):0}}
+                    <label class="item-label">
+                        <span><input type="checkbox" (change)="storeObjectData(v)" [(ngModel)]="v.selected"
+                                [checked]="v.selected"></span>
+                        <span class="sku">{{ v.skuNo }}</span>
+                        <span class="remaining-quantity">Remaining Qty: {{v?.poQuantity ? v?.poQuantity -
+                            v?.lockedQuantity -
+                            v?.shippedQuantity +
+                            v?.discrepancyQuantity:0}}</span>
                     </label>
                 </li>
+                
             </ul>
         </div>
-        <div class="manage-variants">
+        <div class="manage-variants-cart">
             <h3>{{ "form.sAndS.pOneTitleThree" | translate }}</h3>
             <ul class="variant-list" *ngIf="cartItems?.length">
                 <li *ngFor="let cart of cartItems; let i = index" class="variant-item">
                     <label class="set-po-no">
-                        {{ cart.selectedPoId }} : 
+                        {{ cart.selectedPoId }} :
                     </label>
-                    <label>
+                    <label class="sku">
                         {{ cart.skuNo }}
                     </label>
                     <span style="margin-left: 20px;">

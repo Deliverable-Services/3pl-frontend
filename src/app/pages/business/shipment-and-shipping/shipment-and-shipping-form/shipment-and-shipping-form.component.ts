@@ -22,21 +22,22 @@ export class ShipmentAndShippingFormComponent implements OnInit {
   createdDate? = "";
   modifiedDate? = "";
   vendorList: any[] = [];
+  totalCost: any = "0";
 
   projectFormData: any = {
     shipToLocation: {
       connectionLocationId: "",
       nodeName: "",
       nodeType: "",
-      physicalAddress: ""
+      physicalAddress: "",
     },
     vendor: {
       id: "",
       companyName: "",
       address: "",
       creditTermsDto: {
-        creditTermsId: ""
-      }
+        creditTermsId: "",
+      },
     },
     shipToAddress: "",
     details: [],
@@ -102,12 +103,11 @@ export class ShipmentAndShippingFormComponent implements OnInit {
   packageConfig = {
     id: "dialog-service",
     width: "50%",
-    maxHeight: "600px",
-    title: "Carton Details",
+    maxHeight: "700px",
     content: PackagesFormModalComponent,
     backdropCloseable: true,
     data: this.detailsInputs,
-    onClose: () => console.log("")
+    onClose: () => console.log(""),
   };
 
   bulkConfig = {
@@ -116,7 +116,7 @@ export class ShipmentAndShippingFormComponent implements OnInit {
     maxHeight: "600px",
     content: BulkPackFormModalComponent,
     backdropCloseable: true,
-    onClose: () => console.log("")
+    onClose: () => console.log(""),
   };
 
   addShippingCostConfig = {
@@ -126,7 +126,7 @@ export class ShipmentAndShippingFormComponent implements OnInit {
     title: "Shipping Cost Details",
     content: AddShippingCostModalComponent,
     backdropCloseable: true,
-    onClose: () => console.log("")
+    onClose: () => console.log(""),
   };
 
   toTypeLabel: string = "Origin To Destination";
@@ -135,7 +135,7 @@ export class ShipmentAndShippingFormComponent implements OnInit {
   dDate: any = new Date();
   paramId: string = "";
   connectionLocationList: any[] = [];
-  selectedTransferOrder: any = {};
+  selectedShipment: any = {};
   allowSubmit: boolean = true;
   confirmedCheck: boolean = true;
   expectedDeliveryDateDisabled: boolean = false;
@@ -157,7 +157,7 @@ export class ShipmentAndShippingFormComponent implements OnInit {
     this.mode = this.route.snapshot.params["id"] ? "Edit" : "Add";
     this.getConnectionLocationList();
     if (this.mode === "Edit") {
-      this.getTransferOrderById(this.paramId);
+      this.getShipmentById(this.paramId);
     }
 
     this.connectionLocationService.setPageParams(this.pageParam);
@@ -165,26 +165,36 @@ export class ShipmentAndShippingFormComponent implements OnInit {
 
     this.purchaseOrderService.setPageParams({
       pageNo: "",
-      pageSize: '100',
-      sortBy: "",
-      sortDir: "",
+      pageSize: "100",
+      sortBy: "id",
+      sortDir: "desc",
     });
   }
 
   getPoList(poIds: any) {
-    this.purchaseOrderService.getTransferOrderList({
-      filters: [{
-        field: 'id',
-        operator: "in",
-        value: poIds,
-      }]
-    })
+    this.purchaseOrderService
+      .getPurchaseOrderList({
+        filters: [
+          {
+            field: "id",
+            operator: "in",
+            value: poIds,
+          },
+        ],
+      })
       .subscribe((res) => {
         this.detailsInputs.forEach((d: any) => {
           let getPoInfo = res?.content?.find((p: any) => p.id === d.poId);
-          let skuInfo = getPoInfo?.details?.find((s: any) => (s.variantId === d.variantId && s.skuNo === d.skuNo));
-          d.remainingQuantity = skuInfo?.poQuantity ? (skuInfo.poQuantity - (skuInfo.lockedQuantity+skuInfo.receivedQuantity)):0
-        })
+          let skuInfo = getPoInfo?.details?.find(
+            (s: any) => s.variantId === d.variantId && s.skuNo === d.skuNo
+          );
+          d.remainingQuantity = skuInfo?.poQuantity
+            ? skuInfo.poQuantity -
+              skuInfo.lockedQuantity -
+              skuInfo.shippedQuantity +
+              skuInfo.discrepancyQuantity
+            : 0;
+        });
       });
   }
 
@@ -205,7 +215,7 @@ export class ShipmentAndShippingFormComponent implements OnInit {
               connectionLocationId: c?.connectionLocationId || "",
               nodeName: `${c?.nodeType} - ${c?.nodeName}` || "",
               nodeType: c?.nodeType,
-              physicalAddress: c.physicalAddress
+              physicalAddress: c.physicalAddress,
             };
           }
         );
@@ -248,48 +258,64 @@ export class ShipmentAndShippingFormComponent implements OnInit {
     return `${day}/${month}/${year} ${hours}:${minutes}`;
   }
 
-  getTransferOrderById(id: string) {
+  getShipmentById(id: string) {
     this.shippingOrderService.getById(id).subscribe(
       (res) => {
         this.createdDate = this.formatDate(res.createdDate) ?? "";
         this.modifiedDate = this.formatDate(res.lastModifiedDate) ?? "";
 
-        this.selectedTransferOrder = res;
+        this.selectedShipment = res;
         this.projectFormData = res;
-        
-        let expectedArrivalDate =
-          this.projectFormData?.dueDate?.split("T");
-        let expectedDeliveryDate =
-          this.projectFormData?.issueDate?.split("T");
+        console.log("result", res);
+
+        res.costs.forEach((cost: any) => {
+          console.log("cost:", cost);
+          this.totalCost = parseInt(this.totalCost) + parseInt(cost.costPrice);
+        });
+
+        this.totalCost = `${this.totalCost} SGD`
+
+        let expectedArrivalDate = this.projectFormData?.dueDate?.split("T");
+        let expectedDeliveryDate = this.projectFormData?.issueDate?.split("T");
         this.projectFormData.dueDate = expectedArrivalDate
           ? expectedArrivalDate[0]
           : "";
         this.projectFormData.issueDate = expectedDeliveryDate
           ? expectedDeliveryDate[0]
           : "";
-
         this.detailsInputs = this.projectFormData?.details?.map((d: any) => {
           let totalAdded: number = 0;
           this.projectFormData.packages?.forEach((p: any) => {
-            let findPackageDetails = p?.details?.find((dm: any) => (dm?.poId === d?.poId && dm?.variant?.sku === d?.skuNo));
-            if(findPackageDetails) {
-              totalAdded = totalAdded + parseInt(findPackageDetails?.packageQuantity);
+            let findPackageDetails = p?.details?.find(
+              (dm: any) => dm?.poId === d?.poId && dm?.variant?.sku === d?.skuNo
+            );
+            if (findPackageDetails) {
+              totalAdded =
+                totalAdded + parseInt(findPackageDetails?.packageQuantity);
             }
           });
-          if(totalAdded !== d?.shippedQuantity){
+          if (totalAdded !== d?.shippedQuantity) {
             this.confirmedCheck = false;
-          }          
+          }
+          let poVar = d?.variantId + " " + d?.poId;
+          this.addedVariantIds.push(poVar);
+
           return {
             poId: d?.poId,
             variantId: d?.variantId,
             skuNo: d?.skuNo,
-            remainingQuantity: d?.poQuantity ? (d.poQuantity - (d.lockedQuantity+d.receivedQuantity)):0,
+            remainingQuantity: d?.poQuantity
+              ? d.poQuantity -
+                d.lockedQuantity -
+                d.shippedQuantity +
+                d.discrepancyQuantity
+              : 0,
             skuDescription: d?.skuDescription,
             shippedQuantity: d?.shippedQuantity,
             receivedQuantity: d?.receivedQuantity ? d?.receivedQuantity : 0,
             packedQuantity: d?.packedQuantity ? d?.packedQuantity : 0,
             poDetailsId: d?.poDetailsId,
-            totalAddedInPackage: totalAdded
+            totalAddedInPackage: totalAdded,
           };
         });
 
@@ -311,15 +337,24 @@ export class ShipmentAndShippingFormComponent implements OnInit {
   }
 
   _validateFormInputs() {
-    if(!this.detailsInputs?.length) {
-      this._showError('Please add atleast one product!');
+    if (!this.detailsInputs?.length) {
+      this._showError("Please add atleast one product!");
       return false;
-    } else if((!this.projectFormData.status || this.projectFormData.status?.toLowerCase() === 'draft')
-      && this.detailsInputs?.filter((p: any) => p.shippedQuantity > p.remainingQuantity)?.length) {
-      this._showError('Planned Ship Qty cannot be greater than Remaining Qty!');
+    } else if (
+      (!this.projectFormData.status ||
+        this.projectFormData.status?.toLowerCase() === "draft") &&
+      this.detailsInputs?.filter(
+        (p: any) => p.shippedQuantity > p.remainingQuantity
+      )?.length
+    ) {
+      this._showError("Planned Ship Qty cannot be greater than Remaining Qty!");
       return false;
-    } else if(this.detailsInputs?.filter((p: any) => (!p.shippedQuantity || parseInt(p.shippedQuantity) === 0))?.length) {
-      this._showError('One or more field is required!');
+    } else if (
+      this.detailsInputs?.filter(
+        (p: any) => !p.shippedQuantity || parseInt(p.shippedQuantity) === 0
+      )?.length
+    ) {
+      this._showError("One or more field is required!");
       return false;
     }
     return true;
@@ -327,10 +362,12 @@ export class ShipmentAndShippingFormComponent implements OnInit {
 
   _showError(eMsg: string) {
     this.toastService.open({
-      value: [{
+      value: [
+        {
           severity: "error",
           content: eMsg,
-        }],
+        },
+      ],
       life: 2000,
     });
   }
@@ -342,34 +379,31 @@ export class ShipmentAndShippingFormComponent implements OnInit {
         e["plannedQuantity"] = parseInt(e["plannedQuantity"]);
       });
       this.projectFormData.details = this.detailsInputs;
-    
+
       if (this.mode === "Add") {
         this.shippingOrderService
-            .add({
-              ...this.projectFormData,
-              shipToLocation: {
-                connectionLocationId: this.projectFormData.shipToLocation.connectionLocationId
-              },
-              vendor: {
-                id: this.projectFormData.vendor.id
-              }
-            })
-            .subscribe(
-              (res) => {
-                this._showToast(res);
-              },
-              (error) => {
-                this._showDateToast(error.error.detail);
-              }
-            );
+          .add({
+            ...this.projectFormData,
+            shipToLocation: {
+              connectionLocationId:
+                this.projectFormData.shipToLocation.connectionLocationId,
+            },
+            vendor: {
+              id: this.projectFormData.vendor.id,
+            },
+          })
+          .subscribe(
+            (res) => {
+              this._showToast(res);
+            },
+            (error) => {
+              this._showDateToast(error.error.detail);
+            }
+          );
       } else {
         const today = new Date();
-        const expectedArrivalDate = new Date(
-          this.projectFormData.dueDate
-        );
-        const expectedDeliveryDate = new Date(
-          this.projectFormData.issueDate
-        );
+        const expectedArrivalDate = new Date(this.projectFormData.dueDate);
+        const expectedDeliveryDate = new Date(this.projectFormData.issueDate);
 
         // Set the time components to 00:00:00
         today.setHours(0, 0, 0, 0);
@@ -397,7 +431,7 @@ export class ShipmentAndShippingFormComponent implements OnInit {
           return;
         }
         this.shippingOrderService
-          .updateTransferOrder(this.paramId, this.projectFormData)
+          .updateShipment(this.paramId, this.projectFormData)
           .subscribe(
             (res) => {
               this._showToast(res);
@@ -437,7 +471,7 @@ export class ShipmentAndShippingFormComponent implements OnInit {
       if (this.mode === "Add") {
         this.router.navigate(["/business/shipment-and-shipping"]);
       } else {
-        this.getTransferOrderById(this.paramId);
+        this.getShipmentById(this.paramId);
       }
     } else {
       type = "error";
@@ -493,24 +527,35 @@ export class ShipmentAndShippingFormComponent implements OnInit {
           disabled: false,
           handler: (variantList: any) => {
             results.modalInstance.hide();
+            this.detailsInputs = [];
             this.stVariants?.forEach((p: any) => {
+              let poVar = p?.variantId + " " + p?.selectedPoId;
               if (
                 p?.selected === true &&
-                !this.addedVariantIds.includes(p?.variantId) &&
-                !this.detailsInputs.some((input: any) => input.variantId === p?.variantId)
+                !this.detailsInputs.some(
+                  (input: any) => input.poVArId === poVar
+                )
               ) {
+                console.log("----------p------------>", p);
+
                 this.detailsInputs.push({
                   poId: p?.selectedPoId,
-                  poDetailsId: p?.id,
+                  poVArId: poVar,
+                  poDetailsId: p?.id ? p?.id : p?.poDetailsId,
                   variantId: p?.variantId,
                   skuNo: p?.skuNo,
-                  remainingQuantity: p?.poQuantity ? (p.poQuantity - (p.lockedQuantity+p.receivedQuantity)):0,
+                  remainingQuantity: p?.remainingQuantity
+                    ? p?.remainingQuantity
+                    : p?.poQuantity -
+                      p?.lockedQuantity -
+                      p?.shippedQuantity +
+                      p?.discrepancyQuantity,
                   skuDescription: p?.skuDescription,
-                  shippedQuantity: null
+                  shippedQuantity: p?.vendorPrice ? null : p?.shippedQuantity,
                 });
 
                 // Add the variantId to the addedVariantIds array
-                this.addedVariantIds.push(p?.variantId);
+                this.addedVariantIds.push(poVar);
               }
             });
           },
@@ -528,6 +573,7 @@ export class ShipmentAndShippingFormComponent implements OnInit {
       ],
       data: {
         info: this.projectFormData,
+        detailsInputs: this.detailsInputs,
         vList: (vData: any) => {
           this.stVariants = vData;
           if (this.mode === "Edit") {
@@ -551,29 +597,62 @@ export class ShipmentAndShippingFormComponent implements OnInit {
           text: "Ok",
           disabled: false,
           handler: (variantList: any) => {
-            console.log(this.packageInfo,
-              this.packageInfo?.filter((pack: any) => (!pack?.packageQuantity || pack?.packageQuantity === '0')),
-            this.packageInfo?.filter((pack: any) => (!pack?.packageQuantity || pack?.packageQuantity === '0'))?.length)
-            if(!this.cartonInfo.length || !this.cartonInfo.width
-              || !this.cartonInfo.height || !this.cartonInfo.grossWeight
-              || !this.cartonInfo.netWeight
-              || !this.packageInfo?.length
-              || this.packageInfo?.filter((pack: any) => (!pack?.packageQuantity || pack?.packageQuantity === '0'))?.length) {
-                this._showError('One or more field is required!');
-                return;
-              }
-            results.modalInstance.hide();
-            this.packageDetailsInfo = this.cartonInfo;
-            this.packageDetailsInfo['details'] = this.packageInfo?.map((p: any) => {
-              return {
-                packageQuantity: p?.packageQuantity,
-                poId: p?.poId,
-                variant: {
-                  sku: p?.addtionalDetails?.skuNo,
-                  variantId: p?.variantId
-                }
+            let error = 0;
+            this.packageInfo.forEach((packageInfo: any) => {
+              let rmQt =
+                packageInfo?.shippedQuantity - packageInfo?.totalAddedInPackage;
+              if (rmQt < packageInfo.packageQuantity) {
+                error++;
               }
             });
+            if (error > 0) {
+              this._showError("Qty is greater than Remaining Quntity!");
+              return;
+            }
+            console.log(
+              "this.cartonInfo.grossWeight",
+              this.cartonInfo.grossWeight
+            );
+            console.log("this.cartonInfo.netWeight", this.cartonInfo.netWeight);
+
+            if (
+              Number(this.cartonInfo.netWeight) >
+              Number(this.cartonInfo.grossWeight)
+            ) {
+              this._showError(
+                "Gross Weight Should be greater than or equal to net wieght!"
+              );
+              return;
+            }
+            if (
+              !this.cartonInfo.length ||
+              !this.cartonInfo.width ||
+              !this.cartonInfo.height ||
+              !this.cartonInfo.grossWeight ||
+              !this.cartonInfo.netWeight ||
+              !this.packageInfo?.length ||
+              this.packageInfo?.filter(
+                (pack: any) =>
+                  !pack?.packageQuantity || pack?.packageQuantity === "0"
+              )?.length
+            ) {
+              this._showError("One or more field is required!");
+              return;
+            }
+            results.modalInstance.hide();
+            this.packageDetailsInfo = this.cartonInfo;
+            this.packageDetailsInfo["details"] = this.packageInfo?.map(
+              (p: any) => {
+                return {
+                  packageQuantity: p?.packageQuantity,
+                  poId: p?.poId,
+                  variant: {
+                    sku: p?.addtionalDetails?.skuNo,
+                    variantId: p?.variantId,
+                  },
+                };
+              }
+            );
             this.addPackage([this.packageDetailsInfo]);
           },
         },
@@ -610,15 +689,35 @@ export class ShipmentAndShippingFormComponent implements OnInit {
           text: "Ok",
           disabled: false,
           handler: (variantList: any) => {
-            if(!this.bulkDetailsInfo?.length || !this.bulkDetailsInfo?.width
-              || !this.bulkDetailsInfo?.height || !this.bulkDetailsInfo?.grossWeight
-              || !this.bulkDetailsInfo?.netWeight) {
-                this._showError('One or more field is required!');
-                return;
-              }
+            let remainingQuantity =
+              this.selectedPoDetails.shippedQuantity -
+              this.selectedPoDetails.totalAddedInPackage;
+            if (this.bulkDetailsInfo.totalPackedQty > remainingQuantity) {
+              this._showError("Qty is greater than Remaining Quntity!");
+              return;
+            }
+            if (
+              Number(this.bulkDetailsInfo.netWeight) >
+              Number(this.bulkDetailsInfo.grossWeight)
+            ) {
+              this._showError(
+                "Gross Weight Should be greater than or equal to net wieght!"
+              );
+              return;
+            }
+            if (
+              !this.bulkDetailsInfo?.length ||
+              !this.bulkDetailsInfo?.width ||
+              !this.bulkDetailsInfo?.height ||
+              !this.bulkDetailsInfo?.grossWeight ||
+              !this.bulkDetailsInfo?.netWeight
+            ) {
+              this._showError("One or more field is required!");
+              return;
+            }
             results.modalInstance.hide();
             let preparePayload = [];
-            for (let i=0; i<this.bulkDetailsInfo.noOfCarton; i++) {
+            for (let i = 0; i < this.bulkDetailsInfo.noOfCarton; i++) {
               preparePayload.push({
                 ctnCode: this.bulkDetailsInfo?.ctnCode,
                 ctnNo: this.bulkDetailsInfo?.ctnNo,
@@ -628,14 +727,16 @@ export class ShipmentAndShippingFormComponent implements OnInit {
                 cbm: this.bulkDetailsInfo?.cbm,
                 grossWeight: this.bulkDetailsInfo?.grossWeight,
                 netWeight: this.bulkDetailsInfo?.netWeight,
-                details: [{
-                  packageQuantity: this.bulkDetailsInfo?.qtyInOne,
-                  poId: this.selectedPoDetails?.poId,
-                  variant: {
-                    sku: this.selectedPoDetails?.skuNo,
-                    variantId: this.selectedPoDetails?.variantId
-                  }
-                }]
+                details: [
+                  {
+                    packageQuantity: this.bulkDetailsInfo?.qtyInOne,
+                    poId: this.selectedPoDetails?.poId,
+                    variant: {
+                      sku: this.selectedPoDetails?.skuNo,
+                      variantId: this.selectedPoDetails?.variantId,
+                    },
+                  },
+                ],
               });
             }
             this.addPackage(preparePayload);
@@ -673,31 +774,32 @@ export class ShipmentAndShippingFormComponent implements OnInit {
         {
           cssClass: "primary",
           text: "Update",
-          disabled: false,
+          disabled:
+            this.projectFormData.status?.toLowerCase() === "confirmed"
+              ? false
+              : true,
           handler: (details: any) => {
-            if(!this.shippinCostDetail){
-              this._showError('One or more field is required!');
+            if (!this.shippinCostDetail) {
+              this._showError("One or more field is required!");
               return;
             }
             let error = 0;
             this.shippinCostDetail.forEach((shipDetails: any) => {
-              console.log('shippinCostDetail', shipDetails);
-              console.log(shipDetails.costPrice === "" || shipDetails.description === "" || shipDetails.type === "");
-                            
-              if(shipDetails.costPrice === "" || shipDetails.description === "" || shipDetails.type === ""){
+              if (
+                shipDetails.costPrice === "" ||
+                shipDetails.description === "" ||
+                shipDetails.type === ""
+              ) {
                 error++;
-              }              
+              }
             });
-            if(error === 0){
+            if (error === 0) {
               results.modalInstance.hide();
-              this.updateShippingCost(this.shippinCostDetail)            
-              console.log('details',this.shippinCostDetail);
-            }else{
-              this._showError('One or more field is required!');
-                return;
+              this.updateShippingCost(this.shippinCostDetail);
+            } else {
+              this._showError("One or more field is required!");
+              return;
             }
-           
-            
           },
         },
         {
@@ -714,7 +816,6 @@ export class ShipmentAndShippingFormComponent implements OnInit {
         packageDetailsInfo: this.packageDetailsInfo,
         vList: (vData: any) => {
           this.shippinCostDetail = vData;
-          console.log('details',vData);
         },
       },
     });
@@ -781,8 +882,18 @@ export class ShipmentAndShippingFormComponent implements OnInit {
   }
 
   updateStatus(type: string) {
-    if(type === 'confirm' && this.confirmedCheck === false) {
-      this._showToastMsg("error", "Please Add all planned ship quantity to packed quantity first");
+    if (type === "dispatch" && this.projectFormData.costs.length === 0) {
+      this._showToastMsg(
+        "error",
+        "Please Add Shipping Cost First to Dispatch the Shipping"
+      );
+      return;
+    }
+    if (type === "confirm" && this.confirmedCheck === false) {
+      this._showToastMsg(
+        "error",
+        "Please Add all planned ship quantity to packed quantity first"
+      );
       return;
     }
     if (type === "publish" && this.detailsInputs.length === 0) {
@@ -797,7 +908,9 @@ export class ShipmentAndShippingFormComponent implements OnInit {
     }
     if (!this.projectFormData.issueDate.includes(searchString)) {
       this.projectFormData.issueDate =
-      (this.projectFormData.issueDate ? this.projectFormData.issueDate:'2023-10-20') + "T00:00:00Z";
+        (this.projectFormData.issueDate
+          ? this.projectFormData.issueDate
+          : "2023-10-20") + "T00:00:00Z";
     }
 
     this.detailsInputs?.forEach((e: any, key: any) => {
@@ -832,7 +945,7 @@ export class ShipmentAndShippingFormComponent implements OnInit {
         (res) => {
           let type;
           let msg;
-          this.getTransferOrderById(this.paramId);
+          this.getShipmentById(this.paramId);
           if (res) {
             type = "success";
             msg = "Data Updated Successfully";
@@ -874,7 +987,7 @@ export class ShipmentAndShippingFormComponent implements OnInit {
         (res) => {
           let type;
           let msg;
-          this.getTransferOrderById(this.paramId);
+          this.getShipmentById(this.paramId);
           if (res) {
             type = "success";
             msg = MSG.update;
@@ -892,13 +1005,13 @@ export class ShipmentAndShippingFormComponent implements OnInit {
 
   removeNow(rowIndex: number) {
     this.detailsInputs?.splice(rowIndex, 1);
-    this.addedVariantIds?.splice(rowIndex,1);
+    this.addedVariantIds?.splice(rowIndex, 1);
   }
 
   confirmDialog(type: string) {
-    if(!this._validateFormInputs()) return;
+    if (!this._validateFormInputs()) return;
     let stType = type;
-    this.showConfirmation('updateDetails', stType);
+    this.showConfirmation("updateDetails", stType);
   }
 
   confirm(rowIndex: number) {
@@ -998,10 +1111,10 @@ export class ShipmentAndShippingFormComponent implements OnInit {
             address: v.address,
             id: v.id,
             creditTermsDto: {
-              creditTermsId: v.creditTermsDto.creditTermsId
-            }
-          }
-        })
+              creditTermsId: v.creditTermsDto.creditTermsId,
+            },
+          };
+        });
       });
   }
 
@@ -1011,23 +1124,22 @@ export class ShipmentAndShippingFormComponent implements OnInit {
 
   _dateVaidationForToday() {
     let dtToday = new Date();
-    
-    let month:any = dtToday.getMonth() + 1;
-    let day:any = dtToday.getDate();
+
+    let month: any = dtToday.getMonth() + 1;
+    let day: any = dtToday.getDate();
     let year = dtToday.getFullYear();
-    if(month < 10)
-        month = '0' + month.toString();
-    if(day < 10)
-        day = '0' + day.toString();
-    
-    return year + '-' + month + '-' + day;
+    if (month < 10) month = "0" + month.toString();
+    if (day < 10) day = "0" + day.toString();
+
+    return year + "-" + month + "-" + day;
   }
 
   addPackage(formData: any) {
-    this.shippingOrderService.addPackage(formData, this.paramId)
-    .subscribe(
+    this.shippingOrderService.addPackage(formData, this.paramId).subscribe(
       (res) => {
         this._showToast(res);
+        this.getShipmentById(this.paramId);
+        window.location.reload();
       },
       (error) => {
         this._showDateToast(error.error.detail);
@@ -1036,19 +1148,20 @@ export class ShipmentAndShippingFormComponent implements OnInit {
   }
 
   updateShippingCost(formData: any) {
-    this.shippingOrderService.updateShippingCost(formData, this.paramId)
-    .subscribe(
-      (res) => {
-        this._showToast(res);
-      },
-      (error) => {
-        this._showDateToast(error.error.detail);
-      }
-    );
+    this.shippingOrderService
+      .updateShippingCost(formData, this.paramId)
+      .subscribe(
+        (res) => {
+          this._showToast(res);
+        },
+        (error) => {
+          this._showDateToast(error.error.detail);
+        }
+      );
   }
 
   deletePackage(ctnCode: string) {
-    this.showConfirmation('deletePackage', ctnCode);
+    this.showConfirmation("deletePackage", ctnCode);
   }
 
   showConfirmation(cTYpe: string, stType: any) {
@@ -1068,7 +1181,7 @@ export class ShipmentAndShippingFormComponent implements OnInit {
           disabled: false,
           handler: ($event: Event) => {
             results.modalInstance.hide();
-            if(cTYpe == 'deletePackage') {
+            if (cTYpe == "deletePackage") {
               this._removePackage(stType);
             } else {
               this.updateStatus(stType);
@@ -1088,15 +1201,24 @@ export class ShipmentAndShippingFormComponent implements OnInit {
   }
 
   _removePackage(ctnCode: string) {
-    this.shippingOrderService
-    .removePackage(ctnCode)
-          .subscribe(
-            (res) => {
-              this._showToast(res);
-            },
-            (error) => {
-              this._showDateToast(error.error.detail);
-            }
-          );
+    this.shippingOrderService.removePackage(ctnCode).subscribe(
+      (res) => {
+        this._showToast(res);
+      },
+      (error) => {
+        this._showDateToast(error.error.detail);
+      }
+    );
+  }
+
+  removeAllPackages() {
+    this.shippingOrderService.removeAllPackage(this.paramId).subscribe(
+      (res) => {
+        this._showToast(res);
+      },
+      (error) => {
+        this._showDateToast(error.error.detail);
+      }
+    );
   }
 }

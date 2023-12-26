@@ -19,99 +19,126 @@ li {
 
 /* Styles for the Variant List */
 .variant-list {
-    list-style: none;
-    padding: 0;
-  }
-  
-  .variant-item {
-    display: flex;
-    align-items: center;
-    margin-bottom: 8px;
-    cursor: pointer;
-    padding: 8px;
-    border: 1px solid #ccc;
-    background-color: #f7f7f7; /* Background color for each item */
-  }
-  
-  .variant-item:hover {
-    background-color: #e0e0e0; /* Background color on hover */
-  }
-  
-  /* Styles for checkboxes */
-  .variant-item input[type="checkbox"] {
-    margin-right: 8px;
-  }
-  
-  /* Heading style */
-  h3 {
-    margin-top: 16px;
-    font-size: 1.2rem;
-  }
-  
-  .column-container {
-    display: flex;
-    flex-direction: row;
-    max-height: 500px;
-    overflow-y: auto;
-  }
-  
-  .column-left {
-    width: 100%;
-    padding: 5px;
-    box-sizing: border-box;
-    display: inline-flex;
-  }
+  list-style: none;
+  padding: 0;
+}
+.sku {
+  flex: 1;
+}
 
-  .column-right {
-    width: 30%;
-    padding: 10px;
-    box-sizing: border-box;
-  }
+.variant-item {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  margin-bottom: 8px;
+  cursor: pointer;
+  padding: 8px;
+  border: 1px solid #ccc;
+  background-color: #f7f7f7; /* Background color for each item */
+}
 
-  .m-top{
-    margin-top: 25px;
-  }
-  .remove-button{
-    color: red;
-  }
+.variant-item:hover {
+  background-color: #e0e0e0; /* Background color on hover */
+}
 
-  .first-list {
-    max-width: 14%;
-  }
+/* Styles for checkboxes */
+.variant-item input[type="checkbox"] {
+  margin-right: 8px;
+}
 
-  .selectedPoId {
-    // background-color: #0073FA;
-  }
+/* Heading style */
+h3 {
+  margin-top: 0px;
+  font-size: 1.2rem;
+}
 
-  .manage-variants {
-    margin-left: 5%;
-    max-width: 3500px;
-    min-width: 350px;
-  }
+.column-container {
+  display: flex;
+  flex-direction: row;
+  max-height: 500px;
+  overflow-y: auto;
+}
 
-  .manage-main-head {
-    text-align: center;
-    color: red;
-    font-size: 10px;
-    margin-top: -20px;
-  }
+.column-left {
+  width: 100%;
+  padding: 5px;
+  box-sizing: border-box;
+  display: inline-flex;
+}
 
-  .set-po-no {
-    color: #0073FA;
-  }
+.column-right {
+  width: 30%;
+  padding: 10px;
+  box-sizing: border-box;
+}
 
-  .selectedPoId {
-    background: #0073FA;
-    color: #fff;
-  }
+.m-top {
+  margin-top: 25px;
+}
+.remove-button {
+  color: red;
+}
 
-  .selectedPoId:hover {
-    background: #0073FA;
-    color: #fff;
-  }
+.first-list {
+  max-width: 14%;
+}
 
-  
+.selectedPoId {
+  // background-color: #0073FA;
+}
 
-  // .manage-rmng-qty {
-  //   margin-left: calc(100% - 87%);
-  // }
+.manage-variants {
+  margin-left: 5%;
+  max-width: 23vw;
+  min-width: 23vw;
+}
+
+.manage-variants-cart {
+  margin-left: 5%;
+  max-width: 18vw;
+  min-width: 18vw;
+}
+
+label.item-label {
+  width: 100%;
+  display: flex;
+}
+
+.manage-main-head {
+  text-align: center;
+  color: red;
+  font-size: 10px;
+  margin-top: -20px;
+}
+
+.set-po-no {
+  color: #0073fa;
+}
+
+.first-list {
+  position: relative;
+  min-width: 6vw;
+  padding-right: 1vw;
+  overflow: auto;
+}
+
+.first-list h3 {
+  position: sticky;
+  top: 0;
+  background-color: white; /* You can adjust the background color as needed */
+  z-index: 100; /* Adjust the z-index to ensure it appears above other elements */
+}
+
+.selectedPoId {
+  background: #0073fa;
+  color: #fff;
+}
+
+.selectedPoId:hover {
+  background: #0073fa;
+  color: #fff;
+}
+
+// .manage-rmng-qty {
+//   margin-left: calc(100% - 87%);
+// }

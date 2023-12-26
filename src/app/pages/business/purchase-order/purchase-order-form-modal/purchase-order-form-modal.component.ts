@@ -81,7 +81,7 @@ export class PurchaseOrderFormModalComponent {
 
   search(e: any) {
     // return from here if length is not three
-    if (e.target.value?.length < 3) return;
+    if (e.target.value?.length < 2) return;
 
     this.searchWithStyleName.keyword = e.target.value;
     this.productsListDataService.setSearchParams(this.searchWithStyleName);

@@ -73,7 +73,7 @@ export class ShippingOrderService {
     );
   }
 
-  getTransferOrderListActive(data?: any) {
+  getShipmentListActive(data?: any) {
 
     // const searchParams = {
     //   filters: [
@@ -104,7 +104,7 @@ export class ShippingOrderService {
     );
   }
 
-  updateTransferOrder(id: string, data: any): Observable<any> {
+  updateShipment(id: string, data: any): Observable<any> {
     const httpOptionsToken = {
       headers: new HttpHeaders({
         // "Content-Type": "application/json",
@@ -200,6 +200,18 @@ export class ShippingOrderService {
 
     return this.http.delete(
       `${this.baseApiUrl}/shipment/delete-package?ctnCode=${ctnCode}`,
+      httpOptionsToken
+    );
+  }
+
+  removeAllPackage(shipmentID: string): Observable<any> {
+    const httpOptionsToken = {
+      headers: new HttpHeaders({
+      }),
+    };
+
+    return this.http.delete(
+      `${this.baseApiUrl}/shipment/delete-all-packages?shipmentId=${shipmentID}`,
       httpOptionsToken
     );
   }

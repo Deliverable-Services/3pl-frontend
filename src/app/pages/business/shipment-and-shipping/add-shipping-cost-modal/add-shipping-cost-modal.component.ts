@@ -24,6 +24,8 @@ export class AddShippingCostModalComponent implements OnInit {
 
   formArray: any[] = [];
 
+  status = "";
+
   currencyList: any[] = [];
   currencyData: any[] = [];
 
@@ -50,8 +52,7 @@ export class AddShippingCostModalComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    
-    console.log('this.data.info',this.data.info);
+    this.status = this.data.info.status.toLowerCase();
     if(this.data.info.costs.length == 0){
       this.formArray.push({
         type: "",

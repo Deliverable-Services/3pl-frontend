@@ -19,89 +19,123 @@ li {
 
 /* Styles for the Variant List */
 .variant-list {
-    list-style: none;
-    padding: 0;
-  }
+  list-style: none;
+  padding: 0;
+}
 
 li.variant-item.ng-star-inserted {
-    max-height: 45px;
-    min-height: 45px;
+  // max-height: 45px;
+  // min-height: 45px;
 }
-  
-  .variant-item {
-    display: flex;
-    align-items: center;
-    margin-bottom: 8px;
-    cursor: pointer;
-    padding: 8px;
-    border: 1px solid #ccc;
-    background-color: #f7f7f7; /* Background color for each item */
-  }
-  
-  .variant-item:hover {
-    background-color: #e0e0e0; /* Background color on hover */
-  }
-  
-  /* Styles for checkboxes */
-  .variant-item input[type="checkbox"] {
-    margin-right: 8px;
-  }
-  
-  /* Heading style */
-  h3 {
-    margin-top: 16px;
-    font-size: 1.2rem;
-  }
-  
-  .column-container {
-    display: flex;
-    flex-direction: row;
-  }
-  
-  .column-left {
-    width: 70%;
-    padding: 10px;
-    box-sizing: border-box;
-    display: inline-flex;
-  }
 
-  .column-right {
-    width: 30%;
-    padding: 10px;
-    box-sizing: border-box;
-  }
+input.set-width-var {
+  min-height: 36px;
+}
 
-  .m-top{
-    margin-top: 25px;
-  }
-  .remove-button{
-    color: red;
-  }
+.variant-item-input.ng-star-inserted {
+  margin-bottom: 8px;
+  padding: 0.5px;
+}
 
-  .first-list {
-    max-width: 14%;
-  }
+.variant-item {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+  cursor: pointer;
+  padding: 8px;
+  margin-top: 1px;
+  border: 1px solid #ccc;
+  background-color: #f7f7f7;
+  width: 100%; /* Background color for each item */
+}
 
-  .selectedPoId {
-    // background-color: #0073FA;
-  }
 
-  .manage-variants {
-    margin-left: 10%;
-    display: inline-grid;
-  }
+label.variant-item-label {
+  display: flex;
+  width: 100%;
+  justify-content: flex-end;
+  flex-direction: row;
+}
 
-  .manage-main-head {
-    text-align: center;
-    color: red;
-    font-size: 10px;
-    margin-top: -20px;
-  }
+.variant-span{
+  flex: 1;
+}
 
-  .set-po-no {
-    color: #0073FA;
-  }
+.variant-item:hover {
+  background-color: #e0e0e0; /* Background color on hover */
+}
 
-  .set-mrgn {
-    margin: 35px 18px;
-  }
+/* Styles for checkboxes */
+.variant-item input[type="checkbox"] {
+  margin-right: 8px;
+}
+
+/* Heading style */
+h3 {
+  margin-top: 16px;
+  font-size: 1.2rem;
+}
+
+.column-container {
+  display: flex;
+  flex-direction: row;
+}
+
+.column-left {
+  width: 70%;
+  padding: 10px;
+  box-sizing: border-box;
+  display: inline-flex;
+}
+
+.column-right {
+  width: 30%;
+  padding: 10px;
+  box-sizing: border-box;
+}
+
+.m-top {
+  margin-top: 25px;
+}
+.remove-button {
+  color: red;
+}
+
+.first-list {
+  max-width: 14%;
+}
+
+.selectedPoId {
+  // background-color: #0073FA;
+}
+.standard-title{
+  width: 81% !important;
+  margin: auto !important;
+}
+.manage-variants {
+ width: 100%;
+  display: inline-grid;
+}
+
+.manage-fields {
+  background: #f3f3f3 !important;
+}
+
+.manage-main-head {
+  text-align: center;
+  color: red;
+  font-size: 10px;
+  margin-top: -20px;
+}
+
+.set-po-no {
+  color: #0073fa;
+}
+
+.set-mrgn {
+  margin: 35px 18px;
+}
+.package-details{
+  width: 80%;
+  margin: auto;
+}

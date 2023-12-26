@@ -20,6 +20,8 @@ export class PackagesFormModalComponent implements OnInit {
   storePOID: any[] = []; //
   detailsInputs: any[] = [];
   storePoDetails: any;
+  field1: any;
+  field2: any;
   searchWithStyleName: any = {
     keyword: "",
     sort: "asc",
@@ -50,11 +52,10 @@ export class PackagesFormModalComponent implements OnInit {
     this.purchaseOrderService.setPageParams({
       pageNo: "",
       pageSize: '100',
-      sortBy: "",
-      sortDir: "",
+      sortBy: "id",
+      sortDir: "desc",
     });
     this.getPoList();
-    // console.log('this.data',this.data.info);
     this.detailsInputs = this.data.info?.details?.map((d: any) => {
       let totalAdded: number = 0;
       this.data.info.packages?.forEach((p: any) => {
@@ -77,29 +78,39 @@ export class PackagesFormModalComponent implements OnInit {
         totalAddedInPackage: totalAdded
       };
     });
-
-    // console.log('this.details',this.detailsInputs);,
-    
     
   }
 
+  numberOnly(event: any) {
+    const charCode = event.which ? event.which : event.keyCode;
+    // Allow numbers (0-9) and the full stop (decimal point)
+    if ((charCode >= 48 && charCode <= 57) || charCode === 46) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  numberPriceOnly(event: any) {
+    const charCode = event.which ? event.which : event.keyCode;
+    if (charCode > 31 && (charCode < 48 || charCode > 57)) {
+      return false;
+    }
+    return true;
+  }
+
   getPoList() {
-    this.purchaseOrderService.getTransferOrderList()
+    this.purchaseOrderService.getPurchaseOrderList()
       .subscribe((res) => {
         // this.storePoDetails = res?.content?.filter((p: any) => (this.data.info.vendor.id === p.vendor.id
         //   && this.data.info.shipToLocation.connectionLocationId === p.shipToLocation.connectionLocationId));
         this.storePoDetails = this.detailsInputs?.map((d: any) => {
           let findMoreDetails = res?.content?.find((p: any) => p.id === d.poId)?.details;
-          console.log('d',d);
-          console.log('findMoreDetails',findMoreDetails);
-          
           return {
             ...d,
             addtionalDetails: findMoreDetails.find((ad: any) => ad.id === d.poDetailsId)
           }
         });
-        console.log('storePoDetails', this.storePoDetails);
-        
       });
   }
 
@@ -109,15 +120,12 @@ export class PackagesFormModalComponent implements OnInit {
   }
 
   storeObjectData(obj: any) {
-    // Check if the object is selected or deselected
-    console.log('obj',obj);
-    
     const variantIdExists = this.selectedVariants.some(
-      (item) => item.variantId === obj.variantId
+      (item) => item.poDetailsId === obj.poDetailsId
     );
-    console.log('variantIdExists', variantIdExists);
-    
     if (obj.selected) {
+      console.log('object data',obj);
+      
       if (!variantIdExists) {
         // Store the object's data in the selectedVariants array
         this.selectedVariants.push(obj);
@@ -125,14 +133,15 @@ export class PackagesFormModalComponent implements OnInit {
           selectedPoId: this.selectedPoId,
           packageQuantity: null,
           ...obj});
-          console.log('this.selectedPoId',this.selectedPoId);
-          
-        this.storePOID.push(obj.poDetailsId);
+          obj.poSku = `${obj.poDetailsId}  ${obj.skuNo}`;
+        this.storePOID.push(`${obj.poDetailsId}  ${obj.skuNo}`);
       }
     } else {
+      console.log('this.selectedVariants',this.selectedVariants);
+      
       // Remove the object from the selectedVariants array if deselected
       const index = this.selectedVariants.findIndex(
-        (item) => item.variantId === obj.variantId
+        (item) => `${item.poDetailsId}  ${item.skuNo}` === `${obj.poDetailsId}  ${obj.skuNo}`
       );
       if (index !== -1) {
         this.selectedVariants.splice(index, 1);
@@ -140,12 +149,12 @@ export class PackagesFormModalComponent implements OnInit {
         this.storePOID.splice(index, 1);
       }
     }
-
-    console.log('this.storePOID',this.storePOID);
     
-
     this.storePoDetails.forEach((ele:any)=>{
-      if(this.storePOID.includes(ele.poDetailsId)) {
+      console.log('`${ele.poDetailsId}  ${ele.skuNo}`',`${ele.poDetailsId}  ${ele.skuNo}`);
+      console.log('this.storePOID',this.storePOID);
+      
+      if(this.storePOID.includes(`${ele.poDetailsId}  ${ele.skuNo}`)) {
         ele.checked = true;
         ele.packageQuantity = null
       }else{
@@ -153,7 +162,6 @@ export class PackagesFormModalComponent implements OnInit {
         ele.packageQuantity = null
       }
     })    
-    console.log('cartItems',  this.storePoDetails);
     this.data.vList(this.cartItems);
   }
 
@@ -243,9 +251,6 @@ export class PackagesFormModalComponent implements OnInit {
   }
 
   updateValue(event: any, keyName: string, index: number) {
-    console.log('event', event);
-    console.log('keyName', keyName);
-    console.log('index', index);
     this.cartItems.forEach((ela:any)=>{
       if(ela.poDetailsId === index){
         ela[keyName] = event.target.value;

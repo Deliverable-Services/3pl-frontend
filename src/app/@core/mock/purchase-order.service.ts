@@ -59,7 +59,7 @@ export class PurchaseOrderService {
     );
   }
 
-  getTransferOrderList(searchParams?:any): Observable<any> {
+  getPurchaseOrderList(searchParams?:any): Observable<any> {
     const httpOptionsToken = {
       params: new HttpParams({
         fromObject: this.pageParams,
@@ -73,7 +73,7 @@ export class PurchaseOrderService {
     );
   }
 
-  getTransferOrderListActive(data?: any) {
+  getPurchaseOrderListActive(data?: any) {
 
     // const searchParams = {
     //   filters: [
@@ -104,7 +104,7 @@ export class PurchaseOrderService {
     );
   }
 
-  updateTransferOrder(id: string, data: any): Observable<any> {
+  updatePurchaseOrder(id: string, data: any): Observable<any> {
     const httpOptionsToken = {
       headers: new HttpHeaders({
         // "Content-Type": "application/json",
@@ -154,15 +154,14 @@ export class PurchaseOrderService {
     );
   }
 
-  deleteTransferOrder(id: string): Observable<any> {
+  deletePurchaseOrder(id: string): Observable<any> {
     const httpOptionsToken = {
       headers: new HttpHeaders({
       }),
     };
 
-    return this.http.put(
+    return this.http.delete(
       `${this.baseApiUrl}/purchase-order/${id}/delete`,
-      {},
       httpOptionsToken
     );
   }

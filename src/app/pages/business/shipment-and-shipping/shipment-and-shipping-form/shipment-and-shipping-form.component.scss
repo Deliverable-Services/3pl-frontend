@@ -121,6 +121,16 @@ button.manage-btn-color {
   border-radius: 4px;
   font-weight: bold;
 }
+
+button.danger {
+  background: #c7000b;
+  color: #fff;
+  float: right;
+  padding: 5px 20px;
+  border-radius: 4px;
+  font-weight: bold;
+}
+
 .manage-svg svg {
   width: 26px;
   margin: 32px 10px;
@@ -135,4 +145,17 @@ button.manage-btn-color {
 
 .manage-fields {
   background: #f3f3f3 !important;
+}
+
+.container {
+  position: relative;
+}
+
+
+svg.curved-line {
+  margin: -7px 0px 3px 38px;
+}
+
+.break-margin{
+  margin-left: 71px;
 }

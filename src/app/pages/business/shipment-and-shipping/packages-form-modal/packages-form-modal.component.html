@@ -1,135 +1,165 @@
-<div [ngStyle]="{ display: 'flex', justifyContent: 'space-between' }">
-    <div [ngStyle]="{ display: 'flex' }">
-    <!-- <d-form-item [ngStyle]="{ margin: '20px 20px 20px 0px' }">
-        <d-form-label [required]="true">Carton No.</d-form-label>
-        <d-form-control>
-        <input (blur)="updateCarton()" class="set-width" dTextInput autocomplete="off" [(ngModel)]="cartonDetails.ctnNo"/>
-        </d-form-control>
-    </d-form-item> -->
-
-    <d-form-item [ngStyle]="{ margin: '20px 20px 20px 0px' }">
-        <d-form-label [required]="true">{{ "form.sAndS.extraFields.length" | translate }}</d-form-label>
-        <d-form-control>
-        <input (blur)="updateCarton()" class="set-width" dTextInput autocomplete="off" [(ngModel)]="cartonDetails.length"/>
-        </d-form-control>
-    </d-form-item>
-
-    <!-- <span class="set-mrgn">
-        <svg width="15" height="18" viewBox="0 0 15 18" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M3.45455 0.545454L7.63636 7.68182L11.8182 0.545454H14.9091L9.27273 9.27273L14.9091 18H11.8182L7.63636 11.2273L3.45455 18H0.363636L5.90909 9.27273L0.363636 0.545454H3.45455Z" fill="black"/>
-            </svg>
-    </span> -->
-
-    <d-form-item [ngStyle]="{ margin: '20px 20px 20px 0px' }">
-        <d-form-label [required]="true">{{ "form.sAndS.extraFields.width" | translate }}</d-form-label>
-        <d-form-control>
-        <input (blur)="updateCarton()" class="set-width" dTextInput autocomplete="off" [(ngModel)]="cartonDetails.width">
-        </d-form-control>
-    </d-form-item>
-
-    <!-- <span class="set-mrgn">
-        <svg width="15" height="18" viewBox="0 0 15 18" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M3.45455 0.545454L7.63636 7.68182L11.8182 0.545454H14.9091L9.27273 9.27273L14.9091 18H11.8182L7.63636 11.2273L3.45455 18H0.363636L5.90909 9.27273L0.363636 0.545454H3.45455Z" fill="black"/>
-            </svg>
-    </span> -->
-
-    <d-form-item [ngStyle]="{ margin: '20px 20px 20px 0px' }">
-        <d-form-label [required]="true">{{ "form.sAndS.extraFields.height" | translate }}</d-form-label>
-        <d-form-control>
-        <input (blur)="updateCarton()" class="set-width" dTextInput autocomplete="off" [(ngModel)]="cartonDetails.height"/>
-        </d-form-control>
-    </d-form-item>
-
-    <!-- <span class="set-mrgn">
-        <svg width="15" height="10" viewBox="0 0 15 10" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M0.545455 2.77273V0.318181H14.5455V2.77273H0.545455ZM0.545455 9.5V7.04545H14.5455V9.5H0.545455Z" fill="black"/>
-            </svg>
-    </span> -->
-
-    <d-form-item [ngStyle]="{ margin: '20px 20px 20px 0px' }">
-        <d-form-label>{{ "form.sAndS.extraFields.cbm" | translate }}</d-form-label>
-        <d-form-control>
-        <input disabled class="set-width" dTextInput autocomplete="off" [(ngModel)]="cartonDetails.cbm"/>
-        </d-form-control>
-    </d-form-item>
+<div class="package-details">
+    <div class="main-title">
+        <h1>Carton Details</h1>
     </div>
-</div>
+    <div [ngStyle]="{ display: 'flex', justifyContent: 'space-between' }">
+        <div [ngStyle]="{ display: 'flex' }">
+            <!-- <d-form-item [ngStyle]="{ margin: '20px 20px 20px 0px' }">
+            <d-form-label [required]="true">Carton No.</d-form-label>
+            <d-form-control>
+            <input (blur)="updateCarton()" class="set-width" dTextInput autocomplete="off" [(ngModel)]="cartonDetails.ctnNo"/>
+            </d-form-control>
+        </d-form-item> -->
 
-<div [ngStyle]="{ display: 'flex', justifyContent: 'space-between' }">
-    <div [ngStyle]="{ display: 'flex' }">
-    <d-form-item [ngStyle]="{ margin: '20px 20px 20px 0px' }">
-        <d-form-label [required]="true">{{ "form.sAndS.extraFields.grossWeight" | translate }}</d-form-label>
-        <d-form-control>
-        <input (blur)="updateCarton()" class="set-width" dTextInput autocomplete="off" [(ngModel)]="cartonDetails.grossWeight"/>
-        </d-form-control>
-    </d-form-item>
+            <d-form-item [ngStyle]="{ margin: '20px 20px 20px 0px' }">
+                <d-form-label [required]="true">{{ "form.sAndS.extraFields.length" | translate }}</d-form-label>
+                <d-form-control>
+                    <input (blur)="updateCarton()" class="set-width" dTextInput autocomplete="off"
+                        (keypress)="numberOnly($event)" [(ngModel)]="cartonDetails.length" />
+                </d-form-control>
+            </d-form-item>
 
-    <d-form-item [ngStyle]="{ margin: '20px 20px 20px 0px' }">
-        <d-form-label [required]="true">{{ "form.sAndS.extraFields.netWeight" | translate }}</d-form-label>
-        <d-form-control>
-        <input (blur)="updateCarton()" class="set-width" dTextInput autocomplete="off" [(ngModel)]="cartonDetails.netWeight"/>
-        </d-form-control>
-    </d-form-item>
-    </div>
-</div>
+            <!-- <span class="set-mrgn">
+            <svg width="15" height="18" viewBox="0 0 15 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M3.45455 0.545454L7.63636 7.68182L11.8182 0.545454H14.9091L9.27273 9.27273L14.9091 18H11.8182L7.63636 11.2273L3.45455 18H0.363636L5.90909 9.27273L0.363636 0.545454H3.45455Z" fill="black"/>
+                </svg>
+        </span> -->
 
-<!-- <div class="column-container">
-    <div class="column-left">        
-        <div class="manage-variants" *ngIf="storePoDetails">
-            <h3>{{ "form.sAndS.pTitleOne" | translate }}</h3>
-            <h4>{{ "form.sAndS.pTitleTwo" | translate }}</h4>
-            <ul class="variant-list">
-                <li *ngFor="let v of storePoDetails" class="variant-item">
-                    <label>
-                        <input type="checkbox"
-                               (change)="storeObjectData(v)" [(ngModel)]="v.selected"
-                               [checked]="v.itemAlreadySelected">
-                        {{ v.addtionalDetails.skuNo }} Shipment Remaining Qty - {{v?.addtionalDetails?.poQuantity ? (v.addtionalDetails.poQuantity - (v.addtionalDetails.lockedQuantity+v.addtionalDetails.receivedQuantity)):0}}
-                    </label>
-                </li>
-            </ul>
-        </div>
-        <div class="manage-variants">
-            <h3></h3>
-            <h4>Qty</h4>
-            <ul class="variant-list" *ngIf="cartItems?.length">
-                <li *ngFor="let cart of cartItems; let i = index" class="variant-item">
-                    <input class="set-width" dTextInput autocomplete="off" [value]="cart.packageQuantity"
-                        (input)="updateValue($event, 'packageQuantity', i)" />
-                </li>
-            </ul>
-        </div>
-    </div>
-</div> -->
+            <d-form-item [ngStyle]="{ margin: '20px 20px 20px 0px' }">
+                <d-form-label [required]="true">{{ "form.sAndS.extraFields.width" | translate }}</d-form-label>
+                <d-form-control>
+                    <input (blur)="updateCarton()" class="set-width" dTextInput autocomplete="off"
+                        (keypress)="numberOnly($event)" [(ngModel)]="cartonDetails.width">
+                </d-form-control>
+            </d-form-item>
 
-<div [ngStyle]="{ display: 'flex',marginLeft: '-44px'}">
+            <!-- <span class="set-mrgn">
+            <svg width="15" height="18" viewBox="0 0 15 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M3.45455 0.545454L7.63636 7.68182L11.8182 0.545454H14.9091L9.27273 9.27273L14.9091 18H11.8182L7.63636 11.2273L3.45455 18H0.363636L5.90909 9.27273L0.363636 0.545454H3.45455Z" fill="black"/>
+                </svg>
+        </span> -->
 
-    <div style="flex: 1;">
-        <!-- <h3>{{ "form.sAndS.pTitleOne" | translate }}</h3> -->
-        <div class="manage-variants">
-            <h4>{{ "form.sAndS.pTitleTwo" | translate }}</h4>
-            <ul class="variant-list">
-                <li *ngFor="let v of storePoDetails" class="variant-item">
-                    <label>
-                        <input type="checkbox"
-                               (change)="storeObjectData(v)" [(ngModel)]="v.selected"
-                               [checked]="v.itemAlreadySelected">
-                        {{ v.addtionalDetails.skuNo }} Shipment Remaining Qty - {{v?.shippedQuantity - v?.totalAddedInPackage}}
-                    </label>
-                </li>
-            </ul>
+            <d-form-item [ngStyle]="{ margin: '20px 20px 20px 0px' }">
+                <d-form-label [required]="true">{{ "form.sAndS.extraFields.height" | translate }}</d-form-label>
+                <d-form-control>
+                    <input (input)="updateCarton()" class="set-width" dTextInput autocomplete="off"
+                        (keypress)="numberOnly($event)" [(ngModel)]="cartonDetails.height" />
+                </d-form-control>
+            </d-form-item>
+
+            <!-- <span class="set-mrgn">
+            <svg width="15" height="10" viewBox="0 0 15 10" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M0.545455 2.77273V0.318181H14.5455V2.77273H0.545455ZM0.545455 9.5V7.04545H14.5455V9.5H0.545455Z" fill="black"/>
+                </svg>
+        </span> -->
+
+            <d-form-item [ngStyle]="{ margin: '20px 20px 20px 0px' }">
+                <d-form-label>{{ "form.sAndS.extraFields.cbm" | translate }}</d-form-label>
+                <d-form-control>
+                    <input disabled class="set-width manage-fields" dTextInput autocomplete="off"
+                        [(ngModel)]="cartonDetails.cbm" />
+                </d-form-control>
+            </d-form-item>
         </div>
     </div>
 
-    <div style="flex: 1;">
-        <div class="manage-variants">
-            <h4>Qty</h4>
-            <ul class="variant-list" *ngIf="cartItems?.length">
-                    <li *ngFor="let cart of storePoDetails; let i = index" [ngStyle]="{ visibility: cart.checked ? 'visible' : 'hidden' }" class="variant-item">
-                        <input class="set-width" dTextInput autocomplete="off" [value]="cart.packageQuantity"
-                            (input)="updateValue($event, 'packageQuantity', cart.poDetailsId)" />
+    <div [ngStyle]="{ display: 'flex', justifyContent: 'space-between' }">
+        <div [ngStyle]="{ display: 'flex' }">
+            <d-form-item [ngStyle]="{ margin: '20px 20px 20px 0px' }">
+                <d-form-label [required]="true">{{ "form.sAndS.extraFields.grossWeight" | translate }}</d-form-label>
+                <d-form-control>
+                    <input (blur)="updateCarton()" class="set-width" dTextInput autocomplete="off"
+                        (keypress)="numberOnly($event)" [(ngModel)]="cartonDetails.grossWeight" />
+                </d-form-control>
+            </d-form-item>
+
+            <d-form-item [ngStyle]="{ margin: '20px 20px 20px 0px' }">
+                <d-form-label [required]="true">{{ "form.sAndS.extraFields.netWeight" | translate }}</d-form-label>
+                <d-form-control>
+                    <input (blur)="updateCarton()" class="set-width" dTextInput autocomplete="off"
+                        (keypress)="numberOnly($event)" [(ngModel)]="cartonDetails.netWeight" />
+                </d-form-control>
+            </d-form-item>
+            <d-form-item [ngStyle]="{ margin: '20px 20px 20px 0px',visibility:'hidden' }">
+                <d-form-label [required]="true">{{ "form.sAndS.extraFields.netWeight" | translate }}</d-form-label>
+                <d-form-control>
+                    <input  class="set-width" dTextInput autocomplete="off"
+                         [(ngModel)]="field1" />
+                </d-form-control>
+            </d-form-item>
+            <d-form-item [ngStyle]="{ margin: '20px 20px 20px 0px',visibility:'hidden' }">
+                <d-form-label [required]="true">{{ "form.sAndS.extraFields.netWeight" | translate }}</d-form-label>
+                <d-form-control>
+                    <input  class="set-width" dTextInput autocomplete="off"
+                         [(ngModel)]="field2" />
+                </d-form-control>
+            </d-form-item>
+        </div>
+    </div>
+
+    <!-- <div class="column-container">
+        <div class="column-left">        
+            <div class="manage-variants" *ngIf="storePoDetails">
+                <h3>{{ "form.sAndS.pTitleOne" | translate }}</h3>
+                <h4>{{ "form.sAndS.pTitleTwo" | translate }}</h4>
+                <ul class="variant-list">
+                    <li *ngFor="let v of storePoDetails" class="variant-item">
+                        <label>
+                            <input type="checkbox"
+                                   (change)="storeObjectData(v)" [(ngModel)]="v.selected"
+                                   [checked]="v.itemAlreadySelected">
+                            {{ v.addtionalDetails.skuNo }} Shipment Remaining Qty - {{v?.addtionalDetails?.poQuantity ? (v.addtionalDetails.poQuantity - (v.addtionalDetails.lockedQuantity+v.addtionalDetails.receivedQuantity)):0}}
+                        </label>
                     </li>
-            </ul>
+                </ul>
+            </div>
+            <div class="manage-variants">
+                <h3></h3>
+                <h4>Qty</h4>
+                <ul class="variant-list" *ngIf="cartItems?.length">
+                    <li *ngFor="let cart of cartItems; let i = index" class="variant-item">
+                        <input class="set-width" dTextInput autocomplete="off" [value]="cart.packageQuantity"
+                            (input)="updateValue($event, 'packageQuantity', i)" />
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div> -->
+    <h3>Select Product From Shipment</h3>
+    <div [ngStyle]="{ display: 'flex', gap: '10px'}">
+
+        <div style="width: calc(100% - 125px);">
+            <!-- <h3>{{ "form.sAndS.pTitleOne" | translate }}</h3> -->
+            <div class="manage-variants">
+                <h4>{{ "form.sAndS.pTitleTwo" | translate }}</h4>
+                <ul class="variant-list">
+                    <li *ngFor="let v of storePoDetails" class="variant-item">
+                        <label class="variant-item-label">
+                            <input type="checkbox" (change)="storeObjectData(v)" [(ngModel)]="v.selected"
+                                [checked]="v.itemAlreadySelected">
+                            <span class="variant-span"><span [ngStyle]="{color:'#0073FA'}"> {{v.poId}}</span> : {{
+                                v.addtionalDetails.skuNo }} </span>
+
+                            <span class="shipping-remaining-qty">Shipment Remaining Qty : {{v?.shippedQuantity -
+                                v?.totalAddedInPackage}}</span>
+                        </label>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <div style="max-width: 125px; width: 100%;">
+            <div class="manage-variants">
+                <h4>Qty</h4>
+                <div class="variant-list" *ngIf="cartItems?.length">
+                    <div *ngFor="let cart of storePoDetails; let i = index"
+                        [ngStyle]="{ visibility: cart.checked ? 'visible' : 'hidden' }" class="variant-item-input">
+                        <input (keypress)="numberPriceOnly($event)" class="set-width-var" dTextInput autocomplete="off"
+                            [value]="cart.packageQuantity"
+                            (input)="updateValue($event, 'packageQuantity', cart.poDetailsId)" />
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </div>

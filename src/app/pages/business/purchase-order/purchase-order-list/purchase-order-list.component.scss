@@ -22,6 +22,14 @@
     }
   }
 }
+.da-flex{
+  display: flex;
+}
+.devui-search:not(.devui-icon-left) .devui-input-sm.devui-clear-exit {
+  padding-right: 36px;
+}
+
+
 
 .advance-searches {
   display: flex;

@@ -10,7 +10,9 @@
           <d-form-control>
             <input
               class="set-width"
+              [ngClass]="{'manage-fields': status!=='confirmed'}"
               dTextInput
+              [disabled]="status!=='confirmed'"
               (input)="updateValue($event, 'type', i)"
               autocomplete="off"
               [(ngModel)]="input.type"
@@ -23,7 +25,9 @@
           <d-form-control>
             <input
               class="set-width-des"
+              [ngClass]="{'manage-fields': status!=='confirmed'}"
               dTextInput
+              [disabled]="status!=='confirmed'"
               (input)="updateValue($event, 'description', i)"
               autocomplete="off"
               [(ngModel)]="input.description"
@@ -32,10 +36,12 @@
         </d-form-item>
 
         <d-form-item [ngStyle]="{ margin: '20px 20px 20px 0px' }">
-          <d-form-label [required]="true">Price($)</d-form-label>
+          <d-form-label [required]="true">Cost (SGD)</d-form-label>
           <d-form-control>
             <input
               class="set-width"
+              [ngClass]="{'manage-fields': status!=='confirmed'}"
+              [disabled]="status!=='confirmed'"
               dTextInput
               (input)="updateValue($event, 'costPrice', i)"
               autocomplete="off"
@@ -87,7 +93,7 @@
 
         <d-button
           dLoading
-          *ngIf="i !== 0"
+          *ngIf="i !== 0 && status==='confirmed'"
           bsStyle="danger"
           class="danger"
           circled="true"
@@ -100,6 +106,7 @@
     </div>
 
     <d-button
+    *ngIf="status==='confirmed'"
       class="mr-element-spacing"
       circled="true"
       style="margin-right: 8px"

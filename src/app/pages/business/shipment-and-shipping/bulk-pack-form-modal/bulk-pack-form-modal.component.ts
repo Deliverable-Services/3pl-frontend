@@ -83,7 +83,7 @@ export class BulkPackFormModalComponent implements OnInit {
   }
 
   getPoList() {
-    this.purchaseOrderService.getTransferOrderList()
+    this.purchaseOrderService.getPurchaseOrderList()
       .subscribe((res) => {
         // this.storePoDetails = res?.content?.filter((p: any) => (this.data.info.vendor.id === p.vendor.id
         //   && this.data.info.shipToLocation.connectionLocationId === p.shipToLocation.connectionLocationId));
@@ -97,11 +97,20 @@ export class BulkPackFormModalComponent implements OnInit {
         this.storePoDetails = this.storePoDetails?.map((s: any) => {
           return {
             ...s,
-            valueToShow: `${s.poId} : ${s.addtionalDetails.skuNo} Shipment Remaining Qty - ${s?.addtionalDetails?.poQuantity ? (s.addtionalDetails.poQuantity - (s.addtionalDetails.lockedQuantity+s.addtionalDetails.receivedQuantity)):0}`
+            valueToShow: `${s.poId} : ${s.addtionalDetails.skuNo} Shipment Remaining Qty : ${s?.shippedQuantity - s?.totalAddedInPackage}`
           }
         });
-        console.log('::  :: ', this.storePoDetails);
       });
+  }
+
+  numberOnly(event: any) {
+    const charCode = event.which ? event.which : event.keyCode;
+    // Allow numbers (0-9) and the full stop (decimal point)
+    if ((charCode >= 48 && charCode <= 57) || charCode === 46) {
+      return true;
+    } else {
+      return false;
+    }
   }
 
   close($event: any) {

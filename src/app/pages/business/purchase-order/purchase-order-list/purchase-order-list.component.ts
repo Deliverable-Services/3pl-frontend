@@ -1,6 +1,11 @@
 import { Component, OnInit, Output, EventEmitter } from "@angular/core";
 import { Router } from "@angular/router";
-import { SortEventArg, TableWidthConfig, ToastService, DialogService } from "ng-devui";
+import {
+  SortEventArg,
+  TableWidthConfig,
+  ToastService,
+  DialogService,
+} from "ng-devui";
 import { Subscription } from "rxjs";
 // import { Brand } from "src/app/@core/data/brandList";
 import { PageParam, SearchParam } from "src/app/@core/data/searchFormData";
@@ -24,7 +29,7 @@ export class PurchaseOrderListComponent implements OnInit {
     sortBy: "",
     sortDir: "",
   };
- 
+
   selectStyle = { width: "calc(100% - 53%)", float: "right", margin: "-2px" };
 
   isAddSession: boolean = true;
@@ -39,20 +44,19 @@ export class PurchaseOrderListComponent implements OnInit {
   editForm: any = null;
 
   editRowIndex = -1;
-
-  statusList: any[] = ["ALL", "DRAFT", "OPEN", "IN_TRANSIT", "PROCESSING", "CONFIRMED", "CANCELED"];
+  statusList: any[] = ["ALL", "DRAFT", "OPEN", "RELEASED", "CLOSED","ACCEPT"];
 
   pager = {
     total: 0,
     pageIndex: 1,
     pageSize: 10,
-    sortDir:"desc",
-    sortBy: "id",    
+    sortDir: "desc",
+    sortBy: "id",
   };
 
   searchKeywords: any = {
     id: "",
-    status: "",
+    orderStatus: "",
   };
 
   columnSize: any = {
@@ -77,34 +81,34 @@ export class PurchaseOrderListComponent implements OnInit {
   ngOnInit() {
     this.pageParam.pageSize = 50;
     this.pager.pageSize = 50;
-    this.pager.sortBy = 'id';
-    this.pager.sortDir = 'id';
-    this.pageParam.sortDir= "desc";
-    this.pageParam.sortDir= "desc";
+    this.pager.sortBy = "id";
+    this.pager.sortDir = "id";
+    this.pageParam.sortDir = "desc";
+    this.pageParam.sortDir = "desc";
 
     this.pageParam.pageNo = 0;
     this.purchaseOrderService.setPageParams(this.pageParam);
-    this.getTransferOrderList();
+    this.getPurchaseOrderList();
   }
 
-  getTransferOrderList(searchParams?: any) {
+  getPurchaseOrderList(searchParams?: any) {
     this.busy = this.purchaseOrderService
-      .getTransferOrderList(searchParams)
+      .getPurchaseOrderList(searchParams)
       .subscribe((res) => {
         this.basicDataSource = res.content;
-        console.log("TransferOrderList", this.basicDataSource);
+        console.log("PurchaseOrderList", this.basicDataSource);
         this.pager.total = res.totalItems;
       });
   }
 
   setSearchParams(searchParam: SearchParam) {
-    // this.transferOrderListDataService.setSearchParams(searchParam);
-    this.getTransferOrderList();
+    // this.PurchaseOrderListDataService.setSearchParams(searchParam);
+    this.getPurchaseOrderList();
   }
 
   setPageParams(pageParam: PageParam) {
     this.purchaseOrderService.setPageParams(pageParam);
-    this.getTransferOrderList();
+    this.getPurchaseOrderList();
   }
 
   editRow(rowId: any, index: number) {
@@ -115,7 +119,7 @@ export class PurchaseOrderListComponent implements OnInit {
 
   deleteRow(rowId: any, index: number) {
     this.busy = this.purchaseOrderService
-      .deleteTransferOrder(rowId)
+      .deletePurchaseOrder(rowId)
       .subscribe((res) => {
         // console.log(':: res :: ', res);
         // let s;
@@ -123,18 +127,18 @@ export class PurchaseOrderListComponent implements OnInit {
         // if(res) {
         //   s = 'success';
         //   msg = 'Transfer Order Deleted Successfully!';
-        //   this.getTransferOrderList();
+        //   this.getPurchaseOrderList();
         // } else {
         //   s = 'error';
         //   msg = MSG.error;
         // }
 
-        this.getTransferOrderList();
+        this.getPurchaseOrderList();
         this.toastService.open({
           value: [
             {
-              severity: 'success',
-              content: 'Transfer Order Deleted Successfully!'
+              severity: "success",
+              content: "Purchase Order Deleted Successfully!",
             },
           ],
           life: 2000,
@@ -146,20 +150,20 @@ export class PurchaseOrderListComponent implements OnInit {
     this.pager.pageIndex = e;
     this.pageParam.pageNo = this.pager.pageIndex - 1;
     this.setPageParams(this.pageParam);
-    this.getTransferOrderList();
+    this.getPurchaseOrderList();
   }
 
   onSizeChange(e: number) {
     this.pager.pageSize = e;
     this.pageParam.pageSize = e;
     this.setPageParams(this.pageParam);
-    this.getTransferOrderList();
+    this.getPurchaseOrderList();
   }
 
   search(e: any, searchParam: SearchParam) {
     searchParam.keyword = e.target.value;
     this.setSearchParams(searchParam);
-    this.getTransferOrderList();
+    this.getPurchaseOrderList();
   }
 
   startSearch(event: any) {
@@ -168,8 +172,8 @@ export class PurchaseOrderListComponent implements OnInit {
     };
     setTimeout(() => {
       Object.keys(this.searchKeywords).forEach((field) => {
-        console.log("field",field);
-        if(this.searchKeywords[field] != "ALL"){
+        console.log("field", field);
+        if (this.searchKeywords[field] != "ALL") {
           if (this.searchKeywords[field]) {
             newSearchParams.filters.push({
               field: field,
@@ -180,7 +184,7 @@ export class PurchaseOrderListComponent implements OnInit {
         }
       });
 
-      this.getTransferOrderList(newSearchParams);
+      this.getPurchaseOrderList(newSearchParams);
     }, 500);
   }
 
@@ -189,7 +193,7 @@ export class PurchaseOrderListComponent implements OnInit {
       this.pageParam.sortBy = e[0].field;
       this.pageParam.sortDir = e[0].direction.toLowerCase();
       this.purchaseOrderService.setPageParams(this.pageParam);
-      this.getTransferOrderList();
+      this.getPurchaseOrderList();
     }
   }
 
@@ -229,6 +233,6 @@ export class PurchaseOrderListComponent implements OnInit {
 
   openModal() {
     // Use the Bootstrap modal service to open the modal
-    // const modalRef = this.modalService.open(TransferOrderFormModalComponent);
+    // const modalRef = this.modalService.open(PurchaseOrderFormModalComponent);
   }
 }

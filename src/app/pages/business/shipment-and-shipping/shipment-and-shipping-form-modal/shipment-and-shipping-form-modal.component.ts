@@ -37,27 +37,42 @@ export class ShipmentAndShippingFormModalComponent implements OnInit {
   ngOnInit(): void {
     this.purchaseOrderService.setPageParams({
       pageNo: "",
-      pageSize: '100',
-      sortBy: "",
-      sortDir: "",
+      pageSize: "100",
+      sortBy: "id",
+      sortDir: "desc",
     });
+    this.data.detailsInputs.forEach((details: any) => {
+      console.log('details', details);
+      
+      details.selected = true;
+      details.selectedPoId = details.poId;
+      this.storeObjectData(details);
+    });
+
     this.getPoList();
   }
 
   getPoList() {
-    this.purchaseOrderService.getTransferOrderList()
-      .subscribe((res) => {
-        this.storePoDetails = res?.content?.filter((p: any) => {
-          let dInfo = p?.details?.filter((v: any) => {
-            let rQty = v?.poQuantity ? (v.poQuantity - (v.lockedQuantity+v.receivedQuantity)):0;
-            return rQty !== 0;
-          });
-          return (p.orderStatus === 'RELEASED'
-          && this.data.info.vendor.id === p.vendor.id
-          && this.data.info.shipToLocation.connectionLocationId === p.shipToLocation.connectionLocationId
-          && dInfo?.length)
+    this.purchaseOrderService.getPurchaseOrderList().subscribe((res) => {
+      this.storePoDetails = res?.content?.filter((p: any) => {
+        let dInfo = p?.details?.filter((v: any) => {
+          let rQty = v?.poQuantity
+            ? v?.poQuantity -
+              v?.lockedQuantity -
+              v?.shippedQuantity +
+              v?.discrepancyQuantity
+            : 0;
+          return rQty > 0;
         });
+        return (
+          p.orderStatus === "RELEASED" &&
+          this.data.info.vendor.id === p.vendor.id &&
+          this.data.info.shipToLocation.connectionLocationId ===
+            p.shipToLocation.connectionLocationId &&
+          dInfo?.length
+        );
       });
+    });
   }
 
   close($event: any) {
@@ -67,25 +82,26 @@ export class ShipmentAndShippingFormModalComponent implements OnInit {
 
   storeObjectData(obj: any) {
     // Check if the object is selected or deselected
-
-    // console.log(':: obj :: ', obj, this.cartItems)
-
     const variantIdExists = this.cartItems.some(
-      (item) => (item.variantId === obj.variantId && this.selectedPoId === item?.selectedPoId)
+      (item) =>
+        item.variantId === obj.variantId &&
+        this.selectedPoId === item?.selectedPoId
     );
 
     if (obj.selected) {
       if (!variantIdExists) {
         // Store the object's data in the selectedVariants array
-        // this.selectedVariants.push(obj);
         this.cartItems.push({
           selectedPoId: this.selectedPoId,
-          ...obj});
+          ...obj,
+        });
       }
     } else {
       // Remove the object from the selectedVariants array if deselected
       const index = this.cartItems.findIndex(
-        (item) => (item.variantId === obj.variantId && this.selectedPoId === item?.selectedPoId)
+        (item) =>
+          item.variantId === obj.variantId &&
+          this.selectedPoId === item?.selectedPoId
       );
       if (index !== -1) {
         // this.selectedVariants.splice(index, 1);
@@ -157,10 +173,10 @@ export class ShipmentAndShippingFormModalComponent implements OnInit {
       this.variantList.forEach((v: any) => {
         const foundItem = res.content.find((item: any) => item.sku === v.sku);
         const checked = this.cartItems.find((item: any) => item.sku === v.sku);
-        if(checked){
-          v.itemAlreadySelected = true;
-        }else{
-          v.itemAlreadySelected = false;
+        if (checked) {
+          v.selected = true;
+        } else {
+          v.selected = false;
         }
         if (foundItem) {
           v.custName = `${v.sku} - Available Qty: ${foundItem.avaiableQty}`;
@@ -174,15 +190,38 @@ export class ShipmentAndShippingFormModalComponent implements OnInit {
   }
 
   _getFilteredVariants() {
-    let getSelectedVariants = this.storePoDetails?.find((p: any) => p.id === this.selectedPoId)?.details;
+    let getSelectedVariants = this.storePoDetails?.find(
+      (p: any) => p.id === this.selectedPoId
+    )?.details;
+    const fItem = this.cartItems.map((item: any) => {
+      return `${item.skuNo} ${item.poDetailsId ? item.poDetailsId : item.id}`;
+    });
     getSelectedVariants?.forEach((v: any) => {
-      const fItem = this.cartItems.find((item: any) => item.skuNo === v.skuNo);
-      if(fItem){
-        v['itemAlreadySelected'] = true;
+      console.log('v',v);
+      
+      if (fItem.includes(`${v.skuNo} ${v.id}`)) {
+        v["selected"] = true;
       } else {
-        v['itemAlreadySelected'] = false;
+        v["selected"] = false;
       }
     });
-    return this.storePoDetails?.find((p: any) => p.id === this.selectedPoId)?.details;
+    let data = this.storePoDetails?.find(
+      (p: any) => p.id === this.selectedPoId
+    )?.details;
+    let filteredData: any = [];
+    if (data) {
+      data.forEach((d: any) => {
+        let remainingQuantity =
+          d?.poQuantity -
+          d?.lockedQuantity -
+          d?.shippedQuantity +
+          d?.discrepancyQuantity;
+
+        if (remainingQuantity > 0) {
+          filteredData.push(d);
+        }
+      });
+    }
+    return filteredData;
   }
 }

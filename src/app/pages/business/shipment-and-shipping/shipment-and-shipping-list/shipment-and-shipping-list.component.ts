@@ -1,6 +1,11 @@
 import { Component, OnInit, Output, EventEmitter } from "@angular/core";
 import { Router } from "@angular/router";
-import { SortEventArg, TableWidthConfig, ToastService, DialogService } from "ng-devui";
+import {
+  SortEventArg,
+  TableWidthConfig,
+  ToastService,
+  DialogService,
+} from "ng-devui";
 import { Subscription } from "rxjs";
 // import { Brand } from "src/app/@core/data/brandList";
 import { PageParam, SearchParam } from "src/app/@core/data/searchFormData";
@@ -24,7 +29,7 @@ export class ShipmentAndShippingListComponent implements OnInit {
     sortBy: "",
     sortDir: "",
   };
- 
+
   selectStyle = { width: "calc(100% - 53%)", float: "right", margin: "-2px" };
 
   isAddSession: boolean = true;
@@ -40,14 +45,22 @@ export class ShipmentAndShippingListComponent implements OnInit {
 
   editRowIndex = -1;
 
-  statusList: any[] = ["ALL", "DRAFT", "OPEN", "IN_TRANSIT", "PROCESSING", "CONFIRMED", "CANCELED"];
+  statusList: any[] = [
+    "ALL",
+    "DRAFT",
+    "READY",
+    "CONFIRMED",
+    "DISPATCHING",
+    "PARTIAL RECEIVED",
+    "FULLY RECEIVED",
+  ];
 
   pager = {
     total: 0,
     pageIndex: 1,
     pageSize: 10,
-    sortDir:"desc",
-    sortBy: "id",    
+    sortDir: "desc",
+    sortBy: "id",
   };
 
   searchKeywords: any = {
@@ -77,10 +90,10 @@ export class ShipmentAndShippingListComponent implements OnInit {
   ngOnInit() {
     this.pageParam.pageSize = 50;
     this.pager.pageSize = 50;
-    this.pager.sortBy = 'id';
-    this.pager.sortDir = 'id';
-    this.pageParam.sortDir= "desc";
-    this.pageParam.sortDir= "desc";
+    this.pager.sortBy = "id";
+    this.pager.sortDir = "id";
+    this.pageParam.sortDir = "desc";
+    this.pageParam.sortDir = "desc";
 
     this.pageParam.pageNo = 0;
     this.shippingOrderService.setPageParams(this.pageParam);
@@ -114,32 +127,30 @@ export class ShipmentAndShippingListComponent implements OnInit {
   }
 
   deleteRow(rowId: any, index: number) {
-    this.busy = this.shippingOrderService
-      .delete(rowId)
-      .subscribe((res) => {
-        // console.log(':: res :: ', res);
-        // let s;
-        // let msg;
-        // if(res) {
-        //   s = 'success';
-        //   msg = 'Transfer Order Deleted Successfully!';
-        //   this.getTransferOrderList();
-        // } else {
-        //   s = 'error';
-        //   msg = MSG.error;
-        // }
+    this.busy = this.shippingOrderService.delete(rowId).subscribe((res) => {
+      // console.log(':: res :: ', res);
+      // let s;
+      // let msg;
+      // if(res) {
+      //   s = 'success';
+      //   msg = 'Transfer Order Deleted Successfully!';
+      //   this.getTransferOrderList();
+      // } else {
+      //   s = 'error';
+      //   msg = MSG.error;
+      // }
 
-        this.getTransferOrderList();
-        this.toastService.open({
-          value: [
-            {
-              severity: 'success',
-              content: 'Transfer Order Deleted Successfully!'
-            },
-          ],
-          life: 2000,
-        });
+      this.getTransferOrderList();
+      this.toastService.open({
+        value: [
+          {
+            severity: "success",
+            content: "Transfer Order Deleted Successfully!",
+          },
+        ],
+        life: 2000,
       });
+    });
   }
 
   onPageChange(e: number) {
@@ -168,13 +179,22 @@ export class ShipmentAndShippingListComponent implements OnInit {
     };
     setTimeout(() => {
       Object.keys(this.searchKeywords).forEach((field) => {
-        console.log("field",field);
-        if(this.searchKeywords[field] != "ALL"){
+        console.log("field", field);
+        if (this.searchKeywords[field] != "ALL") {
           if (this.searchKeywords[field]) {
+            console.log(
+              "this.searchKeywords[field]",
+              this.searchKeywords[field]
+            );
             newSearchParams.filters.push({
               field: field,
               operator: "match",
-              value: this.searchKeywords[field],
+              value:
+                this.searchKeywords[field] === "FULLY RECEIVED"
+                  ? "RECEIVED_FULL"
+                  : this.searchKeywords[field] === "PARTIAL RECEIVED"
+                  ? "RECEIVED_PARTIAL"
+                  : this.searchKeywords[field],
             });
           }
         }
