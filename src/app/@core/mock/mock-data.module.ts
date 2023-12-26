@@ -27,6 +27,7 @@ import { ShippingPartnerService } from "./shipping-partner.service";
 import { TransferOrderListDataService } from "./tranfer-order.service";
 import { PurchaseOrderService } from "./purchase-order.service";
 import { ShippingOrderService } from "./shipping-order.service";
+import { InvoiceManagementService } from "./invoice-management.service";
 
 
 
@@ -57,7 +58,8 @@ const SERVICES = [
   ShippingPartnerService,
   TransferOrderListDataService,
   PurchaseOrderService,
-  ShippingOrderService
+  ShippingOrderService,
+  InvoiceManagementService
 ];
 
 @NgModule({

@@ -220,6 +220,22 @@ export default {
     actions:"Actions",
     lastModifiedDate: "Updated Date",
     lastModifiedBy: "Updated By"
-  }
+  },
+  invoiceManagement:{
+    status: "Status",
+    type: "Type",
+    invoiceNo: "Invoice No.",
+    id: "PO No.",
+    nodeName:"Vendor",
+    nodeName2:"Shipping to Department",
+    list:"Invoice List",
+    title:"Invoice List",
+    buttonTitle:"Create Invoice",
+    actions:"Actions",
+    lastModifiedDate: "Updated Date",
+    lastModifiedBy: "Updated By",
+    searchWithOrder: "Search with Order No",
+    searchWithStatus: "Select a Status"
+  },
   },
 };
