@@ -9,6 +9,7 @@ import {
 import { Subscription } from "rxjs";
 import { PageParam, SearchParam } from "src/app/@core/data/searchFormData";
 import { InvoiceManagementService } from "src/app/@core/mock/invoice-management.service";
+import { CreateInvoiceManagementModalComponent } from "../create-invoice-management-modal/create-invoice-management-modal.component";
 
 @Component({
   selector: "app-invoice-management-list",
@@ -65,6 +66,16 @@ export class InvoiceManagementListComponent implements OnInit {
   };
 
   busy: Subscription | undefined;
+
+  config = {
+    id: "dialog-service",
+    width: "40%",
+    maxHeight: "600px",
+    content: CreateInvoiceManagementModalComponent,
+    backdropCloseable: true,
+    onClose: () => console.log(""),
+    data: {},
+  };
 
   constructor(
     private cService: InvoiceManagementService,
@@ -227,8 +238,27 @@ export class InvoiceManagementListComponent implements OnInit {
     });
   }
 
-  openModal() {
-    // Use the Bootstrap modal service to open the modal
-    // const modalRef = this.modalService.open(PurchaseOrderFormModalComponent);
+  createInvoice(dialogtype?: string, showAnimation?: boolean) {
+    const results = this.dialogService.open({
+      ...this.config,
+      dialogtype: dialogtype,
+      showAnimation: showAnimation,
+      buttons: [
+        {
+          cssClass: "primary",
+          text: "Create",
+          disabled: false,
+          handler: (variantList: any) => {
+            results.modalInstance.hide();
+            this.router.navigate(["/business/invoice-management/add"]);
+          },
+        }
+      ],
+      data: {
+        vList: (vData: any) => {
+          
+        },
+      },
+    });
   }
 }

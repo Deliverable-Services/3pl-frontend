@@ -1,0 +1,18 @@
+<div class="column-container">
+  <div class="main-head">
+    <h1>Create New Invoice</h1>
+  </div>
+
+  <div class="center-content form-inline">
+    <label>Invoice Type:</label>
+    <button class="set-mrgn" type="button">Deposit</button>
+    <button class="set-mrgn manage-btn" type="button">Pre-Shipment</button>
+    <button class="set-mrgn manage-btn" type="button">Final</button>
+  </div>
+
+  <div style="display: flex;" class="center-content form-inline">
+    <label>PO No.:</label>
+        <d-select
+            [multiple]="false" [filterKey]="'toDisplay'" [options]="poList" name="vendor"></d-select>
+  </div>
+</div>

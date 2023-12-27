@@ -21,6 +21,7 @@ export class InvoiceManagementFormComponent implements OnInit {
   vendorList: any[] = [];
 
   projectFormData: any = {
+    typeOfInvoice: '',
     shipToLocation: {
       connectionLocationId: "",
       nodeName: "",

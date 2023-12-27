@@ -38,8 +38,8 @@
                     </div>
                   </div>
                 </div>
-                <div class="header-right" routerLink="add">
-                  <d-button class="mr-element-spacing">{{"list.invoiceManagement.buttonTitle" | translate}}</d-button>
+                <div class="header-right">
+                  <d-button class="mr-element-spacing" (click)="createInvoice()">{{"list.invoiceManagement.buttonTitle" | translate}}</d-button>
                 </div>
                 <!-- <div>
                     <d-button dLoading (click)="syncShopify()" class="mr-element-spacing primary" circled="true"

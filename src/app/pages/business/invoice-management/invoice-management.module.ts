@@ -11,15 +11,16 @@ import {
 } from "ng-devui";
 import { AdminFormModule } from "src/app/@shared/components/admin-form";
 import { SharedModule } from "src/app/@shared/shared.module";
-import { InvoiceManagementListComponent } from "./invoice-management-list/purchase-order-list.component";
+import { InvoiceManagementListComponent } from "./invoice-management-list/invoice-management-list.component";
 import { InvoiceManagementFormComponent } from "./invoice-management-form/invoice-management-form.component";
 import { InvoiceManagementFormModalComponent } from "./invoice-management-form-modal/invoice-management-form-modal.component";
-
+import { CreateInvoiceManagementModalComponent } from "./create-invoice-management-modal/create-invoice-management-modal.component";
 @NgModule({
   declarations: [
     InvoiceManagementListComponent,
     InvoiceManagementFormComponent,
-    InvoiceManagementFormModalComponent
+    InvoiceManagementFormModalComponent,
+    CreateInvoiceManagementModalComponent
   ],
   imports: [
     CommonModule,

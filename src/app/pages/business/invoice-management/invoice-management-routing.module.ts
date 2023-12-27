@@ -1,6 +1,6 @@
 import { RouterModule, Routes } from "@angular/router";
 import { NgModule } from "@angular/core";
-import { InvoiceManagementListComponent } from "./invoice-management-list/purchase-order-list.component";
+import { InvoiceManagementListComponent } from "./invoice-management-list/invoice-management-list.component";
 import { InvoiceManagementFormComponent } from "./invoice-management-form/invoice-management-form.component";
 
 const routes: Routes = [
