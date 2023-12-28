@@ -11,6 +11,7 @@ import { VendorListDataService } from "src/app/@core/mock/vendor-data.service";
 import { FormConfig } from "src/app/@shared/components/admin-form";
 import { CreditTermsService } from "src/app/@core/mock/credit-terms.service";
 import { CurrencyDataService } from "src/app/@core/mock/currency-data.service";
+import { ToastService } from "ng-devui";
 
 @Component({
   selector: "app-vendor-form",
@@ -24,6 +25,7 @@ export class VendorFormComponent implements OnInit {
 
   projectFormData: any = {
     address: "",
+    invoicePercentage: "",
     businessRegNo: "",
     companyName: "",
     creditTermsDto: {
@@ -107,7 +109,8 @@ export class VendorFormComponent implements OnInit {
     private router: Router,
     private route: ActivatedRoute,
     private currencyDataService: CurrencyDataService,
-    private creditTermsService: CreditTermsService
+    private creditTermsService: CreditTermsService,
+    private toastService: ToastService
   ) {}
 
   ngOnInit() {
@@ -145,11 +148,27 @@ export class VendorFormComponent implements OnInit {
   everyRange(range: any) {
     return range.every((_: any) => !!_);
   }
+  
+  _validateForm() {
+    if(this.projectFormData.invoicePercentage < 0 || this.projectFormData.invoicePercentage > 100) {
+      this.toastService.open({
+        value: [
+          {
+            severity: "error",
+            content: "Invoice Percentage can not be greater then 100!",
+          },
+        ],
+        life: 2000,
+      });
+      return false;
+    }
+    return true;
+  }
 
   submitProjectForm({ valid, directive, data, errors }: any) {
-    console.log("projectFormData", this.projectFormData);
     // delete this.projectFormData.termsObj;
     if (valid) {
+      if(!this._validateForm()) return;
       if (this.mode === "Add") {
         this.vendorListDataService
           .addVendor(this.projectFormData)

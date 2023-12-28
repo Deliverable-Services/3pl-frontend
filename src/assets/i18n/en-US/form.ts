@@ -589,6 +589,7 @@ export default {
         bankName: "Bank Name",
         accountNo: "Account No.",
         swiftCode: "Swift Code",
+        invoicePercentage: "Invoice Percentage"
       },
       buttonTitle: {
         publish: "Publish",

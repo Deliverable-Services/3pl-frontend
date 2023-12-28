@@ -95,12 +95,12 @@ export class InvoiceManagementListComponent implements OnInit {
 
     this.pageParam.pageNo = 0;
     this.cService.setPageParams(this.pageParam);
-    this.getPurchaseOrderList();
+    this.getList();
   }
 
-  getPurchaseOrderList(searchParams?: any) {
+  getList(searchParams?: any) {
     this.busy = this.cService
-      .getPurchaseOrderList(searchParams)
+      .getList(searchParams)
       .subscribe((res) => {
         this.basicDataSource = res.content;
         console.log("PurchaseOrderList", this.basicDataSource);
@@ -110,12 +110,12 @@ export class InvoiceManagementListComponent implements OnInit {
 
   setSearchParams(searchParam: SearchParam) {
     // this.PurchaseOrderListDataService.setSearchParams(searchParam);
-    this.getPurchaseOrderList();
+    this.getList();
   }
 
   setPageParams(pageParam: PageParam) {
     this.cService.setPageParams(pageParam);
-    this.getPurchaseOrderList();
+    this.getList();
   }
 
   editRow(rowId: any, index: number) {
@@ -134,13 +134,13 @@ export class InvoiceManagementListComponent implements OnInit {
         // if(res) {
         //   s = 'success';
         //   msg = 'Transfer Order Deleted Successfully!';
-        //   this.getPurchaseOrderList();
+        //   this.getList();
         // } else {
         //   s = 'error';
         //   msg = MSG.error;
         // }
 
-        this.getPurchaseOrderList();
+        this.getList();
         this.toastService.open({
           value: [
             {
@@ -157,20 +157,20 @@ export class InvoiceManagementListComponent implements OnInit {
     this.pager.pageIndex = e;
     this.pageParam.pageNo = this.pager.pageIndex - 1;
     this.setPageParams(this.pageParam);
-    this.getPurchaseOrderList();
+    this.getList();
   }
 
   onSizeChange(e: number) {
     this.pager.pageSize = e;
     this.pageParam.pageSize = e;
     this.setPageParams(this.pageParam);
-    this.getPurchaseOrderList();
+    this.getList();
   }
 
   search(e: any, searchParam: SearchParam) {
     searchParam.keyword = e.target.value;
     this.setSearchParams(searchParam);
-    this.getPurchaseOrderList();
+    this.getList();
   }
 
   startSearch(event: any) {
@@ -191,7 +191,7 @@ export class InvoiceManagementListComponent implements OnInit {
         }
       });
 
-      this.getPurchaseOrderList(newSearchParams);
+      this.getList(newSearchParams);
     }, 500);
   }
 
@@ -200,7 +200,7 @@ export class InvoiceManagementListComponent implements OnInit {
       this.pageParam.sortBy = e[0].field;
       this.pageParam.sortDir = e[0].direction.toLowerCase();
       this.cService.setPageParams(this.pageParam);
-      this.getPurchaseOrderList();
+      this.getList();
     }
   }
 
@@ -249,14 +249,19 @@ export class InvoiceManagementListComponent implements OnInit {
           text: "Create",
           disabled: false,
           handler: (variantList: any) => {
-            results.modalInstance.hide();
-            this.router.navigate(["/business/invoice-management/add"]);
+
+            this.cService.create({dto: this.formData}).subscribe((invoice: any) => {
+              console.log(':: :: ', invoice);
+              results.modalInstance.hide();
+              this.router.navigate([`/business/invoice-management/edit/${invoice.id}`]);
+            })
           },
         }
       ],
       data: {
         vList: (vData: any) => {
-          
+          console.log(':: :: ', vData);
+          this.formData = vData;
         },
       },
     });

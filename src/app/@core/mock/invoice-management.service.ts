@@ -59,7 +59,7 @@ export class InvoiceManagementService {
     );
   }
 
-  getPurchaseOrderList(searchParams?:any): Observable<any> {
+  getList(searchParams?:any): Observable<any> {
     const httpOptionsToken = {
       params: new HttpParams({
         fromObject: this.pageParams,
@@ -67,7 +67,7 @@ export class InvoiceManagementService {
     };
 
     return this.http.post(
-      `${this.baseApiUrl}/purchase-order/list`,
+      `${this.baseApiUrl}/invoice/list`,
       searchParams ? searchParams :this.searchParams,
       httpOptionsToken
     );
@@ -125,7 +125,7 @@ export class InvoiceManagementService {
       }),
     };
 
-    return this.http.get(`${this.baseApiUrl}/purchase-order/${id}`, httpOptionsToken);
+    return this.http.get(`${this.baseApiUrl}/invoice/${id}`, httpOptionsToken);
   }
 
   updateStatus(data: any) {
@@ -162,6 +162,20 @@ export class InvoiceManagementService {
 
     return this.http.delete(
       `${this.baseApiUrl}/purchase-order/${id}/delete`,
+      httpOptionsToken
+    );
+  }
+
+  create(formInfo: any) {
+    const httpOptionsToken = {
+      headers: new HttpHeaders({
+        "Content-Type": "application/json",
+      }),
+    };
+
+    return this.http.post(
+      `${this.baseApiUrl}/invoice`,
+      formInfo,
       httpOptionsToken
     );
   }

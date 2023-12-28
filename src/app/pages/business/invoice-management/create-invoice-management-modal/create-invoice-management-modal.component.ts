@@ -22,7 +22,13 @@ export class CreateInvoiceManagementModalComponent implements OnInit {
     columnName: "styleName",
     searchType: "match",
   };
+  dValue:any;
   poList: any[] = [];
+  formInfo:any = {
+    type: "",
+    poId: ""
+  }
+  allowedStatus:any[] = ['ACCEPTED', 'CLOSED', 'CONFIRMED', 'READY', 'RELEASED'];
 
   constructor(
     private purchaseOrderService: PurchaseOrderService
@@ -31,13 +37,22 @@ export class CreateInvoiceManagementModalComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.purchaseOrderService.getPurchaseOrderListActive().subscribe((p: any) => {
-      this.poList = p?.map((po: any) => {
+    this._getPoList();
+  }
+
+  _getPoList() {
+    this.purchaseOrderService.getPurchaseOrderListActive({ perPage: 100 }).subscribe((p: any) => {
+      this.poList = p?.content?.map((po: any) => {
+        // console.log(':: po :: ', po.orderStatus, po.sampleStatus);
         return {
           ...po,
           toDisplay: po?.id+' - '+po?.vendor.companyName
         }
-      })
+      });
+      this.poList = this.poList?.filter((po: any) => {
+        console.log(po?.orderStatus, this.allowedStatus, this.allowedStatus?.indexOf(po?.orderStatus));
+        return this.allowedStatus?.indexOf(po?.orderStatus) > -1;
+      });
     })
   }
 
@@ -46,7 +61,7 @@ export class CreateInvoiceManagementModalComponent implements OnInit {
     this.handler($event);
   }
 
-  getPurchaseOrdeList() {
-
+  updateFormInfo() {
+    this.data.vList(this.formInfo);
   }
 }

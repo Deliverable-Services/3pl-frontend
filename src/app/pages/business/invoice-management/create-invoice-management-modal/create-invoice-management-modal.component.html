@@ -5,14 +5,23 @@
 
   <div class="center-content form-inline">
     <label>Invoice Type:</label>
-    <button class="set-mrgn" type="button">Deposit</button>
-    <button class="set-mrgn manage-btn" type="button">Pre-Shipment</button>
-    <button class="set-mrgn manage-btn" type="button">Final</button>
+    <button (click)="formInfo.type = 'DEPOSIT'; updateFormInfo()" [ngClass]="{ 'set-new-bg': formInfo?.type?.toLowerCase() === 'deposit' }" class="set-mrgn" type="button">Deposit</button>
+    <button (click)="formInfo.type = 'PRE-SHIPMENT'; updateFormInfo()" [ngClass]="{ 'set-new-bg': formInfo?.type?.toLowerCase() === 'pre-shipment' }" class="set-mrgn manage-btn" type="button">Pre-Shipment</button>
+    <button (click)="formInfo.type = 'FINAL'; updateFormInfo()" [ngClass]="{ 'set-new-bg': formInfo?.type?.toLowerCase() === 'final' }" class="set-mrgn manage-btn" type="button">Final</button>
   </div>
+
+  {{formInfo | json}}
 
   <div style="display: flex;" class="center-content form-inline">
     <label>PO No.:</label>
-        <d-select
-            [multiple]="false" [filterKey]="'toDisplay'" [options]="poList" name="vendor"></d-select>
+    <span class="manage-dropdown">
+        <d-select 
+        [multiple]="false" 
+        [filterKey]="'toDisplay'"
+        [(ngModel)]="dValue"
+        [options]="poList" 
+        name="poId"
+        (valueChange)="formInfo.poId = dValue.id; updateFormInfo()"></d-select>
+    </span>
   </div>
 </div>

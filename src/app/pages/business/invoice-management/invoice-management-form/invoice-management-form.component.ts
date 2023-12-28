@@ -127,10 +127,9 @@ export class InvoiceManagementFormComponent implements OnInit {
     this.paramId = this.route.snapshot.params["id"];
     this.mode = this.route.snapshot.params["id"] ? "Edit" : "Add";
     this.getConnectionLocationList();
-    if (this.mode === "Edit") {
-      this.getPurchaseOrderById(this.paramId);
-    }
-
+    
+    this.getById(this.paramId);
+    
     this.connectionLocationService.setPageParams(this.pageParam);
     this.getVendorList();
   }
@@ -195,7 +194,7 @@ export class InvoiceManagementFormComponent implements OnInit {
     return `${day}/${month}/${year} ${hours}:${minutes}`;
   }
 
-  getPurchaseOrderById(id: string) {
+  getById(id: string) {
     this.purchaseOrderService.getById(id).subscribe(
       (res) => {
         // if (res?.status?.toLowerCase() !== "draft") {
@@ -406,7 +405,7 @@ export class InvoiceManagementFormComponent implements OnInit {
       if (this.mode === "Add") {
         this.router.navigate(["/business/purchase-order"]);
       } else {
-        this.getPurchaseOrderById(this.paramId);
+        this.getById(this.paramId);
       }
     } else {
       type = "error";
@@ -655,7 +654,7 @@ export class InvoiceManagementFormComponent implements OnInit {
         (res) => {
           let type;
           let msg;
-          this.getPurchaseOrderById(this.paramId);
+          this.getById(this.paramId);
           if (res) {
             type = "success";
             msg = "Data Updated Successfully";
@@ -697,7 +696,7 @@ export class InvoiceManagementFormComponent implements OnInit {
         (res) => {
           let type;
           let msg;
-          this.getPurchaseOrderById(this.paramId);
+          this.getById(this.paramId);
           if (res) {
             type = "success";
             msg = MSG.update;
