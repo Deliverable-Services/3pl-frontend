@@ -7,6 +7,7 @@ import { VendorListDataService } from "src/app/@core/mock/vendor-data.service";
 import { MSG } from "src/config/global-var";
 import { ProductsListDataService } from "src/app/@core/mock/products-data.service";
 import { InvoiceManagementFormModalComponent } from "../invoice-management-form-modal/invoice-management-form-modal.component";
+import { InvoiceManagementService } from "src/app/@core/mock/invoice-management.service";
 
 @Component({
   selector: "app-invoice-management-form",
@@ -21,7 +22,8 @@ export class InvoiceManagementFormComponent implements OnInit {
   vendorList: any[] = [];
 
   projectFormData: any = {
-    typeOfInvoice: '',
+    type: '',
+    poId: '',
     shipToLocation: {
       connectionLocationId: "",
       nodeName: "",
@@ -114,13 +116,14 @@ export class InvoiceManagementFormComponent implements OnInit {
   expectedArrivalDateDisabled: boolean = false;
 
   constructor(
-    private purchaseOrderService: PurchaseOrderService,
+    // private purchaseOrderService: PurchaseOrderService,
     private vendorListDataService: VendorListDataService,
     private connectionLocationService: ConnectionLocationService,
     private route: ActivatedRoute,
     private dialogService: DialogService,
     private router: Router,
-    private toastService: ToastService
+    private toastService: ToastService,
+    private invoiceManagementService: InvoiceManagementService
   ) {}
 
   ngOnInit(): void {
@@ -195,65 +198,8 @@ export class InvoiceManagementFormComponent implements OnInit {
   }
 
   getById(id: string) {
-    this.purchaseOrderService.getById(id).subscribe(
-      (res) => {
-        // if (res?.status?.toLowerCase() !== "draft") {
-        //   this.expectedDeliveryDateDisabled = true;
-        //   this.expectedArrivalDateDisabled = true;
-        // }
-
-        // console.log(':: :: ', res);
-
-        this.createdDate = this.formatDate(res.createdDate) ?? "";
-        this.modifiedDate = this.formatDate(res.lastModifiedDate) ?? "";
-
-        this.selectedPurchaseOrder = res;
-        this.projectFormData = res;
-        // this.projectFormData.originLocation.nodeName = `${this.projectFormData.originLocation.nodeType} - ${this.projectFormData.originLocation.nodeName}`;
-        // this.projectFormData.destinationLocation.nodeName = `${this.projectFormData.destinationLocation.nodeType} - ${this.projectFormData.destinationLocation.nodeName}`;
-
-        let expectedArrivalDate = this.projectFormData?.dueDate?.split("T");
-        let expectedDeliveryDate = this.projectFormData?.issueDate?.split("T");
-        this.projectFormData.dueDate = expectedArrivalDate
-          ? expectedArrivalDate[0]
-          : "";
-        this.projectFormData.issueDate = expectedDeliveryDate
-          ? expectedDeliveryDate[0]
-          : "";
-
-        // this.toTypeLabel =
-        //   this.projectFormData?.originLocation?.nodeType +
-        //   " To " +
-        //   this.projectFormData?.destinationLocation?.nodeType;
-        this.detailsInputs = this.projectFormData?.details?.map((d: any) => {
-          return {
-            variantId: d?.variantId,
-            skuNo: d?.skuNo,
-            plannedQuantity: d?.poQuantity,
-            productPrice: d?.poQuantity ? d?.productPrice : 0,
-            totalPrice: d?.poQuantity * d?.productPrice,
-            productPriceFront: d?.productPrice,
-            lockedQuantity: d?.lockedQuantity,
-            shippedQuantity: d?.shippedQuantity,
-            receivedQuantity: d?.receivedQuantity,
-            skuDescription: d?.skuDescription,
-            // receivedQuantity: d?.receivedQuantity,
-            // sentQuantity: d?.sentQuantity,
-            // discrepancyResolvedTo: d?.discrepancyResolvedTo,
-            lineNumber: d?.lineNumber,
-            shipments: d?.shipments,
-            // discrepancyFlag: d?.discrepancyFlag,
-            // alreadyAdded: true,
-          };
-        });
-
-        this.detailsInputs?.sort((a: any, b: any) => {
-          let fVal = parseInt(a.lineNumber);
-          let sVal = parseInt(b.lineNumber);
-          return fVal > sVal ? 1 : fVal < sVal ? -1 : 0;
-        });
-
-        // console.log(':: :: ', this.projectFormData)
+    this.invoiceManagementService.getById(id).subscribe((res) => {
+      this.projectFormData = res;
       },
       (error) => {
         this._showDateToast(error.error.detail);
@@ -307,7 +253,7 @@ export class InvoiceManagementFormComponent implements OnInit {
 
         // return
 
-        this.purchaseOrderService
+        this.invoiceManagementService
           .add({
             ...this.projectFormData,
             dueDate: this.projectFormData.dueDate + "T00:00:00Z",
@@ -361,7 +307,7 @@ export class InvoiceManagementFormComponent implements OnInit {
         //   );
         //   return;
         // }
-        this.purchaseOrderService
+        this.invoiceManagementService
           .updatePurchaseOrder(this.paramId, {
             ...this.projectFormData,
             dueDate: this.projectFormData.dueDate + "T00:00:00Z",
@@ -641,7 +587,7 @@ export class InvoiceManagementFormComponent implements OnInit {
     });
     this.projectFormData.details = this.detailsInputs;
 
-    this.purchaseOrderService
+    this.invoiceManagementService
       .updateStatus({
         id: this.paramId,
         formData: {
@@ -686,7 +632,7 @@ export class InvoiceManagementFormComponent implements OnInit {
       lineNumber: this.detailsInputs[rowIndex]?.lineNumber,
       locationId: locationID ? locationID : null,
     });
-    this.purchaseOrderService
+    this.invoiceManagementService
       .updateStatus({
         id: this.paramId,
         formData: this.dObj,

@@ -10,8 +10,6 @@
     <button (click)="formInfo.type = 'FINAL'; updateFormInfo()" [ngClass]="{ 'set-new-bg': formInfo?.type?.toLowerCase() === 'final' }" class="set-mrgn manage-btn" type="button">Final</button>
   </div>
 
-  {{formInfo | json}}
-
   <div style="display: flex;" class="center-content form-inline">
     <label>PO No.:</label>
     <span class="manage-dropdown">

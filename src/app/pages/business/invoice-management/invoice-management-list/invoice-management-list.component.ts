@@ -58,7 +58,11 @@ export class InvoiceManagementListComponent implements OnInit {
 
   columnSize: any = {
     id: "10%",
-    nodeName: "20%",
+    type: "20%",
+    poId: "10%",
+    vendor: "10%",
+    shipToLocation: "10%",
+    status: "10%",
     createdBy: "40%",
     createdDate: "40%",
     action: "10%",
@@ -103,7 +107,6 @@ export class InvoiceManagementListComponent implements OnInit {
       .getList(searchParams)
       .subscribe((res) => {
         this.basicDataSource = res.content;
-        console.log("PurchaseOrderList", this.basicDataSource);
         this.pager.total = res.totalItems;
       });
   }
@@ -121,7 +124,7 @@ export class InvoiceManagementListComponent implements OnInit {
   editRow(rowId: any, index: number) {
     this.isAdd = "EDIT";
     this.editRowIndex = index;
-    this.router.navigate([`/business/purchase-order/edit/${rowId}`]);
+    this.router.navigate([`/business/invoice-management/edit/${rowId}`]);
   }
 
   deleteRow(rowId: any, index: number) {
