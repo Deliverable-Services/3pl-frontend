@@ -24,6 +24,10 @@ export class InvoiceManagementFormComponent implements OnInit {
   projectFormData: any = {
     type: '',
     poId: '',
+    poDetails: {
+      billToAddress: '',
+      issueDate: ''
+    },
     shipToLocation: {
       connectionLocationId: "",
       nodeName: "",
@@ -116,7 +120,7 @@ export class InvoiceManagementFormComponent implements OnInit {
   expectedArrivalDateDisabled: boolean = false;
 
   constructor(
-    // private purchaseOrderService: PurchaseOrderService,
+    private purchaseOrderService: PurchaseOrderService,
     private vendorListDataService: VendorListDataService,
     private connectionLocationService: ConnectionLocationService,
     private route: ActivatedRoute,
@@ -200,6 +204,11 @@ export class InvoiceManagementFormComponent implements OnInit {
   getById(id: string) {
     this.invoiceManagementService.getById(id).subscribe((res) => {
       this.projectFormData = res;
+      this.projectFormData['poDetails'] = {
+        billToAddress: '',
+        issueDate: ''
+      };
+      this.getPoInformation(this.projectFormData?.poId);
       },
       (error) => {
         this._showDateToast(error.error.detail);
@@ -850,5 +859,15 @@ export class InvoiceManagementFormComponent implements OnInit {
         v.plannedQuantity * (v.exwSgdCost ? v.exwSgdCost : v.productPrice);
     });
     return tPrice;
+  }
+
+  getPoInformation(poId: string) {
+    console.log('::  poId :: ', poId);
+    this.purchaseOrderService.getById(poId).subscribe((res: any) => {
+      console.log(':: :: ', res);
+      this.projectFormData['poDetails'] = res;
+      this.projectFormData.poDetails.issueDate = this.projectFormData?.poDetails?.issueDate?.split("T")[0];
+      this.detailsInputs = this.projectFormData?.poDetails?.details;
+    })
   }
 }

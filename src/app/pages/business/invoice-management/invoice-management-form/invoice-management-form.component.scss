@@ -109,3 +109,31 @@ form {
 .manage-fields {
   background: #F3F3F3 !important;
 }
+
+.manage-bottom-section {
+  span {
+    color: red;
+    margin-right: 2px;
+  }
+  .set-input {
+    width: 17%;
+    margin-left: 4px;
+  }
+  .mange-second-text {
+    font-size: 14px;
+  }
+}
+
+.manage-brief {
+  display: flex;
+  justify-content: space-between;
+
+  .brief-two {
+    width: 75%;
+  }
+  
+  .right-section {
+    width: 25%;
+    border-left: 1px solid #000;
+  }
+}

@@ -282,7 +282,7 @@
                   <input
                     style="pointer-events: none; background: #f3f3f3 !important"
                     class="devui-input devui-form-control"
-                    [(ngModel)]="projectFormData.issueDate"
+                    [(ngModel)]="projectFormData.poDetails.issueDate"
                     autocomplete="off"
                     placeholder="y-MM-dd"
                     type="date"
@@ -338,9 +338,6 @@
 
           <div class="da-content-banner-title">
             Additional Information (Optional)
-            <span *ngIf="projectFormData.orderStatus"
-              >&nbsp;({{ projectFormData.id }})</span
-            >
           </div>
 
           <div [ngStyle]="{ display: 'flex', justifyContent: 'space-between' }">
@@ -348,6 +345,9 @@
               <d-form-item [ngStyle]="{ margin: '20px 20px 20px 0px' }">
                 <d-form-label [required]="true">Attn</d-form-label>
                 <d-form-control>
+                  <span *ngIf="projectFormData.orderStatus"
+                    >&nbsp;({{ projectFormData.id }})</span
+                  >
                   <input
                     [disabled]="
                       projectFormData.type?.toLowerCase() === 'deposit'
@@ -540,7 +540,7 @@
                     </d-form-label>
                     <d-form-control>
                       <input
-                        [(ngModel)]="projectFormData.billToAddress"
+                        [(ngModel)]="projectFormData.poDetails.billToAddress"
                         style="
                           pointer-events: none;
                           background: #f3f3f3 !important;
@@ -664,79 +664,6 @@
             </div>
           </div>
 
-          <!-- <div [ngStyle]="{ display: 'flex', justifyContent: 'space-between' }">
-            <div [ngStyle]="{ display: 'flex' }">
-              <d-form-item [ngStyle]="{ margin: '20px 20px 20px 0px' }">
-                <d-form-label [required]="true">Price Terms</d-form-label>
-                <d-form-control>
-                  <input
-                    class="set-width manage-fields"
-                    dTextInput
-                    autocomplete="off"
-                  />
-                </d-form-control>
-              </d-form-item>
-
-              <d-form-item [ngStyle]="{ margin: '20px 20px 20px 0px' }">
-                <d-form-label [required]="true">Payment Terms</d-form-label>
-                <d-form-control>
-                  <input
-                    class="set-width manage-fields"
-                    dTextInput
-                    disabled
-                    autocomplete="off"
-                  />
-                </d-form-control>
-              </d-form-item>
-            </div>
-
-            <div
-              [ngStyle]="{ width: '46%' }"
-              [ngClass]="{ 'set-cursor': mode.toLowerCase() === 'edit' }"
-            >
-              <ng-container
-                *ngIf="projectFormData.type?.toLowerCase() !== 'deposit'"
-              >
-                <d-form-item
-                  [ngStyle]="{ marginTop: '20px' }"
-                  [ngClass]="{
-                    'set-cursor':
-                      !(mode.toLowerCase() !== 'edit') &&
-                      projectFormData.orderStatus?.toLowerCase() !== 'draft'
-                  }"
-                >
-                  <d-form-label>Supplier's Bank Details</d-form-label>
-                  <d-form-control>
-                    <textarea
-                      [ngClass]="{
-                        'manage-fields':
-                          mode.toLowerCase() === 'edit' &&
-                          projectFormData.orderStatus?.toLowerCase() !== 'draft'
-                      }"
-                      [ngStyle]="{
-                        'pointer-events':
-                          !(mode.toLowerCase() !== 'edit') &&
-                          projectFormData.orderStatus?.toLowerCase() !== 'draft'
-                            ? 'none'
-                            : 'auto',
-                        height: '104px'
-                      }"
-                      rows="4"
-                      dTextarea
-                      resize="vertical"
-                      autocomplete="off"
-                      name="remarks"
-                      [placeholder]="
-                        'form.invoiceManagement.fields.remarks' | translate
-                      "
-                      [(ngModel)]="projectFormData.remarks"
-                    ></textarea>
-                  </d-form-control>
-                </d-form-item>
-              </ng-container>
-            </div>
-          </div> -->
-
           <ng-container>
             <div [ngStyle]="{ display: 'flex' }">
               <div style="width: 100%" class="da-content-banner-title">
@@ -823,260 +750,291 @@
                 </d-button> -->
               </d-form-operation>
             </div>
-            <ng-container *ngIf="detailsInputs?.length">
-              <div
-                *ngFor="let input of detailsInputs; let i = index"
-                [ngStyle]="{ display: 'flex', justifyContent: 'space-between' }"
-              >
-                <div [ngStyle]="{ display: 'flex' }">
-                  <d-form-item [ngStyle]="{ margin: '20px 20px 20px 0px' }">
-                    <d-form-label [required]="true">{{
-                      "form.invoiceManagement.fields.sku" | translate
-                    }}</d-form-label>
-                    <d-form-control>
-                      <input
-                        class="set-width manage-fields"
-                        disabled
-                        dTextInput
-                        autocomplete="off"
-                        [value]="input.skuNo"
-                        (input)="updateValue($event, 'skuNo', i)"
-                      />
-                    </d-form-control>
-                  </d-form-item>
+            <div class="manage-brief">
+              <ng-container *ngIf="detailsInputs?.length">
+                <div class="brief-two">
+                  <div
+                    *ngFor="let input of detailsInputs; let i = index"
+                    [ngStyle]="{ display: 'flex', justifyContent: 'space-between' }"
+                  >
+                    <div [ngStyle]="{ display: 'flex' }">
+                      <d-form-item [ngStyle]="{ margin: '20px 20px 20px 0px' }">
+                        <d-form-label [required]="true">{{
+                          "form.invoiceManagement.fields.sku" | translate
+                        }}</d-form-label>
+                        <d-form-control>
+                          <input
+                            class="set-width manage-fields"
+                            disabled
+                            dTextInput
+                            autocomplete="off"
+                            [value]="input.skuNo"
+                            (input)="updateValue($event, 'skuNo', i)"
+                          />
+                        </d-form-control>
+                      </d-form-item>
 
-                  <d-form-item [ngStyle]="{ margin: '20px 20px 20px 0px' }">
-                    <d-form-label [required]="true">{{
-                      "form.invoiceManagement.fields.description" | translate
-                    }}</d-form-label>
-                    <d-form-control>
-                      <input
-                        class="set-width manage-fields"
-                        dTextInput
-                        disabled
-                        autocomplete="off"
-                        [value]="input.skuDescription"
-                      />
-                    </d-form-control>
-                  </d-form-item>
+                      <d-form-item [ngStyle]="{ margin: '20px 20px 20px 0px' }">
+                        <d-form-label [required]="true">{{
+                          "form.invoiceManagement.fields.description" | translate
+                        }}</d-form-label>
+                        <d-form-control>
+                          <input
+                            class="set-width manage-fields"
+                            dTextInput
+                            disabled
+                            autocomplete="off"
+                            [value]="input.skuDescription"
+                          />
+                        </d-form-control>
+                      </d-form-item>
 
-                  <d-form-item [ngStyle]="{ margin: '20px 20px 20px 0px' }">
-                    <d-form-label [required]="true">{{
-                      "form.invoiceManagement.fields.plannedQuantity"
-                        | translate
-                    }}</d-form-label>
-                    <d-form-control>
-                      <input
-                        class="set-width"
-                        [disabled]="
-                          projectFormData.orderStatus &&
-                          !(
-                            projectFormData.orderStatus?.toLowerCase() ===
-                            'draft'
-                          )
-                        "
-                        [ngClass]="{
-                          'manage-fields':
-                            mode.toLowerCase() === 'edit' &&
-                            projectFormData.orderStatus?.toLowerCase() !==
-                              'draft'
-                        }"
-                        [ngStyle]="{
-                          'pointer-events':
-                            mode.toLowerCase() === 'edit' &&
-                            projectFormData.orderStatus?.toLowerCase() !==
-                              'draft'
-                              ? 'none'
-                              : 'auto',
-                          width: '100%'
-                        }"
-                        dTextInput
-                        (keypress)="numberOnly($event)"
-                        autocomplete="off"
-                        [placeholder]="
-                          'form.invoiceManagement.fields.plannedQuantity'
+                      <d-form-item [ngStyle]="{ margin: '20px 20px 20px 0px' }">
+                        <d-form-label [required]="true">{{
+                          "form.invoiceManagement.fields.plannedQuantity"
                             | translate
-                        "
-                        [value]="input.plannedQuantity"
-                        (input)="updateValue($event, 'plannedQuantity', i)"
-                      />
-                    </d-form-control>
-                  </d-form-item>
+                        }}</d-form-label>
+                        <d-form-control>
+                          <input
+                            class="set-width"
+                            [disabled]="
+                              projectFormData.orderStatus &&
+                              !(
+                                projectFormData.orderStatus?.toLowerCase() ===
+                                'draft'
+                              )
+                            "
+                            [ngClass]="{
+                              'manage-fields':
+                                mode.toLowerCase() === 'edit' &&
+                                projectFormData.orderStatus?.toLowerCase() !==
+                                  'draft'
+                            }"
+                            [ngStyle]="{
+                              'pointer-events':
+                                mode.toLowerCase() === 'edit' &&
+                                projectFormData.orderStatus?.toLowerCase() !==
+                                  'draft'
+                                  ? 'none'
+                                  : 'auto',
+                              width: '100%'
+                            }"
+                            dTextInput
+                            (keypress)="numberOnly($event)"
+                            autocomplete="off"
+                            [placeholder]="
+                              'form.invoiceManagement.fields.plannedQuantity'
+                                | translate
+                            "
+                            [value]="input.plannedQuantity"
+                            (input)="updateValue($event, 'plannedQuantity', i)"
+                          />
+                        </d-form-control>
+                      </d-form-item>
 
-                  <d-form-item [ngStyle]="{ margin: '20px 20px 20px 0px' }">
-                    <d-form-label [required]="true">{{
-                      "form.invoiceManagement.fields.productPrice" | translate
-                    }}</d-form-label>
-                    <d-form-control>
-                      <input
-                        class="set-width manage-fields"
-                        disabled
-                        dTextInput
-                        (keypress)="numberOnly($event)"
-                        autocomplete="off"
-                        [placeholder]="
-                          'form.invoiceManagement.fields.productPrice'
+                      <d-form-item [ngStyle]="{ margin: '20px 20px 20px 0px' }">
+                        <d-form-label [required]="true">{{
+                          "form.invoiceManagement.fields.productPrice" | translate
+                        }}</d-form-label>
+                        <d-form-control>
+                          <input
+                            class="set-width manage-fields"
+                            disabled
+                            dTextInput
+                            (keypress)="numberOnly($event)"
+                            autocomplete="off"
+                            [placeholder]="
+                              'form.invoiceManagement.fields.productPrice'
+                                | translate
+                            "
+                            [value]="
+                              (input?.productPriceFront
+                                ? input?.productPriceFront
+                                : input?.exwSgdCost) * input?.plannedQuantity
+                            "
+                            (input)="updateValue($event, 'productPrice', i)"
+                          />
+                        </d-form-control>
+                      </d-form-item>
+
+                      <d-form-item
+                        *ngIf="
+                          projectFormData.orderStatus?.toLowerCase() ===
+                            'released' ||
+                          projectFormData.orderStatus?.toLowerCase() === 'closed'
+                        "
+                        [ngStyle]="{ margin: '20px 20px 20px 0px' }"
+                      >
+                        <d-form-label [required]="true">{{
+                          "form.invoiceManagement.fields.lockedQuantity" | translate
+                        }}</d-form-label>
+                        <d-form-control>
+                          <input
+                            class="set-width manage-fields"
+                            disabled
+                            dTextInput
+                            (keypress)="numberOnly($event)"
+                            autocomplete="off"
+                            [placeholder]="
+                              'form.invoiceManagement.fields.lockedQuantity'
+                                | translate
+                            "
+                            [value]="input.lockedQuantity"
+                            (input)="updateValue($event, 'lockedQuantity', i)"
+                          />
+                        </d-form-control>
+                      </d-form-item>
+
+                      <d-form-item
+                        *ngIf="
+                          projectFormData.orderStatus?.toLowerCase() ===
+                            'released' ||
+                          projectFormData.orderStatus?.toLowerCase() === 'closed'
+                        "
+                        [ngStyle]="{ margin: '20px 20px 20px 0px' }"
+                      >
+                        <d-form-label [required]="true">{{
+                          "form.invoiceManagement.fields.shippedQuantity"
                             | translate
-                        "
-                        [value]="
-                          (input?.productPriceFront
-                            ? input?.productPriceFront
-                            : input?.exwSgdCost) * input?.plannedQuantity
-                        "
-                        (input)="updateValue($event, 'productPrice', i)"
-                      />
-                    </d-form-control>
-                  </d-form-item>
+                        }}</d-form-label>
+                        <d-form-control>
+                          <input
+                            class="set-width manage-fields"
+                            disabled
+                            dTextInput
+                            (keypress)="numberOnly($event)"
+                            autocomplete="off"
+                            [placeholder]="
+                              'form.invoiceManagement.fields.shippedQuantity'
+                                | translate
+                            "
+                            [value]="input.shippedQuantity"
+                            (input)="updateValue($event, 'shippedQuantity', i)"
+                          />
+                        </d-form-control>
+                      </d-form-item>
 
-                  <d-form-item
-                    *ngIf="
-                      projectFormData.orderStatus?.toLowerCase() ===
-                        'released' ||
-                      projectFormData.orderStatus?.toLowerCase() === 'closed'
-                    "
-                    [ngStyle]="{ margin: '20px 20px 20px 0px' }"
-                  >
-                    <d-form-label [required]="true">{{
-                      "form.invoiceManagement.fields.lockedQuantity" | translate
-                    }}</d-form-label>
-                    <d-form-control>
-                      <input
-                        class="set-width manage-fields"
-                        disabled
-                        dTextInput
-                        (keypress)="numberOnly($event)"
-                        autocomplete="off"
-                        [placeholder]="
-                          'form.invoiceManagement.fields.lockedQuantity'
+                      <d-form-item
+                        *ngIf="
+                          projectFormData.orderStatus?.toLowerCase() ===
+                            'released' ||
+                          projectFormData.orderStatus?.toLowerCase() === 'closed'
+                        "
+                        [ngStyle]="{ margin: '20px 20px 20px 0px' }"
+                      >
+                        <d-form-label [required]="true">{{
+                          "form.invoiceManagement.fields.receivedQuantity"
                             | translate
-                        "
-                        [value]="input.lockedQuantity"
-                        (input)="updateValue($event, 'lockedQuantity', i)"
-                      />
-                    </d-form-control>
-                  </d-form-item>
+                        }}</d-form-label>
+                        <d-form-control>
+                          <input
+                            class="set-width manage-fields"
+                            disabled
+                            dTextInput
+                            (keypress)="numberOnly($event)"
+                            autocomplete="off"
+                            [placeholder]="
+                              'form.invoiceManagement.fields.receivedQuantity'
+                                | translate
+                            "
+                            [value]="input.receivedQuantity"
+                            (input)="updateValue($event, 'receivedQuantity', i)"
+                          />
+                        </d-form-control>
+                      </d-form-item>
 
-                  <d-form-item
-                    *ngIf="
-                      projectFormData.orderStatus?.toLowerCase() ===
-                        'released' ||
-                      projectFormData.orderStatus?.toLowerCase() === 'closed'
-                    "
-                    [ngStyle]="{ margin: '20px 20px 20px 0px' }"
-                  >
-                    <d-form-label [required]="true">{{
-                      "form.invoiceManagement.fields.shippedQuantity"
-                        | translate
-                    }}</d-form-label>
-                    <d-form-control>
-                      <input
-                        class="set-width manage-fields"
-                        disabled
-                        dTextInput
-                        (keypress)="numberOnly($event)"
-                        autocomplete="off"
-                        [placeholder]="
-                          'form.invoiceManagement.fields.shippedQuantity'
+                      <d-button
+                        *ngIf="
+                          projectFormData.orderStatus?.toLowerCase() === 'confirmed'
+                        "
+                        dLoading
+                        class="warning"
+                        circled="true"
+                        style="margin-right: 8px; margin-top: 47px"
+                        (click)="confirm(i)"
+                      >
+                        {{ "form.invoiceManagement.buttons.confirm" | translate }}
+                      </d-button>
+
+                      <d-button
+                        *ngIf="
+                          projectFormData.orderStatus?.toLowerCase() ===
+                            'released' ||
+                          projectFormData.orderStatus?.toLowerCase() === 'closed'
+                        "
+                        dLoading
+                        bsStyle="primary"
+                        class="primary"
+                        circled="true"
+                        style="margin-right: 8px; margin-top: 47px"
+                        (click)="shipmentDialog(input.shipments)"
+                      >
+                        {{
+                          "form.invoiceManagement.buttons.shipmentDetails"
                             | translate
+                        }}
+                      </d-button>
+
+                      <d-button
+                        *ngIf="
+                          projectFormData.orderStatus?.toLowerCase() === 'draft' ||
+                          mode === 'Add'
                         "
-                        [value]="input.shippedQuantity"
-                        (input)="updateValue($event, 'shippedQuantity', i)"
-                      />
-                    </d-form-control>
-                  </d-form-item>
-
-                  <d-form-item
-                    *ngIf="
-                      projectFormData.orderStatus?.toLowerCase() ===
-                        'released' ||
-                      projectFormData.orderStatus?.toLowerCase() === 'closed'
-                    "
-                    [ngStyle]="{ margin: '20px 20px 20px 0px' }"
-                  >
-                    <d-form-label [required]="true">{{
-                      "form.invoiceManagement.fields.receivedQuantity"
-                        | translate
-                    }}</d-form-label>
-                    <d-form-control>
-                      <input
-                        class="set-width manage-fields"
-                        disabled
-                        dTextInput
-                        (keypress)="numberOnly($event)"
-                        autocomplete="off"
-                        [placeholder]="
-                          'form.invoiceManagement.fields.receivedQuantity'
-                            | translate
-                        "
-                        [value]="input.receivedQuantity"
-                        (input)="updateValue($event, 'receivedQuantity', i)"
-                      />
-                    </d-form-control>
-                  </d-form-item>
-
-                  <d-button
-                    *ngIf="
-                      projectFormData.orderStatus?.toLowerCase() === 'confirmed'
-                    "
-                    dLoading
-                    class="warning"
-                    circled="true"
-                    style="margin-right: 8px; margin-top: 47px"
-                    (click)="confirm(i)"
-                  >
-                    {{ "form.invoiceManagement.buttons.confirm" | translate }}
-                  </d-button>
-
-                  <d-button
-                    *ngIf="
-                      projectFormData.orderStatus?.toLowerCase() ===
-                        'released' ||
-                      projectFormData.orderStatus?.toLowerCase() === 'closed'
-                    "
-                    dLoading
-                    bsStyle="primary"
-                    class="primary"
-                    circled="true"
-                    style="margin-right: 8px; margin-top: 47px"
-                    (click)="shipmentDialog(input.shipments)"
-                  >
-                    {{
-                      "form.invoiceManagement.buttons.shipmentDetails"
-                        | translate
-                    }}
-                  </d-button>
-
-                  <d-button
-                    *ngIf="
-                      projectFormData.orderStatus?.toLowerCase() === 'draft' ||
-                      mode === 'Add'
-                    "
-                    dLoading
-                    bsStyle="danger"
-                    class="danger"
-                    circled="true"
-                    style="margin-right: 8px; margin-top: 47px"
-                    (click)="removeNow(i)"
-                  >
-                    {{ "form.invoiceManagement.buttons.remove" | translate }}
-                  </d-button>
+                        dLoading
+                        bsStyle="danger"
+                        class="danger"
+                        circled="true"
+                        style="margin-right: 8px; margin-top: 47px"
+                        (click)="removeNow(i)"
+                      >
+                        {{ "form.invoiceManagement.buttons.remove" | translate }}
+                      </d-button>
+                    </div>
+                  </div>
                 </div>
-              </div>
-            </ng-container>
+              </ng-container>
 
-            <div [ngStyle]="{ width: '100%' }">
-              <label
-                style="float: right; margin: 5px 16px"
-                *ngIf="projectFormData.orderStatus"
-              >
-                <b
-                  >{{
-                    "form.invoiceManagement.fields.totalProductPrice"
-                      | translate
-                  }}:
-                </b>
-                {{ _checkTotalPrice() }} SGD</label
-              >
+              <div class="right-section">
+                <!-- <label
+                  style="float: right; margin: 5px 16px"
+                  *ngIf="projectFormData.orderStatus"
+                > -->
+                <label *ngIf="projectFormData.type?.toLowerCase() === 'deposit'" 
+                class="manage-bottom-section" style="float: right; margin: 5px 16px">
+                  <span>*</span>
+                  <b>Deposit % : </b>
+                  <input type="text" class="set-input">
+
+                  <br><br><br>
+
+                  <label class="mange-second-text">
+                    <b>Invoice Amount (RMB) : 333,500.23</b>
+                  </label>
+                </label>
+
+                <label *ngIf="projectFormData.type?.toLowerCase() === 'mid'" 
+                class="manage-bottom-section" style="float: right; margin: 5px 16px">
+                  <span>*</span>
+                  <b>% of PO : </b>
+                  <input type="text" class="set-input">
+
+                  <br><br><br>
+
+                  <label class="mange-second-text">
+                    <b>Invoice Amount (RMB) : 333,500.23</b>
+                  </label>
+                </label>
+
+                <label *ngIf="projectFormData.type?.toLowerCase() === 'final'" 
+                class="manage-bottom-section" style="float: right; margin: 5px 16px">
+                <b>Billed Amount : 12000 SGD</b>
+                <br>
+                <b>Fulfillment Amount : 9000 SGD </b>
+                <br>
+                <b>Balance Amount : </b>
+                  <input type="text" class="set-input">
+                </label>
+              </div>
             </div>
           </ng-container>
         </form>
