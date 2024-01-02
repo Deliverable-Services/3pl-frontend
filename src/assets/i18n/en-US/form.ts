@@ -542,7 +542,7 @@ export default {
         remarks: "Remarks",
         sku: "SKU",
         description: "Description",
-        plannedQuantity: "Planned Quantity",
+        plannedQuantity: "PO Planned Quantity",
         sentQty: "Sent Qty",
         receivedQty: "Received Qty",
         lockedQuantity: "Locked Qty",

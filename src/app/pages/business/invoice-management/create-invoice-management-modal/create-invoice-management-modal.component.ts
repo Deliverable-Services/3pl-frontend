@@ -50,7 +50,7 @@ export class CreateInvoiceManagementModalComponent implements OnInit {
         }
       });
       this.poList = this.poList?.filter((po: any) => {
-        console.log(po?.orderStatus, this.allowedStatus, this.allowedStatus?.indexOf(po?.orderStatus));
+        // console.log(po?.orderStatus, this.allowedStatus, this.allowedStatus?.indexOf(po?.orderStatus));
         return this.allowedStatus?.indexOf(po?.orderStatus) > -1;
       });
     })

@@ -129,7 +129,7 @@ export class InvoiceManagementListComponent implements OnInit {
 
   deleteRow(rowId: any, index: number) {
     this.busy = this.cService
-      .deletePurchaseOrder(rowId)
+      .delete(rowId)
       .subscribe((res) => {
         // console.log(':: res :: ', res);
         // let s;

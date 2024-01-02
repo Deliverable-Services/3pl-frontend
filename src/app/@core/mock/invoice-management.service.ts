@@ -45,20 +45,6 @@ export class InvoiceManagementService {
     console.log(this.pageParams);
   }
 
-  add(data: any): Observable<any> {
-    const httpOptionsToken = {
-      headers: new HttpHeaders({
-        "Content-Type": "application/json",
-      }),
-    };
-
-    return this.http.post(
-      `${this.baseApiUrl}/purchase-order`,
-      data,
-      httpOptionsToken
-    );
-  }
-
   getList(searchParams?:any): Observable<any> {
     const httpOptionsToken = {
       params: new HttpParams({
@@ -74,16 +60,6 @@ export class InvoiceManagementService {
   }
 
   getPurchaseOrderListActive(data?: any) {
-
-    // const searchParams = {
-    //   filters: [
-    //     {
-    //       field: "isActive",
-    //       operator: "equal",
-    //       value: true,
-    //     },
-    //   ],
-    // };
 
     const searchParams = {
       filters: [
@@ -104,7 +80,7 @@ export class InvoiceManagementService {
     );
   }
 
-  updatePurchaseOrder(id: string, data: any): Observable<any> {
+  update(id: string, data: any): Observable<any> {
     const httpOptionsToken = {
       headers: new HttpHeaders({
         // "Content-Type": "application/json",
@@ -112,7 +88,7 @@ export class InvoiceManagementService {
     };
 
     return this.http.put(
-      `${this.baseApiUrl}/purchase-order/${id}`,
+      `${this.baseApiUrl}/invoice/${id}`,
       data,
       httpOptionsToken
     );
@@ -135,33 +111,20 @@ export class InvoiceManagementService {
     };
 
     return this.http.put(
-      `${this.baseApiUrl}/purchase-order/${data?.id}/${data?.type}`,
+      `${this.baseApiUrl}/invoice/${data?.id}/${data?.type}`,
       data?.formData,
       httpOptionsToken
     );
   }
 
-  resolveDiscrepancy(data: any) {
-    const httpOptionsToken = {
-      headers: new HttpHeaders({
-      }),
-    };
-
-    return this.http.put(
-      `${this.baseApiUrl}/purchase-order/${data?.id}/resolve-discrepancy`,
-      data?.formData,
-      httpOptionsToken
-    );
-  }
-
-  deletePurchaseOrder(id: string): Observable<any> {
+  delete(id: string): Observable<any> {
     const httpOptionsToken = {
       headers: new HttpHeaders({
       }),
     };
 
     return this.http.delete(
-      `${this.baseApiUrl}/purchase-order/${id}/delete`,
+      `${this.baseApiUrl}/invoice/${id}/delete`,
       httpOptionsToken
     );
   }

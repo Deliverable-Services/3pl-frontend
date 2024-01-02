@@ -24,9 +24,9 @@ export class InvoiceManagementFormComponent implements OnInit {
   projectFormData: any = {
     type: '',
     poId: '',
+    paymentRemarks: '',
     poDetails: {
-      billToAddress: '',
-      issueDate: ''
+      billToAddress: ''
     },
     shipToLocation: {
       connectionLocationId: "",
@@ -38,8 +38,13 @@ export class InvoiceManagementFormComponent implements OnInit {
       id: "",
       companyName: "",
       address: "",
-      creditTermsDto: {
-        creditTermsId: "",
+      primaryContactEmail: "",
+      primaryContactPhone1: "",
+      bankInfo: {
+        accName: "",
+        accNo: "",
+        bankName: "",
+        swiftCode: ""
       },
     },
     tradeTerm: {
@@ -50,7 +55,6 @@ export class InvoiceManagementFormComponent implements OnInit {
     details: [],
     remarks: "",
     issueDate: null,
-    dueDate: null,
   };
   stVariants: any = [];
   locationID: string = "";
@@ -208,6 +212,21 @@ export class InvoiceManagementFormComponent implements OnInit {
         billToAddress: '',
         issueDate: ''
       };
+
+      this.projectFormData['vendor'] = {
+        id: "",
+        companyName: "",
+        address: "",
+        primaryContactEmail: "",
+        primaryContactPhone1: "",
+        bankInfo: {
+          accName: "",
+          accNo: "",
+          bankName: "",
+          swiftCode: ""
+        },
+      };
+
       this.getPoInformation(this.projectFormData?.poId);
       },
       (error) => {
@@ -218,108 +237,11 @@ export class InvoiceManagementFormComponent implements OnInit {
 
   submitProjectForm(event: any) {
     if (event?.valid) {
-      // this.detailsInputs?.forEach((e: any, key: any) => {
-      //   e["lineNumber"] = parseInt(key + 1);
-      // });
-
-      this.detailsInputs?.forEach((e: any, key: any) => {
-        // delete e["productPrice"];
-        e["lineNumber"] = parseInt(key + 1);
-        // e["sentQuantity"] = parseInt(e["sentQuantity"]);
-        e["poQuantity"] = parseInt(e["plannedQuantity"]);
-        // e["receivedQuantity"] = parseInt(e["receivedQuantity"]);
-      });
-      this.projectFormData.details = this.detailsInputs;
-
-      let searchString = "T00:00:00Z"; // The string to search for
-      // Check if the searchString exists in the date strings
-      // if (!this.projectFormData?.dueDate?.includes(searchString)) {
-      //   this.projectFormData.dueDate =
-      //     this.projectFormData.dueDate + "T00:00:00Z";
-      // }
-      if (!this.projectFormData?.issueDate?.includes(searchString)) {
-        this.projectFormData.issueDate =
-          (this.projectFormData.issueDate
-            ? this.projectFormData.issueDate
-            : "2023-10-20") + "T00:00:00Z";
-      }
-      if (this.mode === "Add") {
-        // const destinationId =
-        //   this.projectFormData.destinationLocation.connectionLocationId;
-        // const originId =
-        //   this.projectFormData.originLocation.connectionLocationId;
-
-        // delete this.projectFormData.destinationLocation?.nodeType;
-        // delete this.projectFormData.originLocation?.nodeType;
-
-        // if (destinationId == originId) {
-        //   this._showDuplicatToast();
-        // } else {
-
-        // }
-
-        // console.log(':: :: ', this.projectFormData);
-
-        // return
-
+      console.log(':: this.projectFormData.issueDate :: ', this.projectFormData);
         this.invoiceManagementService
-          .add({
+          .update(this.paramId, {
             ...this.projectFormData,
-            dueDate: this.projectFormData.dueDate + "T00:00:00Z",
-            shipToLocation: {
-              connectionLocationId:
-                this.projectFormData.shipToLocation.connectionLocationId,
-            },
-            vendor: {
-              id: this.projectFormData.vendor.id,
-            },
-          })
-          .subscribe(
-            (res) => {
-              this._showToast(res);
-            },
-            (error) => {
-              this._showDateToast(error.error.detail);
-            }
-          );
-      } else {
-        // const today = new Date();
-        // const expectedArrivalDate = new Date(
-        //   this.projectFormData.dueDate
-        // );
-        // const expectedDeliveryDate = new Date(
-        //   this.projectFormData.issueDate
-        // );
-
-        // // Set the time components to 00:00:00
-        // today.setHours(0, 0, 0, 0);
-        // expectedArrivalDate.setHours(0, 0, 0, 0);
-        // expectedDeliveryDate.setHours(0, 0, 0, 0);
-
-        // const secondsToday = Math.floor(today.getTime() / 1000);
-        // const secondsExpectedArrival = Math.floor(
-        //   expectedArrivalDate.getTime() / 1000
-        // );
-        // const secondsExpectedDelivery = Math.floor(
-        //   expectedDeliveryDate.getTime() / 1000
-        // );
-
-        // if (secondsExpectedDelivery < secondsToday) {
-        //   this._showDateToast(
-        //     "Expected delivery date should be greater than or equal to today"
-        //   );
-        //   return;
-        // }
-        // if (secondsExpectedArrival < secondsExpectedDelivery) {
-        //   this._showDateToast(
-        //     "Expected arrival date should be greater than or equal to expected delivery date"
-        //   );
-        //   return;
-        // }
-        this.invoiceManagementService
-          .updatePurchaseOrder(this.paramId, {
-            ...this.projectFormData,
-            dueDate: this.projectFormData.dueDate + "T00:00:00Z",
+            issueDate: this.projectFormData.issueDate + "T00:00:00Z",
           })
           .subscribe(
             (res) => {
@@ -330,7 +252,6 @@ export class InvoiceManagementFormComponent implements OnInit {
             }
           );
       }
-    }
   }
 
   _showDuplicatToast() {
@@ -862,11 +783,12 @@ export class InvoiceManagementFormComponent implements OnInit {
   }
 
   getPoInformation(poId: string) {
-    console.log('::  poId :: ', poId);
     this.purchaseOrderService.getById(poId).subscribe((res: any) => {
-      console.log(':: :: ', res);
+      console.log(':: res :: ', res);
       this.projectFormData['poDetails'] = res;
-      this.projectFormData.poDetails.issueDate = this.projectFormData?.poDetails?.issueDate?.split("T")[0];
+      // this.projectFormData.poDetails.issueDate = this.projectFormData?.poDetails?.issueDate?.split("T")[0];
+      this.projectFormData.issueDate = this.projectFormData?.poDetails?.issueDate?.split("T")[0];
+      this.projectFormData.vendor = res.vendor;
       this.detailsInputs = this.projectFormData?.poDetails?.details;
     })
   }

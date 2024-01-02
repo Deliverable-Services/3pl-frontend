@@ -39,14 +39,14 @@
           <div [ngStyle]="{ width: '100%' }">
             <d-form-operation>
               <div
-                *ngIf="projectFormData.orderStatus"
+                *ngIf="projectFormData.status"
                 style="text-align: right"
               >
                 <label
                   ><span class="bold-label"
                     >{{ "list.invoiceManagement.status" | translate }}:</span
                   >
-                  {{ projectFormData.orderStatus }}
+                  {{ projectFormData.status }}
                 </label>
                 <br />
                 <label>Created By: {{ projectFormData.createdBy }}</label>
@@ -77,7 +77,7 @@
               </d-button>
 
               <d-button
-                *ngIf="projectFormData.orderStatus?.toLowerCase() === 'draft'"
+                *ngIf="projectFormData.status?.toLowerCase() === 'draft'"
                 [ngStyle]="{ float: 'right' }"
                 [disabled]="!allowSubmit"
                 dLoading
@@ -96,7 +96,7 @@
               </d-button>
 
               <d-button
-                *ngIf="projectFormData.orderStatus?.toLowerCase() === 'draft'"
+                *ngIf="projectFormData.status?.toLowerCase() === 'draft'"
                 [ngStyle]="{ float: 'right' }"
                 class="mr-element-spacing"
                 circled="true"
@@ -109,10 +109,10 @@
               <d-button
                 *ngIf="
                   mode.toLowerCase() === 'edit' &&
-                  projectFormData.orderStatus?.toLowerCase() !== 'draft' &&
-                  projectFormData.orderStatus?.toLowerCase() !== 'released' &&
-                  projectFormData.orderStatus?.toLowerCase() !== 'closed' &&
-                  projectFormData.orderStatus?.toLowerCase() !== 'canceled'
+                  projectFormData.status?.toLowerCase() !== 'draft' &&
+                  projectFormData.status?.toLowerCase() !== 'released' &&
+                  projectFormData.status?.toLowerCase() !== 'closed' &&
+                  projectFormData.status?.toLowerCase() !== 'canceled'
                 "
                 bsStyle="danger"
                 class="danger"
@@ -126,7 +126,7 @@
 
               <d-button
                 *ngIf="
-                  projectFormData.orderStatus?.toLowerCase() === 'accepted'
+                  projectFormData.status?.toLowerCase() === 'accepted'
                 "
                 [ngStyle]="{ float: 'right' }"
                 class="mr-element-spacing"
@@ -138,7 +138,7 @@
               </d-button>
 
               <d-button
-                *ngIf="projectFormData.orderStatus?.toLowerCase() === 'open'"
+                *ngIf="projectFormData.status?.toLowerCase() === 'open'"
                 [ngStyle]="{ float: 'right' }"
                 class="mr-element-spacing"
                 circled="true"
@@ -150,7 +150,7 @@
 
               <d-button
                 *ngIf="
-                  projectFormData.orderStatus?.toLowerCase() === 'released'
+                  projectFormData.status?.toLowerCase() === 'released'
                 "
                 [ngStyle]="{ float: 'right' }"
                 class="mr-element-spacing"
@@ -164,14 +164,13 @@
           </div>
           <div class="da-content-banner-title">
             Invoice Order
-            <span *ngIf="projectFormData.orderStatus"
+            <span *ngIf="projectFormData.status"
               >&nbsp;({{ projectFormData.id }})</span
             >
           </div>
           <div [ngStyle]="{ display: 'flex', justifyContent: 'space-between' }">
             <div
               [ngStyle]="{ width: '46%' }"
-              [ngClass]="{ 'set-cursor': mode.toLowerCase() === 'edit' }"
             >
               <d-form-item>
                 <d-form-label [hasHelp]="false" [helpTips]="'Type of invoice'">
@@ -215,11 +214,6 @@
                   >
                     <d-form-item
                       [ngStyle]="{ marginTop: '20px' }"
-                      [ngClass]="{
-                        'set-cursor':
-                          !(mode.toLowerCase() !== 'edit') &&
-                          projectFormData.orderStatus?.toLowerCase() !== 'draft'
-                      }"
                     >
                       <d-form-label>Invoice Remarks</d-form-label>
                       <d-form-control>
@@ -231,7 +225,6 @@
                           dTextarea
                           resize="vertical"
                           autocomplete="off"
-                          name="remarks"
                           [placeholder]="
                             'form.invoiceManagement.fields.remarks' | translate
                           "
@@ -282,7 +275,7 @@
                   <input
                     style="pointer-events: none; background: #f3f3f3 !important"
                     class="devui-input devui-form-control"
-                    [(ngModel)]="projectFormData.poDetails.issueDate"
+                    [(ngModel)]="projectFormData.issueDate"
                     autocomplete="off"
                     placeholder="y-MM-dd"
                     type="date"
@@ -300,7 +293,7 @@
                   [ngClass]="{
                     'set-cursor':
                       !(mode.toLowerCase() !== 'edit') &&
-                      projectFormData.orderStatus?.toLowerCase() !== 'draft'
+                      projectFormData.status?.toLowerCase() !== 'draft'
                   }"
                 >
                   <d-form-label>Payment Remarks</d-form-label>
@@ -310,12 +303,12 @@
                       [ngClass]="{
                         'manage-fields':
                           mode.toLowerCase() === 'edit' &&
-                          projectFormData.orderStatus?.toLowerCase() !== 'draft'
+                          projectFormData.status?.toLowerCase() !== 'draft'
                       }"
                       [ngStyle]="{
                         'pointer-events':
                           !(mode.toLowerCase() !== 'edit') &&
-                          projectFormData.orderStatus?.toLowerCase() !== 'draft'
+                          projectFormData.status?.toLowerCase() !== 'draft'
                             ? 'none'
                             : 'auto',
                         height: '104px'
@@ -328,7 +321,7 @@
                       [placeholder]="
                         'form.invoiceManagement.fields.remarks' | translate
                       "
-                      [(ngModel)]="projectFormData.remarks"
+                      [(ngModel)]="projectFormData.paymentRemarks"
                     ></textarea>
                   </d-form-control>
                 </d-form-item>
@@ -345,9 +338,6 @@
               <d-form-item [ngStyle]="{ margin: '20px 20px 20px 0px' }">
                 <d-form-label [required]="true">Attn</d-form-label>
                 <d-form-control>
-                  <span *ngIf="projectFormData.orderStatus"
-                    >&nbsp;({{ projectFormData.id }})</span
-                  >
                   <input
                     [disabled]="
                       projectFormData.type?.toLowerCase() === 'deposit'
@@ -369,6 +359,7 @@
                       projectFormData.type?.toLowerCase() === 'deposit'
                     "
                     autocomplete="off"
+                    [(ngModel)]="projectFormData.vendor.primaryContactPhone1"
                   />
                 </d-form-control>
               </d-form-item>
@@ -383,6 +374,7 @@
                       projectFormData.type?.toLowerCase() === 'deposit'
                     "
                     autocomplete="off"
+                    [(ngModel)]="projectFormData.vendor.primaryContactEmail"
                   />
                 </d-form-control>
               </d-form-item>
@@ -397,6 +389,7 @@
                       projectFormData.type?.toLowerCase() === 'deposit'
                     "
                     autocomplete="off"
+                    [(ngModel)]="projectFormData.vendor.address"
                   />
                 </d-form-control>
               </d-form-item>
@@ -416,11 +409,6 @@
               >
                 <d-form-item
                   [ngStyle]="{ marginTop: '20px' }"
-                  [ngClass]="{
-                    'set-cursor':
-                      !(mode.toLowerCase() !== 'edit') &&
-                      projectFormData.orderStatus?.toLowerCase() !== 'draft'
-                  }"
                 >
                   <d-form-label>Invoice Remarks</d-form-label>
                   <d-form-control>
@@ -428,12 +416,12 @@
                       [ngClass]="{
                         'manage-fields':
                           mode.toLowerCase() === 'edit' &&
-                          projectFormData.orderStatus?.toLowerCase() !== 'draft'
+                          projectFormData.status?.toLowerCase() !== 'draft'
                       }"
                       [ngStyle]="{
                         'pointer-events':
                           !(mode.toLowerCase() !== 'edit') &&
-                          projectFormData.orderStatus?.toLowerCase() !== 'draft'
+                          projectFormData.status?.toLowerCase() !== 'draft'
                             ? 'none'
                             : 'auto',
                         height: '104px'
@@ -468,7 +456,7 @@
                   [ngClass]="{
                     'set-cursor':
                       !(mode.toLowerCase() !== 'edit') &&
-                      projectFormData.orderStatus?.toLowerCase() !== 'draft'
+                      projectFormData.status?.toLowerCase() !== 'draft'
                   }"
                 >
                   <d-form-label>Payment Remarks</d-form-label>
@@ -477,12 +465,12 @@
                       [ngClass]="{
                         'manage-fields':
                           mode.toLowerCase() === 'edit' &&
-                          projectFormData.orderStatus?.toLowerCase() !== 'draft'
+                          projectFormData.status?.toLowerCase() !== 'draft'
                       }"
                       [ngStyle]="{
                         'pointer-events':
                           !(mode.toLowerCase() !== 'edit') &&
-                          projectFormData.orderStatus?.toLowerCase() !== 'draft'
+                          projectFormData.status?.toLowerCase() !== 'draft'
                             ? 'none'
                             : 'auto',
                         height: '104px'
@@ -571,7 +559,7 @@
                   [ngClass]="{
                     'set-cursor':
                       !(mode.toLowerCase() !== 'edit') &&
-                      projectFormData.orderStatus?.toLowerCase() !== 'draft'
+                      projectFormData.status?.toLowerCase() !== 'draft'
                   }"
                 >
                   <!-- <d-form-label>Supplier's Bank Details</d-form-label> -->
@@ -580,12 +568,12 @@
                       [ngClass]="{
                         'manage-fields':
                           mode.toLowerCase() === 'edit' &&
-                          projectFormData.orderStatus?.toLowerCase() !== 'draft'
+                          projectFormData.status?.toLowerCase() !== 'draft'
                       }"
                       [ngStyle]="{
                         'pointer-events':
                           !(mode.toLowerCase() !== 'edit') &&
-                          projectFormData.orderStatus?.toLowerCase() !== 'draft'
+                          projectFormData.status?.toLowerCase() !== 'draft'
                             ? 'none'
                             : 'auto',
                         height: '104px'
@@ -615,6 +603,7 @@
                         class="set-width manage-fields"
                         dTextInput
                         autocomplete="off"
+                        [(ngModel)]="projectFormData.vendor.bankInfo.accName"
                       />
                     </d-form-control>
                   </d-form-item>
@@ -628,6 +617,7 @@
                         class="set-width manage-fields"
                         dTextInput
                         autocomplete="off"
+                        [(ngModel)]="projectFormData.vendor.bankInfo.accNo"
                       />
                     </d-form-control>
                   </d-form-item>
@@ -643,6 +633,7 @@
                         class="set-width manage-fields"
                         dTextInput
                         autocomplete="off"
+                        [(ngModel)]="projectFormData.vendor.bankInfo.bankName"
                       />
                     </d-form-control>
                   </d-form-item>
@@ -656,6 +647,7 @@
                         class="set-width manage-fields"
                         dTextInput
                         autocomplete="off"
+                        [(ngModel)]="projectFormData.vendor.bankInfo.swiftCode"
                       />
                     </d-form-control>
                   </d-form-item>
@@ -671,12 +663,12 @@
               </div>
               <div [ngStyle]="{ width: '100%' }">
                 <d-form-operation
-                  *ngIf="projectFormData.orderStatus?.toLowerCase() !== 'draft'"
+                  *ngIf="projectFormData.status?.toLowerCase() !== 'draft'"
                 >
                   <d-button
                     *ngIf="
-                      (projectFormData.orderStatus?.toLowerCase() === 'open' ||
-                        projectFormData.orderStatus?.toLowerCase() ===
+                      (projectFormData.status?.toLowerCase() === 'open' ||
+                        projectFormData.status?.toLowerCase() ===
                           'released') &&
                       projectFormData.sampleStatus?.toLowerCase() === 'open'
                     "
@@ -718,7 +710,7 @@
 
                   <label
                     style="float: right; margin: 5px 16px"
-                    *ngIf="projectFormData.orderStatus"
+                    *ngIf="projectFormData.status"
                   >
                     <b
                       >{{
@@ -736,7 +728,7 @@
               <d-form-operation
                 *ngIf="
                   mode.toLowerCase() === 'add' ||
-                  projectFormData.orderStatus?.toLowerCase() === 'draft'
+                  projectFormData.status?.toLowerCase() === 'draft'
                 "
               >
                 <!-- <d-button
@@ -774,7 +766,7 @@
                         </d-form-control>
                       </d-form-item>
 
-                      <d-form-item [ngStyle]="{ margin: '20px 20px 20px 0px' }">
+                      <!-- <d-form-item [ngStyle]="{ margin: '20px 20px 20px 0px' }">
                         <d-form-label [required]="true">{{
                           "form.invoiceManagement.fields.description" | translate
                         }}</d-form-label>
@@ -787,7 +779,7 @@
                             [value]="input.skuDescription"
                           />
                         </d-form-control>
-                      </d-form-item>
+                      </d-form-item> -->
 
                       <d-form-item [ngStyle]="{ margin: '20px 20px 20px 0px' }">
                         <d-form-label [required]="true">{{
@@ -798,22 +790,22 @@
                           <input
                             class="set-width"
                             [disabled]="
-                              projectFormData.orderStatus &&
+                              projectFormData.status &&
                               !(
-                                projectFormData.orderStatus?.toLowerCase() ===
+                                projectFormData.status?.toLowerCase() ===
                                 'draft'
                               )
                             "
                             [ngClass]="{
                               'manage-fields':
                                 mode.toLowerCase() === 'edit' &&
-                                projectFormData.orderStatus?.toLowerCase() !==
+                                projectFormData.status?.toLowerCase() !==
                                   'draft'
                             }"
                             [ngStyle]="{
                               'pointer-events':
                                 mode.toLowerCase() === 'edit' &&
-                                projectFormData.orderStatus?.toLowerCase() !==
+                                projectFormData.status?.toLowerCase() !==
                                   'draft'
                                   ? 'none'
                                   : 'auto',
@@ -859,9 +851,9 @@
 
                       <d-form-item
                         *ngIf="
-                          projectFormData.orderStatus?.toLowerCase() ===
+                          projectFormData.status?.toLowerCase() ===
                             'released' ||
-                          projectFormData.orderStatus?.toLowerCase() === 'closed'
+                          projectFormData.status?.toLowerCase() === 'closed'
                         "
                         [ngStyle]="{ margin: '20px 20px 20px 0px' }"
                       >
@@ -887,9 +879,9 @@
 
                       <d-form-item
                         *ngIf="
-                          projectFormData.orderStatus?.toLowerCase() ===
+                          projectFormData.status?.toLowerCase() ===
                             'released' ||
-                          projectFormData.orderStatus?.toLowerCase() === 'closed'
+                          projectFormData.status?.toLowerCase() === 'closed'
                         "
                         [ngStyle]="{ margin: '20px 20px 20px 0px' }"
                       >
@@ -916,9 +908,9 @@
 
                       <d-form-item
                         *ngIf="
-                          projectFormData.orderStatus?.toLowerCase() ===
+                          projectFormData.status?.toLowerCase() ===
                             'released' ||
-                          projectFormData.orderStatus?.toLowerCase() === 'closed'
+                          projectFormData.status?.toLowerCase() === 'closed'
                         "
                         [ngStyle]="{ margin: '20px 20px 20px 0px' }"
                       >
@@ -945,7 +937,7 @@
 
                       <d-button
                         *ngIf="
-                          projectFormData.orderStatus?.toLowerCase() === 'confirmed'
+                          projectFormData.status?.toLowerCase() === 'confirmed'
                         "
                         dLoading
                         class="warning"
@@ -958,9 +950,9 @@
 
                       <d-button
                         *ngIf="
-                          projectFormData.orderStatus?.toLowerCase() ===
+                          projectFormData.status?.toLowerCase() ===
                             'released' ||
-                          projectFormData.orderStatus?.toLowerCase() === 'closed'
+                          projectFormData.status?.toLowerCase() === 'closed'
                         "
                         dLoading
                         bsStyle="primary"
@@ -977,7 +969,7 @@
 
                       <d-button
                         *ngIf="
-                          projectFormData.orderStatus?.toLowerCase() === 'draft' ||
+                          projectFormData.status?.toLowerCase() === 'draft' ||
                           mode === 'Add'
                         "
                         dLoading
@@ -997,7 +989,7 @@
               <div class="right-section">
                 <!-- <label
                   style="float: right; margin: 5px 16px"
-                  *ngIf="projectFormData.orderStatus"
+                  *ngIf="projectFormData.status"
                 > -->
                 <label *ngIf="projectFormData.type?.toLowerCase() === 'deposit'" 
                 class="manage-bottom-section" style="float: right; margin: 5px 16px">
