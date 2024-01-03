@@ -6,7 +6,7 @@
   <div class="center-content form-inline">
     <label>Invoice Type:</label>
     <button (click)="formInfo.type = 'DEPOSIT'; updateFormInfo()" [ngClass]="{ 'set-new-bg': formInfo?.type?.toLowerCase() === 'deposit' }" class="set-mrgn" type="button">Deposit</button>
-    <button (click)="formInfo.type = 'PRE-SHIPMENT'; updateFormInfo()" [ngClass]="{ 'set-new-bg': formInfo?.type?.toLowerCase() === 'pre-shipment' }" class="set-mrgn manage-btn" type="button">Pre-Shipment</button>
+    <button (click)="formInfo.type = 'MID'; updateFormInfo()" [ngClass]="{ 'set-new-bg': formInfo?.type?.toLowerCase() === 'mid' }" class="set-mrgn manage-btn" type="button">Pre-Shipment</button>
     <button (click)="formInfo.type = 'FINAL'; updateFormInfo()" [ngClass]="{ 'set-new-bg': formInfo?.type?.toLowerCase() === 'final' }" class="set-mrgn manage-btn" type="button">Final</button>
   </div>
 
@@ -18,8 +18,10 @@
         [filterKey]="'toDisplay'"
         [(ngModel)]="dValue"
         [options]="poList" 
+        [appendToBody]="true"
         name="poId"
         (valueChange)="formInfo.poId = dValue.id; updateFormInfo()"></d-select>
+        <span class="bottom-text"># PO without ‘Accepted’ will not appear in the list</span>
     </span>
   </div>
 </div>

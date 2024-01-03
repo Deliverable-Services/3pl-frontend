@@ -137,3 +137,12 @@ form {
     border-left: 1px solid #000;
   }
 }
+
+.total_amount_section {
+  span {
+    float: right;
+    margin-right: 25px;
+    font-size: 18px;
+    font-weight: bold;
+  }
+}

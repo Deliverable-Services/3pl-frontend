@@ -253,7 +253,7 @@ export class InvoiceManagementListComponent implements OnInit {
           disabled: false,
           handler: (variantList: any) => {
 
-            this.cService.create({dto: this.formData}).subscribe((invoice: any) => {
+            this.cService.create(this.formData).subscribe((invoice: any) => {
               console.log(':: :: ', invoice);
               results.modalInstance.hide();
               this.router.navigate([`/business/invoice-management/edit/${invoice.id}`]);

@@ -548,7 +548,7 @@ export default {
         lockedQuantity: "Locked Qty",
         receivedQuantity: "Received Qty",
         shippedQuantity: "Shipped Quantity",
-        productPrice: "Price (SGD)",
+        productPrice: "EXW Price (RMB)",
         sampleStatus: "Sample Status",
         totalProductPrice: "Total Product Price",
       },

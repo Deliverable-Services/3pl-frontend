@@ -790,6 +790,7 @@ export class InvoiceManagementFormComponent implements OnInit {
       this.projectFormData.issueDate = this.projectFormData?.poDetails?.issueDate?.split("T")[0];
       this.projectFormData.vendor = res.vendor;
       this.detailsInputs = this.projectFormData?.poDetails?.details;
+      console.log(':: :: ', this.projectFormData);
     })
   }
 }

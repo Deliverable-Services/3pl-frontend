@@ -225,6 +225,7 @@
                           dTextarea
                           resize="vertical"
                           autocomplete="off"
+                          name="remarks"
                           [placeholder]="
                             'form.invoiceManagement.fields.remarks' | translate
                           "
@@ -317,7 +318,7 @@
                       dTextarea
                       resize="vertical"
                       autocomplete="off"
-                      name="remarks"
+                      name="paymentRemarks"
                       [placeholder]="
                         'form.invoiceManagement.fields.remarks' | translate
                       "
@@ -345,6 +346,7 @@
                     class="set-width manage-fields"
                     dTextInput
                     autocomplete="off"
+                    name="attn"
                   />
                 </d-form-control>
               </d-form-item>
@@ -359,6 +361,7 @@
                       projectFormData.type?.toLowerCase() === 'deposit'
                     "
                     autocomplete="off"
+                    name="primaryContactPhone1"
                     [(ngModel)]="projectFormData.vendor.primaryContactPhone1"
                   />
                 </d-form-control>
@@ -374,6 +377,7 @@
                       projectFormData.type?.toLowerCase() === 'deposit'
                     "
                     autocomplete="off"
+                    name="primaryContactEmail"
                     [(ngModel)]="projectFormData.vendor.primaryContactEmail"
                   />
                 </d-form-control>
@@ -389,6 +393,7 @@
                       projectFormData.type?.toLowerCase() === 'deposit'
                     "
                     autocomplete="off"
+                    name="address"
                     [(ngModel)]="projectFormData.vendor.address"
                   />
                 </d-form-control>
@@ -399,7 +404,6 @@
           <div [ngStyle]="{ display: 'flex', justifyContent: 'space-between' }">
             <div
               [ngStyle]="{ width: '46%' }"
-              [ngClass]="{ 'set-cursor': mode.toLowerCase() === 'edit' }"
             >
               <ng-container
                 *ngIf="
@@ -419,11 +423,6 @@
                           projectFormData.status?.toLowerCase() !== 'draft'
                       }"
                       [ngStyle]="{
-                        'pointer-events':
-                          !(mode.toLowerCase() !== 'edit') &&
-                          projectFormData.status?.toLowerCase() !== 'draft'
-                            ? 'none'
-                            : 'auto',
                         height: '104px'
                       }"
                       rows="4"
@@ -431,9 +430,7 @@
                       resize="vertical"
                       autocomplete="off"
                       name="remarks"
-                      [placeholder]="
-                        'form.invoiceManagement.fields.remarks' | translate
-                      "
+                      [placeholder]="'form.invoiceManagement.fields.remarks' | translate"
                       [(ngModel)]="projectFormData.remarks"
                     ></textarea>
                   </d-form-control>
@@ -443,7 +440,6 @@
 
             <div
               [ngStyle]="{ width: '46%' }"
-              [ngClass]="{ 'set-cursor': mode.toLowerCase() === 'edit' }"
             >
               <ng-container
                 *ngIf="
@@ -453,11 +449,6 @@
               >
                 <d-form-item
                   [ngStyle]="{ marginTop: '20px' }"
-                  [ngClass]="{
-                    'set-cursor':
-                      !(mode.toLowerCase() !== 'edit') &&
-                      projectFormData.status?.toLowerCase() !== 'draft'
-                  }"
                 >
                   <d-form-label>Payment Remarks</d-form-label>
                   <d-form-control>
@@ -468,22 +459,17 @@
                           projectFormData.status?.toLowerCase() !== 'draft'
                       }"
                       [ngStyle]="{
-                        'pointer-events':
-                          !(mode.toLowerCase() !== 'edit') &&
-                          projectFormData.status?.toLowerCase() !== 'draft'
-                            ? 'none'
-                            : 'auto',
                         height: '104px'
                       }"
                       rows="4"
                       dTextarea
                       resize="vertical"
                       autocomplete="off"
-                      name="remarks"
+                      name="paymentRemarks"
                       [placeholder]="
                         'form.invoiceManagement.fields.remarks' | translate
                       "
-                      [(ngModel)]="projectFormData.remarks"
+                      [(ngModel)]="projectFormData.paymentRemarks"
                     ></textarea>
                   </d-form-control>
                 </d-form-item>
@@ -582,9 +568,7 @@
                       dTextarea
                       resize="vertical"
                       autocomplete="off"
-                      name="remarks"
                       placeholder="Bank Details"
-                      [(ngModel)]="projectFormData.remarks"
                     ></textarea>
                   </d-form-control>
                 </d-form-item>
@@ -603,6 +587,7 @@
                         class="set-width manage-fields"
                         dTextInput
                         autocomplete="off"
+                        name="accName"
                         [(ngModel)]="projectFormData.vendor.bankInfo.accName"
                       />
                     </d-form-control>
@@ -617,6 +602,7 @@
                         class="set-width manage-fields"
                         dTextInput
                         autocomplete="off"
+                        name="accNo"
                         [(ngModel)]="projectFormData.vendor.bankInfo.accNo"
                       />
                     </d-form-control>
@@ -633,6 +619,7 @@
                         class="set-width manage-fields"
                         dTextInput
                         autocomplete="off"
+                        name="bankName"
                         [(ngModel)]="projectFormData.vendor.bankInfo.bankName"
                       />
                     </d-form-control>
@@ -647,6 +634,7 @@
                         class="set-width manage-fields"
                         dTextInput
                         autocomplete="off"
+                        name="swiftCode"
                         [(ngModel)]="projectFormData.vendor.bankInfo.swiftCode"
                       />
                     </d-form-control>
@@ -789,13 +777,7 @@
                         <d-form-control>
                           <input
                             class="set-width"
-                            [disabled]="
-                              projectFormData.status &&
-                              !(
-                                projectFormData.status?.toLowerCase() ===
-                                'draft'
-                              )
-                            "
+                            [disabled]="true"
                             [ngClass]="{
                               'manage-fields':
                                 mode.toLowerCase() === 'edit' &&
@@ -818,8 +800,8 @@
                               'form.invoiceManagement.fields.plannedQuantity'
                                 | translate
                             "
-                            [value]="input.plannedQuantity"
-                            (input)="updateValue($event, 'plannedQuantity', i)"
+                            [value]="input.poQuantity"
+                            (input)="updateValue($event, 'poQuantity', i)"
                           />
                         </d-form-control>
                       </d-form-item>
@@ -878,10 +860,7 @@
                       </d-form-item>
 
                       <d-form-item
-                        *ngIf="
-                          projectFormData.status?.toLowerCase() ===
-                            'released' ||
-                          projectFormData.status?.toLowerCase() === 'closed'
+                        *ngIf="projectFormData.type?.toLowerCase() === 'mid'
                         "
                         [ngStyle]="{ margin: '20px 20px 20px 0px' }"
                       >
@@ -907,11 +886,7 @@
                       </d-form-item>
 
                       <d-form-item
-                        *ngIf="
-                          projectFormData.status?.toLowerCase() ===
-                            'released' ||
-                          projectFormData.status?.toLowerCase() === 'closed'
-                        "
+                      *ngIf="projectFormData.type?.toLowerCase() === 'final'"
                         [ngStyle]="{ margin: '20px 20px 20px 0px' }"
                       >
                         <d-form-label [required]="true">{{
@@ -967,7 +942,7 @@
                         }}
                       </d-button>
 
-                      <d-button
+                      <!-- <d-button
                         *ngIf="
                           projectFormData.status?.toLowerCase() === 'draft' ||
                           mode === 'Add'
@@ -980,8 +955,17 @@
                         (click)="removeNow(i)"
                       >
                         {{ "form.invoiceManagement.buttons.remove" | translate }}
-                      </d-button>
+                      </d-button> -->
                     </div>
+                  </div>
+                  <div class="total_amount_section">
+                    <span *ngIf="projectFormData.type?.toLowerCase() === 'deposit'">
+                      <label>PO Total Amount (RMB): 233,500.23</label>
+                    </span>
+                    <span *ngIf="projectFormData.type?.toLowerCase() === 'mid'
+                    || projectFormData.type?.toLowerCase() === 'final'">
+                      <label>PO Total Amount : 23000 SGD</label>
+                    </span>
                   </div>
                 </div>
               </ng-container>
