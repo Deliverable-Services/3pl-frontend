@@ -60,24 +60,27 @@
 
               <br />
               <br />
+
               <d-button
-                *ngIf="!paramId"
+                *ngIf="
+                  mode.toLowerCase() === 'edit' &&
+                  projectFormData.status?.toLowerCase() !== 'draft' &&
+                  projectFormData.status?.toLowerCase() !== 'paid'
+                "
+                bsStyle="danger"
+                class="danger"
                 [ngStyle]="{ float: 'right' }"
-                [disabled]="!allowSubmit"
-                dLoading
-                class="mr-element-spacing"
-                [title]="projectForm.errorMessage || ''"
                 circled="true"
                 style="margin-right: 8px"
-                [showLoading]="projectForm.pending"
-                dFormSubmit
-                [dFormSubmitData]="'submit-button'"
+                (btnClick)="confirmDialog('cancel')"
               >
-                {{ "form.common.create" | translate }}
+                {{ "form.invoiceManagement.fields.cancel" | translate }}
               </d-button>
 
               <d-button
-                *ngIf="projectFormData.status?.toLowerCase() === 'draft'"
+                *ngIf="projectFormData.status?.toLowerCase() === 'draft' ||
+                projectFormData.status?.toLowerCase() === 'pending_payment' ||
+                projectFormData.status?.toLowerCase() === 'paid'"
                 [ngStyle]="{ float: 'right' }"
                 [disabled]="!allowSubmit"
                 dLoading
@@ -96,6 +99,17 @@
               </d-button>
 
               <d-button
+                *ngIf="projectFormData.status?.toLowerCase() === 'pending_payment'"
+                [ngStyle]="{ float: 'right' }"
+                class="mr-element-spacing"
+                circled="true"
+                style="margin-right: 8px"
+                (btnClick)="confirmDialog('paid-invoice')"
+              >
+                Paid
+              </d-button>
+
+              <d-button
                 *ngIf="projectFormData.status?.toLowerCase() === 'draft'"
                 [ngStyle]="{ float: 'right' }"
                 class="mr-element-spacing"
@@ -106,60 +120,6 @@
                 {{ "form.invoiceManagement.fields.publish" | translate }}
               </d-button>
 
-              <d-button
-                *ngIf="
-                  mode.toLowerCase() === 'edit' &&
-                  projectFormData.status?.toLowerCase() !== 'draft' &&
-                  projectFormData.status?.toLowerCase() !== 'released' &&
-                  projectFormData.status?.toLowerCase() !== 'closed' &&
-                  projectFormData.status?.toLowerCase() !== 'canceled'
-                "
-                bsStyle="danger"
-                class="danger"
-                [ngStyle]="{ float: 'right' }"
-                circled="true"
-                style="margin-right: 8px"
-                (btnClick)="confirmDialog('cancel')"
-              >
-                {{ "form.invoiceManagement.fields.cancel" | translate }}
-              </d-button>
-
-              <d-button
-                *ngIf="
-                  projectFormData.status?.toLowerCase() === 'accepted'
-                "
-                [ngStyle]="{ float: 'right' }"
-                class="mr-element-spacing"
-                circled="true"
-                style="margin-right: 8px"
-                (btnClick)="confirmDialog('release')"
-              >
-                {{ "form.invoiceManagement.buttons.release" | translate }}
-              </d-button>
-
-              <d-button
-                *ngIf="projectFormData.status?.toLowerCase() === 'open'"
-                [ngStyle]="{ float: 'right' }"
-                class="mr-element-spacing"
-                circled="true"
-                style="margin-right: 8px"
-                (btnClick)="confirmDialog('accept')"
-              >
-                {{ "form.invoiceManagement.buttons.accept" | translate }}
-              </d-button>
-
-              <d-button
-                *ngIf="
-                  projectFormData.status?.toLowerCase() === 'released'
-                "
-                [ngStyle]="{ float: 'right' }"
-                class="mr-element-spacing"
-                circled="true"
-                style="margin-right: 8px"
-                (btnClick)="confirmDialog('close')"
-              >
-                {{ "form.invoiceManagement.buttons.close" | translate }}
-              </d-button>
             </d-form-operation>
           </div>
           <div class="da-content-banner-title">
@@ -214,6 +174,10 @@
                   >
                     <d-form-item
                       [ngStyle]="{ marginTop: '20px' }"
+                      [ngClass]="{
+                        'set-cursor':
+                        projectFormData.status?.toLowerCase() === 'pending_payment'
+                      }"
                     >
                       <d-form-label>Invoice Remarks</d-form-label>
                       <d-form-control>
@@ -221,6 +185,11 @@
                           [ngStyle]="{
                             height: '104px'
                           }"
+                          [ngClass]="{
+                            'set-cursor':
+                            projectFormData.status?.toLowerCase() === 'pending_payment'
+                          }"
+                          [disabled]="projectFormData.status?.toLowerCase() === 'pending_payment'"
                           rows="4"
                           dTextarea
                           resize="vertical"
@@ -293,25 +262,18 @@
                   [ngStyle]="{ marginTop: '40px' }"
                   [ngClass]="{
                     'set-cursor':
-                      !(mode.toLowerCase() !== 'edit') &&
-                      projectFormData.status?.toLowerCase() !== 'draft'
+                    projectFormData.status?.toLowerCase() === 'darft'
                   }"
                 >
                   <d-form-label>Payment Remarks</d-form-label>
                   <d-form-control>
                     <textarea
-                      [disabled]="true"
                       [ngClass]="{
-                        'manage-fields':
-                          mode.toLowerCase() === 'edit' &&
-                          projectFormData.status?.toLowerCase() !== 'draft'
+                        'set-cursor':
+                        projectFormData.status?.toLowerCase() === 'darft'
                       }"
+                      [disabled]="projectFormData.status?.toLowerCase() === 'darft'"
                       [ngStyle]="{
-                        'pointer-events':
-                          !(mode.toLowerCase() !== 'edit') &&
-                          projectFormData.status?.toLowerCase() !== 'draft'
-                            ? 'none'
-                            : 'auto',
                         height: '104px'
                       }"
                       rows="4"
@@ -997,17 +959,30 @@
                   <br><br><br>
 
                   <label class="mange-second-text">
-                    <b>Invoice Amount (RMB) : 333,500.23</b>
+                    <b>Invoice Amount: <input type="text" value="333,500.23"></b>
                   </label>
                 </label>
 
                 <label *ngIf="projectFormData.type?.toLowerCase() === 'final'" 
                 class="manage-bottom-section" style="float: right; margin: 5px 16px">
                 <b>Billed Amount : 12000 SGD</b>
+                <span class="invoice-popup">
+                  <d-button
+                        bsStyle="primary"
+                        class="primary"
+                        circled="true"
+                      >
+                        Invoice Details
+                      </d-button>
+                </span>
                 <br>
-                <b>Fulfillment Amount : 9000 SGD </b>
                 <br>
-                <b>Balance Amount : </b>
+                <b style="margin-left: calc(100% - 80%);">Fulfillment Amount : 9000 SGD </b>
+                <br>
+                <span class="hint-text"># Calculation based on ratio of received qty and planned qty</span>
+                <br>
+                <br>
+                <b style="font-size: 20px">Balance Amount : </b>
                   <input type="text" class="set-input">
                 </label>
               </div>

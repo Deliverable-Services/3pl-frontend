@@ -522,7 +522,7 @@ export class InvoiceManagementFormComponent implements OnInit {
         id: this.paramId,
         formData: {
           ...this.projectFormData,
-          dueDate: this.projectFormData.dueDate + "T00:00:00Z",
+          issueDate: this.projectFormData.issueDate + "T00:00:00Z",
         },
         type: type,
       })
@@ -619,7 +619,7 @@ export class InvoiceManagementFormComponent implements OnInit {
   }
 
   confirmDialog(type: string) {
-    if (!this._validateFormInputs()) return;
+    // if (!this._validateFormInputs()) return;
     let stType = type;
     const results = this.dialogService.open({
       id: "dialog-service",

@@ -115,12 +115,27 @@ form {
     color: red;
     margin-right: 2px;
   }
+  b {
+    font-size: 14px;
+  }
   .set-input {
-    width: 17%;
+    width: 25%;
     margin-left: 4px;
   }
   .mange-second-text {
-    font-size: 14px;
+    font-size: 16px;
+    input {
+      width: 40%;
+      margin-left: 4px;
+    }
+  }
+  .invoice-popup {
+    margin-left: 20px;
+  }
+  .hint-text {
+    color: #71757F !important;
+    font-size: 10px;
+    margin-left: calc(100% - 90%);
   }
 }
 
@@ -134,7 +149,7 @@ form {
   
   .right-section {
     width: 25%;
-    border-left: 1px solid #000;
+    border-left: 1px solid #dad9d9;
   }
 }
 
@@ -142,7 +157,7 @@ form {
   span {
     float: right;
     margin-right: 25px;
-    font-size: 18px;
+    font-size: 16px;
     font-weight: bold;
   }
 }
