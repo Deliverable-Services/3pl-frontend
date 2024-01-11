@@ -15,13 +15,17 @@ import { PurchaseOrderListComponent } from "./purchase-order-list/purchase-order
 import { PurchaseOrderFormComponent } from "./purchase-order-form/purchase-order-form.component";
 import { PurchaseOrderFormModalComponent } from "./purchase-order-form-modal/purchase-order-form-modal.component";
 import { PurchaseOrderShipmentsModalComponent } from "./purchase-order-shipments-modal/purchase-order-shipments-modal.component";
+import { PurchaseOrderEditQtyModalComponent } from "./purchase-order-edit-qty-modal/purchase-order-edit-qty-modal.component";
+import { SplitAllocationModalComponent } from "./split-allocation-modal/split-allocation-modal.component";
 
 @NgModule({
   declarations: [
     PurchaseOrderListComponent,
     PurchaseOrderFormComponent,
     PurchaseOrderFormModalComponent,
-    PurchaseOrderShipmentsModalComponent
+    PurchaseOrderShipmentsModalComponent,
+    PurchaseOrderEditQtyModalComponent,
+    SplitAllocationModalComponent
   ],
   imports: [
     CommonModule,

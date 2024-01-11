@@ -38,6 +38,11 @@ export default function (values: any) {
       title: "purchasing",
       children: [
         {
+          title: "shippingAddress",
+          link: "/business/shipping-address",
+          disabled: false
+        },
+        {
           title: "poList",
           link: "/business/purchase-order",
           disabled: false
@@ -48,7 +53,7 @@ export default function (values: any) {
           disabled: false
         },
         {
-          title: "invliceList",
+          title: "invoiceManagement",
           link: "/business/invoice-management",
           disabled: false
         },

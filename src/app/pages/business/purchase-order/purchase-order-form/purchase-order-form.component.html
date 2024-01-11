@@ -166,9 +166,9 @@
                     [ngClass]="{'manage-fields': (mode.toLowerCase() === 'edit' && projectFormData.orderStatus?.toLowerCase() !== 'draft')}"
                     [ngStyle]="{'pointer-events': (mode.toLowerCase() === 'edit' && projectFormData.orderStatus?.toLowerCase() !== 'draft') ? 'none' : 'auto', width: '100%'}"
                     [placeholder]="'form.purchaseOrder.fields.shippingToDepartment' | translate" [appendToBody]="true"
-                    [multiple]="false" [filterKey]="'nodeName'" [options]="connectionLocationList" name="shipToLocation"
-                    (valueChange)="setAddress(projectFormData.shipToLocation.physicalAddress, 'shipToAddress')"
-                    [(ngModel)]="projectFormData.shipToLocation" [dValidateRules]="{
+                    [multiple]="true" [filterKey]="'market'" [options]="shippingAddressList" name="shipToAddress"
+                    (valueChange)="setAddress($event, 'shipToAddress')"
+                    [(ngModel)]="projectFormData.shipToAddress" [dValidateRules]="{
                       validators: [{ required: true }]
                     }"></d-select>
                 </d-form-control>
@@ -264,7 +264,55 @@
               </d-form-operation>
             </div>
             <ng-container *ngIf="detailsInputs?.length">
-              <div *ngFor="let input of detailsInputs; let i = index"
+
+              <!-- TABLE CARD -->
+              <div class="add-details-table">
+                <table class="manage-table">
+                  <thead>
+                    <tr class="set-head-botder">
+                      <!-- <span class="head-row"> -->
+                        <th class="manage-table-head first-head">Line No.</th>
+                        <th class="manage-table-head">SKU</th>
+                        <th class="manage-table-head">Style Name</th>
+                        <th class="manage-table-head">Colour</th>
+                        <th class="manage-table-head">Size</th>
+                        <th class="manage-table-head">Fabric Content</th>
+                        <th class="manage-table-head">Fabrice Swatch</th>
+                        <th class="manage-table-head">EXW Price(SGD)</th>
+                        <th class="manage-table-head">EXW Price(RMB)</th>
+                        <th class="manage-table-head">Planned Qty</th>
+                        <th class="manage-table-head">Split Details</th>
+                      <!-- </span> -->
+                    </tr>
+                  </thead>
+    
+                  <tbody>
+                    <tr *ngFor="let input of detailsInputs; let i = index"
+                    [ngClass]="{'set-child-botder': ((i+1) !== detailsInputs?.length)}">
+                      <!-- <span class="child-row"> -->
+                        <td class="manage-table-content first-head"> {{ input.lineNumber }}</td>
+                        <td class="manage-table-content"> {{ input.skuNo }} </td>
+                        <td class="manage-table-content"> {{ input.style }}</td>
+                        <td class="manage-table-content"> {{ input.color }} </td>
+                        <td class="manage-table-content"> {{ input.size }}</td>
+                        <td class="manage-table-content"> - </td>
+                        <td class="manage-table-content"> - </td>
+                        <td class="manage-table-content"> - </td>
+                        <td class="manage-table-content"> - </td>
+                        <td class="manage-table-content"> {{ input.plannedQuantity }}</td>
+                        <td class="manage-table-content">
+                          <button class="manage-split-button">
+                            Split Allocation
+                          </button>
+                        </td>
+                      <!-- </span> -->
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <!-- TABLE CARD -->
+
+              <!-- <div *ngFor="let input of detailsInputs; let i = index"
                 [ngStyle]="{ display: 'flex', justifyContent: 'space-between' }">
                 <div [ngStyle]="{ display: 'flex' }">
                   <d-form-item [ngStyle]="{ margin: '20px 20px 20px 0px' }">
@@ -366,7 +414,7 @@
                   </d-button>
                 </div>
 
-              </div>
+              </div> -->
             </ng-container>
 
             <div [ngStyle]="{ width: '100%' }">

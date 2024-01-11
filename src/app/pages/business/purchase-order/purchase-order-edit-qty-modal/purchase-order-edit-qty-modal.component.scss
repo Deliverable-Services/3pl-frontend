@@ -1,0 +1,44 @@
+.main-head {
+  img {
+    width: 35%;
+    display: block;
+    margin: auto;
+  }
+}
+
+.content-part {
+  ul {
+    width: 48%;
+    font-size: 12px;
+    font-weight: bold;
+    line-height: 35px;
+
+    li span {
+      color: #F00;
+    }
+  }
+  .first-list {
+    float: left;
+  }
+  .second-list {
+    float: right;
+    text-align: right;
+  }
+}
+
+.qty-input {
+  display: inline-block;
+  margin: 10px 0px;
+  width: 100%;
+  text-align: center;
+
+  label {
+    font-weight: bold;
+  }
+
+  input {
+    width: 50%;
+    border: 1px solid #000;
+    border-radius: 5px;
+  }
+}

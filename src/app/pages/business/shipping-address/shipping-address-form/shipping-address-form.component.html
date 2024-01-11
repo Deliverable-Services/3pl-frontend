@@ -1,0 +1,101 @@
+<div class="da-content-banner">
+    <div class="add-session-btn">
+      <d-breadcrumb>
+        <d-breadcrumb-item>
+          <a routerLink="/product/category">{{ 'list.shippingAddress.title' | translate }}</a>
+        </d-breadcrumb-item>
+        <d-breadcrumb-item>
+          {{ (mode === 'Add' ? "list.shippingAddress.buttonTitle" : "form.shippingAddress.edit") | translate }}
+        </d-breadcrumb-item>
+        <!-- <d-button [ngStyle]="{ marginLeft: '900px' }" (click)="addSession()">Add Season</d-button> -->
+      </d-breadcrumb>
+    </div>
+  </div>
+  
+  <div class="da-content-wrapper">
+    <da-layout-row [daGutter]="[24, 24]">
+      <da-col-item [daSpan]="24" [daXs]="24">
+        <div class="da-basic-form" [ngStyle]="{ display: 'flex', justifyContent: 'space-between' }">
+          <form dForm ngForm [dValidateRules]="{
+              message: 'The form verification failed, please check.'
+            }" [layout]="verticalLayout" #projectForm="dValidateRules" (dSubmit)="submitProjectForm($event)"
+            autocomplete="off">
+            <div class="da-content-banner-title">
+              {{ (mode === 'Add' ? "list.shippingAddress.buttonTitle" : "form.shippingAddress.edit") | translate }}
+            </div>
+            <d-form-item [ngStyle]="{ width: '500px' }">
+              <d-form-label [required]="true" [hasHelp]="false" [helpTips]="'This is Terms Subject.'">
+                {{'form.shippingAddress.fields.market' | translate}}
+              </d-form-label>
+              <d-form-control>
+                <input dTextInput autocomplete="off" name="market" [placeholder]="'form.shippingAddress.fields.market' | translate"
+                  [(ngModel)]="projectFormData.market" [dValidateRules]="{
+                    validators: [{ required: true }]
+                  }" />
+              </d-form-control>
+            </d-form-item>
+
+            <d-form-item [ngStyle]="{ width: '500px' }">
+                <d-form-label [required]="true" [hasHelp]="false" [helpTips]="'This is the Credit Day.'">
+                  {{'form.shippingAddress.fields.locName' | translate}}
+                </d-form-label>
+                <d-form-control>
+                  <input dTextInput autocomplete="off" name="locName" [placeholder]="'form.shippingAddress.fields.locName' | translate"
+                    [(ngModel)]="projectFormData.locationName" [dValidateRules]="{
+                      validators: [{ required: true }]
+                    }" />
+                </d-form-control>
+            </d-form-item>
+  
+            <d-form-item>
+              <d-form-label [required]="true" [hasHelp]="false" [helpTips]="'Add Terms Code'">
+                {{'form.shippingAddress.fields.address' | translate}}
+              </d-form-label>
+              <d-form-control>
+                <textarea [ngStyle]="{ height: '104px' }" dTextarea resize="vertical" autocomplete="off" name="tradeDesc"
+                  [placeholder]="'form.shippingAddress.fields.address' | translate" [(ngModel)]="projectFormData.address" [dValidateRules]="{
+                    validators: [{ required: true }]
+                  }"></textarea>
+              </d-form-control>
+            </d-form-item>
+
+            <d-form-item>
+              <d-form-label [required]="true" [hasHelp]="false" [helpTips]="'Add Terms Code'">
+                {{'form.shippingAddress.fields.shipTo' | translate}}
+              </d-form-label>
+              <d-form-control>
+                <d-toggle (change)="projectFormData.shipTo = $event" [checked]="projectFormData.shipTo" [size]="'lg'"></d-toggle>
+              </d-form-control>
+            </d-form-item>
+
+            <d-form-item>
+              <d-form-label [required]="true" [hasHelp]="false" [helpTips]="'Add Terms Code'">
+                {{'form.shippingAddress.fields.split' | translate}}
+              </d-form-label>
+              <d-form-control>
+                <d-toggle (change)="projectFormData.split = $event" [checked]="projectFormData.split === true" [size]="'lg'"></d-toggle>
+              </d-form-control>
+            </d-form-item>
+  
+            <d-form-operation>
+              <d-button dLoading class="mr-element-spacing" [title]="projectForm.errorMessage || ''" circled="true"
+                style="margin-right: 8px" [showLoading]="projectForm.pending" dFormSubmit
+                [dFormSubmitData]="'submit-button'">
+                {{ (paramId ? "form.common.update" : "form.common.create") | translate}}
+              </d-button>
+            </d-form-operation>
+          </form>
+          <!-- <div *ngIf="paramId">
+            <div class="dateWrapper">
+              {{ "Created Date :" + " " }}
+              {{ selectedshippingAddress.createdAt | mydatepipe }}
+            </div>
+            <div class="dateWrapper">
+              {{ "Updated Date :" + " " }}
+              {{ selectedshippingAddress.updatedAt | mydatepipe }}
+            </div>
+          </div> -->
+        </div>
+      </da-col-item>
+    </da-layout-row>
+  </div>

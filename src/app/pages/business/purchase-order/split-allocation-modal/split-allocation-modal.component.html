@@ -1,0 +1,73 @@
+<div class="column-container">
+  <div class="left-section">
+    <h1>Split Details</h1>
+
+    <div class="form-details">
+      <div *ngFor="let sDetails of splitDetailsfields; let in = index" class="form-input">
+        <d-form-item [ngStyle]="{ width: '300px' }">
+          <d-form-label [required]="true" [hasHelp]="false">
+            Market & Location
+          </d-form-label>
+          <d-form-control>
+            <input
+              dTextInput
+              autocomplete="off"
+              [name]="'market-'+in"
+              [(ngModel)]="sDetails.market"
+              [placeholder]="'form.shippingAddress.fields.market' | translate"
+            />
+          </d-form-control>
+        </d-form-item>
+        <d-form-item [ngStyle]="{ width: '100px', marginLeft: '10px'}">
+          <d-form-label [required]="true" [hasHelp]="false"> Qty </d-form-label>
+          <d-form-control>
+            <input
+                (click)="removeRow(in)"
+              dTextInput
+              autocomplete="off"
+              [name]="'qty-'+sDetails.qty"
+              [(ngModel)]="sDetails.qty"
+              [placeholder]="'form.shippingAddress.fields.market' | translate"
+            />
+          </d-form-control>
+        </d-form-item>
+
+        <d-button
+          bsStyle="danger"
+          class="danger"
+          circled="true"
+          style="margin-right: 8px; margin-top: 18px; margin-left: 10px"
+        >
+          {{ "form.purchaseOrder.buttons.remove" | translate }}
+        </d-button>
+      </div>
+      <div class="add-more-btn">
+        <button (click)="addMore()" type="button">+ Add New</button>
+      </div>
+    </div>
+  </div>
+  <div class="rigth-section">
+    <h1>Split Summary</h1>
+
+    <div class="content-part">
+        <table>
+            <tr>
+                <th>Market</th>
+                <th class="set-mrgn">Total Qty</th>
+                <th class="set-mrgn">Percentage</th>
+            </tr>
+
+            <tr>
+                <td>SC</td>
+                <td class="set-mrgn">400</td>
+                <td class="set-mrgn">80%</td>
+            </tr>
+            <tr>
+                <td>JP</td>
+                <td class="set-mrgn">110</td>
+                <td class="set-mrgn">20%</td>
+            </tr>
+        </table>
+    </div>
+  </div>
+</div>

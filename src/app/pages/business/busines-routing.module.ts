@@ -124,6 +124,11 @@ const routes: Routes = [
     loadChildren: () =>
       import("./invoice-management/invoice-management.module").then((m) => m.InvoiceManagementModule),
   },
+  {
+    path: "shipping-address",
+    loadChildren: () =>
+      import("./shipping-address/shipping-address.module").then((m) => m.ShippingAddressModule),
+  },
   // {
   //   path: "inventory",
   //   component: InventoryListComponent,

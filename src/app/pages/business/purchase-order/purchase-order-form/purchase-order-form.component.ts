@@ -7,7 +7,10 @@ import { VendorListDataService } from "src/app/@core/mock/vendor-data.service";
 import { MSG } from "src/config/global-var";
 import { ProductsListDataService } from "src/app/@core/mock/products-data.service";
 import { PurchaseOrderFormModalComponent } from "../purchase-order-form-modal/purchase-order-form-modal.component";
+import { PurchaseOrderEditQtyModalComponent } from "../purchase-order-edit-qty-modal/purchase-order-edit-qty-modal.component";
 import { PurchaseOrderShipmentsModalComponent } from "../purchase-order-shipments-modal/purchase-order-shipments-modal.component";
+import { SplitAllocationModalComponent } from "../split-allocation-modal/split-allocation-modal.component";
+import { ShippingAddressService } from "src/app/@core/mock/shipping-address.service";
 
 @Component({
   selector: "app-purchase-order-form",
@@ -117,12 +120,41 @@ export class PurchaseOrderFormComponent implements OnInit {
     },
   };
 
+  editQtyConfig = {
+    id: "dialog-service",
+    width: "20%",
+    maxHeight: "600px",
+    content: PurchaseOrderEditQtyModalComponent,
+    backdropCloseable: true,
+    onClose: () => console.log(""),
+    data: {
+      name: "Tom",
+      age: 10,
+      address: "Chengdu",
+    },
+  };
+
+  splitAllocationConfig = {
+    id: "dialog-service",
+    width: "50%",
+    maxHeight: "600px",
+    content: SplitAllocationModalComponent,
+    backdropCloseable: true,
+    onClose: () => console.log(""),
+    data: {
+      name: "Tom",
+      age: 10,
+      address: "Chengdu",
+    },
+  };
+
   toTypeLabel: string = "Origin To Destination";
   todayDate: any = new Date();
   addedVariantIds: any = [];
   dDate: any = new Date();
   paramId: string = "";
   connectionLocationList: any[] = [];
+  shippingAddressList: any[] = [];
   selectedPurchaseOrder: any = {};
   allowSubmit: boolean = true;
   expectedDeliveryDateDisabled: boolean = false;
@@ -135,7 +167,8 @@ export class PurchaseOrderFormComponent implements OnInit {
     private route: ActivatedRoute,
     private dialogService: DialogService,
     private router: Router,
-    private toastService: ToastService
+    private toastService: ToastService,
+    private shippingAddressService: ShippingAddressService
   ) {}
 
   ngOnInit(): void {
@@ -148,6 +181,21 @@ export class PurchaseOrderFormComponent implements OnInit {
 
     this.connectionLocationService.setPageParams(this.pageParam);
     this.getVendorList();
+
+    // this.splitAllocation('as');
+
+    this._getShippingAddressList();
+  }
+
+  _getShippingAddressList() {
+    this.shippingAddressService.getList({
+      pageNo: 0,
+      pageSize: 100,
+      sortBy: "",
+      sortDir: "",
+    }).subscribe((sAddress: any) => {
+      this.shippingAddressList = sAddress.content;
+    });
   }
 
   getConnectionLocationList() {
@@ -243,6 +291,7 @@ export class PurchaseOrderFormComponent implements OnInit {
         //   this.projectFormData?.destinationLocation?.nodeType;
         this.detailsInputs = this.projectFormData?.details?.map((d: any) => {
           return {
+            ...d,
             variantId: d?.variantId,
             skuNo: d?.skuNo,
             plannedQuantity: d?.poQuantity,
@@ -563,6 +612,66 @@ export class PurchaseOrderFormComponent implements OnInit {
       data: {
         shipments: shipments,
         vList: (vData: any) => {},
+      },
+    });
+  }
+
+  editQty(sDetails: any) {
+    const results = this.dialogService.open({
+      ...this.editQtyConfig,
+      // dialogtype: dialogtype,
+      // showAnimation: showAnimation,
+      buttons: [
+        {
+          cssClass: "primary",
+          text: "Update",
+          disabled: false,
+          handler: (variantList: any) => {
+            results.modalInstance.hide();
+          },
+        },
+        {
+          id: "btn-cancel",
+          cssClass: "common",
+          text: "Cancel",
+          handler: (variantList: any) => {
+            results.modalInstance.hide();
+          },
+        },
+      ],
+      data: {
+        // shipments: shipments,
+        // vList: (vData: any) => {},
+      },
+    });
+  }
+
+  splitAllocation(sDetails: any) {
+    const results = this.dialogService.open({
+      ...this.splitAllocationConfig,
+      // dialogtype: dialogtype,
+      // showAnimation: showAnimation,
+      buttons: [
+        {
+          cssClass: "primary",
+          text: "Update",
+          disabled: false,
+          handler: (variantList: any) => {
+            results.modalInstance.hide();
+          },
+        },
+        {
+          id: "btn-cancel",
+          cssClass: "common",
+          text: "Cancel",
+          handler: (variantList: any) => {
+            results.modalInstance.hide();
+          },
+        },
+      ],
+      data: {
+        // shipments: shipments,
+        // vList: (vData: any) => {},
       },
     });
   }
@@ -924,7 +1033,8 @@ export class PurchaseOrderFormComponent implements OnInit {
   }
 
   setAddress(address: string, fValue: string) {
-    this.projectFormData[fValue] = address;
+    // this.projectFormData[fValue] = address;
+    console.log(':: :: ', address, this.projectFormData.shipToAddress);
   }
 
   _dateVaidationForToday() {

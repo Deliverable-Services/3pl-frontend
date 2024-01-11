@@ -45,6 +45,12 @@ export default {
       buttonTitle: 'Add Credit Terms',
       table: {subject: 'Subject', details: 'Details', creditDay: 'Credit Day'}
     },
+    shippingAddress:{
+      title:"Shipping Address",
+      list: 'Shipping Address List',
+      buttonTitle: 'Add Shipping Address',
+      table: {market: 'Market', locationName: 'Location Name', address: 'Address', shipTo: 'Ship To', split: 'Split'}
+    },
     connectionLocationList: {
       title: 'Node Setup',
       list: 'Inventory Node List',
@@ -229,7 +235,7 @@ export default {
     nodeName:"Vendor",
     nodeName2:"Shipping to Department",
     list:"Invoice List",
-    title:"Invoice List",
+    title:"Invoice Management",
     buttonTitle:"Create Invoice",
     actions:"Actions",
     lastModifiedDate: "Updated Date",

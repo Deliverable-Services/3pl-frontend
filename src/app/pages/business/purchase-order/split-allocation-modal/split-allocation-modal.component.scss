@@ -1,0 +1,37 @@
+.left-section {
+  width: 60%;
+  float: left;
+
+  h1 {
+    font-size: 12px;
+    color: #000;
+  }
+}
+
+.form-input {
+  display: inline-flex;
+  margin-left: 10px;
+}
+
+.add-more-btn button {
+  background: #09B01A;
+  padding: 7px;
+  color: #fff;
+  border-radius: 4px;
+}
+
+.rigth-section {
+  width: 40%;
+  float: right;
+
+  h1 {
+    font-size: 12px;
+    color: #000;
+  }
+
+  .content-part {
+    .set-mrgn {
+      margin-left: 50px;
+    }
+  }
+}

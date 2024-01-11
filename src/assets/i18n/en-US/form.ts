@@ -333,6 +333,16 @@ export default {
         termsDescription: "Terms Description",
       },
     },
+    shippingAddress: {
+      edit: "Edit Shipping Address",
+      fields: {
+        market: "Market",
+        locName: "Loc. Name",
+        address: "Address",
+        shipTo: "Ship To",
+        split: "Split"
+      },
+    },
     connectionLocationList: {
       edit_location: "Edit Inventory Node",
       fields: {
