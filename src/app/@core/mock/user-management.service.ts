@@ -52,10 +52,10 @@ export class UserManagementService {
     this.pageParams = pageParams;
   }
 
-  getList(srarchParams?: any): Observable<any> {
+  getList(srarchParams?: any, pageParams?: any): Observable<any> {
     const httpOptionsToken = {
       params: new HttpParams({
-        fromObject: this.pageParams,
+        fromObject: pageParams ? pageParams:this.pageParams,
       }),
     };
 

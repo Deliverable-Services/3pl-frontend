@@ -11,6 +11,7 @@ import { PurchaseOrderEditQtyModalComponent } from "../purchase-order-edit-qty-m
 import { PurchaseOrderShipmentsModalComponent } from "../purchase-order-shipments-modal/purchase-order-shipments-modal.component";
 import { SplitAllocationModalComponent } from "../split-allocation-modal/split-allocation-modal.component";
 import { ShippingAddressService } from "src/app/@core/mock/shipping-address.service";
+import { UserManagementService } from "src/app/@core/mock/user-management.service";
 
 @Component({
   selector: "app-purchase-order-form",
@@ -23,8 +24,14 @@ export class PurchaseOrderFormComponent implements OnInit {
   createdDate? = "";
   modifiedDate? = "";
   vendorList: any[] = [];
+  usersList:any[] = [];
+
+  selectedUser:any = {};
 
   projectFormData: any = {
+    contactEmail: "",
+    contactPhone: "",
+    contactUsername: "",
     shipToLocation: {
       connectionLocationId: "",
       nodeName: "",
@@ -122,8 +129,8 @@ export class PurchaseOrderFormComponent implements OnInit {
 
   editQtyConfig = {
     id: "dialog-service",
-    width: "20%",
-    maxHeight: "600px",
+    width: "25%",
+    maxHeight: "650px",
     content: PurchaseOrderEditQtyModalComponent,
     backdropCloseable: true,
     onClose: () => console.log(""),
@@ -168,7 +175,8 @@ export class PurchaseOrderFormComponent implements OnInit {
     private dialogService: DialogService,
     private router: Router,
     private toastService: ToastService,
-    private shippingAddressService: ShippingAddressService
+    private shippingAddressService: ShippingAddressService,
+    private userManagementService: UserManagementService
   ) {}
 
   ngOnInit(): void {
@@ -185,6 +193,7 @@ export class PurchaseOrderFormComponent implements OnInit {
     // this.splitAllocation('as');
 
     this._getShippingAddressList();
+    this._getUserList();
   }
 
   _getShippingAddressList() {
@@ -196,6 +205,17 @@ export class PurchaseOrderFormComponent implements OnInit {
     }).subscribe((sAddress: any) => {
       this.shippingAddressList = sAddress.content;
     });
+  }
+
+  _getUserList() {
+    this.userManagementService.getList(undefined, {
+      pageNo: "",
+      pageSize: 100,
+      sortBy: "",
+      sortDir: "",
+    }).subscribe((users: any) => {
+      this.usersList = users?.content || [];
+    })
   }
 
   getConnectionLocationList() {
@@ -376,6 +396,7 @@ export class PurchaseOrderFormComponent implements OnInit {
           .add({
             ...this.projectFormData,
             dueDate: this.projectFormData.dueDate + "T00:00:00Z",
+            // shipToAddress: this.projectFormData?.shipToAddress?.map((s: any) => s.market)?.toString() || '',
             shipToLocation: {
               connectionLocationId:
                 this.projectFormData.shipToLocation.connectionLocationId,
@@ -430,6 +451,7 @@ export class PurchaseOrderFormComponent implements OnInit {
           .updatePurchaseOrder(this.paramId, {
             ...this.projectFormData,
             dueDate: this.projectFormData.dueDate + "T00:00:00Z",
+            // shipToAddress: this.projectFormData?.shipToAddress?.map((s: any) => s.market)?.toString() || '',
           })
           .subscribe(
             (res) => {
@@ -1033,7 +1055,7 @@ export class PurchaseOrderFormComponent implements OnInit {
   }
 
   setAddress(address: string, fValue: string) {
-    // this.projectFormData[fValue] = address;
+    this.projectFormData[fValue] = address;
     console.log(':: :: ', address, this.projectFormData.shipToAddress);
   }
 
@@ -1057,5 +1079,12 @@ export class PurchaseOrderFormComponent implements OnInit {
         v.plannedQuantity * (v.exwSgdCost ? v.exwSgdCost : v.productPrice);
     });
     return tPrice;
+  }
+
+  setContactDetails(user: any) {
+    console.log(':: :: ', user);
+    this.projectFormData.contactUsername = user?.username || '';
+    this.projectFormData.contactEmail = user?.email || '';
+    this.projectFormData.contactPhone = user?.username || '';
   }
 }

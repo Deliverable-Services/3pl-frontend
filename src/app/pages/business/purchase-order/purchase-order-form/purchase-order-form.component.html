@@ -141,13 +141,13 @@
                     </d-form-control>
                   </d-form-item>
 
-                  <d-form-label>{{ "form.purchaseOrder.fields.expectedDeliveryDate" | translate
+                  <!-- <d-form-label>{{ "form.purchaseOrder.fields.expectedDeliveryDate" | translate
                     }}</d-form-label>
                   <div style="width: 100%" cdiv class="devui-input-group devui-dropdown-origin" dActiveFormControl>
                     <input style="pointer-events: none; background: #F3F3F3 !important;"
                       class="devui-input devui-form-control" [(ngModel)]="projectFormData.issueDate" autocomplete="off"
                       placeholder="y-MM-dd" type="date" [min]="_dateVaidationForToday()" name="issueDate">
-                  </div>
+                  </div> -->
                 </div>
               </ng-container>
 
@@ -167,7 +167,6 @@
                     [ngStyle]="{'pointer-events': (mode.toLowerCase() === 'edit' && projectFormData.orderStatus?.toLowerCase() !== 'draft') ? 'none' : 'auto', width: '100%'}"
                     [placeholder]="'form.purchaseOrder.fields.shippingToDepartment' | translate" [appendToBody]="true"
                     [multiple]="true" [filterKey]="'market'" [options]="shippingAddressList" name="shipToAddress"
-                    (valueChange)="setAddress($event, 'shipToAddress')"
                     [(ngModel)]="projectFormData.shipToAddress" [dValidateRules]="{
                       validators: [{ required: true }]
                     }"></d-select>
@@ -175,7 +174,7 @@
               </d-form-item>
 
               <ng-container>
-                <d-form-item>
+                <!-- <d-form-item>
                   <d-form-label [hasHelp]="false" [helpTips]="'This is Shipping Address.'">
                     {{'form.purchaseOrder.fields.shippingAddress' | translate}}
                   </d-form-label>
@@ -184,9 +183,9 @@
                       [(ngModel)]="projectFormData.shipToAddress" dTextInput autocomplete="off" name="shipToAddress"
                       [placeholder]="'form.purchaseOrder.fields.shippingAddress' | translate" />
                   </d-form-control>
-                </d-form-item>
+                </d-form-item> -->
 
-                <div class="input-setting">
+                <!-- <div class="input-setting">
                   <d-form-label [required]="true">{{ "form.purchaseOrder.fields.expectedArrivalDate" | translate
                     }}</d-form-label>
                   <div style="width: 100%" div class="devui-input-group devui-dropdown-origin" dActiveFormControl>
@@ -198,12 +197,64 @@
                       validators: [{ required: true }]
                     }" type="date" [min]="_dateVaidationForToday()" name="dueDate">
                   </div>
-                </div>
+                </div> -->
 
               </ng-container>
 
             </div>
           </div>
+
+          <div [ngStyle]="{ display: 'flex', justifyContent: 'space-between', width: '100%' }">
+                <div [ngStyle]="{ display: 'flex', width: '100%' }">
+                  <d-form-item [ngStyle]="{ margin: '20px 20px 20px 0px', width: '15%' }">
+                    <d-form-label [required]="true">{{ "form.purchaseOrder.fields.expectedArrivalDate" | translate }}</d-form-label>
+                    <d-form-control>
+                      <input class="set-width" dTextInput [(ngModel)]="projectFormData.dueDate" autocomplete="off"
+                      placeholder="y-MM-dd" [dValidateRules]="{
+                      validators: [{ required: true }]
+                    }" type="date" [min]="_dateVaidationForToday()" name="dueDate"/>
+                    </d-form-control>
+                  </d-form-item>
+
+                  <d-form-item [ngStyle]="{ margin: '20px 20px 20px 0px' }">
+                    <d-form-label [required]="true">Attn</d-form-label>
+                    <d-form-control>
+                      <!-- <input class="set-width" dTextInput autocomplete="off" name="attn"> -->
+                        <d-select
+                      [appendToBody]="true"
+                      [multiple]="false" [filterKey]="'username'" [options]="usersList" name="attn"
+                      [(ngModel)]="selectedUser" (valueChange)="setContactDetails($event)"
+                      [dValidateRules]="{
+                        validators: [{ required: true }]
+                      }"></d-select>
+                    </d-form-control>
+                  </d-form-item>
+
+                  <d-form-item [ngStyle]="{ margin: '20px 20px 20px 0px' }">
+                    <d-form-label [required]="true">Tel</d-form-label>
+                    <d-form-control>
+                      <input [(ngModel)]="projectFormData.contactPhone" class="set-width" dTextInput autocomplete="off" name="tel"/>
+                    </d-form-control>
+                  </d-form-item>
+
+                  <d-form-item [ngStyle]="{ margin: '20px 20px 20px 0px' }">
+                    <d-form-label [required]="true">Email</d-form-label>
+                    <d-form-control>
+                      <input [(ngModel)]="projectFormData.contactEmail" class="set-width" dTextInput autocomplete="off" name="email"/>
+                    </d-form-control>
+                  </d-form-item>
+
+                  <d-form-item [ngStyle]="{ margin: '20px 20px 20px 0px', width: '15%' }">
+                    <d-form-label [required]="true">{{ "form.purchaseOrder.fields.expectedDeliveryDate" | translate
+                    }}</d-form-label>
+                    <d-form-control>
+                      <input class="set-width" dTextInput [(ngModel)]="projectFormData.issueDate" autocomplete="off"
+                      placeholder="y-MM-dd" type="date" [min]="_dateVaidationForToday()" name="issueDate"/>
+                    </d-form-control>
+                  </d-form-item>
+                </div>
+
+              </div>
 
           <d-form-item [ngStyle]="{ marginTop: '20px' }"
             [ngClass]="{'set-cursor': !(mode.toLowerCase() !== 'edit') && projectFormData.orderStatus?.toLowerCase() !== 'draft'}">
@@ -264,6 +315,7 @@
               </d-form-operation>
             </div>
             <ng-container *ngIf="detailsInputs?.length">
+              <!-- <ng-container> -->
 
               <!-- TABLE CARD -->
               <div class="add-details-table">
@@ -271,7 +323,9 @@
                   <thead>
                     <tr class="set-head-botder">
                       <!-- <span class="head-row"> -->
-                        <th class="manage-table-head first-head">Line No.</th>
+                        <th class="manage-table-head first-head"></th>
+                        <th class="manage-table-head">Line No.</th>
+                        <th class="manage-table-head">Image</th>
                         <th class="manage-table-head">SKU</th>
                         <th class="manage-table-head">Style Name</th>
                         <th class="manage-table-head">Colour</th>
@@ -289,8 +343,15 @@
                   <tbody>
                     <tr *ngFor="let input of detailsInputs; let i = index"
                     [ngClass]="{'set-child-botder': ((i+1) !== detailsInputs?.length)}">
-                      <!-- <span class="child-row"> -->
-                        <td class="manage-table-content first-head"> {{ input.lineNumber }}</td>
+                        <td class="manage-table-content first-head">
+                          <span class="set-image">
+                            <img src="assets/draw.png"/>
+                            <img src="assets/minus.png"/>
+                            <img src="assets/refresh.png"/>
+                          </span>
+                        </td>
+                        <td class="manage-table-content"> {{ input.lineNumber }}</td>
+                        <td class="manage-table-content"> {{ input.lineNumber }}</td>
                         <td class="manage-table-content"> {{ input.skuNo }} </td>
                         <td class="manage-table-content"> {{ input.style }}</td>
                         <td class="manage-table-content"> {{ input.color }} </td>
@@ -305,8 +366,36 @@
                             Split Allocation
                           </button>
                         </td>
-                      <!-- </span> -->
                     </tr>
+                    <!-- <tr>
+                        <td class="manage-table-content first-head">
+                          <span class="set-image">
+                            <img src="assets/draw.png"/>
+                            <img src="assets/minus.png"/>
+                            <img src="assets/refresh.png"/>
+                          </span>
+                        </td>
+                        <td class="manage-table-content">asas</td>
+                        <td class="manage-table-content"> 
+                          <span class="set-image">
+                            <img src="assets/draw.png"/> 
+                            </span>
+                        </td>
+                        <td class="manage-table-content"> asas </td>
+                        <td class="manage-table-content"> cascatd>
+                        <td class="manage-table-content"> cascas </td>
+                        <td class="manage-table-content"> casc</td>
+                        <td class="manage-table-content"> casca </td>
+                        <td class="manage-table-content"> casca </td>
+                        <td class="manage-table-content"> cs </td>
+                        <td class="manage-table-content"> vcdssc </td>
+                        <td class="manage-table-content"> csca</td>
+                        <td class="manage-table-content">
+                          <button class="manage-split-button">
+                            Split Allocation
+                          </button>
+                        </td>
+                    </tr> -->
                   </tbody>
                 </table>
               </div>

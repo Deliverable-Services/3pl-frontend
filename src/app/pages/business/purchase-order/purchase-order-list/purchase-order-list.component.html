@@ -69,12 +69,45 @@
                 </d-cell>
               </d-column>
 
-              <d-column [field]="'shipToLocation'" header="{{'list.purchaseOrder.nodeName2' | translate}}"
+              <!-- <d-column [field]="'shipToLocation'" header="{{'list.purchaseOrder.nodeName2' | translate}}"
                 [sortable]="true" [width]="columnSize.nodeName2">
                 <d-cell>
                   <ng-template let-cellItem="cellItem">
                     <span [title]="cellItem" class="over-flow-ellipsis">
                       {{ cellItem.nodeName }}
+                    </span>
+                  </ng-template>
+                </d-cell>
+              </d-column> -->
+
+              <d-column [field]="'contactUsername'" header="Contact Username" [sortable]="true"
+                [width]="columnSize.nodeName">
+                <d-cell>
+                  <ng-template let-cellItem="cellItem">
+                    <span [title]="cellItem" class="over-flow-ellipsis">
+                      {{ cellItem?.contactUsername || '-' }}
+                    </span>
+                  </ng-template>
+                </d-cell>
+              </d-column>
+
+              <d-column [field]="'contactEmail'" header="Contact Email" [sortable]="true"
+                [width]="columnSize.nodeName">
+                <d-cell>
+                  <ng-template let-cellItem="cellItem">
+                    <span [title]="cellItem" class="over-flow-ellipsis">
+                      {{ cellItem?.contactEmail || '-' }}
+                    </span>
+                  </ng-template>
+                </d-cell>
+              </d-column>
+
+              <d-column [field]="'contactPhone'" header="Contact Phone" [sortable]="true"
+                [width]="columnSize.nodeName">
+                <d-cell>
+                  <ng-template let-cellItem="cellItem">
+                    <span [title]="cellItem" class="over-flow-ellipsis">
+                      {{ cellItem?.contactPhone || '-' }}
                     </span>
                   </ng-template>
                 </d-cell>

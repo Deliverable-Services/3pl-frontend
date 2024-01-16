@@ -126,16 +126,22 @@ form {
       border-bottom: 1px solid lightgrey;
     }
     .manage-table-head {
-      padding: 0px 26px;
+      padding: 0px 20px;
       font-size: 12px;
       // font-weight: bold;
     }
     .manage-table-content {
-      padding: 0px 26px;
+      padding: 0px 20px;
       font-size: 12px;
+
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      max-width: 100px;
     }
     .first-head {
       padding: 0px !important;
+      max-width: 200px;
     }
 
     .manage-split-button {
@@ -146,5 +152,15 @@ form {
       border-radius: 5px;
     }
 
+  }
+}
+
+.set-image {
+  img {
+    width: 14px;
+    margin: 13px 10px 0px;
+  }
+  img:hover {
+    cursor: pointer;
   }
 }

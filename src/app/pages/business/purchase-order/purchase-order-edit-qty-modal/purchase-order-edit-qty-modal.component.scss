@@ -8,17 +8,27 @@
 
 .content-part {
   ul {
-    width: 48%;
+    // width: 100%;
     font-size: 12px;
     font-weight: bold;
     line-height: 35px;
+    margin-left: 40px;
 
-    li span {
-      color: #F00;
+    li {
+      line-height: 44px;
+      span input {
+        // color: #F00;
+        border: 1px solid;
+        border-radius: 5px;
+        line-height: 23px;
+        float: right;
+        margin: 2% 20% 0% 0%;
+        background: #F3F3F3 !important;
+      }
     }
   }
   .first-list {
-    float: left;
+    // float: left;
   }
   .second-list {
     float: right;
@@ -34,11 +44,28 @@
 
   label {
     font-weight: bold;
+    span {
+      color: red;
+    }
   }
 
   input {
     width: 50%;
-    border: 1px solid #000;
+    border: 1px solid;
     border-radius: 5px;
+    line-height: 23px;
+  }
+}
+
+.w-50 {
+  width: 50% !important;
+}
+
+.manage-specific-li {
+  display: inline-flex;
+  span {
+    display: flex;
+    height: 30px;
+    margin: 6px;
   }
 }
