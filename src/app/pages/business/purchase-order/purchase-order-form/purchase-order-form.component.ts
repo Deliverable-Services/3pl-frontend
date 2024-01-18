@@ -25,6 +25,7 @@ export class PurchaseOrderFormComponent implements OnInit {
   modifiedDate? = "";
   vendorList: any[] = [];
   usersList:any[] = [];
+  storeSplitDetails:any[] = [];
 
   selectedUser:any = {};
 
@@ -687,15 +688,25 @@ export class PurchaseOrderFormComponent implements OnInit {
   splitAllocation(sDetails: any, index: number) {
     const results = this.dialogService.open({
       ...this.splitAllocationConfig,
-      // dialogtype: dialogtype,
-      // showAnimation: showAnimation,
       buttons: [
         {
           cssClass: "primary",
           text: "Update",
           disabled: false,
           handler: (variantList: any) => {
-            results.modalInstance.hide();
+            let stObj:any[] = [];
+            let obj:any = {};
+            let checkIfAllFilled = this.storeSplitDetails?.filter((split: any) => (!split.market || !split.qty));
+            this.storeSplitDetails?.forEach((splitInfo:any) => {
+              let key = splitInfo.market.id;
+              obj[key] = splitInfo.qty;
+              // stObj.push(obj);
+            });
+
+            this.purchaseOrderService.splitManagement(this.paramId, obj).subscribe((res: any) => {
+              console.log(':: :: ', res);
+              checkIfAllFilled?.length === 0 ? results.modalInstance.hide():null;
+            })
           },
         },
         {
@@ -708,8 +719,10 @@ export class PurchaseOrderFormComponent implements OnInit {
         },
       ],
       data: {
-        // shipments: shipments,
-        // vList: (vData: any) => {},
+        shippingAddressList: this.shippingAddressList,
+        vList: (vData: any) => {
+          this.storeSplitDetails = vData;
+        },
       },
     });
   }

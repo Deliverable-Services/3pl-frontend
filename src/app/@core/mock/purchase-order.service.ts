@@ -165,4 +165,18 @@ export class PurchaseOrderService {
       httpOptionsToken
     );
   }
+
+  splitManagement(id: string, data: any): Observable<any> {
+    const httpOptionsToken = {
+      headers: new HttpHeaders({
+        // "Content-Type": "application/json",
+      }),
+    };
+
+    return this.http.put(
+      `${this.baseApiUrl}/purchase-order/purchase-order-detail/${id}/split`,
+      data,
+      httpOptionsToken
+    );
+  }
 }

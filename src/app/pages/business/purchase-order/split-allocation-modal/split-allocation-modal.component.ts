@@ -163,4 +163,8 @@ export class SplitAllocationModalComponent {
   removeRow(index: number) {
     this.splitDetailsfields.splice(index);
   }
+
+  saveCurrentValue() {
+    this.data.vList(this.splitDetailsfields);
+  }
 }
