@@ -85,7 +85,7 @@
                 <d-cell>
                   <ng-template let-cellItem="cellItem">
                     <span [title]="cellItem" class="over-flow-ellipsis">
-                      {{ cellItem?.contactUsername || '-' }}
+                      {{ cellItem }}
                     </span>
                   </ng-template>
                 </d-cell>
@@ -96,7 +96,7 @@
                 <d-cell>
                   <ng-template let-cellItem="cellItem">
                     <span [title]="cellItem" class="over-flow-ellipsis">
-                      {{ cellItem?.contactEmail || '-' }}
+                      {{ cellItem }}
                     </span>
                   </ng-template>
                 </d-cell>
@@ -107,7 +107,7 @@
                 <d-cell>
                   <ng-template let-cellItem="cellItem">
                     <span [title]="cellItem" class="over-flow-ellipsis">
-                      {{ cellItem?.contactPhone || '-' }}
+                      {{ cellItem }}
                     </span>
                   </ng-template>
                 </d-cell>

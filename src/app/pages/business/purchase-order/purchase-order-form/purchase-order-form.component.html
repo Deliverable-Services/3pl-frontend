@@ -56,7 +56,7 @@
               <d-button *ngIf="projectFormData.orderStatus?.toLowerCase() === 'draft'" [ngStyle]="{ float: 'right' }"
                 [disabled]="!allowSubmit" dLoading class="mr-element-spacing" [title]="projectForm.errorMessage || ''"
                 circled="true" style="margin-right: 8px" [showLoading]="projectForm.pending" dFormSubmit
-                [dFormSubmitData]="'submit-button'">
+                [dFormSubmitData]="'submit-button'" id="createNdUpdateBtn">
                 {{
                 (paramId ? "form.common.update" : "form.common.create")
                 | translate
@@ -345,24 +345,24 @@
                     [ngClass]="{'set-child-botder': ((i+1) !== detailsInputs?.length)}">
                         <td class="manage-table-content first-head">
                           <span class="set-image">
-                            <img src="assets/draw.png"/>
-                            <img src="assets/minus.png"/>
-                            <img src="assets/refresh.png"/>
+                            <img (click)="editQty(input, i)" src="assets/draw.png"/>
+                            <img (click)="removeNow(i)" src="assets/minus.png"/>
+                            <img (click)="getPurchaseOrderById(paramId)" src="assets/refresh.png"/>
                           </span>
                         </td>
                         <td class="manage-table-content"> {{ input.lineNumber }}</td>
-                        <td class="manage-table-content"> {{ input.lineNumber }}</td>
-                        <td class="manage-table-content"> {{ input.skuNo }} </td>
-                        <td class="manage-table-content"> {{ input.style }}</td>
-                        <td class="manage-table-content"> {{ input.color }} </td>
-                        <td class="manage-table-content"> {{ input.size }}</td>
-                        <td class="manage-table-content"> - </td>
-                        <td class="manage-table-content"> - </td>
-                        <td class="manage-table-content"> - </td>
+                        <td class="manage-table-content"> {{ input?.iamge || '-' }}</td>
+                        <td class="manage-table-content"> {{ input?.skuNo || '-' }} </td>
+                        <td class="manage-table-content"> {{ input?.style || '-' }}</td>
+                        <td class="manage-table-content"> {{ input?.color || '-' }} </td>
+                        <td class="manage-table-content"> {{ input?.size || '-' }}</td>
+                        <td class="manage-table-content"> {{ input?.fabricComposition || '-' }} </td>
+                        <td class="manage-table-content"> {{ input?.fabicSwatch || '-' }} </td>
+                        <td class="manage-table-content"> {{ input?.exwSgdCost || '-' }} </td>
                         <td class="manage-table-content"> - </td>
                         <td class="manage-table-content"> {{ input.plannedQuantity }}</td>
                         <td class="manage-table-content">
-                          <button class="manage-split-button">
+                          <button (click)="splitAllocation(input, i)" class="manage-split-button">
                             Split Allocation
                           </button>
                         </td>

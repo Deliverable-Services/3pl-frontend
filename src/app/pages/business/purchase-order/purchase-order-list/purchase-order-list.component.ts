@@ -61,11 +61,15 @@ export class PurchaseOrderListComponent implements OnInit {
 
   columnSize: any = {
     id: "10%",
-    nodeName: "20%",
-    createdBy: "40%",
-    createdDate: "40%",
-    action: "10%",
-    active: "10%",
+    contactUsername: "20%",
+    contactEmail: "40%",
+    contactPhone: "40%",
+    vendor: "10%",
+    orderStatus: "10%",
+    sampleStatus: "10%",
+    lastModifiedDate: "10%",
+    lastModifiedBy: "10%",
+    action: "10%"
   };
 
   busy: Subscription | undefined;

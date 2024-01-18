@@ -150,4 +150,11 @@ export class PurchaseOrderEditQtyModalComponent {
       });
     });
   }
+
+  updateQty(event: any) {
+    this.data.vList({
+      ...this.data?.sDetails,
+      plannedQuantity: event?.target?.value
+    });
+  }
 }

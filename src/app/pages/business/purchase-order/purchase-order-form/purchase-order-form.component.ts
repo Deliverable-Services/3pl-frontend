@@ -183,9 +183,6 @@ export class PurchaseOrderFormComponent implements OnInit {
     this.paramId = this.route.snapshot.params["id"];
     this.mode = this.route.snapshot.params["id"] ? "Edit" : "Add";
     this.getConnectionLocationList();
-    if (this.mode === "Edit") {
-      this.getPurchaseOrderById(this.paramId);
-    }
 
     this.connectionLocationService.setPageParams(this.pageParam);
     this.getVendorList();
@@ -194,6 +191,9 @@ export class PurchaseOrderFormComponent implements OnInit {
 
     this._getShippingAddressList();
     this._getUserList();
+    if (this.mode === "Edit") {
+      this.getPurchaseOrderById(this.paramId);
+    }
   }
 
   _getShippingAddressList() {
@@ -215,6 +215,9 @@ export class PurchaseOrderFormComponent implements OnInit {
       sortDir: "",
     }).subscribe((users: any) => {
       this.usersList = users?.content || [];
+      if(this.usersList?.length) {
+        this.selectedUser = this.usersList.find((user: any) => user.username === this.projectFormData.contactUsername);
+      }
     })
   }
 
@@ -310,6 +313,7 @@ export class PurchaseOrderFormComponent implements OnInit {
         //   " To " +
         //   this.projectFormData?.destinationLocation?.nodeType;
         this.detailsInputs = this.projectFormData?.details?.map((d: any) => {
+          // console.log(':: :: ', d);
           return {
             ...d,
             variantId: d?.variantId,
@@ -567,14 +571,20 @@ export class PurchaseOrderFormComponent implements OnInit {
                 // and it's not already in detailsInputs
 
                 this.detailsInputs.push({
+                  lineNumber: this.detailsInputs?.length + 1,
                   variantId: p?.variantId,
+                  color: p?.color,
                   skuNo: p?.sku,
                   skuDescription: p?.desc
                     ? p?.desc
                     : "" + " " + p?.size + " " + p?.color,
                   plannedQuantity: null,
                   productPrice: null,
+                  size: p?.size,
                   exwSgdCost: p.exwSgdCost,
+                  style: p?.style,
+                  fabicSwatch: p?.fabicSwatch,
+                  fabricComposition: p?.fabricComposition
                 });
 
                 // Add the variantId to the addedVariantIds array
@@ -638,7 +648,7 @@ export class PurchaseOrderFormComponent implements OnInit {
     });
   }
 
-  editQty(sDetails: any) {
+  editQty(sDetails: any, index: number) {
     const results = this.dialogService.open({
       ...this.editQtyConfig,
       // dialogtype: dialogtype,
@@ -649,6 +659,7 @@ export class PurchaseOrderFormComponent implements OnInit {
           text: "Update",
           disabled: false,
           handler: (variantList: any) => {
+            document.getElementById("createNdUpdateBtn")?.click();
             results.modalInstance.hide();
           },
         },
@@ -662,13 +673,18 @@ export class PurchaseOrderFormComponent implements OnInit {
         },
       ],
       data: {
-        // shipments: shipments,
-        // vList: (vData: any) => {},
+        sDetails: {
+          ...sDetails,
+          index: index
+        },
+        vList: (vData: any) => {
+          this.detailsInputs[vData?.index].plannedQuantity = vData?.plannedQuantity; 
+        },
       },
     });
   }
 
-  splitAllocation(sDetails: any) {
+  splitAllocation(sDetails: any, index: number) {
     const results = this.dialogService.open({
       ...this.splitAllocationConfig,
       // dialogtype: dialogtype,

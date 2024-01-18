@@ -108,6 +108,9 @@ export class PurchaseOrderFormModalComponent {
         .subscribe((res) => {
           res.variants.forEach((variant: any) => {
             variant.desc = res.logisticsDesc;
+            variant.style = res.styleName;
+            variant.fabicSwatch = res.fabicSwatch;
+            variant.fabricComposition = res.fabricComposition;
           });
           this.exwSgdCost = res.exwSgdCost;
           this.variantList = res.variants;
