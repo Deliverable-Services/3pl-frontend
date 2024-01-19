@@ -7,7 +7,7 @@ import { InventoryService } from "src/app/@core/mock/inventory.service";
   templateUrl: "./split-allocation-modal.component.html",
   styleUrls: ["./split-allocation-modal.component.scss"],
 })
-export class SplitAllocationModalComponent {
+export class SplitAllocationModalComponent implements OnInit {
   @Input() data: any;
   @Input() handler: Function;
   @Output() modalClosed = new EventEmitter<any>();
@@ -32,6 +32,27 @@ export class SplitAllocationModalComponent {
     private inventoryService: InventoryService
   ) {
     this.handler = () => {}; // Initialize the handler with a default empty function
+  }
+
+  ngOnInit(): void {
+    let stSplitDetails = this.data?.sDetails?.splitAddress;
+
+    if(stSplitDetails && Object.keys(stSplitDetails).length) { this.splitDetailsfields = []; }
+
+    for (const key in stSplitDetails) {
+      if (stSplitDetails.hasOwnProperty(key)) {
+        console.log(`${key}: ${stSplitDetails[key]}`);
+
+        let findSplitAddress = this.data?.shippingAddressList?.find((address: any) => address.id === key);
+
+        this.splitDetailsfields.push(
+          { market: findSplitAddress, qty: stSplitDetails[key] }
+        );
+
+        console.log(':: :: ', this.splitDetailsfields);
+
+      }
+    }
   }
 
   close($event: any) {

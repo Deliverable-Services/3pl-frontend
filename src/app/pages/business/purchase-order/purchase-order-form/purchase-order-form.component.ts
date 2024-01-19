@@ -686,6 +686,7 @@ export class PurchaseOrderFormComponent implements OnInit {
   }
 
   splitAllocation(sDetails: any, index: number) {
+    let stSpDetails = sDetails;
     const results = this.dialogService.open({
       ...this.splitAllocationConfig,
       buttons: [
@@ -703,9 +704,10 @@ export class PurchaseOrderFormComponent implements OnInit {
               // stObj.push(obj);
             });
 
-            this.purchaseOrderService.splitManagement(this.paramId, obj).subscribe((res: any) => {
-              console.log(':: :: ', res);
+            this.purchaseOrderService.splitManagement(stSpDetails.id, obj).subscribe((res: any) => {
               checkIfAllFilled?.length === 0 ? results.modalInstance.hide():null;
+              this._showToastMsg('success', 'Split Allocation Updated Successfully!');
+              this.getPurchaseOrderById(this.paramId);
             })
           },
         },
@@ -720,6 +722,7 @@ export class PurchaseOrderFormComponent implements OnInit {
       ],
       data: {
         shippingAddressList: this.shippingAddressList,
+        sDetails: sDetails,
         vList: (vData: any) => {
           this.storeSplitDetails = vData;
         },

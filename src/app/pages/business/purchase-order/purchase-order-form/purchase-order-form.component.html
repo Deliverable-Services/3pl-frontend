@@ -80,19 +80,19 @@
               </d-button>
 
 
-              <d-button *ngIf="projectFormData.orderStatus?.toLowerCase() === 'accepted'" [ngStyle]="{ float: 'right' }"
+              <d-button *ngIf="projectFormData.orderStatus?.toLowerCase() === 'open'" [ngStyle]="{ float: 'right' }"
                 class="mr-element-spacing" circled="true" style="margin-right: 8px"
                 (btnClick)="confirmDialog('release')">
                 {{ "form.purchaseOrder.buttons.release" | translate }}
               </d-button>
 
-              <d-button *ngIf="projectFormData.orderStatus?.toLowerCase() === 'open'" [ngStyle]="{ float: 'right' }"
+              <d-button *ngIf="projectFormData.orderStatus?.toLowerCase() === 'released'" [ngStyle]="{ float: 'right' }"
                 class="mr-element-spacing" circled="true" style="margin-right: 8px"
                 (btnClick)="confirmDialog('accept')">
                 {{ "form.purchaseOrder.buttons.accept" | translate }}
               </d-button>
 
-              <d-button *ngIf="projectFormData.orderStatus?.toLowerCase() === 'released'" [ngStyle]="{ float: 'right' }"
+              <d-button *ngIf="projectFormData.orderStatus?.toLowerCase() === 'accepted'" [ngStyle]="{ float: 'right' }"
                 class="mr-element-spacing" circled="true" style="margin-right: 8px" (btnClick)="confirmDialog('close')">
                 {{ "form.purchaseOrder.buttons.close" | translate }}
               </d-button>
@@ -209,7 +209,9 @@
                   <d-form-item [ngStyle]="{ margin: '20px 20px 20px 0px', width: '15%' }">
                     <d-form-label [required]="true">{{ "form.purchaseOrder.fields.expectedArrivalDate" | translate }}</d-form-label>
                     <d-form-control>
-                      <input class="set-width" dTextInput [(ngModel)]="projectFormData.dueDate" autocomplete="off"
+                      <input [ngClass]="{'manage-fields': (mode.toLowerCase() === 'edit' && projectFormData.orderStatus?.toLowerCase() !== 'draft')}"
+                      [disabled]="(mode.toLowerCase() === 'edit' && projectFormData.orderStatus?.toLowerCase() !== 'draft')"
+                      class="set-width" dTextInput [(ngModel)]="projectFormData.dueDate" autocomplete="off"
                       placeholder="y-MM-dd" [dValidateRules]="{
                       validators: [{ required: true }]
                     }" type="date" [min]="_dateVaidationForToday()" name="dueDate"/>
@@ -221,6 +223,8 @@
                     <d-form-control>
                       <!-- <input class="set-width" dTextInput autocomplete="off" name="attn"> -->
                         <d-select
+                        [ngClass]="{'manage-fields': (mode.toLowerCase() === 'edit' && projectFormData.orderStatus?.toLowerCase() !== 'draft')}"
+                        [disabled]="(mode.toLowerCase() === 'edit' && projectFormData.orderStatus?.toLowerCase() !== 'draft')"
                       [appendToBody]="true"
                       [multiple]="false" [filterKey]="'username'" [options]="usersList" name="attn"
                       [(ngModel)]="selectedUser" (valueChange)="setContactDetails($event)"
@@ -233,14 +237,14 @@
                   <d-form-item [ngStyle]="{ margin: '20px 20px 20px 0px' }">
                     <d-form-label [required]="true">Tel</d-form-label>
                     <d-form-control>
-                      <input [(ngModel)]="projectFormData.contactPhone" class="set-width" dTextInput autocomplete="off" name="tel"/>
+                      <input [disabled]="true" [(ngModel)]="projectFormData.contactPhone" class="set-width manage-fields" dTextInput autocomplete="off" name="tel"/>
                     </d-form-control>
                   </d-form-item>
 
                   <d-form-item [ngStyle]="{ margin: '20px 20px 20px 0px' }">
                     <d-form-label [required]="true">Email</d-form-label>
                     <d-form-control>
-                      <input [(ngModel)]="projectFormData.contactEmail" class="set-width" dTextInput autocomplete="off" name="email"/>
+                      <input [disabled]="true" [(ngModel)]="projectFormData.contactEmail" class="set-width manage-fields" dTextInput autocomplete="off" name="email"/>
                     </d-form-control>
                   </d-form-item>
 
@@ -248,7 +252,7 @@
                     <d-form-label [required]="true">{{ "form.purchaseOrder.fields.expectedDeliveryDate" | translate
                     }}</d-form-label>
                     <d-form-control>
-                      <input class="set-width" dTextInput [(ngModel)]="projectFormData.issueDate" autocomplete="off"
+                      <input [disabled]="true" class="set-width manage-fields" dTextInput [(ngModel)]="projectFormData.issueDate" autocomplete="off"
                       placeholder="y-MM-dd" type="date" [min]="_dateVaidationForToday()" name="issueDate"/>
                     </d-form-control>
                   </d-form-item>
@@ -345,8 +349,8 @@
                     [ngClass]="{'set-child-botder': ((i+1) !== detailsInputs?.length)}">
                         <td class="manage-table-content first-head">
                           <span class="set-image">
-                            <img (click)="editQty(input, i)" src="assets/draw.png"/>
-                            <img (click)="removeNow(i)" src="assets/minus.png"/>
+                            <img *ngIf="projectFormData.orderStatus?.toLowerCase() === 'draft'" (click)="editQty(input, i)" src="assets/draw.png"/>
+                            <img *ngIf="projectFormData.orderStatus?.toLowerCase() === 'draft'" (click)="removeNow(i)" src="assets/minus.png"/>
                             <img (click)="getPurchaseOrderById(paramId)" src="assets/refresh.png"/>
                           </span>
                         </td>
