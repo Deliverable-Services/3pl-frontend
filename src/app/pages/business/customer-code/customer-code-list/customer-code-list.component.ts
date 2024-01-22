@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { Router } from "@angular/router";
-import { ShippingAddressService } from 'src/app/@core/mock/shipping-address.service';
+import { CustomerCodeService } from 'src/app/@core/mock/customer-code.service';
 import {
   SortEventArg,
   ToastService,
@@ -39,7 +39,7 @@ export class CustomerCodeListComponent implements OnInit {
   };
 
   constructor(
-    private $service: ShippingAddressService,
+    private $service: CustomerCodeService,
     private router: Router,
     private toastService: ToastService,
     private dialogService: DialogService
@@ -94,7 +94,7 @@ export class CustomerCodeListComponent implements OnInit {
   }
 
   editRow(rowId: any, index: number) {
-    this.router.navigate([`/business/shipping-address/edit/${rowId}`]);
+    this.router.navigate([`/business/customer-code/edit/${rowId}`]);
   }
 
   confirmDialog(rowId: any, index: number) {

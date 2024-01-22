@@ -343,6 +343,13 @@ export default {
         split: "Split"
       },
     },
+    customerCode: {
+      edit: "Edit Customer Code",
+      fields: {
+        customerName: "Customer Name",
+        customerCode: "Customer Code"
+      },
+    },
     connectionLocationList: {
       edit_location: "Edit Inventory Node",
       fields: {

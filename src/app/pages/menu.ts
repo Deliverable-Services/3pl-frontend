@@ -38,6 +38,11 @@ export default function (values: any) {
       title: "purchasing",
       children: [
         {
+          title: "customerCode",
+          link: "/business/customer-code",
+          disabled: false
+        },
+        {
           title: "shippingAddress",
           link: "/business/shipping-address",
           disabled: false

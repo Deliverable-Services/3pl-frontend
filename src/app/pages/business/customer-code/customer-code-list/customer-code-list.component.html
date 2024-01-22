@@ -6,10 +6,10 @@
             "list.breadcrumb.home" | translate
           }}</a></d-breadcrumb-item
         >
-        <d-breadcrumb-item>{{ "list.shippingAddress.title" | translate }}</d-breadcrumb-item>
+        <d-breadcrumb-item>{{ "list.customerCode.title" | translate }}</d-breadcrumb-item>
       </d-breadcrumb>
       <div class="da-content-banner-title">
-        {{ "list.shippingAddress.list" | translate }}
+        {{ "list.customerCode.list" | translate }}
       </div>
     </div>
     <div class="da-content-wrapper">
@@ -29,7 +29,7 @@
                     ></d-search> -->
                   </div>
                   <div class="header-right">
-                    <d-button class="mr-element-spacing" routerLink="add">{{"list.shippingAddress.buttonTitle" | translate}}</d-button>
+                    <d-button class="mr-element-spacing" routerLink="add">{{"list.customerCode.buttonTitle" | translate}}</d-button>
                   </div>
                 </div>
               </div>
@@ -44,8 +44,8 @@
                 (multiSortChange)="multiSortChange($event)"
               >
                 <d-column
-                  [field]="'market'"
-                  [header]="'list.shippingAddress.table.market' | translate"
+                  [field]="'customerName'"
+                  [header]="'list.customerCode.table.customerName' | translate"
                   [sortable]="true"
                 >
                   <d-cell>
@@ -58,8 +58,8 @@
                 </d-column>
 
                 <d-column
-                  [field]="'locationName'"
-                  [header]="'list.shippingAddress.table.locationName' | translate"
+                  [field]="'customerCode'"
+                  [header]="'list.customerCode.table.customerCode' | translate"
                   [sortable]="true"
                 >
                   <d-cell>
@@ -70,48 +70,6 @@
                     </ng-template>
                   </d-cell>
                 </d-column>
-
-                <d-column
-                  [field]="'address'"
-                  [header]="'list.shippingAddress.table.address' | translate"
-                  [sortable]="true"
-                >
-                  <d-cell>
-                    <ng-template let-cellItem="cellItem">
-                      <span [title]="cellItem" class="over-flow-ellipsis">
-                        {{ cellItem }}
-                      </span>
-                    </ng-template>
-                  </d-cell>
-                </d-column>
-
-                <d-column
-                [field]="'shipTo'"
-                [header]="'list.shippingAddress.table.shipTo' | translate"
-                [sortable]="true"
-              >
-                <d-cell>
-                  <ng-template let-cellItem="cellItem">
-                    <span [title]="cellItem" class="over-flow-ellipsis">
-                      {{ (cellItem === true || cellItem === 'true') ? 'YES':'NO' }}
-                    </span>
-                  </ng-template>
-                </d-cell>
-              </d-column>
-
-              <d-column
-                [field]="'split'"
-                [header]="'list.shippingAddress.table.split' | translate"
-                [sortable]="true"
-             >
-                <d-cell>
-                  <ng-template let-cellItem="cellItem">
-                    <span [title]="cellItem" class="over-flow-ellipsis">
-                      {{ (cellItem === true || cellItem === 'true') ? 'YES':'NO' }}
-                    </span>
-                  </ng-template>
-                </d-cell>
-              </d-column>
   
                 <d-column
                   [field]="'lastModifiedDate'"

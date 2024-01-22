@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormLayout, ToastService } from "ng-devui";
 import { ActivatedRoute, Router } from "@angular/router";
-import { ShippingAddressService } from 'src/app/@core/mock/shipping-address.service';
+import { CustomerCodeService } from 'src/app/@core/mock/customer-code.service';
 import { MSG } from 'src/config/global-var';
 
 @Component({
@@ -14,16 +14,13 @@ export class CustomerCodeFormComponent implements OnInit {
   mode: string = "Add";
   verticalLayout: FormLayout = FormLayout.Vertical;
   projectFormData = {
-    address: "",
-    locationName: "",
-    market: "",
-    shipTo: false,
-    split: false
+    customerCode: "",
+    customerName: ""
   };
   paramId: string = "";
   selectedCreditTerms: any = {};
   constructor(
-    private $service: ShippingAddressService,
+    private $service: CustomerCodeService,
     private route: ActivatedRoute,
     private router: Router,
     private toastService: ToastService
@@ -67,7 +64,7 @@ export class CustomerCodeFormComponent implements OnInit {
     if(resp) {
       type = 'success';
       msg = this.mode === 'Add' ? MSG.create:MSG.update;
-      this.router.navigate(["/business/shipping-address"]);
+      this.router.navigate(["/business/customer-code"]);
     } else {
       type = 'error';
       msg = MSG.error;

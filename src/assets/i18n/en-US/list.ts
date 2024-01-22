@@ -51,6 +51,12 @@ export default {
       buttonTitle: 'Add Shipping Address',
       table: {market: 'Market', locationName: 'Location Name', address: 'Address', shipTo: 'Ship To', split: 'Split'}
     },
+    customerCode:{
+      title:"Customer Code",
+      list: 'Customer Code List',
+      buttonTitle: 'Add Customer Code',
+      table: { customerName: 'Customer Name', customerCode: 'Customer Code'}
+    },
     connectionLocationList: {
       title: 'Node Setup',
       list: 'Inventory Node List',

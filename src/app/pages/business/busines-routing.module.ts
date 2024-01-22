@@ -129,6 +129,11 @@ const routes: Routes = [
     loadChildren: () =>
       import("./shipping-address/shipping-address.module").then((m) => m.ShippingAddressModule),
   },
+  {
+    path: "customer-code",
+    loadChildren: () =>
+      import("./customer-code/customer-code.module").then((m) => m.CustomerCodeModule),
+  },
   // {
   //   path: "inventory",
   //   component: InventoryListComponent,
