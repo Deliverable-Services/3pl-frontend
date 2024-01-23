@@ -98,13 +98,16 @@
               </d-button>
             </d-form-operation>
           </div>
-          <div class="da-content-banner-title">
-            {{
-            (mode === "Add"
-            ? "form.purchaseOrder.buttonTitle"
-            : "form.purchaseOrder.editButtonTitle"
-            ) | translate
-            }} <span *ngIf="projectFormData.orderStatus">&nbsp;({{ projectFormData.id }})</span>
+          <div class="title-flex">
+            <div class="da-content-banner-title">
+              {{
+              (mode === "Add"
+              ? "form.purchaseOrder.buttonTitle"
+              : "form.purchaseOrder.editButtonTitle"
+              ) | translate
+              }} <span *ngIf="projectFormData.orderStatus">&nbsp;({{ projectFormData.id }})</span>
+            </div>
+            <button class="btn linked-btn">Linked Invoice</button>
           </div>
           <!-- {{projectFormData | json}} -->
           <div [ngStyle]="{ display: 'flex', justifyContent: 'space-between' }">
@@ -205,60 +208,65 @@
           </div>
 
           <div [ngStyle]="{ display: 'flex', justifyContent: 'space-between', width: '100%' }">
-                <div [ngStyle]="{ display: 'flex', width: '100%' }">
-                  <d-form-item [ngStyle]="{ margin: '20px 20px 20px 0px', width: '15%' }">
-                    <d-form-label [required]="true">{{ "form.purchaseOrder.fields.expectedArrivalDate" | translate }}</d-form-label>
-                    <d-form-control>
-                      <input [ngClass]="{'manage-fields': (mode.toLowerCase() === 'edit' && projectFormData.orderStatus?.toLowerCase() !== 'draft')}"
-                      [disabled]="(mode.toLowerCase() === 'edit' && projectFormData.orderStatus?.toLowerCase() !== 'draft')"
-                      class="set-width" dTextInput [(ngModel)]="projectFormData.dueDate" autocomplete="off"
-                      placeholder="y-MM-dd" [dValidateRules]="{
+            <div [ngStyle]="{ display: 'flex', width: '100%' }">
+              <d-form-item [ngStyle]="{ margin: '20px 20px 20px 0px', width: '15%' }">
+                <d-form-label [required]="true">{{ "form.purchaseOrder.fields.expectedArrivalDate" | translate
+                  }}</d-form-label>
+                <d-form-control>
+                  <input
+                    [ngClass]="{'manage-fields': (mode.toLowerCase() === 'edit' && projectFormData.orderStatus?.toLowerCase() !== 'draft')}"
+                    [disabled]="(mode.toLowerCase() === 'edit' && projectFormData.orderStatus?.toLowerCase() !== 'draft')"
+                    class="set-width" dTextInput [(ngModel)]="projectFormData.dueDate" autocomplete="off"
+                    placeholder="y-MM-dd" [dValidateRules]="{
                       validators: [{ required: true }]
-                    }" type="date" [min]="_dateVaidationForToday()" name="dueDate"/>
-                    </d-form-control>
-                  </d-form-item>
+                    }" type="date" [min]="_dateVaidationForToday()" name="dueDate" />
+                </d-form-control>
+              </d-form-item>
 
-                  <d-form-item [ngStyle]="{ margin: '20px 20px 20px 0px' }">
-                    <d-form-label [required]="true">Attn</d-form-label>
-                    <d-form-control>
-                      <!-- <input class="set-width" dTextInput autocomplete="off" name="attn"> -->
-                        <d-select
-                        [ngClass]="{'manage-fields': (mode.toLowerCase() === 'edit' && projectFormData.orderStatus?.toLowerCase() !== 'draft')}"
-                        [disabled]="(mode.toLowerCase() === 'edit' && projectFormData.orderStatus?.toLowerCase() !== 'draft')"
-                      [appendToBody]="true"
-                      [multiple]="false" [filterKey]="'username'" [options]="usersList" name="attn"
-                      [(ngModel)]="selectedUser" (valueChange)="setContactDetails($event)"
-                      [dValidateRules]="{
+              <d-form-item [ngStyle]="{ margin: '20px 20px 20px 0px' }">
+                <d-form-label [required]="true">Attn</d-form-label>
+                <d-form-control>
+                  <!-- <input class="set-width" dTextInput autocomplete="off" name="attn"> -->
+                  <d-select
+                    [ngClass]="{'manage-fields': (mode.toLowerCase() === 'edit' && projectFormData.orderStatus?.toLowerCase() !== 'draft')}"
+                    [disabled]="(mode.toLowerCase() === 'edit' && projectFormData.orderStatus?.toLowerCase() !== 'draft')"
+                    [appendToBody]="true" [multiple]="false" [filterKey]="'username'" [options]="usersList" name="attn"
+                    [(ngModel)]="selectedUser" (valueChange)="setContactDetails($event)" [dValidateRules]="{
                         validators: [{ required: true }]
                       }"></d-select>
-                    </d-form-control>
-                  </d-form-item>
+                </d-form-control>
+              </d-form-item>
 
-                  <d-form-item [ngStyle]="{ margin: '20px 20px 20px 0px' }">
-                    <d-form-label [required]="true">Tel</d-form-label>
-                    <d-form-control>
-                      <input [disabled]="true" [(ngModel)]="projectFormData.contactPhone" class="set-width manage-fields" dTextInput autocomplete="off" name="tel"/>
-                    </d-form-control>
-                  </d-form-item>
+              <d-form-item [ngStyle]="{ margin: '20px 20px 20px 0px' }">
+                <d-form-label [required]="true">Tel</d-form-label>
+                <d-form-control>
+                  <input [disabled]="true" [(ngModel)]="projectFormData.contactPhone" class="set-width manage-fields"
+                    dTextInput autocomplete="off" name="tel" />
+                </d-form-control>
+              </d-form-item>
 
-                  <d-form-item [ngStyle]="{ margin: '20px 20px 20px 0px' }">
-                    <d-form-label [required]="true">Email</d-form-label>
-                    <d-form-control>
-                      <input [disabled]="true" [(ngModel)]="projectFormData.contactEmail" class="set-width manage-fields" dTextInput autocomplete="off" name="email"/>
-                    </d-form-control>
-                  </d-form-item>
+              <d-form-item [ngStyle]="{ margin: '20px 20px 20px 0px' }">
+                <d-form-label [required]="true">Email</d-form-label>
+                <d-form-control>
+                  <input [disabled]="true" [(ngModel)]="projectFormData.contactEmail" class="set-width manage-fields"
+                    dTextInput autocomplete="off" name="email" />
+                </d-form-control>
+              </d-form-item>
 
-                  <d-form-item [ngStyle]="{ margin: '20px 20px 20px 0px', width: '15%' }">
-                    <d-form-label [required]="true">{{ "form.purchaseOrder.fields.expectedDeliveryDate" | translate
-                    }}</d-form-label>
-                    <d-form-control>
-                      <input [disabled]="true" class="set-width manage-fields" dTextInput [(ngModel)]="projectFormData.issueDate" autocomplete="off"
-                      placeholder="y-MM-dd" type="date" [min]="_dateVaidationForToday()" name="issueDate"/>
-                    </d-form-control>
-                  </d-form-item>
-                </div>
+              <d-form-item [ngStyle]="{ margin: '20px 20px 20px 0px', width: '15%' }">
+              </d-form-item>
+              <d-form-item [ngStyle]="{ margin: '20px 20px 20px 0px', width: '15%' }">
+                <d-form-label [required]="true">{{ "form.purchaseOrder.fields.expectedDeliveryDate" | translate
+                  }}</d-form-label>
+                <d-form-control>
+                  <input [disabled]="true" class="set-width manage-fields" dTextInput
+                    [(ngModel)]="projectFormData.issueDate" autocomplete="off" placeholder="y-MM-dd" type="date"
+                    [min]="_dateVaidationForToday()" name="issueDate" />
+                </d-form-control>
+              </d-form-item>
+            </div>
 
-              </div>
+          </div>
 
           <d-form-item [ngStyle]="{ marginTop: '20px' }"
             [ngClass]="{'set-cursor': !(mode.toLowerCase() !== 'edit') && projectFormData.orderStatus?.toLowerCase() !== 'draft'}">
@@ -327,49 +335,51 @@
                   <thead>
                     <tr class="set-head-botder">
                       <!-- <span class="head-row"> -->
-                        <th class="manage-table-head first-head"></th>
-                        <th class="manage-table-head">Line No.</th>
-                        <th class="manage-table-head">Image</th>
-                        <th class="manage-table-head">SKU</th>
-                        <th class="manage-table-head">Style Name</th>
-                        <th class="manage-table-head">Colour</th>
-                        <th class="manage-table-head">Size</th>
-                        <th class="manage-table-head">Fabric Content</th>
-                        <th class="manage-table-head">Fabrice Swatch</th>
-                        <th class="manage-table-head">EXW Price(SGD)</th>
-                        <th class="manage-table-head">EXW Price(RMB)</th>
-                        <th class="manage-table-head">Planned Qty</th>
-                        <th class="manage-table-head">Split Details</th>
+                      <th class="manage-table-head first-head"></th>
+                      <th class="manage-table-head">Line No.</th>
+                      <th class="manage-table-head">Image</th>
+                      <th class="manage-table-head">SKU</th>
+                      <th class="manage-table-head">Style Name</th>
+                      <th class="manage-table-head">Colour</th>
+                      <th class="manage-table-head">Size</th>
+                      <th class="manage-table-head">Fabric Content</th>
+                      <th class="manage-table-head">Fabrice Swatch</th>
+                      <th class="manage-table-head">EXW Price(SGD)</th>
+                      <th class="manage-table-head">EXW Price(RMB)</th>
+                      <th class="manage-table-head">Planned Qty</th>
+                      <th class="manage-table-head">Split Details</th>
                       <!-- </span> -->
                     </tr>
                   </thead>
-    
+
                   <tbody>
                     <tr *ngFor="let input of detailsInputs; let i = index"
-                    [ngClass]="{'set-child-botder': ((i+1) !== detailsInputs?.length)}">
-                        <td class="manage-table-content first-head">
-                          <span class="set-image">
-                            <img *ngIf="projectFormData.orderStatus?.toLowerCase() === 'draft'" (click)="editQty(input, i)" src="assets/draw.png"/>
-                            <img *ngIf="projectFormData.orderStatus?.toLowerCase() === 'draft'" (click)="removeNow(i)" src="assets/minus.png"/>
-                            <img (click)="getPurchaseOrderById(paramId)" src="assets/refresh.png"/>
-                          </span>
-                        </td>
-                        <td class="manage-table-content"> {{ input.lineNumber }}</td>
-                        <td class="manage-table-content"> {{ input?.iamge || '-' }}</td>
-                        <td class="manage-table-content"> {{ input?.skuNo || '-' }} </td>
-                        <td class="manage-table-content"> {{ input?.style || '-' }}</td>
-                        <td class="manage-table-content"> {{ input?.color || '-' }} </td>
-                        <td class="manage-table-content"> {{ input?.size || '-' }}</td>
-                        <td class="manage-table-content"> {{ input?.fabricComposition || '-' }} </td>
-                        <td class="manage-table-content"> {{ input?.fabicSwatch || '-' }} </td>
-                        <td class="manage-table-content"> {{ input?.exwSgdCost || '-' }} </td>
-                        <td class="manage-table-content"> - </td>
-                        <td class="manage-table-content"> {{ input.plannedQuantity }}</td>
-                        <td class="manage-table-content">
-                          <button (click)="splitAllocation(input, i)" class="manage-split-button">
-                            Split Allocation
-                          </button>
-                        </td>
+                      [ngClass]="{'set-child-botder': ((i+1) !== detailsInputs?.length)}">
+                      <td class="manage-table-content first-head">
+                        <span class="set-image">
+                          <img *ngIf="projectFormData.orderStatus?.toLowerCase() === 'draft'"
+                            (click)="editQty(input, i)" src="assets/draw.png" />
+                          <img *ngIf="projectFormData.orderStatus?.toLowerCase() === 'draft'" (click)="removeNow(i)"
+                            src="assets/minus.png" />
+                          <img (click)="getPurchaseOrderById(paramId)" src="assets/refresh.png" />
+                        </span>
+                      </td>
+                      <td class="manage-table-content"> {{ input.lineNumber }}</td>
+                      <td class="manage-table-content"> {{ input?.iamge || '-' }}</td>
+                      <td class="manage-table-content"><span> {{ input?.skuNo || '-' }} </span></td>
+                      <td class="manage-table-content"><span> {{ input?.style || '-' }}</span></td>
+                      <td class="manage-table-content"> {{ input?.color || '-' }} </td>
+                      <td class="manage-table-content"> {{ input?.size || '-' }}</td>
+                      <td class="manage-table-content"><span> {{ input?.fabricComposition || '-' }} </span></td>
+                      <td class="manage-table-content"><span> {{ input?.fabicSwatch || '-' }}</span> </td>
+                      <td class="manage-table-content"> {{ input?.exwSgdCost || '-' }} </td>
+                      <td class="manage-table-content"> - </td>
+                      <td class="manage-table-content"> {{ input.plannedQuantity }}</td>
+                      <td class="manage-table-content">
+                        <button (click)="splitAllocation(input, i)" class="manage-split-button">
+                          Split Allocation
+                        </button>
+                      </td>
                     </tr>
                     <!-- <tr>
                         <td class="manage-table-content first-head">

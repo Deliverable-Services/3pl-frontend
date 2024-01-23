@@ -2,6 +2,7 @@
   text-align: center;
   font-size: 7px;
   color: #000;
+  margin-bottom: 20px;
 
   h1 {
     margin: auto;
@@ -16,7 +17,11 @@
     color: #000;
   }
 }
-
+.form-details{
+  d-select{
+    width: 100%;
+  }
+}
 .form-input {
   display: inline-flex;
   margin-left: 10px;

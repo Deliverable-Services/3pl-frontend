@@ -20,40 +20,24 @@
               [(ngModel)]="sDetails.market"
               [placeholder]="'form.shippingAddress.fields.market' | translate"
             /> -->
-            <d-select
-                    [appendToBody]="true"
-                    [multiple]="false" [filterKey]="'keyToUse'" [options]="stShippingAddressInfo"
-                    (valueChange)="saveCurrentValue()"
-                    [name]="'market-'+in"
-                    [(ngModel)]="sDetails.market"
-                    [placeholder]="'form.shippingAddress.fields.market' | translate"
-                    [dValidateRules]="{
+            <d-select [appendToBody]="true" [multiple]="false" [filterKey]="'keyToUse'"
+              [options]="stShippingAddressInfo" (valueChange)="saveCurrentValue()" [name]="'market-'+in"
+              [(ngModel)]="sDetails.market" [placeholder]="'form.shippingAddress.fields.market' | translate"
+              [dValidateRules]="{
                       validators: [{ required: true }]
                     }"></d-select>
           </d-form-control>
         </d-form-item>
-        <d-form-item [ngStyle]="{ width: '100px', marginLeft: '10px'}">
+        <d-form-item [ngStyle]="{ width: '80px', marginLeft: '10px'}">
           <d-form-label [required]="true" [hasHelp]="false"> Qty </d-form-label>
           <d-form-control>
-            <input
-              dTextInput
-              (input)="saveCurrentValue()"
-              autocomplete="off"
-              [name]="'qty-'+sDetails.qty"
-              [(ngModel)]="sDetails.qty"
-              [placeholder]="'form.shippingAddress.fields.market' | translate"
-            />
+            <input dTextInput (input)="saveCurrentValue()" autocomplete="off" [name]="'qty-'+sDetails.qty"
+              [(ngModel)]="sDetails.qty" [placeholder]="'form.shippingAddress.fields.market' | translate" />
           </d-form-control>
         </d-form-item>
 
-        <d-button
-        *ngIf="in !== 0"
-          (click)="removeRow(in)"
-          bsStyle="danger"
-          class="danger"
-          circled="true"
-          style="margin-right: 8px; margin-top: 18px; margin-left: 10px"
-        >
+        <d-button *ngIf="in !== 0" (click)="removeRow(in)" bsStyle="danger" class="danger" circled="true"
+          style="margin-right: 8px; margin-top: 18px; margin-left: 10px">
           {{ "form.purchaseOrder.buttons.remove" | translate }}
         </d-button>
       </div>
@@ -66,45 +50,45 @@
     <h1>Split Summary</h1>
 
     <div class="content-part">
-        <table>
-            <tr class="header-class">
-                <th>Market</th>
-                <th class="set-mrgn">Total Qty</th>
-                <th class="set-mrgn">Percentage</th>
+      <table>
+        <tr class="header-class">
+          <th>Market</th>
+          <th class="set-mrgn">Total Qty</th>
+          <th class="set-mrgn">Percentage</th>
+        </tr>
+
+        <ng-container *ngFor="let summary of splitSummaryDetails; let ind = index">
+          <tr class="parent-row">
+            <td> {{ summary.market.market }} </td>
+            <td class="set-mrgn">400</td>
+            <td class="set-mrgn">80%
+              <span class="manage-toggle">
+                <img *ngIf="childCaseIds.indexOf(ind) === -1" (click)="manageToggle(ind)" src="assets/down-key.png" />
+                <img *ngIf="childCaseIds.indexOf(ind) > -1" (click)="manageToggle(ind)" src="assets/up-key.png" />
+              </span>
+            </td>
+          </tr>
+
+          <ng-container *ngIf="childCaseIds.indexOf(ind) > -1">
+            <tr *ngFor="let summaryDetails of summary.childDetails; let nInd = index" class="child-row">
+              <td> {{ summaryDetails.market.locationName }} </td>
+              <td class="set-mrgn">400</td>
+              <td class="set-mrgn">80%</td>
             </tr>
-
-            <ng-container *ngFor="let summary of splitSummaryDetails; let ind = index">
-              <tr class="parent-row">
-                  <td> {{ summary.market.market }} </td>
-                  <td class="set-mrgn">400</td>
-                  <td class="set-mrgn">80%
-                    <span class="manage-toggle">
-                      <img *ngIf="childCaseIds.indexOf(ind) === -1" (click)="manageToggle(ind)" src="assets/down-key.png"/>
-                      <img *ngIf="childCaseIds.indexOf(ind) > -1" (click)="manageToggle(ind)" src="assets/up-key.png"/>
-                    </span>
-                  </td>
-              </tr>
-
-              <ng-container *ngIf="childCaseIds.indexOf(ind) > -1">
-                <tr *ngFor="let summaryDetails of summary.childDetails; let nInd = index" class="child-row">
-                  <td> {{ summaryDetails.market.locationName }} </td>
-                  <td class="set-mrgn">400</td>
-                  <td class="set-mrgn">80%</td>
-                </tr>
-              </ng-container>
-            <!-- <tr class="child-row">
+          </ng-container>
+          <!-- <tr class="child-row">
               <td>SC</td>
               <td class="set-mrgn">400</td>
               <td class="set-mrgn">80%</td>
             </tr> -->
-          </ng-container>
+        </ng-container>
 
-            <!-- <tr class="parent-row">
+        <!-- <tr class="parent-row">
                 <td>JP</td>
                 <td class="set-mrgn">110</td>
                 <td class="set-mrgn">20%</td>
             </tr> -->
-        </table>
+      </table>
     </div>
   </div>
 </div>

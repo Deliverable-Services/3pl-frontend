@@ -46,7 +46,6 @@
 }
 
 form {
-  margin: 0 20px;
   width: 100%;
 }
 
@@ -114,12 +113,15 @@ form {
   border: 10px solid #D9D9D9;
   padding: 8px;
   border-radius: 4px;
+  white-space: nowrap;
+  overflow: auto;
   table {
     border-collapse: collapse;
     line-height: 35px;
   }
   .manage-table {
     width: 100%;
+    
     .set-head-botder {
       border-bottom: 1px solid #000000;
     }
@@ -127,18 +129,21 @@ form {
       border-bottom: 1px solid lightgrey;
     }
     .manage-table-head {
-      padding: 0px 20px;
+      padding: 0px 10px;
       font-size: 12px;
+      text-align: left;
       // font-weight: bold;
     }
     .manage-table-content {
-      padding: 0px 20px;
+      padding: 0px 10px;
       font-size: 12px;
-
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      max-width: 100px;
+      span{
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        max-width: 100px;
+        display: block;
+      }
     }
     .first-head {
       padding: 0px !important;
@@ -155,6 +160,10 @@ form {
 
   }
 }
+.add-details-table::-webkit-scrollbar{
+  width: 0;
+  height: 0;
+}
 
 .set-image {
   img {
@@ -164,4 +173,20 @@ form {
   img:hover {
     cursor: pointer;
   }
+}
+.title-flex{
+  display: flex;
+  gap: 20px;
+  align-items: center;
+}
+.linked-btn{
+  border-radius: 5px;
+  background: #5E7CE0;
+  color: #FFF;
+  text-align: center;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  padding: 8px 20px;
 }

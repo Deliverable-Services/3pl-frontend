@@ -144,7 +144,7 @@ export class PurchaseOrderFormComponent implements OnInit {
 
   splitAllocationConfig = {
     id: "dialog-service",
-    width: "50%",
+    width: "70%",
     maxHeight: "600px",
     content: SplitAllocationModalComponent,
     backdropCloseable: true,
