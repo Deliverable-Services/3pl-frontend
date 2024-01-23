@@ -12,6 +12,7 @@ export class SplitAllocationModalComponent implements OnInit {
   @Input() handler: Function;
   @Output() modalClosed = new EventEmitter<any>();
 
+  stShippingAddressInfo: any[] = [];
   splitDetailsfields: any[] = [
     { market: '', qty: '' }
   ];
@@ -26,6 +27,8 @@ export class SplitAllocationModalComponent implements OnInit {
     columnName: "styleName",
     searchType: "match",
   };
+  splitSummaryDetails:any[] = [];
+  childCaseIds:any[] = [];
 
   constructor(
     private productsListDataService: ProductsListDataService,
@@ -39,20 +42,43 @@ export class SplitAllocationModalComponent implements OnInit {
 
     if(stSplitDetails && Object.keys(stSplitDetails).length) { this.splitDetailsfields = []; }
 
+    this.stShippingAddressInfo = this.data?.shippingAddressList?.map((sAddress: any) => {
+      return {
+        ...sAddress,
+        keyToUse: sAddress.market+' - '+sAddress.locationName
+      }
+    })
+
     for (const key in stSplitDetails) {
       if (stSplitDetails.hasOwnProperty(key)) {
-        console.log(`${key}: ${stSplitDetails[key]}`);
-
+        
         let findSplitAddress = this.data?.shippingAddressList?.find((address: any) => address.id === key);
+        findSplitAddress['keyToUse'] = findSplitAddress.market+' - '+findSplitAddress.locationName;
 
         this.splitDetailsfields.push(
           { market: findSplitAddress, qty: stSplitDetails[key] }
         );
 
-        console.log(':: :: ', this.splitDetailsfields);
-
       }
     }
+    this._manageSplitSummaryDetails(this.splitDetailsfields);
+  }
+
+  _manageSplitSummaryDetails(savedDetails: any) {
+    savedDetails?.forEach((d: any) => {
+      let findIndex = this.splitSummaryDetails.findIndex((split: any) => split?.market?.market === d.market.market);
+      console.log(':: :: ', findIndex);
+      if(findIndex === -1) {
+        d['childDetails'] = [d];
+        this.splitSummaryDetails.push(d);
+      } else {
+        let lcDetails = this.splitSummaryDetails[findIndex]?.childDetails?.findIndex((child: any) => child?.market?.locationName === d?.market?.locationName);
+        if(lcDetails === -1) {
+          this.splitSummaryDetails[findIndex]?.childDetails?.push(d);
+        }
+      }
+    });
+    console.log(':: :: ', this.splitSummaryDetails);
   }
 
   close($event: any) {
@@ -187,5 +213,11 @@ export class SplitAllocationModalComponent implements OnInit {
 
   saveCurrentValue() {
     this.data.vList(this.splitDetailsfields);
+    this._manageSplitSummaryDetails(this.splitDetailsfields);
+  }
+
+  manageToggle(index: number) {
+    let getIndex = this.childCaseIds.findIndex((n: number) => n === index);
+    getIndex === -1 ? this.childCaseIds.push(index):this.childCaseIds.splice(index, 1);
   }
 }

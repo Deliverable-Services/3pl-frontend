@@ -40,7 +40,33 @@
 
   .content-part {
     .set-mrgn {
-      margin-left: 50px;
+      // margin-left: 50px;
+    }
+    table {
+      border-collapse: collapse;
+      width: 100%;
+
+      tr {
+        text-align: left;
+      }
+
+      .header-class {
+        border-bottom: 1px solid #000;
+      }
+      .parent-row {
+        border-bottom: 1px solid #000;
+        .manage-toggle img {
+          width: 8%;
+          margin: 0px 0px 0px 28px;
+        }
+        .manage-toggle img:hover {
+          cursor: pointer;
+        }
+      }
+      .child-row {
+        color: #575D6C;
+        background: #D9D9D9;
+      }
     }
   }
 }
