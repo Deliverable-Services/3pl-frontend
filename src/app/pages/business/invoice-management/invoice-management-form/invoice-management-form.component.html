@@ -4,14 +4,14 @@
       <d-breadcrumb-item>
         <a routerLink="/business/purchase-order/">{{
           "list.invoiceManagement.title" | translate
-        }}</a>
+          }}</a>
       </d-breadcrumb-item>
       <d-breadcrumb-item>
         {{
-          (mode === "Add"
-            ? "form.invoiceManagement.buttonTitle"
-            : "form.invoiceManagement.editButtonTitle"
-          ) | translate
+        (mode === "Add"
+        ? "form.invoiceManagement.buttonTitle"
+        : "form.invoiceManagement.editButtonTitle"
+        ) | translate
         }}
       </d-breadcrumb-item>
     </d-breadcrumb>
@@ -21,130 +21,406 @@
 <div class="da-content-wrapper">
   <da-layout-row [daGutter]="[24, 24]">
     <da-col-item [daSpan]="24" [daXs]="24">
-      <div
-        class="da-basic-form"
-        [ngStyle]="{ display: 'flex', justifyContent: 'space-between' }"
-      >
-        <form
-          dForm
-          ngForm
-          [dValidateRules]="{
+      <div class="da-basic-form" [ngStyle]="{ display: 'flex', justifyContent: 'space-between' }">
+        <form dForm ngForm [dValidateRules]="{
             message: 'The form verification failed, please check.'
-          }"
-          [layout]="verticalLayout"
-          #projectForm="dValidateRules"
-          (dSubmit)="submitProjectForm($event)"
-          autocomplete="off"
-        >
+          }" [layout]="verticalLayout" #projectForm="dValidateRules" (dSubmit)="submitProjectForm($event)"
+          autocomplete="off">
           <div [ngStyle]="{ width: '100%' }">
             <d-form-operation>
-              <div
-                *ngIf="projectFormData.status"
-                style="text-align: right"
-              >
-                <label
-                  ><span class="bold-label"
-                    >{{ "list.invoiceManagement.status" | translate }}:</span
-                  >
+              <div *ngIf="projectFormData.status" style="text-align: right">
+                <label><span class="bold-label">{{ "list.invoiceManagement.status" | translate }}:</span>
                   {{ projectFormData.status }}
                 </label>
                 <br />
                 <label>Created By: {{ projectFormData.createdBy }}</label>
                 <label>Created Date: {{ createdDate }}</label>
                 <br />
-                <label
-                  >Last Modified By: {{ projectFormData.lastModifiedBy }}</label
-                >
+                <label>Last Modified By: {{ projectFormData.lastModifiedBy }}</label>
                 <label>Last Modified Date: {{ modifiedDate }}</label>
               </div>
 
               <br />
               <br />
 
-              <d-button
-                *ngIf="
+              <d-button *ngIf="
                   mode.toLowerCase() === 'edit' &&
                   projectFormData.status?.toLowerCase() !== 'draft' &&
                   projectFormData.status?.toLowerCase() !== 'paid'
-                "
-                bsStyle="danger"
-                class="danger"
-                [ngStyle]="{ float: 'right' }"
-                circled="true"
-                style="margin-right: 8px"
-                (btnClick)="confirmDialog('cancel')"
-              >
+                " bsStyle="danger" class="danger" [ngStyle]="{ float: 'right' }" circled="true"
+                style="margin-right: 8px" (btnClick)="confirmDialog('cancel')">
                 {{ "form.invoiceManagement.fields.cancel" | translate }}
               </d-button>
 
-              <d-button
-                *ngIf="projectFormData.status?.toLowerCase() === 'draft' ||
+              <d-button *ngIf="projectFormData.status?.toLowerCase() === 'draft' ||
                 projectFormData.status?.toLowerCase() === 'pending_payment' ||
-                projectFormData.status?.toLowerCase() === 'paid'"
-                [ngStyle]="{ float: 'right' }"
-                [disabled]="!allowSubmit"
-                dLoading
-                class="mr-element-spacing"
-                [title]="projectForm.errorMessage || ''"
-                circled="true"
-                style="margin-right: 8px"
-                [showLoading]="projectForm.pending"
-                dFormSubmit
-                [dFormSubmitData]="'submit-button'"
-              >
+                projectFormData.status?.toLowerCase() === 'paid'" [ngStyle]="{ float: 'right' }"
+                [disabled]="!allowSubmit" dLoading class="mr-element-spacing" [title]="projectForm.errorMessage || ''"
+                circled="true" style="margin-right: 8px" [showLoading]="projectForm.pending" dFormSubmit
+                [dFormSubmitData]="'submit-button'">
                 {{
-                  (paramId ? "form.common.update" : "form.common.create")
-                    | translate
+                (paramId ? "form.common.update" : "form.common.create")
+                | translate
                 }}
               </d-button>
 
-              <d-button
-                *ngIf="projectFormData.status?.toLowerCase() === 'pending_payment'"
-                [ngStyle]="{ float: 'right' }"
-                class="mr-element-spacing"
-                circled="true"
-                style="margin-right: 8px"
-                (btnClick)="confirmDialog('paid-invoice')"
-              >
+              <d-button *ngIf="projectFormData.status?.toLowerCase() === 'pending_payment'"
+                [ngStyle]="{ float: 'right' }" class="mr-element-spacing" circled="true" style="margin-right: 8px"
+                (btnClick)="confirmDialog('paid-invoice')">
                 Paid
               </d-button>
 
-              <d-button
-                *ngIf="projectFormData.status?.toLowerCase() === 'draft'"
-                [ngStyle]="{ float: 'right' }"
-                class="mr-element-spacing"
-                circled="true"
-                style="margin-right: 8px"
-                (btnClick)="confirmDialog('publish')"
-              >
+              <d-button *ngIf="projectFormData.status?.toLowerCase() === 'draft'" [ngStyle]="{ float: 'right' }"
+                class="mr-element-spacing" circled="true" style="margin-right: 8px"
+                (btnClick)="confirmDialog('publish')">
                 {{ "form.invoiceManagement.fields.publish" | translate }}
               </d-button>
 
             </d-form-operation>
           </div>
+          <!-- new design start -->
           <div class="da-content-banner-title">
             Invoice Order
-            <span *ngIf="projectFormData.status"
-              >&nbsp;({{ projectFormData.id }})</span
-            >
+            <span *ngIf="projectFormData.status">&nbsp;({{ projectFormData.id }})</span>
           </div>
-          <div [ngStyle]="{ display: 'flex', justifyContent: 'space-between' }">
-            <div
-              [ngStyle]="{ width: '46%' }"
-            >
+          <da-layout-row [daGutter]="[24, 24]" class="invoice-form-row">
+            <da-col-item [daSpan]="12" [daXs]="12">
+              <da-layout-row [daGutter]="[24, 24]">
+                <da-col-item [daSpan]="12" [daXs]="12">
+                  <d-form-item>
+                    <d-form-label [hasHelp]="false" [helpTips]="'Type of invoice'">
+                      Type of invoice
+                    </d-form-label>
+                    <d-form-control>
+                      <input [(ngModel)]="projectFormData.type"
+                        style="pointer-events: none; background: #f3f3f3 !important" dTextInput autocomplete="off"
+                        name="type" [placeholder]="'Type of invoice'" />
+                    </d-form-control>
+                  </d-form-item>
+                </da-col-item>
+                <da-col-item [daSpan]="12" [daXs]="12">
+                  <d-form-item>
+                    <d-form-label [required]="true" [hasHelp]="false" [helpTips]="'Type of invoice'">
+                      PO No.
+                    </d-form-label>
+                    <d-form-control>
+                      <input [(ngModel)]="projectFormData.poId"
+                        style="pointer-events: none; background: #f3f3f3 !important" dTextInput autocomplete="off"
+                        name="typeOfInvoice" [placeholder]="'Type of invoice'" />
+                    </d-form-control>
+                  </d-form-item>
+                </da-col-item>
+                <da-col-item [daSpan]="12" [daXs]="12">
+                  <d-form-item>
+                    <d-form-label [hasHelp]="false"> To </d-form-label>
+                    <d-form-control>
+                      <input [(ngModel)]="projectFormData.billToAddress" style="
+                          pointer-events: none;
+                          background: #f3f3f3 !important;
+                        " dTextInput autocomplete="off" name="billToAddress" [placeholder]="
+                          'form.invoiceManagement.fields.billAddress'
+                            | translate
+                        " />
+                    </d-form-control>
+                  </d-form-item>
+                </da-col-item>
+                <da-col-item [daSpan]="12" [daXs]="12">
+                  <ng-container>
+                    <d-form-label>{{
+                      "form.invoiceManagement.fields.expectedDeliveryDate"
+                      | translate
+                      }}</d-form-label>
+                    <div style="width: 100%" cdiv class="devui-input-group devui-dropdown-origin" dActiveFormControl>
+                      <input style="pointer-events: none; background: #f3f3f3 !important"
+                        class="devui-input devui-form-control" [(ngModel)]="projectFormData.issueDate"
+                        autocomplete="off" placeholder="y-MM-dd" type="date" [min]="_dateVaidationForToday()"
+                        name="issueDate" />
+                    </div>
+                  </ng-container>
+                </da-col-item>
+                <da-col-item [daSpan]="24" [daXs]="24">
+                  <ng-container *ngIf="
+                  projectFormData.type?.toLowerCase() === 'mid' ||
+                  projectFormData.type?.toLowerCase() === 'final'
+                ">
+                    <d-form-item>
+                      <d-form-label>Invoice Remarks</d-form-label>
+                      <d-form-control>
+                        <textarea [ngClass]="{
+                        'manage-fields':
+                          mode.toLowerCase() === 'edit' &&
+                          projectFormData.status?.toLowerCase() !== 'draft'
+                      }" [ngStyle]="{
+                        height: '104px'
+                      }" rows="4" dTextarea resize="vertical" autocomplete="off" name="remarks"
+                          [placeholder]="'form.invoiceManagement.fields.remarks' | translate"
+                          [(ngModel)]="projectFormData.remarks"></textarea>
+                      </d-form-control>
+                    </d-form-item>
+                  </ng-container>
+                </da-col-item>
+
+              </da-layout-row>
+            </da-col-item>
+            <da-col-item [daSpan]="12" [daXs]="12">
+              <da-layout-row [daGutter]="[24, 24]">
+                <da-col-item [daSpan]="12" [daXs]="12">
+                  <ng-container>
+                    <d-form-label>{{
+                      "form.invoiceManagement.fields.expectedDeliveryDate"
+                      | translate
+                      }}</d-form-label>
+                    <div style="width: 100%" cdiv class="devui-input-group devui-dropdown-origin" dActiveFormControl>
+                      <input style="pointer-events: none; background: #f3f3f3 !important"
+                        class="devui-input devui-form-control" [(ngModel)]="projectFormData.issueDate"
+                        autocomplete="off" placeholder="y-MM-dd" type="date" [min]="_dateVaidationForToday()"
+                        name="issueDate" />
+                    </div>
+                  </ng-container>
+                </da-col-item>
+              </da-layout-row>
+              <da-layout-row [daGutter]="[24, 24]">
+                <da-col-item [daSpan]="24" [daXs]="24">
+                  <ng-container *ngIf="
+                  projectFormData.type?.toLowerCase() === 'mid' ||
+                  projectFormData.type?.toLowerCase() === 'final'
+                ">
+                    <d-form-item>
+                      <d-form-label>Payment Remarks</d-form-label>
+                      <d-form-control>
+                        <textarea [ngClass]="{
+                        'manage-fields':
+                          mode.toLowerCase() === 'edit' &&
+                          projectFormData.status?.toLowerCase() !== 'draft'
+                      }" [ngStyle]="{
+                        height: '104px'
+                      }" rows="4" dTextarea resize="vertical" autocomplete="off" name="paymentRemarks" [placeholder]="
+                        'form.invoiceManagement.fields.remarks' | translate
+                      " [(ngModel)]="projectFormData.paymentRemarks"></textarea>
+                      </d-form-control>
+                    </d-form-item>
+                  </ng-container>
+                </da-col-item>
+              </da-layout-row>
+            </da-col-item>
+          </da-layout-row>
+          <div class="da-content-banner-title">
+            Additional Information (Optional)
+          </div>
+          <da-layout-row [daGutter]="[24, 24]" class="invoice-form-row">
+            <da-col-item [daSpan]="5" [daXs]="5">
+              <d-form-item>
+                <d-form-label [required]="true">Attn</d-form-label>
+                <d-form-control>
+                  <input [disabled]="
+                          projectFormData.type?.toLowerCase() === 'deposit'
+                        " class="set-width manage-fields" dTextInput autocomplete="off" name="attn" />
+                </d-form-control>
+              </d-form-item>
+            </da-col-item>
+            <da-col-item [daSpan]="5" [daXs]="5">
+              <d-form-item>
+                <d-form-label [required]="true">Tel</d-form-label>
+                <d-form-control>
+                  <input class="set-width manage-fields" dTextInput [disabled]="
+                          projectFormData.type?.toLowerCase() === 'deposit'
+                        " autocomplete="off" name="primaryContactPhone1"
+                    [(ngModel)]="projectFormData.vendor.primaryContactPhone1" />
+                </d-form-control>
+              </d-form-item>
+            </da-col-item>
+            <da-col-item [daSpan]="5" [daXs]="5">
+              <d-form-item>
+                <d-form-label [required]="true">Email</d-form-label>
+                <d-form-control>
+                  <input class="set-width manage-fields" dTextInput [disabled]="
+                          projectFormData.type?.toLowerCase() === 'deposit'
+                        " autocomplete="off" name="primaryContactEmail"
+                    [(ngModel)]="projectFormData.vendor.primaryContactEmail" />
+                </d-form-control>
+              </d-form-item>
+            </da-col-item>
+            <da-col-item [daSpan]="9" [daXs]="9">
+              <d-form-item>
+                <d-form-label [required]="true">Address</d-form-label>
+                <d-form-control>
+                  <input class="set-width manage-fields" dTextInput [disabled]="
+                          projectFormData.type?.toLowerCase() === 'deposit'
+                        " autocomplete="off" name="address" [(ngModel)]="projectFormData.vendor.address" />
+                </d-form-control>
+              </d-form-item>
+            </da-col-item>
+          </da-layout-row>
+          <da-layout-row [daGutter]="[24, 24]" class="invoice-form-row">
+            <da-col-item [daSpan]="12" [daXs]="12" [ngClass]="{ 'set-cursor': mode.toLowerCase() === 'edit' }">
+              <da-layout-row [daGutter]="[24, 24]">
+                <da-col-item [daSpan]="24" [daXs]="24">
+                  <div class="da-content-banner-title">Terms & Conditions</div>
+                  <d-form-item>
+                    <d-form-label [hasHelp]="false" [helpTips]="'Price Terms'">
+                      Price Terms
+                    </d-form-label>
+                    <d-form-control>
+                      <input [(ngModel)]="projectFormData.type"
+                        style="pointer-events: none; background: #f3f3f3 !important" dTextInput autocomplete="off"
+                        name="type" [placeholder]="'Type of invoice'" />
+                    </d-form-control>
+                  </d-form-item>
+                </da-col-item>
+                <da-col-item [daSpan]="24" [daXs]="24">
+                  <ng-container>
+                    <div class="input-setting">
+                      <d-form-item>
+                        <d-form-label [hasHelp]="false">
+                          Payment Terms
+                        </d-form-label>
+                        <d-form-control>
+                          <input [(ngModel)]="projectFormData.poDetails.billToAddress" style="
+                              pointer-events: none;
+                              background: #f3f3f3 !important;
+                            " dTextInput autocomplete="off" name="billToAddress" [placeholder]="
+                              'form.invoiceManagement.fields.billAddress'
+                                | translate
+                            " />
+                        </d-form-control>
+                      </d-form-item>
+                    </div>
+                  </ng-container>
+                </da-col-item>
+              </da-layout-row>
+            </da-col-item>
+            <da-col-item [daSpan]="12" [daXs]="12">
+              <da-layout-row [daGutter]="[24, 24]">
+                <da-col-item [daSpan]="24" [daXs]="24">
+                  <div class="da-content-banner-title">Supplier’s Bank Details</div>
+                </da-col-item>
+                <da-col-item [daSpan]="12" [daXs]="12">
+                  <d-form-item>
+                    <d-form-label [hasHelp]="false" [helpTips]="'Account Name'">
+                      Account Name
+                    </d-form-label>
+                    <d-form-control>
+                      <input [(ngModel)]="projectFormData.type"
+                        style="pointer-events: none; background: #f3f3f3 !important" dTextInput autocomplete="off"
+                        name="type" [placeholder]="'Account Name'" />
+                    </d-form-control>
+                  </d-form-item>
+                </da-col-item>
+                <da-col-item [daSpan]="12" [daXs]="12">
+                  <d-form-item>
+                    <d-form-label [hasHelp]="false" [helpTips]="'Account No.'">
+                      Account No.
+                    </d-form-label>
+                    <d-form-control>
+                      <input [(ngModel)]="projectFormData.type"
+                        style="pointer-events: none; background: #f3f3f3 !important" dTextInput autocomplete="off"
+                        name="type" [placeholder]="'Account No.'" />
+                    </d-form-control>
+                  </d-form-item>
+                </da-col-item>
+                <da-col-item [daSpan]="12" [daXs]="12">
+                  <d-form-item>
+                    <d-form-label [hasHelp]="false" [helpTips]="'Bank Name'">
+                      Bank Name
+                    </d-form-label>
+                    <d-form-control>
+                      <input [(ngModel)]="projectFormData.type"
+                        style="pointer-events: none; background: #f3f3f3 !important" dTextInput autocomplete="off"
+                        name="type" [placeholder]="'Bank Name'" />
+                    </d-form-control>
+                  </d-form-item>
+                </da-col-item>
+                <da-col-item [daSpan]="12" [daXs]="12">
+                  <d-form-item>
+                    <d-form-label [hasHelp]="false" [helpTips]="'Swift Code'">
+                      Swift Code
+                    </d-form-label>
+                    <d-form-control>
+                      <input [(ngModel)]="projectFormData.type"
+                        style="pointer-events: none; background: #f3f3f3 !important" dTextInput autocomplete="off"
+                        name="type" [placeholder]="'Swift Code'" />
+                    </d-form-control>
+                  </d-form-item>
+                </da-col-item>
+              </da-layout-row>
+            </da-col-item>
+          </da-layout-row>
+
+          <da-layout-row [daGutter]="[24, 24]" class="invoice-form-row">
+            <da-col-item [daSpan]="24" [daXs]="24">
+              <div class="da-content-banner-title">PO Details</div>
+            </da-col-item>
+          </da-layout-row>
+          <da-layout-row [daGutter]="[24, 24]" class="invoice-form-row">
+            <da-col-item [daSpan]="16" [daXs]="16">
+              <ng-container>
+                <!-- <ng-container> -->
+
+                <!-- TABLE CARD -->
+                <div style="border-right: 1px dotted #000;padding-right: 10px;">
+                  <div class="add-details-table">
+                    <table class="manage-table">
+                      <thead>
+                        <tr class="set-head-botder">
+                          <!-- <span class="head-row"> -->
+                          <th class="manage-table-head">Line No.</th>
+                          <th class="manage-table-head">Image</th>
+                          <th class="manage-table-head">SKU</th>
+                          <th class="manage-table-head">Style Name</th>
+
+                          <!-- </span> -->
+                        </tr>
+                      </thead>
+
+                      <tbody>
+                        <tr>
+                          <td class="manage-table-content"> 1</td>
+                          <td class="manage-table-content"> fdc</td>
+                          <td class="manage-table-content"><span> vfd </span></td>
+                          <td class="manage-table-content"><span> ds</span></td>
+
+
+                        </tr>
+
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+
+              </ng-container>
+              <div style="text-align: right;margin-top: 10px;">
+                <p><b>PO Total Amount (RMB) : </b> : : 9000</p>
+              </div>
+            </da-col-item>
+            <da-col-item [daSpan]="8" [daXs]="8">
+              <div
+                style="margin-bottom: 10px;height: 100%;display: flex;align-items: center;flex-direction: column;justify-content: center;text-align: center;">
+                <d-form-item [ngStyle]="{flexDirection:'row',gap:'10px', marginBottom:'10px'}">
+                  <d-form-label>
+                    Details
+                  </d-form-label>
+                  <d-form-control>
+                    <input style="width: 50px; background: #f3f3f3 !important" type="text" class="set-input" />
+                  </d-form-control>
+                </d-form-item>
+                <p><b>Invoice Amount (RMB) : </b> : 9000</p>
+              </div>
+            </da-col-item>
+          </da-layout-row>
+
+
+          <!-- end new design -->
+
+          <!-- old design start -->
+          <div [ngStyle]=" { display: 'flex' , justifyContent: 'space-between' }">
+            <div [ngStyle]="{ width: '46%' }">
               <d-form-item>
                 <d-form-label [hasHelp]="false" [helpTips]="'Type of invoice'">
                   Type of invoice
                 </d-form-label>
                 <d-form-control>
-                  <input
-                    [(ngModel)]="projectFormData.type"
-                    style="pointer-events: none; background: #f3f3f3 !important"
-                    dTextInput
-                    autocomplete="off"
-                    name="type"
-                    [placeholder]="'Type of invoice'"
-                  />
+                  <input [(ngModel)]="projectFormData.type" style="pointer-events: none; background: #f3f3f3 !important"
+                    dTextInput autocomplete="off" name="type" [placeholder]="'Type of invoice'" />
                 </d-form-control>
               </d-form-item>
               <ng-container>
@@ -152,54 +428,32 @@
                   <d-form-item>
                     <d-form-label [hasHelp]="false"> To </d-form-label>
                     <d-form-control>
-                      <input
-                        [(ngModel)]="projectFormData.billToAddress"
-                        style="
+                      <input [(ngModel)]="projectFormData.billToAddress" style="
                           pointer-events: none;
                           background: #f3f3f3 !important;
-                        "
-                        dTextInput
-                        autocomplete="off"
-                        name="billToAddress"
-                        [placeholder]="
+                        " dTextInput autocomplete="off" name="billToAddress" [placeholder]="
                           'form.invoiceManagement.fields.billAddress'
                             | translate
-                        "
-                      />
+                        " />
                     </d-form-control>
                   </d-form-item>
 
-                  <ng-container
-                    *ngIf="projectFormData.type?.toLowerCase() === 'deposit'"
-                  >
-                    <d-form-item
-                      [ngStyle]="{ marginTop: '20px' }"
-                      [ngClass]="{
+                  <ng-container *ngIf="projectFormData.type?.toLowerCase() === 'deposit'">
+                    <d-form-item [ngStyle]="{ marginTop: '20px' }" [ngClass]="{
                         'set-cursor':
                         projectFormData.status?.toLowerCase() === 'pending_payment'
-                      }"
-                    >
+                      }">
                       <d-form-label>Invoice Remarks</d-form-label>
                       <d-form-control>
-                        <textarea
-                          [ngStyle]="{
+                        <textarea [ngStyle]="{
                             height: '104px'
-                          }"
-                          [ngClass]="{
+                          }" [ngClass]="{
                             'set-cursor':
                             projectFormData.status?.toLowerCase() === 'pending_payment'
-                          }"
-                          [disabled]="projectFormData.status?.toLowerCase() === 'pending_payment'"
-                          rows="4"
-                          dTextarea
-                          resize="vertical"
-                          autocomplete="off"
-                          name="remarks"
-                          [placeholder]="
+                          }" [disabled]="projectFormData.status?.toLowerCase() === 'pending_payment'" rows="4"
+                          dTextarea resize="vertical" autocomplete="off" name="remarks" [placeholder]="
                             'form.invoiceManagement.fields.remarks' | translate
-                          "
-                          [(ngModel)]="projectFormData.remarks"
-                        ></textarea>
+                          " [(ngModel)]="projectFormData.remarks"></textarea>
                       </d-form-control>
                     </d-form-item>
                   </ng-container>
@@ -207,85 +461,44 @@
               </ng-container>
             </div>
 
-            <div
-              [ngStyle]="{ width: '46%' }"
-              [ngClass]="{ 'set-cursor': mode.toLowerCase() === 'edit' }"
-            >
+            <div [ngStyle]="{ width: '46%' }" [ngClass]="{ 'set-cursor': mode.toLowerCase() === 'edit' }">
               <d-form-item>
-                <d-form-label
-                  [required]="true"
-                  [hasHelp]="false"
-                  [helpTips]="'Type of invoice'"
-                >
+                <d-form-label [required]="true" [hasHelp]="false" [helpTips]="'Type of invoice'">
                   PO No.
                 </d-form-label>
                 <d-form-control>
-                  <input
-                    [(ngModel)]="projectFormData.poId"
-                    style="pointer-events: none; background: #f3f3f3 !important"
-                    dTextInput
-                    autocomplete="off"
-                    name="typeOfInvoice"
-                    [placeholder]="'Type of invoice'"
-                  />
+                  <input [(ngModel)]="projectFormData.poId" style="pointer-events: none; background: #f3f3f3 !important"
+                    dTextInput autocomplete="off" name="typeOfInvoice" [placeholder]="'Type of invoice'" />
                 </d-form-control>
               </d-form-item>
 
               <ng-container>
                 <d-form-label>{{
                   "form.invoiceManagement.fields.expectedDeliveryDate"
-                    | translate
-                }}</d-form-label>
-                <div
-                  style="width: 100%"
-                  cdiv
-                  class="devui-input-group devui-dropdown-origin"
-                  dActiveFormControl
-                >
-                  <input
-                    style="pointer-events: none; background: #f3f3f3 !important"
-                    class="devui-input devui-form-control"
-                    [(ngModel)]="projectFormData.issueDate"
-                    autocomplete="off"
-                    placeholder="y-MM-dd"
-                    type="date"
-                    [min]="_dateVaidationForToday()"
-                    name="issueDate"
-                  />
+                  | translate
+                  }}</d-form-label>
+                <div style="width: 100%" cdiv class="devui-input-group devui-dropdown-origin" dActiveFormControl>
+                  <input style="pointer-events: none; background: #f3f3f3 !important"
+                    class="devui-input devui-form-control" [(ngModel)]="projectFormData.issueDate" autocomplete="off"
+                    placeholder="y-MM-dd" type="date" [min]="_dateVaidationForToday()" name="issueDate" />
                 </div>
               </ng-container>
 
-              <ng-container
-                *ngIf="projectFormData.type?.toLowerCase() === 'deposit'"
-              >
-                <d-form-item
-                  [ngStyle]="{ marginTop: '40px' }"
-                  [ngClass]="{
+              <ng-container *ngIf="projectFormData.type?.toLowerCase() === 'deposit'">
+                <d-form-item [ngStyle]="{ marginTop: '40px' }" [ngClass]="{
                     'set-cursor':
                     projectFormData.status?.toLowerCase() === 'darft'
-                  }"
-                >
+                  }">
                   <d-form-label>Payment Remarks</d-form-label>
                   <d-form-control>
-                    <textarea
-                      [ngClass]="{
+                    <textarea [ngClass]="{
                         'set-cursor':
                         projectFormData.status?.toLowerCase() === 'darft'
-                      }"
-                      [disabled]="projectFormData.status?.toLowerCase() === 'darft'"
-                      [ngStyle]="{
+                      }" [disabled]="projectFormData.status?.toLowerCase() === 'darft'" [ngStyle]="{
                         height: '104px'
-                      }"
-                      rows="4"
-                      dTextarea
-                      resize="vertical"
-                      autocomplete="off"
-                      name="paymentRemarks"
-                      [placeholder]="
+                      }" rows="4" dTextarea resize="vertical" autocomplete="off" name="paymentRemarks" [placeholder]="
                         'form.invoiceManagement.fields.remarks' | translate
-                      "
-                      [(ngModel)]="projectFormData.paymentRemarks"
-                    ></textarea>
+                      " [(ngModel)]="projectFormData.paymentRemarks"></textarea>
                   </d-form-control>
                 </d-form-item>
               </ng-container>
@@ -301,138 +514,83 @@
               <d-form-item [ngStyle]="{ margin: '20px 20px 20px 0px' }">
                 <d-form-label [required]="true">Attn</d-form-label>
                 <d-form-control>
-                  <input
-                    [disabled]="
+                  <input [disabled]="
                       projectFormData.type?.toLowerCase() === 'deposit'
-                    "
-                    class="set-width manage-fields"
-                    dTextInput
-                    autocomplete="off"
-                    name="attn"
-                  />
+                    " class="set-width manage-fields" dTextInput autocomplete="off" name="attn" />
                 </d-form-control>
               </d-form-item>
 
               <d-form-item [ngStyle]="{ margin: '20px 20px 20px 0px' }">
                 <d-form-label [required]="true">Tel</d-form-label>
                 <d-form-control>
-                  <input
-                    class="set-width manage-fields"
-                    dTextInput
-                    [disabled]="
+                  <input class="set-width manage-fields" dTextInput [disabled]="
                       projectFormData.type?.toLowerCase() === 'deposit'
-                    "
-                    autocomplete="off"
-                    name="primaryContactPhone1"
-                    [(ngModel)]="projectFormData.vendor.primaryContactPhone1"
-                  />
+                    " autocomplete="off" name="primaryContactPhone1"
+                    [(ngModel)]="projectFormData.vendor.primaryContactPhone1" />
                 </d-form-control>
               </d-form-item>
 
               <d-form-item [ngStyle]="{ margin: '20px 20px 20px 0px' }">
                 <d-form-label [required]="true">Email</d-form-label>
                 <d-form-control>
-                  <input
-                    class="set-width manage-fields"
-                    dTextInput
-                    [disabled]="
+                  <input class="set-width manage-fields" dTextInput [disabled]="
                       projectFormData.type?.toLowerCase() === 'deposit'
-                    "
-                    autocomplete="off"
-                    name="primaryContactEmail"
-                    [(ngModel)]="projectFormData.vendor.primaryContactEmail"
-                  />
+                    " autocomplete="off" name="primaryContactEmail"
+                    [(ngModel)]="projectFormData.vendor.primaryContactEmail" />
                 </d-form-control>
               </d-form-item>
 
               <d-form-item [ngStyle]="{ margin: '20px 20px 20px 0px' }">
                 <d-form-label [required]="true">Address</d-form-label>
                 <d-form-control>
-                  <input
-                    class="set-width manage-fields"
-                    dTextInput
-                    [disabled]="
+                  <input class="set-width manage-fields" dTextInput [disabled]="
                       projectFormData.type?.toLowerCase() === 'deposit'
-                    "
-                    autocomplete="off"
-                    name="address"
-                    [(ngModel)]="projectFormData.vendor.address"
-                  />
+                    " autocomplete="off" name="address" [(ngModel)]="projectFormData.vendor.address" />
                 </d-form-control>
               </d-form-item>
             </div>
           </div>
 
           <div [ngStyle]="{ display: 'flex', justifyContent: 'space-between' }">
-            <div
-              [ngStyle]="{ width: '46%' }"
-            >
-              <ng-container
-                *ngIf="
+            <div [ngStyle]="{ width: '46%' }">
+              <ng-container *ngIf="
                   projectFormData.type?.toLowerCase() === 'mid' ||
                   projectFormData.type?.toLowerCase() === 'final'
-                "
-              >
-                <d-form-item
-                  [ngStyle]="{ marginTop: '20px' }"
-                >
+                ">
+                <d-form-item [ngStyle]="{ marginTop: '20px' }">
                   <d-form-label>Invoice Remarks</d-form-label>
                   <d-form-control>
-                    <textarea
-                      [ngClass]="{
+                    <textarea [ngClass]="{
                         'manage-fields':
                           mode.toLowerCase() === 'edit' &&
                           projectFormData.status?.toLowerCase() !== 'draft'
-                      }"
-                      [ngStyle]="{
+                      }" [ngStyle]="{
                         height: '104px'
-                      }"
-                      rows="4"
-                      dTextarea
-                      resize="vertical"
-                      autocomplete="off"
-                      name="remarks"
+                      }" rows="4" dTextarea resize="vertical" autocomplete="off" name="remarks"
                       [placeholder]="'form.invoiceManagement.fields.remarks' | translate"
-                      [(ngModel)]="projectFormData.remarks"
-                    ></textarea>
+                      [(ngModel)]="projectFormData.remarks"></textarea>
                   </d-form-control>
                 </d-form-item>
               </ng-container>
             </div>
 
-            <div
-              [ngStyle]="{ width: '46%' }"
-            >
-              <ng-container
-                *ngIf="
+            <div [ngStyle]="{ width: '46%' }">
+              <ng-container *ngIf="
                   projectFormData.type?.toLowerCase() === 'mid' ||
                   projectFormData.type?.toLowerCase() === 'final'
-                "
-              >
-                <d-form-item
-                  [ngStyle]="{ marginTop: '20px' }"
-                >
+                ">
+                <d-form-item [ngStyle]="{ marginTop: '20px' }">
                   <d-form-label>Payment Remarks</d-form-label>
                   <d-form-control>
-                    <textarea
-                      [ngClass]="{
+                    <textarea [ngClass]="{
                         'manage-fields':
                           mode.toLowerCase() === 'edit' &&
                           projectFormData.status?.toLowerCase() !== 'draft'
-                      }"
-                      [ngStyle]="{
+                      }" [ngStyle]="{
                         height: '104px'
-                      }"
-                      rows="4"
-                      dTextarea
-                      resize="vertical"
-                      autocomplete="off"
-                      name="paymentRemarks"
-                      [placeholder]="
+                      }" rows="4" dTextarea resize="vertical" autocomplete="off" name="paymentRemarks" [placeholder]="
                         'form.invoiceManagement.fields.remarks' | translate
-                      "
-                      [(ngModel)]="projectFormData.paymentRemarks"
-                    ></textarea>
+                      " [(ngModel)]="projectFormData.paymentRemarks"></textarea>
                   </d-form-control>
                 </d-form-item>
               </ng-container>
@@ -449,23 +607,14 @@
           </div>
 
           <div [ngStyle]="{ display: 'flex', justifyContent: 'space-between' }">
-            <div
-              [ngStyle]="{ width: '46%' }"
-              [ngClass]="{ 'set-cursor': mode.toLowerCase() === 'edit' }"
-            >
+            <div [ngStyle]="{ width: '46%' }" [ngClass]="{ 'set-cursor': mode.toLowerCase() === 'edit' }">
               <d-form-item>
                 <d-form-label [hasHelp]="false" [helpTips]="'Price Terms'">
                   Price Terms
                 </d-form-label>
                 <d-form-control>
-                  <input
-                    [(ngModel)]="projectFormData.type"
-                    style="pointer-events: none; background: #f3f3f3 !important"
-                    dTextInput
-                    autocomplete="off"
-                    name="type"
-                    [placeholder]="'Type of invoice'"
-                  />
+                  <input [(ngModel)]="projectFormData.type" style="pointer-events: none; background: #f3f3f3 !important"
+                    dTextInput autocomplete="off" name="type" [placeholder]="'Type of invoice'" />
                 </d-form-control>
               </d-form-item>
               <ng-container>
@@ -475,98 +624,61 @@
                       Payment Terms
                     </d-form-label>
                     <d-form-control>
-                      <input
-                        [(ngModel)]="projectFormData.poDetails.billToAddress"
-                        style="
+                      <input [(ngModel)]="projectFormData.poDetails.billToAddress" style="
                           pointer-events: none;
                           background: #f3f3f3 !important;
-                        "
-                        dTextInput
-                        autocomplete="off"
-                        name="billToAddress"
-                        [placeholder]="
+                        " dTextInput autocomplete="off" name="billToAddress" [placeholder]="
                           'form.invoiceManagement.fields.billAddress'
                             | translate
-                        "
-                      />
+                        " />
                     </d-form-control>
                   </d-form-item>
                 </div>
               </ng-container>
             </div>
 
-            <div
-              [ngStyle]="{ width: '46%' }"
-              [ngClass]="{ 'set-cursor': mode.toLowerCase() === 'edit' }"
-            >
-              <ng-container
-                *ngIf="projectFormData.type?.toLowerCase() !== 'deposit'"
-              >
-                <d-form-item
-                  [ngStyle]="{ marginTop: '20px' }"
-                  [ngClass]="{
+            <div [ngStyle]="{ width: '46%' }" [ngClass]="{ 'set-cursor': mode.toLowerCase() === 'edit' }">
+              <ng-container *ngIf="projectFormData.type?.toLowerCase() !== 'deposit'">
+                <d-form-item [ngStyle]="{ marginTop: '20px' }" [ngClass]="{
                     'set-cursor':
                       !(mode.toLowerCase() !== 'edit') &&
                       projectFormData.status?.toLowerCase() !== 'draft'
-                  }"
-                >
+                  }">
                   <!-- <d-form-label>Supplier's Bank Details</d-form-label> -->
                   <d-form-control>
-                    <textarea
-                      [ngClass]="{
+                    <textarea [ngClass]="{
                         'manage-fields':
                           mode.toLowerCase() === 'edit' &&
                           projectFormData.status?.toLowerCase() !== 'draft'
-                      }"
-                      [ngStyle]="{
+                      }" [ngStyle]="{
                         'pointer-events':
                           !(mode.toLowerCase() !== 'edit') &&
                           projectFormData.status?.toLowerCase() !== 'draft'
                             ? 'none'
                             : 'auto',
                         height: '104px'
-                      }"
-                      rows="4"
-                      dTextarea
-                      resize="vertical"
-                      autocomplete="off"
-                      placeholder="Bank Details"
-                    ></textarea>
+                      }" rows="4" dTextarea resize="vertical" autocomplete="off" placeholder="Bank Details"></textarea>
                   </d-form-control>
                 </d-form-item>
               </ng-container>
-              <ng-container
-                *ngIf="projectFormData.type?.toLowerCase() === 'deposit'"
-              >
+              <ng-container *ngIf="projectFormData.type?.toLowerCase() === 'deposit'">
                 <div [ngStyle]="{ display: 'flex' }">
                   <d-form-item [ngStyle]="{ margin: '0px 20px 20px 0px' }">
                     <d-form-label [required]="true">Account Name</d-form-label>
                     <d-form-control>
-                      <input
-                        [disabled]="
+                      <input [disabled]="
                           projectFormData.type?.toLowerCase() === 'deposit'
-                        "
-                        class="set-width manage-fields"
-                        dTextInput
-                        autocomplete="off"
-                        name="accName"
-                        [(ngModel)]="projectFormData.vendor.bankInfo.accName"
-                      />
+                        " class="set-width manage-fields" dTextInput autocomplete="off" name="accName"
+                        [(ngModel)]="projectFormData.vendor.bankInfo.accName" />
                     </d-form-control>
                   </d-form-item>
                   <d-form-item [ngStyle]="{ margin: '0px 20px 20px 0px' }">
                     <d-form-label [required]="true">Account No.</d-form-label>
                     <d-form-control>
-                      <input
-                        [disabled]="
+                      <input [disabled]="
                           projectFormData.type?.toLowerCase() === 'deposit'
-                        "
-                        class="set-width manage-fields"
-                        dTextInput
-                        autocomplete="off"
-                        name="accNo"
-                        [(ngModel)]="projectFormData.vendor.bankInfo.accNo"
-                      />
+                        " class="set-width manage-fields" dTextInput autocomplete="off" name="accNo"
+                        [(ngModel)]="projectFormData.vendor.bankInfo.accNo" />
                     </d-form-control>
                   </d-form-item>
                 </div>
@@ -574,31 +686,19 @@
                   <d-form-item [ngStyle]="{ margin: '0px 20px 20px 0px' }">
                     <d-form-label [required]="true">Bank Name</d-form-label>
                     <d-form-control>
-                      <input
-                        [disabled]="
+                      <input [disabled]="
                           projectFormData.type?.toLowerCase() === 'deposit'
-                        "
-                        class="set-width manage-fields"
-                        dTextInput
-                        autocomplete="off"
-                        name="bankName"
-                        [(ngModel)]="projectFormData.vendor.bankInfo.bankName"
-                      />
+                        " class="set-width manage-fields" dTextInput autocomplete="off" name="bankName"
+                        [(ngModel)]="projectFormData.vendor.bankInfo.bankName" />
                     </d-form-control>
                   </d-form-item>
                   <d-form-item [ngStyle]="{ margin: '0px 20px 20px 0px' }">
                     <d-form-label [required]="true">Swift Code</d-form-label>
                     <d-form-control>
-                      <input
-                        [disabled]="
+                      <input [disabled]="
                           projectFormData.type?.toLowerCase() === 'deposit'
-                        "
-                        class="set-width manage-fields"
-                        dTextInput
-                        autocomplete="off"
-                        name="swiftCode"
-                        [(ngModel)]="projectFormData.vendor.bankInfo.swiftCode"
-                      />
+                        " class="set-width manage-fields" dTextInput autocomplete="off" name="swiftCode"
+                        [(ngModel)]="projectFormData.vendor.bankInfo.swiftCode" />
                     </d-form-control>
                   </d-form-item>
                 </div>
@@ -612,75 +712,46 @@
                 {{ "form.invoiceManagement.title2" | translate }}
               </div>
               <div [ngStyle]="{ width: '100%' }">
-                <d-form-operation
-                  *ngIf="projectFormData.status?.toLowerCase() !== 'draft'"
-                >
-                  <d-button
-                    *ngIf="
+                <d-form-operation *ngIf="projectFormData.status?.toLowerCase() !== 'draft'">
+                  <d-button *ngIf="
                       (projectFormData.status?.toLowerCase() === 'open' ||
                         projectFormData.status?.toLowerCase() ===
                           'released') &&
                       projectFormData.sampleStatus?.toLowerCase() === 'open'
-                    "
-                    [ngStyle]="{ float: 'right' }"
-                    class="mr-element-spacing"
-                    circled="true"
-                    style="margin-right: 8px"
-                    (btnClick)="confirmDialog('ready')"
-                  >
+                    " [ngStyle]="{ float: 'right' }" class="mr-element-spacing" circled="true"
+                    style="margin-right: 8px" (btnClick)="confirmDialog('ready')">
                     {{ "form.invoiceManagement.buttons.ready" | translate }}
                   </d-button>
 
-                  <d-button
-                    *ngIf="
+                  <d-button *ngIf="
                       projectFormData.sampleStatus?.toLowerCase() === 'ready'
-                    "
-                    bsStyle="danger"
-                    class="danger"
-                    [ngStyle]="{ float: 'right' }"
-                    circled="true"
-                    style="margin-right: 8px"
-                    (btnClick)="confirmDialog('reject')"
-                  >
+                    " bsStyle="danger" class="danger" [ngStyle]="{ float: 'right' }" circled="true"
+                    style="margin-right: 8px" (btnClick)="confirmDialog('reject')">
                     {{ "form.invoiceManagement.buttons.reject" | translate }}
                   </d-button>
 
-                  <d-button
-                    *ngIf="
+                  <d-button *ngIf="
                       projectFormData.sampleStatus?.toLowerCase() === 'ready'
-                    "
-                    [ngStyle]="{ float: 'right' }"
-                    class="mr-element-spacing"
-                    circled="true"
-                    style="margin-right: 8px"
-                    (btnClick)="confirmDialog('confirm')"
-                  >
+                    " [ngStyle]="{ float: 'right' }" class="mr-element-spacing" circled="true"
+                    style="margin-right: 8px" (btnClick)="confirmDialog('confirm')">
                     {{ "form.invoiceManagement.fields.confirm" | translate }}
                   </d-button>
 
-                  <label
-                    style="float: right; margin: 5px 16px"
-                    *ngIf="projectFormData.status"
-                  >
-                    <b
-                      >{{
-                        "form.invoiceManagement.fields.sampleStatus"
-                          | translate
-                      }}:</b
-                    >
-                    {{ projectFormData.sampleStatus }}</label
-                  >
+                  <label style="float: right; margin: 5px 16px" *ngIf="projectFormData.status">
+                    <b>{{
+                      "form.invoiceManagement.fields.sampleStatus"
+                      | translate
+                      }}:</b>
+                    {{ projectFormData.sampleStatus }}</label>
                 </d-form-operation>
               </div>
             </div>
 
             <div [ngStyle]="{ width: '100%' }">
-              <d-form-operation
-                *ngIf="
+              <d-form-operation *ngIf="
                   mode.toLowerCase() === 'add' ||
                   projectFormData.status?.toLowerCase() === 'draft'
-                "
-              >
+                ">
                 <!-- <d-button
                   [ngStyle]="{ 'margin-bottom': '12px' }"
                   dLoading
@@ -695,24 +766,16 @@
             <div class="manage-brief">
               <ng-container *ngIf="detailsInputs?.length">
                 <div class="brief-two">
-                  <div
-                    *ngFor="let input of detailsInputs; let i = index"
-                    [ngStyle]="{ display: 'flex', justifyContent: 'space-between' }"
-                  >
+                  <div *ngFor="let input of detailsInputs; let i = index"
+                    [ngStyle]="{ display: 'flex', justifyContent: 'space-between' }">
                     <div [ngStyle]="{ display: 'flex' }">
                       <d-form-item [ngStyle]="{ margin: '20px 20px 20px 0px' }">
                         <d-form-label [required]="true">{{
                           "form.invoiceManagement.fields.sku" | translate
-                        }}</d-form-label>
+                          }}</d-form-label>
                         <d-form-control>
-                          <input
-                            class="set-width manage-fields"
-                            disabled
-                            dTextInput
-                            autocomplete="off"
-                            [value]="input.skuNo"
-                            (input)="updateValue($event, 'skuNo', i)"
-                          />
+                          <input class="set-width manage-fields" disabled dTextInput autocomplete="off"
+                            [value]="input.skuNo" (input)="updateValue($event, 'skuNo', i)" />
                         </d-form-control>
                       </d-form-item>
 
@@ -734,19 +797,15 @@
                       <d-form-item [ngStyle]="{ margin: '20px 20px 20px 0px' }">
                         <d-form-label [required]="true">{{
                           "form.invoiceManagement.fields.plannedQuantity"
-                            | translate
-                        }}</d-form-label>
+                          | translate
+                          }}</d-form-label>
                         <d-form-control>
-                          <input
-                            class="set-width"
-                            [disabled]="true"
-                            [ngClass]="{
+                          <input class="set-width" [disabled]="true" [ngClass]="{
                               'manage-fields':
                                 mode.toLowerCase() === 'edit' &&
                                 projectFormData.status?.toLowerCase() !==
                                   'draft'
-                            }"
-                            [ngStyle]="{
+                            }" [ngStyle]="{
                               'pointer-events':
                                 mode.toLowerCase() === 'edit' &&
                                 projectFormData.status?.toLowerCase() !==
@@ -754,153 +813,93 @@
                                   ? 'none'
                                   : 'auto',
                               width: '100%'
-                            }"
-                            dTextInput
-                            (keypress)="numberOnly($event)"
-                            autocomplete="off"
-                            [placeholder]="
+                            }" dTextInput (keypress)="numberOnly($event)" autocomplete="off" [placeholder]="
                               'form.invoiceManagement.fields.plannedQuantity'
                                 | translate
-                            "
-                            [value]="input.poQuantity"
-                            (input)="updateValue($event, 'poQuantity', i)"
-                          />
+                            " [value]="input.poQuantity" (input)="updateValue($event, 'poQuantity', i)" />
                         </d-form-control>
                       </d-form-item>
 
                       <d-form-item [ngStyle]="{ margin: '20px 20px 20px 0px' }">
                         <d-form-label [required]="true">{{
                           "form.invoiceManagement.fields.productPrice" | translate
-                        }}</d-form-label>
+                          }}</d-form-label>
                         <d-form-control>
-                          <input
-                            class="set-width manage-fields"
-                            disabled
-                            dTextInput
-                            (keypress)="numberOnly($event)"
-                            autocomplete="off"
-                            [placeholder]="
+                          <input class="set-width manage-fields" disabled dTextInput (keypress)="numberOnly($event)"
+                            autocomplete="off" [placeholder]="
                               'form.invoiceManagement.fields.productPrice'
                                 | translate
-                            "
-                            [value]="
+                            " [value]="
                               (input?.productPriceFront
                                 ? input?.productPriceFront
                                 : input?.exwSgdCost) * input?.plannedQuantity
-                            "
-                            (input)="updateValue($event, 'productPrice', i)"
-                          />
+                            " (input)="updateValue($event, 'productPrice', i)" />
                         </d-form-control>
                       </d-form-item>
 
-                      <d-form-item
-                        *ngIf="
+                      <d-form-item *ngIf="
                           projectFormData.status?.toLowerCase() ===
                             'released' ||
                           projectFormData.status?.toLowerCase() === 'closed'
-                        "
-                        [ngStyle]="{ margin: '20px 20px 20px 0px' }"
-                      >
+                        " [ngStyle]="{ margin: '20px 20px 20px 0px' }">
                         <d-form-label [required]="true">{{
                           "form.invoiceManagement.fields.lockedQuantity" | translate
-                        }}</d-form-label>
+                          }}</d-form-label>
                         <d-form-control>
-                          <input
-                            class="set-width manage-fields"
-                            disabled
-                            dTextInput
-                            (keypress)="numberOnly($event)"
-                            autocomplete="off"
-                            [placeholder]="
+                          <input class="set-width manage-fields" disabled dTextInput (keypress)="numberOnly($event)"
+                            autocomplete="off" [placeholder]="
                               'form.invoiceManagement.fields.lockedQuantity'
                                 | translate
-                            "
-                            [value]="input.lockedQuantity"
-                            (input)="updateValue($event, 'lockedQuantity', i)"
-                          />
+                            " [value]="input.lockedQuantity" (input)="updateValue($event, 'lockedQuantity', i)" />
                         </d-form-control>
                       </d-form-item>
 
-                      <d-form-item
-                        *ngIf="projectFormData.type?.toLowerCase() === 'mid'
-                        "
-                        [ngStyle]="{ margin: '20px 20px 20px 0px' }"
-                      >
+                      <d-form-item *ngIf="projectFormData.type?.toLowerCase() === 'mid'
+                        " [ngStyle]="{ margin: '20px 20px 20px 0px' }">
                         <d-form-label [required]="true">{{
                           "form.invoiceManagement.fields.shippedQuantity"
-                            | translate
-                        }}</d-form-label>
+                          | translate
+                          }}</d-form-label>
                         <d-form-control>
-                          <input
-                            class="set-width manage-fields"
-                            disabled
-                            dTextInput
-                            (keypress)="numberOnly($event)"
-                            autocomplete="off"
-                            [placeholder]="
+                          <input class="set-width manage-fields" disabled dTextInput (keypress)="numberOnly($event)"
+                            autocomplete="off" [placeholder]="
                               'form.invoiceManagement.fields.shippedQuantity'
                                 | translate
-                            "
-                            [value]="input.shippedQuantity"
-                            (input)="updateValue($event, 'shippedQuantity', i)"
-                          />
+                            " [value]="input.shippedQuantity" (input)="updateValue($event, 'shippedQuantity', i)" />
                         </d-form-control>
                       </d-form-item>
 
-                      <d-form-item
-                      *ngIf="projectFormData.type?.toLowerCase() === 'final'"
-                        [ngStyle]="{ margin: '20px 20px 20px 0px' }"
-                      >
+                      <d-form-item *ngIf="projectFormData.type?.toLowerCase() === 'final'"
+                        [ngStyle]="{ margin: '20px 20px 20px 0px' }">
                         <d-form-label [required]="true">{{
                           "form.invoiceManagement.fields.receivedQuantity"
-                            | translate
-                        }}</d-form-label>
+                          | translate
+                          }}</d-form-label>
                         <d-form-control>
-                          <input
-                            class="set-width manage-fields"
-                            disabled
-                            dTextInput
-                            (keypress)="numberOnly($event)"
-                            autocomplete="off"
-                            [placeholder]="
+                          <input class="set-width manage-fields" disabled dTextInput (keypress)="numberOnly($event)"
+                            autocomplete="off" [placeholder]="
                               'form.invoiceManagement.fields.receivedQuantity'
                                 | translate
-                            "
-                            [value]="input.receivedQuantity"
-                            (input)="updateValue($event, 'receivedQuantity', i)"
-                          />
+                            " [value]="input.receivedQuantity" (input)="updateValue($event, 'receivedQuantity', i)" />
                         </d-form-control>
                       </d-form-item>
 
-                      <d-button
-                        *ngIf="
+                      <d-button *ngIf="
                           projectFormData.status?.toLowerCase() === 'confirmed'
-                        "
-                        dLoading
-                        class="warning"
-                        circled="true"
-                        style="margin-right: 8px; margin-top: 47px"
-                        (click)="confirm(i)"
-                      >
+                        " dLoading class="warning" circled="true" style="margin-right: 8px; margin-top: 47px"
+                        (click)="confirm(i)">
                         {{ "form.invoiceManagement.buttons.confirm" | translate }}
                       </d-button>
 
-                      <d-button
-                        *ngIf="
+                      <d-button *ngIf="
                           projectFormData.status?.toLowerCase() ===
                             'released' ||
                           projectFormData.status?.toLowerCase() === 'closed'
-                        "
-                        dLoading
-                        bsStyle="primary"
-                        class="primary"
-                        circled="true"
-                        style="margin-right: 8px; margin-top: 47px"
-                        (click)="shipmentDialog(input.shipments)"
-                      >
+                        " dLoading bsStyle="primary" class="primary" circled="true"
+                        style="margin-right: 8px; margin-top: 47px" (click)="shipmentDialog(input.shipments)">
                         {{
-                          "form.invoiceManagement.buttons.shipmentDetails"
-                            | translate
+                        "form.invoiceManagement.buttons.shipmentDetails"
+                        | translate
                         }}
                       </d-button>
 
@@ -937,8 +936,8 @@
                   style="float: right; margin: 5px 16px"
                   *ngIf="projectFormData.status"
                 > -->
-                <label *ngIf="projectFormData.type?.toLowerCase() === 'deposit'" 
-                class="manage-bottom-section" style="float: right; margin: 5px 16px">
+                <label *ngIf="projectFormData.type?.toLowerCase() === 'deposit'" class="manage-bottom-section"
+                  style="float: right; margin: 5px 16px">
                   <span>*</span>
                   <b>Deposit % : </b>
                   <input type="text" class="set-input">
@@ -950,8 +949,8 @@
                   </label>
                 </label>
 
-                <label *ngIf="projectFormData.type?.toLowerCase() === 'mid'" 
-                class="manage-bottom-section" style="float: right; margin: 5px 16px">
+                <label *ngIf="projectFormData.type?.toLowerCase() === 'mid'" class="manage-bottom-section"
+                  style="float: right; margin: 5px 16px">
                   <span>*</span>
                   <b>% of PO : </b>
                   <input type="text" class="set-input">
@@ -963,31 +962,28 @@
                   </label>
                 </label>
 
-                <label *ngIf="projectFormData.type?.toLowerCase() === 'final'" 
-                class="manage-bottom-section" style="float: right; margin: 5px 16px">
-                <b>Billed Amount : 12000 SGD</b>
-                <span class="invoice-popup">
-                  <d-button
-                        bsStyle="primary"
-                        class="primary"
-                        circled="true"
-                      >
-                        Invoice Details
-                      </d-button>
-                </span>
-                <br>
-                <br>
-                <b style="margin-left: calc(100% - 80%);">Fulfillment Amount : 9000 SGD </b>
-                <br>
-                <span class="hint-text"># Calculation based on ratio of received qty and planned qty</span>
-                <br>
-                <br>
-                <b style="font-size: 20px">Balance Amount : </b>
+                <label *ngIf="projectFormData.type?.toLowerCase() === 'final'" class="manage-bottom-section"
+                  style="float: right; margin: 5px 16px">
+                  <b>Billed Amount : 12000 SGD</b>
+                  <span class="invoice-popup">
+                    <d-button bsStyle="primary" class="primary" circled="true">
+                      Invoice Details
+                    </d-button>
+                  </span>
+                  <br>
+                  <br>
+                  <b style="margin-left: calc(100% - 80%);">Fulfillment Amount : 9000 SGD </b>
+                  <br>
+                  <span class="hint-text"># Calculation based on ratio of received qty and planned qty</span>
+                  <br>
+                  <br>
+                  <b style="font-size: 20px">Balance Amount : </b>
                   <input type="text" class="set-input">
                 </label>
               </div>
             </div>
           </ng-container>
+          <!-- old design end  -->
         </form>
       </div>
     </da-col-item>

@@ -248,7 +248,7 @@ export class InvoiceManagementListComponent implements OnInit {
       showAnimation: showAnimation,
       buttons: [
         {
-          cssClass: "primary",
+          cssClass: "primary createBtn",
           text: "Create",
           disabled: false,
           handler: (variantList: any) => {

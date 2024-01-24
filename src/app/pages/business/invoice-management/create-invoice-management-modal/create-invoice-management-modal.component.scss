@@ -14,10 +14,18 @@
 }
 
 .center-content {
-  margin: 22px 4em;
+  margin: 22px 2em;
+  white-space: nowrap;
+  display: flex;
+  gap: 8px;
   label {
     font-size: 15px;
     font-weight: bold;
+    min-width: 100px;
+    white-space: nowrap;
+    display: block;
+    text-align: right;
+    color: #000000;
   }
 
   .form-inline {  
@@ -51,16 +59,11 @@
   }
 
   .set-mrgn {
-    margin: 0px 10px;
     border: 1px solid;
     border-radius: 4px;
     padding: 4px 20px;
     font-weight: 500;
     font-size: 12px;
-  }
-
-  .manage-btn {
-    margin: 0px 34px !important;
   }
 }
 
@@ -77,4 +80,10 @@
 .manage-dropdown {
   width: calc(100% - 10%);
   margin-left: 4px;
+}
+.flex-btns{
+  display: flex;
+  gap: 5px;
+  justify-content: space-between;
+  width: 100%;
 }

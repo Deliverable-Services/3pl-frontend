@@ -46,6 +46,12 @@ input{
     align-items: center;
     margin-bottom: 15px;
 }
+.invoice-form-row .devui-form-control-container, .invoice-form-row .devui-form-item{
+  margin-bottom: 0 !important;
+}
+.invoice-form-row .devui-form-label{
+ display: block;
+}
 .devui-form-control-container input{
   margin-bottom: 0 !important;
 }
@@ -60,7 +66,7 @@ input{
 .mr-element-spacing {
   // background: #53ba75 !important;
   button {
-    background: #53ba75 !important;
+    background: #00BA00 !important;
     font-weight: 700 !important;
     span {
       color: #fff !important;
@@ -121,4 +127,7 @@ width: 100% !important;
 }
 .search-input input{
   height: 28px !important;
+}
+.createBtn{
+  background:#00BA00;
 }
