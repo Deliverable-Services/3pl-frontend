@@ -29,6 +29,9 @@ export class CreateInvoiceManagementModalComponent implements OnInit {
     poId: ""
   }
   allowedStatus:any[] = ['ACCEPTED', 'CLOSED', 'CONFIRMED', 'READY', 'RELEASED'];
+  depositDisable:boolean = false;
+  preDisable:boolean = false;
+  finalDisable:boolean = false;
 
   constructor(
     private purchaseOrderService: PurchaseOrderService
@@ -59,6 +62,41 @@ export class CreateInvoiceManagementModalComponent implements OnInit {
   close($event: any) {
     this.modalClosed.emit(this.variantList);
     this.handler($event);
+  }
+
+  checkPo() {
+    this.purchaseOrderService.getById(this.formInfo.poId).subscribe((po: any) => {
+      // console.log(':: :: ', po?.invoices);
+      if(!po?.invoices) {
+        this.formInfo.type = 'DEPOSIT';
+        this.depositDisable = false;
+        this.preDisable = true;
+        this.finalDisable = true;
+      } else if(po?.invoices?.length) {
+        let getPre = po?.invoices?.filter((invoice: any) => invoice?.type?.toLowerCase() === 'mid');
+        let getFinal = po?.invoices?.filter((invoice: any) => invoice?.type?.toLowerCase() === 'final');
+
+        if(getFinal.length) {
+          this.depositDisable = true;
+          this.preDisable = true;
+          this.finalDisable = true;
+        }
+
+        if(po?.invoices?.filter((invoice: any) => invoice?.type?.toLowerCase() === 'deposit')?.length) {
+          this.depositDisable = true;
+        }
+        if(!getPre?.length && !getFinal?.length) {
+          this.preDisable = false;
+          this.finalDisable = true;
+          this.formInfo.type = 'MID';
+        } else if(getPre?.length && !getFinal?.length) {
+          this.preDisable = false;
+          this.finalDisable = false;
+          this.formInfo.type = 'MID';
+        }
+      }
+      this.data.vList(this.formInfo);
+    });
   }
 
   updateFormInfo() {

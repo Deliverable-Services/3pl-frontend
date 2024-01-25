@@ -7,7 +7,7 @@
     <label>PO No. :</label>
     <span class="manage-dropdown">
       <d-select [multiple]="false" [filterKey]="'toDisplay'" [(ngModel)]="dValue" [options]="poList"
-        [appendToBody]="true" name="poId" (valueChange)="formInfo.poId = dValue.id; updateFormInfo()"></d-select>
+        [appendToBody]="true" name="poId" (valueChange)="formInfo.poId = dValue.id; checkPo()"></d-select>
       <span class="bottom-text" style="margin-top:5px;display: block;color:#71757F"># PO without ‘Accepted’ will not
         appear in the
         list</span>
@@ -17,13 +17,13 @@
   <div class="center-content form-inline">
     <label>Invoice Type:</label>
     <div class="flex-btns">
-      <button (click)="formInfo.type = 'DEPOSIT'; updateFormInfo()"
+      <button [disabled]="depositDisable" (click)="formInfo.type = 'DEPOSIT'; updateFormInfo()"
         [ngClass]="{ 'set-new-bg': formInfo?.type?.toLowerCase() === 'deposit' }" class="set-mrgn"
         type="button">Deposit</button>
-      <button (click)="formInfo.type = 'MID'; updateFormInfo()"
+      <button [disabled]="preDisable" (click)="formInfo.type = 'MID'; updateFormInfo()"
         [ngClass]="{ 'set-new-bg': formInfo?.type?.toLowerCase() === 'mid' }" class="set-mrgn manage-btn"
         type="button">Pre-Shipment</button>
-      <button (click)="formInfo.type = 'FINAL'; updateFormInfo()"
+      <button [disabled]="finalDisable" (click)="formInfo.type = 'FINAL'; updateFormInfo()"
         [ngClass]="{ 'set-new-bg': formInfo?.type?.toLowerCase() === 'final' }" class="set-mrgn manage-btn"
         type="button">Final</button>
     </div>

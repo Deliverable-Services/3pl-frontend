@@ -25,6 +25,11 @@ export class InvoiceManagementFormComponent implements OnInit {
     type: '',
     poId: '',
     paymentRemarks: '',
+    contactPhone: '',
+    contactEmail: '',
+    contactUsername: '',
+    paymentTerms: '',
+    paymentReference: '',
     poDetails: {
       billToAddress: ''
     },
