@@ -104,10 +104,10 @@ export class InvoiceManagementFormComponent implements OnInit {
 
   config = {
     id: "dialog-service",
-    width: "70%",
+    width: "40%",
     maxHeight: "600px",
-    title: "Select Produts With Style",
-    content: InvoiceManagementFormComponent,
+    title: "Invoice Details (PO000032)",
+    content: InvoiceManagementFormModalComponent,
     backdropCloseable: true,
     onClose: () => console.log(""),
     data: {
@@ -797,5 +797,29 @@ export class InvoiceManagementFormComponent implements OnInit {
       this.detailsInputs = this.projectFormData?.poDetails?.details;
       console.log(':: :: ', this.projectFormData);
     })
+  }
+
+  openInvoiceDetails(dialogtype?: string, showAnimation?: boolean) {
+    const results = this.dialogService.open({
+      ...this.config,
+      dialogtype: dialogtype,
+      showAnimation: showAnimation,
+      buttons: [
+        {
+          cssClass: "primary createBtn",
+          text: "Close",
+          disabled: false,
+          handler: (variantList: any) => {
+            results.modalInstance.hide();
+          },
+        }
+      ],
+      data: {
+        details: this.projectFormData,
+        vList: (vData: any) => {
+          
+        },
+      },
+    });
   }
 }

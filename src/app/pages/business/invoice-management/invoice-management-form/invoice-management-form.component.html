@@ -256,7 +256,7 @@
             </da-col-item>
           </da-layout-row>
           <da-layout-row [daGutter]="[24, 24]" class="invoice-form-row">
-            <da-col-item [daSpan]="12" [daXs]="12" [ngClass]="{ 'set-cursor': mode.toLowerCase() === 'edit' }">
+            <da-col-item [daSpan]="12" [daXs]="12">
               <da-layout-row [daGutter]="[24, 24]">
                 <da-col-item [daSpan]="24" [daXs]="24">
                   <div class="da-content-banner-title">Terms & Conditions</div>
@@ -266,8 +266,8 @@
                     </d-form-label>
                     <d-form-control>
                       <input [(ngModel)]="projectFormData.paymentReference"
-                        style="pointer-events: none; background: #f3f3f3 !important" dTextInput autocomplete="off"
-                        name="type" [placeholder]="'Type of invoice'" />
+                        dTextInput autocomplete="off"
+                        name="paymentReference"/>
                     </d-form-control>
                   </d-form-item>
                 </da-col-item>
@@ -279,13 +279,7 @@
                           Payment Terms
                         </d-form-label>
                         <d-form-control>
-                          <input [(ngModel)]="projectFormData.paymentTerms" style="
-                              pointer-events: none;
-                              background: #f3f3f3 !important;
-                            " dTextInput autocomplete="off" name="billToAddress" [placeholder]="
-                              'form.invoiceManagement.fields.billAddress'
-                                | translate
-                            " />
+                          <input [(ngModel)]="projectFormData.paymentTerms" dTextInput autocomplete="off" name="paymentTerms"/>
                         </d-form-control>
                       </d-form-item>
                     </div>
@@ -398,16 +392,58 @@
             </da-col-item>
             <da-col-item [daSpan]="8" [daXs]="8">
               <div
+                *ngIf="projectFormData.type?.toLowerCase() === 'deposit'"
                 style="margin-bottom: 10px;height: 100%;display: flex;align-items: center;flex-direction: column;justify-content: center;text-align: center;">
                 <d-form-item [ngStyle]="{flexDirection:'row',gap:'10px', marginBottom:'10px'}">
                   <d-form-label>
-                    Details
+                    <span>*</span> Deposit % :
                   </d-form-label>
                   <d-form-control>
                     <input style="width: 50px; background: #f3f3f3 !important" type="text" class="set-input" />
                   </d-form-control>
                 </d-form-item>
                 <p><b>Invoice Amount (RMB) : </b> : 9000</p>
+              </div>
+
+              <div
+              class="manage-bottom-right"
+                *ngIf="projectFormData.type?.toLowerCase() === 'mid'">
+                <d-form-item [ngStyle]="{flexDirection:'row',gap:'10px', marginBottom:'10px', fontSize: '14px', fontWeight: 'bold'}">
+                  <d-form-label [required]="true">
+                    Invoice Amount:
+                  </d-form-label>
+                  <d-form-control>
+                    <input type="text" class="mid-input" /><span>RMB</span>
+                  </d-form-control>
+                </d-form-item>
+                <div class="manage-bottom-two">
+                  <p><b>Over PO Amt. : </b> 0%</p>
+                  <span># Calculation based on ratio to Total Amt. of PO</span>
+                  <p><b>Ref. - Packed Qty / Planned Qty :</b> 0%</p>
+                  <span># Calculation based on ratio to Total Packed Qty</span>
+                </div>
+              </div>
+
+              <div
+              class="manage-bottom-right"
+                *ngIf="projectFormData.type?.toLowerCase() === 'final'">
+                <div class="bottom-main-line">
+                  <p>Billed Amount : 12000 RMB</p>
+                  <button (click)="openInvoiceDetails()" type="button"> Invoice Details </button>
+                </div>
+                <div class="manage-bottom-two">
+                  <p>Fulfillment Amount : 9000 RMB</p>
+                  <span># Calculation based on ratio of received qty and planned qty</span>
+                </div>
+
+                <d-form-item [ngStyle]="{flexDirection:'row',gap:'10px', marginBottom:'10px', fontSize: '14px', fontWeight: 'bold'}">
+                  <d-form-label [required]="true">
+                    Balance Amount:
+                  </d-form-label>
+                  <d-form-control>
+                    <input type="text" class="mid-input" /><span>RMB</span>
+                  </d-form-control>
+                </d-form-item>
               </div>
             </da-col-item>
           </da-layout-row>

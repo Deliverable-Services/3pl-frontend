@@ -1,73 +1,44 @@
-ul {
-  list-style: none;
-  padding: 0;
+.content-part {
+  table {
+    width: 100%;
+    text-align: left;
+    font-size: 14px;
+
+    .linked-text {
+      color: #0073FA;
+      text-decoration: underline;
+    }
+
+    .linked-text:hover {
+      cursor: pointer;
+    }
+
+    .manage-input {
+      padding: 3px 17px;
+      border: 2px solid;
+      margin-right: 14px;
+      display: flow-root;
+      text-align: right;
+      background: #F3F3F3;
+      border-radius: 5px;
+    } 
+  }
 }
 
-li {
-  display: flex;
-  align-items: center;
-  margin-bottom: 8px;
-  cursor: pointer;
-  padding: 8px;
-  border: 1px solid #ccc;
+.bottom-content {
+  float: right;
+  
+  span {
+    display: inline-flex;
+    
+    h1 {
+      font-weight: bold;
+      font-size: 14px;
+    }
+
+    p {
+      margin: 12px;
+    }
+
+  }
 }
-
-.selected {
-  background-color: #007bff; /* Customize the background color */
-  color: #fff; /* Customize the text color */
-}
-
-/* Styles for the Variant List */
-.variant-list {
-    list-style: none;
-    padding: 0;
-  }
-  
-  .variant-item {
-    display: flex;
-    align-items: center;
-    margin-bottom: 8px;
-    cursor: pointer;
-    padding: 8px;
-    border: 1px solid #ccc;
-    background-color: #f7f7f7; /* Background color for each item */
-  }
-  
-  .variant-item:hover {
-    background-color: #e0e0e0; /* Background color on hover */
-  }
-  
-  /* Styles for checkboxes */
-  .variant-item input[type="checkbox"] {
-    margin-right: 8px;
-  }
-  
-  /* Heading style */
-  h3 {
-    margin-top: 16px;
-    font-size: 1.2rem;
-  }
-  
-  .column-container {
-    display: flex;
-    flex-direction: row;
-  }
-  
-  .column-left {
-    width: 70%;
-    padding: 10px;
-    box-sizing: border-box;
-  }
-
-  .column-right {
-    width: 30%;
-    padding: 10px;
-    box-sizing: border-box;
-  }
-
-  .m-top{
-    margin-top: 25px;
-  }
-  .remove-button{
-    color: red;
-  }

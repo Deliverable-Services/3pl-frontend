@@ -216,3 +216,45 @@ form {
   width: 0;
   height: 0;
 }
+
+.manage-bottom-right {
+  margin-bottom: 10px;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
+  line-height: 25px;
+
+  .manage-bottom-two {
+    width: 100%;
+    text-align: right;
+    margin-right: calc(100% - 60%);
+
+    p {
+      font-size: 14px;
+    }
+
+    span {
+      color: #71757F;
+    }
+  }
+
+  .bottom-main-line {
+    display: inline-flex;
+
+    p {
+      font-size: 14px;
+      font-weight: bold;
+      margin-right: 20px;
+    }
+
+    button {
+      background: #5E7CE0;
+      color: #fff;
+      padding: 4px 17px;
+      border-radius: 5px;
+    }
+  }
+}
