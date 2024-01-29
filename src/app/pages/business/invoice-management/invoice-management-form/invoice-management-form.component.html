@@ -92,7 +92,8 @@
                       Type of invoice
                     </d-form-label>
                     <d-form-control>
-                      <input [(ngModel)]="projectFormData.type?.toLowerCase() === 'mid' ? 'Pre-Shipment':projectFormData.type"
+                      <input
+                        [(ngModel)]="projectFormData.type?.toLowerCase() === 'mid' ? 'Pre-Shipment':projectFormData.type"
                         style="pointer-events: none; background: #f3f3f3 !important" dTextInput autocomplete="off"
                         name="invoiceType" [placeholder]="'Type of invoice'" />
                     </d-form-control>
@@ -169,12 +170,10 @@
                     <d-form-label>Payment Date</d-form-label>
                     <div style="width: 100%" cdiv class="devui-input-group devui-dropdown-origin" dActiveFormControl>
                       <input style="pointer-events: none; background: #f3f3f3 !important"
-                        [disabled]="projectFormData.status?.toLowerCase() === 'draft'"
-                        [ngClass]="{
+                        [disabled]="projectFormData.status?.toLowerCase() === 'draft'" [ngClass]="{
                           'manage-fields':
                             projectFormData.status?.toLowerCase() === 'draft'
-                        }"
-                        class="devui-input devui-form-control" [(ngModel)]="projectFormData.issueDate"
+                        }" class="devui-input devui-form-control" [(ngModel)]="projectFormData.issueDate"
                         autocomplete="off" placeholder="y-MM-dd" type="date" [min]="_dateVaidationForToday()"
                         name="issueDate" />
                     </div>
@@ -193,9 +192,7 @@
                         <textarea [ngClass]="{
                         'manage-fields':
                           projectFormData.status?.toLowerCase() === 'draft'
-                      }" 
-                      [disabled]="projectFormData.status?.toLowerCase() === 'draft'"
-                      [ngStyle]="{
+                      }" [disabled]="projectFormData.status?.toLowerCase() === 'draft'" [ngStyle]="{
                         height: '104px'
                       }" rows="4" dTextarea resize="vertical" autocomplete="off" name="paymentRemarks" [placeholder]="
                         'form.invoiceManagement.fields.remarks' | translate
@@ -218,7 +215,7 @@
                   <input [disabled]="
                           projectFormData.type?.toLowerCase() === 'deposit'
                         " class="set-width manage-fields" dTextInput autocomplete="off" name="attn"
-                        [(ngModel)]="projectFormData.contactUsername" />
+                    [(ngModel)]="projectFormData.contactUsername" />
                 </d-form-control>
               </d-form-item>
             </da-col-item>
@@ -228,8 +225,7 @@
                 <d-form-control>
                   <input class="set-width manage-fields" dTextInput [disabled]="
                           projectFormData.type?.toLowerCase() === 'deposit'
-                        " autocomplete="off" name="primaryContactPhone1"
-                    [(ngModel)]="projectFormData.contactPhone" />
+                        " autocomplete="off" name="primaryContactPhone1" [(ngModel)]="projectFormData.contactPhone" />
                 </d-form-control>
               </d-form-item>
             </da-col-item>
@@ -239,8 +235,7 @@
                 <d-form-control>
                   <input class="set-width manage-fields" dTextInput [disabled]="
                           projectFormData.type?.toLowerCase() === 'deposit'
-                        " autocomplete="off" name="primaryContactEmail"
-                    [(ngModel)]="projectFormData.contactEmail" />
+                        " autocomplete="off" name="primaryContactEmail" [(ngModel)]="projectFormData.contactEmail" />
                 </d-form-control>
               </d-form-item>
             </da-col-item>
@@ -260,14 +255,16 @@
               <da-layout-row [daGutter]="[24, 24]">
                 <da-col-item [daSpan]="24" [daXs]="24">
                   <div class="da-content-banner-title">Terms & Conditions</div>
+                </da-col-item>
+                <da-col-item [daSpan]="24" [daXs]="24">
+
                   <d-form-item>
                     <d-form-label [hasHelp]="false" [helpTips]="'Price Terms'">
                       Price Terms
                     </d-form-label>
                     <d-form-control>
-                      <input [(ngModel)]="projectFormData.paymentReference"
-                        dTextInput autocomplete="off"
-                        name="paymentReference"/>
+                      <input [(ngModel)]="projectFormData.paymentReference" dTextInput autocomplete="off"
+                        name="paymentReference" />
                     </d-form-control>
                   </d-form-item>
                 </da-col-item>
@@ -279,7 +276,8 @@
                           Payment Terms
                         </d-form-label>
                         <d-form-control>
-                          <input [(ngModel)]="projectFormData.paymentTerms" dTextInput autocomplete="off" name="paymentTerms"/>
+                          <input [(ngModel)]="projectFormData.paymentTerms" dTextInput autocomplete="off"
+                            name="paymentTerms" />
                         </d-form-control>
                       </d-form-item>
                     </div>
@@ -346,7 +344,7 @@
 
           <da-layout-row [daGutter]="[24, 24]" class="invoice-form-row">
             <da-col-item [daSpan]="24" [daXs]="24">
-              <div class="da-content-banner-title">PO Details</div>
+              <div class="da-content-banner-title" style="margin-bottom: 0 !important;">PO Details</div>
             </da-col-item>
           </da-layout-row>
           <da-layout-row [daGutter]="[24, 24]" class="invoice-form-row">
@@ -365,7 +363,9 @@
                           <th class="manage-table-head">Product</th>
                           <th class="manage-table-head">EXW Price (RMB)</th>
                           <th class="manage-table-head">PO Planned Qty</th>
-                          <th *ngIf="projectFormData.type?.toLowerCase() === 'mid' || projectFormData.type?.toLowerCase() === 'final'" class="manage-table-head">Packed Qty</th>
+                          <th
+                            *ngIf="projectFormData.type?.toLowerCase() === 'mid' || projectFormData.type?.toLowerCase() === 'final'"
+                            class="manage-table-head">Packed Qty</th>
 
                           <!-- </span> -->
                         </tr>
@@ -374,10 +374,14 @@
                       <tbody>
                         <tr *ngFor="let input of detailsInputs; let i = index">
                           <td class="manage-table-content"> {{ input.lineNumber }}</td>
-                          <td class="manage-table-content"> {{ input.style }}, {{ input?.color || '-' }}, {{ input?.size || '-' }} </td>
-                          <td class="manage-table-content"><span> {{ _getRmbPrice(input.poQuantity*input.productPrice) }} </span></td>
+                          <td class="manage-table-content"> {{ input.style }}, {{ input?.color || '-' }}, {{ input?.size
+                            || '-' }} </td>
+                          <td class="manage-table-content"><span> {{ _getRmbPrice(input.poQuantity*input.productPrice)
+                              }} </span></td>
                           <td class="manage-table-content"><span> {{ input.poQuantity }} </span></td>
-                          <td *ngIf="projectFormData.type?.toLowerCase() === 'mid' || projectFormData.type?.toLowerCase() === 'final'" class="manage-table-head">
+                          <td
+                            *ngIf="projectFormData.type?.toLowerCase() === 'mid' || projectFormData.type?.toLowerCase() === 'final'"
+                            class="manage-table-head">
                             0
                           </td>
 
@@ -389,47 +393,50 @@
                 </div>
 
               </ng-container>
-              <div style="text-align: right;margin-top: 10px;">
-                <p><b>PO Total Amount (RMB) : </b> {{ _getRmbTotal() }} </p>
-              </div>
             </da-col-item>
             <da-col-item [daSpan]="8" [daXs]="8">
-              <div
-                *ngIf="projectFormData.type?.toLowerCase() === 'deposit'"
+              <div *ngIf="projectFormData.type?.toLowerCase() === 'deposit'"
                 style="margin-bottom: 10px;height: 100%;display: flex;align-items: center;flex-direction: column;justify-content: center;text-align: center;">
-                <d-form-item [ngStyle]="{flexDirection:'row',gap:'10px', marginBottom:'10px'}">
-                  <d-form-label>
-                    <span>*</span> Deposit % :
+                <d-form-item [ngStyle]="{flexDirection:'row',gap:'10px'}">
+                  <d-form-label [ngStyle]="{fontWeight:'600',paddingBottom: '0',alignSelf: 'center'}">
+                    <span style="color:red">*</span> Deposit % :
                   </d-form-label>
                   <d-form-control>
-                    <input style="width: 50px; background: #f3f3f3 !important" [value]="this.projectFormData['poDetails']?.vendor?.invoicePercentage || 0" type="text" class="set-input" />
+                    <input
+                      style="width: 50px;text-align: center; background: #f3f3f3 !important;border-radius: 5px; outline: none; border: 2px solid #000;"
+                      [value]="this.projectFormData['poDetails']?.vendor?.invoicePercentage || 0" type="text"
+                      class="set-input" />
                   </d-form-control>
                 </d-form-item>
-                <p><b>Invoice Amount (RMB) : </b> {{ (_getRmbTotal()*this.projectFormData['poDetails']?.vendor?.invoicePercentage)/100 }} </p>
+                <p style="font-size: 14px;margin-top: 15px;"><b>Invoice Amount (RMB) : </b> {{
+                  (_getRmbTotal()*this.projectFormData['poDetails']?.vendor?.invoicePercentage)/100 }} </p>
               </div>
 
-              <div
-              class="manage-bottom-right"
-                *ngIf="projectFormData.type?.toLowerCase() === 'mid'">
-                <d-form-item [ngStyle]="{flexDirection:'row',gap:'10px', marginBottom:'10px', fontSize: '14px', fontWeight: 'bold'}">
+              <div class="manage-bottom-right" *ngIf="projectFormData.type?.toLowerCase() === 'mid'">
+                <d-form-item
+                  [ngStyle]="{flexDirection:'row',gap:'10px', marginBottom:'10px', fontSize: '14px', fontWeight: 'bold'}">
                   <d-form-label [required]="true">
                     Invoice Amount:
                   </d-form-label>
                   <d-form-control>
-                    <input [(ngModel)]="this.projectFormData.amount" type="text" class="mid-input" /><span>RMB</span>
+                    <input [(ngModel)]="this.projectFormData.amount" type="text" class="mid-input"
+                      style="border-radius: 5px;outline: none;border: 2px solid #000;text-align: right;font-weight: 700;" /><span
+                      style="padding-left: 5px">RMB</span>
                   </d-form-control>
                 </d-form-item>
-                <div class="manage-bottom-two">
-                  <p><b>Over PO Amt. : </b> {{ (this.projectFormData.amount !== 0 && this.projectFormData.amount > _getRmbTotal()) ? _getRmbTotal() * (100/this.projectFormData.amount):'0'}}%</p>
-                  <span># Calculation based on ratio to Total Amt. of PO</span>
-                  <p><b>Ref. - Packed Qty / Planned Qty :</b> 0%</p>
-                  <span># Calculation based on ratio to Total Packed Qty</span>
+                <div style="display: flex;">
+                  <div class="manage-bottom-two" style="width: 100%;">
+                    <p><b>Over PO Amt. : </b> {{ (this.projectFormData.amount !== 0 && this.projectFormData.amount >
+                      _getRmbTotal()) ? _getRmbTotal() * (100/this.projectFormData.amount):'0'}}%</p>
+                    <span># Calculation based on ratio to Total Amt. of PO</span>
+                    <p><b>Ref. - Packed Qty / Planned Qty :</b> 0%</p>
+                    <span># Calculation based on ratio to Total Packed Qty</span>
+                  </div>
+                  <div style="width: 37px;"></div>
                 </div>
               </div>
 
-              <div
-              class="manage-bottom-right"
-                *ngIf="projectFormData.type?.toLowerCase() === 'final'">
+              <div class="manage-bottom-right" *ngIf="projectFormData.type?.toLowerCase() === 'final'">
                 <div class="bottom-main-line">
                   <p>Billed Amount : 12000 RMB</p>
                   <button (click)="openInvoiceDetails()" type="button"> Invoice Details </button>
@@ -439,14 +446,24 @@
                   <span># Calculation based on ratio of received qty and planned qty</span>
                 </div>
 
-                <d-form-item [ngStyle]="{flexDirection:'row',gap:'10px', marginBottom:'10px', fontSize: '14px', fontWeight: 'bold'}">
+                <d-form-item
+                  [ngStyle]="{flexDirection:'row',gap:'10px', marginBottom:'10px', fontSize: '14px', fontWeight: 'bold'}">
                   <d-form-label [required]="true">
                     Balance Amount:
                   </d-form-label>
                   <d-form-control>
-                    <input type="text" class="mid-input" /><span>RMB</span>
+                    <div
+                      style="border-radius: 5px;border: 2px solid #000;background: #F3F3F3;display: flex;align-items: center;padding-right: 5px;">
+                      <input type="text" class="mid-input"
+                        style="border: 0;outline: none;background-color: transparent;text-align: right;font-weight: 600;" /><span>RMB</span>
+                    </div>
                   </d-form-control>
                 </d-form-item>
+              </div>
+            </da-col-item>
+            <da-col-item [daSpan]="16" [daXs]="16">
+              <div style="text-align: right;">
+                <p><b>PO Total Amount (RMB) : </b> {{ _getRmbTotal() }} </p>
               </div>
             </da-col-item>
           </da-layout-row>
