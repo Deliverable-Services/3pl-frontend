@@ -8,6 +8,7 @@ import { MSG } from "src/config/global-var";
 import { ProductsListDataService } from "src/app/@core/mock/products-data.service";
 import { InvoiceManagementFormModalComponent } from "../invoice-management-form-modal/invoice-management-form-modal.component";
 import { InvoiceManagementService } from "src/app/@core/mock/invoice-management.service";
+import { CurrencyDataService } from "src/app/@core/mock/currency-data.service";
 
 @Component({
   selector: "app-invoice-management-form",
@@ -20,8 +21,10 @@ export class InvoiceManagementFormComponent implements OnInit {
   createdDate? = "";
   modifiedDate? = "";
   vendorList: any[] = [];
+  stAllCurrency: any = {};
 
   projectFormData: any = {
+    amount: '',
     type: '',
     poId: '',
     paymentRemarks: '',
@@ -136,7 +139,8 @@ export class InvoiceManagementFormComponent implements OnInit {
     private dialogService: DialogService,
     private router: Router,
     private toastService: ToastService,
-    private invoiceManagementService: InvoiceManagementService
+    private invoiceManagementService: InvoiceManagementService,
+    private currencyDataService: CurrencyDataService
   ) {}
 
   ngOnInit(): void {
@@ -145,6 +149,7 @@ export class InvoiceManagementFormComponent implements OnInit {
     this.getConnectionLocationList();
     
     this.getById(this.paramId);
+    this.currencyDataService.getCurrencyList().subscribe((cList: any) => this.stAllCurrency = cList);
     
     this.connectionLocationService.setPageParams(this.pageParam);
     this.getVendorList();
@@ -789,13 +794,13 @@ export class InvoiceManagementFormComponent implements OnInit {
 
   getPoInformation(poId: string) {
     this.purchaseOrderService.getById(poId).subscribe((res: any) => {
-      console.log(':: res :: ', res);
+      // console.log(':: res :: ', res);
       this.projectFormData['poDetails'] = res;
       // this.projectFormData.poDetails.issueDate = this.projectFormData?.poDetails?.issueDate?.split("T")[0];
       this.projectFormData.issueDate = this.projectFormData?.poDetails?.issueDate?.split("T")[0];
       this.projectFormData.vendor = res.vendor;
       this.detailsInputs = this.projectFormData?.poDetails?.details;
-      console.log(':: :: ', this.projectFormData);
+      console.log(':: :: ', this.stAllCurrency);
     })
   }
 
@@ -821,5 +826,23 @@ export class InvoiceManagementFormComponent implements OnInit {
         },
       },
     });
+  }
+
+  _getRmbPrice(price: any) {
+    if(this.stAllCurrency && this.stAllCurrency?.content?.length > 0) {
+      // return this.projectFormData['poDetails']?.vendor?.paymentCurrency;
+      return price * this.stAllCurrency?.content?.find((currency: any) => currency.currencyCode === this.projectFormData['poDetails']?.vendor?.paymentCurrency)?.rate;
+    } else {
+      return price;
+    }
+  }
+  
+  _getRmbTotal() {
+    let tAmt = 0;
+    this.detailsInputs?.forEach((d: any) => {
+      let cRmb = (d.poQuantity*d.productPrice) * this.stAllCurrency?.content?.find((currency: any) => currency.currencyCode === this.projectFormData['poDetails']?.vendor?.paymentCurrency)?.rate
+      tAmt = tAmt + cRmb;
+    });
+    return tAmt;
   }
 }

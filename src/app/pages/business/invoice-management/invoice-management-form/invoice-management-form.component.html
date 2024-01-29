@@ -92,7 +92,7 @@
                       Type of invoice
                     </d-form-label>
                     <d-form-control>
-                      <input [(ngModel)]="projectFormData.type"
+                      <input [(ngModel)]="projectFormData.type?.toLowerCase() === 'mid' ? 'Pre-Shipment':projectFormData.type"
                         style="pointer-events: none; background: #f3f3f3 !important" dTextInput autocomplete="off"
                         name="invoiceType" [placeholder]="'Type of invoice'" />
                     </d-form-control>
@@ -355,28 +355,31 @@
                 <!-- <ng-container> -->
 
                 <!-- TABLE CARD -->
-                <div style="border-right: 1px dotted #000;padding-right: 10px;">
+                <div *ngIf="detailsInputs?.length" style="border-right: 1px dotted #000;padding-right: 10px;">
                   <div class="add-details-table">
                     <table class="manage-table">
                       <thead>
                         <tr class="set-head-botder">
                           <!-- <span class="head-row"> -->
                           <th class="manage-table-head">Line No.</th>
-                          <th class="manage-table-head">Image</th>
-                          <th class="manage-table-head">SKU</th>
-                          <th class="manage-table-head">Style Name</th>
+                          <th class="manage-table-head">Product</th>
+                          <th class="manage-table-head">EXW Price (RMB)</th>
+                          <th class="manage-table-head">PO Planned Qty</th>
+                          <th *ngIf="projectFormData.type?.toLowerCase() === 'mid' || projectFormData.type?.toLowerCase() === 'final'" class="manage-table-head">Packed Qty</th>
 
                           <!-- </span> -->
                         </tr>
                       </thead>
 
                       <tbody>
-                        <tr>
-                          <td class="manage-table-content"> 1</td>
-                          <td class="manage-table-content"> fdc</td>
-                          <td class="manage-table-content"><span> vfd </span></td>
-                          <td class="manage-table-content"><span> ds</span></td>
-
+                        <tr *ngFor="let input of detailsInputs; let i = index">
+                          <td class="manage-table-content"> {{ input.lineNumber }}</td>
+                          <td class="manage-table-content"> {{ input.style }}, {{ input?.color || '-' }}, {{ input?.size || '-' }} </td>
+                          <td class="manage-table-content"><span> {{ _getRmbPrice(input.poQuantity*input.productPrice) }} </span></td>
+                          <td class="manage-table-content"><span> {{ input.poQuantity }} </span></td>
+                          <td *ngIf="projectFormData.type?.toLowerCase() === 'mid' || projectFormData.type?.toLowerCase() === 'final'" class="manage-table-head">
+                            0
+                          </td>
 
                         </tr>
 
@@ -387,7 +390,7 @@
 
               </ng-container>
               <div style="text-align: right;margin-top: 10px;">
-                <p><b>PO Total Amount (RMB) : </b> : : 9000</p>
+                <p><b>PO Total Amount (RMB) : </b> {{ _getRmbTotal() }} </p>
               </div>
             </da-col-item>
             <da-col-item [daSpan]="8" [daXs]="8">
@@ -399,10 +402,10 @@
                     <span>*</span> Deposit % :
                   </d-form-label>
                   <d-form-control>
-                    <input style="width: 50px; background: #f3f3f3 !important" type="text" class="set-input" />
+                    <input style="width: 50px; background: #f3f3f3 !important" [value]="this.projectFormData['poDetails']?.vendor?.invoicePercentage || 0" type="text" class="set-input" />
                   </d-form-control>
                 </d-form-item>
-                <p><b>Invoice Amount (RMB) : </b> : 9000</p>
+                <p><b>Invoice Amount (RMB) : </b> {{ (_getRmbTotal()*this.projectFormData['poDetails']?.vendor?.invoicePercentage)/100 }} </p>
               </div>
 
               <div
@@ -413,11 +416,11 @@
                     Invoice Amount:
                   </d-form-label>
                   <d-form-control>
-                    <input type="text" class="mid-input" /><span>RMB</span>
+                    <input [(ngModel)]="this.projectFormData.amount" type="text" class="mid-input" /><span>RMB</span>
                   </d-form-control>
                 </d-form-item>
                 <div class="manage-bottom-two">
-                  <p><b>Over PO Amt. : </b> 0%</p>
+                  <p><b>Over PO Amt. : </b> {{ (this.projectFormData.amount !== 0 && this.projectFormData.amount > _getRmbTotal()) ? _getRmbTotal() * (100/this.projectFormData.amount):'0'}}%</p>
                   <span># Calculation based on ratio to Total Amt. of PO</span>
                   <p><b>Ref. - Packed Qty / Planned Qty :</b> 0%</p>
                   <span># Calculation based on ratio to Total Packed Qty</span>
