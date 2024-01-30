@@ -53,8 +53,7 @@
               </d-button>
 
               <d-button *ngIf="projectFormData.status?.toLowerCase() === 'draft' ||
-                projectFormData.status?.toLowerCase() === 'pending_payment' ||
-                projectFormData.status?.toLowerCase() === 'paid'" [ngStyle]="{ float: 'right' }"
+                projectFormData.status?.toLowerCase() === 'pending_payment'" [ngStyle]="{ float: 'right' }"
                 [disabled]="!allowSubmit" dLoading class="mr-element-spacing" [title]="projectForm.errorMessage || ''"
                 circled="true" style="margin-right: 8px" [showLoading]="projectForm.pending" dFormSubmit
                 [dFormSubmitData]="'submit-button'">
@@ -82,6 +81,14 @@
           <div class="da-content-banner-title">
             Invoice Order
             <span *ngIf="projectFormData.status">&nbsp;({{ projectFormData.id }})</span>
+
+            <span *ngIf="projectFormData.status?.toLowerCase() === 'pending_payment'
+            || projectFormData.status?.toLowerCase() === 'paid'">&nbsp;
+              <button (click)="generateInvoice()" type="button" class="export-btn">
+                <img src="assets/pdf-img.png"/>
+                Export Invoice
+              </button>
+            </span>
           </div>
           <da-layout-row [daGutter]="[24, 24]" class="invoice-form-row">
             <da-col-item [daSpan]="12" [daXs]="12">
@@ -140,10 +147,7 @@
                   </ng-container>
                 </da-col-item>
                 <da-col-item [daSpan]="24" [daXs]="24">
-                  <ng-container *ngIf="
-                  projectFormData.type?.toLowerCase() === 'mid' ||
-                  projectFormData.type?.toLowerCase() === 'final'
-                ">
+                  <ng-container>
                     <d-form-item>
                       <d-form-label>Invoice Remarks</d-form-label>
                       <d-form-control>
@@ -182,17 +186,14 @@
               </da-layout-row>
               <da-layout-row [daGutter]="[24, 24]">
                 <da-col-item [daSpan]="24" [daXs]="24">
-                  <ng-container *ngIf="
-                  projectFormData.type?.toLowerCase() === 'mid' ||
-                  projectFormData.type?.toLowerCase() === 'final'
-                ">
+                  <ng-container>
                     <d-form-item>
                       <d-form-label>Payment Remarks</d-form-label>
                       <d-form-control>
                         <textarea [ngClass]="{
                         'manage-fields':
-                          projectFormData.status?.toLowerCase() === 'draft'
-                      }" [disabled]="projectFormData.status?.toLowerCase() === 'draft'" [ngStyle]="{
+                        projectFormData.status?.toLowerCase() !== 'pending_payment'
+                      }" [disabled]="projectFormData.status?.toLowerCase() !== 'pending_payment'" [ngStyle]="{
                         height: '104px'
                       }" rows="4" dTextarea resize="vertical" autocomplete="off" name="paymentRemarks" [placeholder]="
                         'form.invoiceManagement.fields.remarks' | translate
@@ -263,7 +264,10 @@
                       Price Terms
                     </d-form-label>
                     <d-form-control>
-                      <input [(ngModel)]="projectFormData.paymentReference" dTextInput autocomplete="off"
+                      <input [disabled]="projectFormData.status?.toLowerCase() === 'paid'" [ngClass]="{
+                        'manage-fields':
+                          projectFormData.status?.toLowerCase() === 'paid'
+                      }" [(ngModel)]="projectFormData.paymentReference" dTextInput autocomplete="off"
                         name="paymentReference" />
                     </d-form-control>
                   </d-form-item>
@@ -276,7 +280,10 @@
                           Payment Terms
                         </d-form-label>
                         <d-form-control>
-                          <input [(ngModel)]="projectFormData.paymentTerms" dTextInput autocomplete="off"
+                          <input [disabled]="projectFormData.status?.toLowerCase() === 'paid'" [ngClass]="{
+                            'manage-fields':
+                              projectFormData.status?.toLowerCase() === 'paid'
+                          }" [(ngModel)]="projectFormData.paymentTerms" dTextInput autocomplete="off"
                             name="paymentTerms" />
                         </d-form-control>
                       </d-form-item>
@@ -366,6 +373,9 @@
                           <th
                             *ngIf="projectFormData.type?.toLowerCase() === 'mid' || projectFormData.type?.toLowerCase() === 'final'"
                             class="manage-table-head">Packed Qty</th>
+                          <th
+                            *ngIf="projectFormData.type?.toLowerCase() === 'final'"
+                            class="manage-table-head">Received Qty</th>  
 
                           <!-- </span> -->
                         </tr>
@@ -383,6 +393,11 @@
                             *ngIf="projectFormData.type?.toLowerCase() === 'mid' || projectFormData.type?.toLowerCase() === 'final'"
                             class="manage-table-head">
                             0
+                          </td>
+                          <td
+                            *ngIf="projectFormData.type?.toLowerCase() === 'final'"
+                            class="manage-table-head">
+                            {{ input.receivedQuantity }}
                           </td>
 
                         </tr>
@@ -419,15 +434,15 @@
                     Invoice Amount:
                   </d-form-label>
                   <d-form-control>
-                    <input [(ngModel)]="this.projectFormData.amount" type="text" class="mid-input"
+                    <input [(ngModel)]="projectFormData.amount" type="text" class="mid-input"
                       style="border-radius: 5px;outline: none;border: 2px solid #000;text-align: right;font-weight: 700;" /><span
                       style="padding-left: 5px">RMB</span>
                   </d-form-control>
                 </d-form-item>
                 <div style="display: flex;">
                   <div class="manage-bottom-two" style="width: 100%;">
-                    <p><b>Over PO Amt. : </b> {{ (this.projectFormData.amount !== 0 && this.projectFormData.amount >
-                      _getRmbTotal()) ? _getRmbTotal() * (100/this.projectFormData.amount):'0'}}%</p>
+                    <p><b>Over PO Amt. : </b> {{ (projectFormData.amount !== 0 && projectFormData.amount >
+                      _getRmbTotal()) ? (_getRmbTotal() * (100/projectFormData.amount) | number):'0'}}%</p>
                     <span># Calculation based on ratio to Total Amt. of PO</span>
                     <p><b>Ref. - Packed Qty / Planned Qty :</b> 0%</p>
                     <span># Calculation based on ratio to Total Packed Qty</span>
@@ -438,11 +453,11 @@
 
               <div class="manage-bottom-right" *ngIf="projectFormData.type?.toLowerCase() === 'final'">
                 <div class="bottom-main-line">
-                  <p>Billed Amount : 12000 RMB</p>
+                  <p>Billed Amount : {{ projectFormData.amount*_getCurrencyRate() | number }} RMB</p>
                   <button (click)="openInvoiceDetails()" type="button"> Invoice Details </button>
                 </div>
                 <div class="manage-bottom-two">
-                  <p>Fulfillment Amount : 9000 RMB</p>
+                  <p>Fulfillment Amount : {{ _getFulFillmentAmt() | number }} RMB</p>
                   <span># Calculation based on ratio of received qty and planned qty</span>
                 </div>
 
@@ -454,8 +469,9 @@
                   <d-form-control>
                     <div
                       style="border-radius: 5px;border: 2px solid #000;background: #F3F3F3;display: flex;align-items: center;padding-right: 5px;">
-                      <input type="text" class="mid-input"
-                        style="border: 0;outline: none;background-color: transparent;text-align: right;font-weight: 600;" /><span>RMB</span>
+                      <input type="text" class="mid-input" [disabled]="true"
+                      [value]="(projectFormData.amount*_getCurrencyRate()) - _getFulFillmentAmt() | number"
+                      style="border: 0;outline: none;background-color: transparent;text-align: right;font-weight: 600;" /><span>RMB</span>
                     </div>
                   </d-form-control>
                 </d-form-item>
@@ -463,7 +479,7 @@
             </da-col-item>
             <da-col-item [daSpan]="16" [daXs]="16">
               <div style="text-align: right;">
-                <p><b>PO Total Amount (RMB) : </b> {{ _getRmbTotal() }} </p>
+                <p><b>PO Total Amount (RMB) : </b> {{ _getRmbTotal() | number }} </p>
               </div>
             </da-col-item>
           </da-layout-row>

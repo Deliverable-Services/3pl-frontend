@@ -142,4 +142,13 @@ export class InvoiceManagementService {
       httpOptionsToken
     );
   }
+
+  generateInvoice(invoiceId: string) {
+    const httpOptionsToken = {
+      headers: new HttpHeaders({
+      }),
+    };
+
+    return this.http.get(`${this.baseApiUrl}/invoice/${invoiceId}/generate`, httpOptionsToken);
+  }
 }

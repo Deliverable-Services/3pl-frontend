@@ -271,3 +271,20 @@ form {
     }
   }
 }
+
+.export-btn {
+    border-radius: 5px;
+    border: 2px solid #000;
+    background: #FFD600;
+    color: #000;
+    font-family: Inter;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+    padding: 4px;
+
+    img {
+      width: 11%;
+    }
+}

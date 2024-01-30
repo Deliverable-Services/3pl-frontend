@@ -821,6 +821,10 @@ export class InvoiceManagementFormComponent implements OnInit {
       ],
       data: {
         details: this.projectFormData,
+        moreInfo: {
+          tPoAmt: this._getRmbTotal(),
+          fulFillAmt: this._getFulFillmentAmt()
+        },
         vList: (vData: any) => {
           
         },
@@ -828,10 +832,14 @@ export class InvoiceManagementFormComponent implements OnInit {
     });
   }
 
+  _getCurrencyRate() {
+    return this.stAllCurrency?.content?.find((currency: any) => currency.currencyCode === this.projectFormData['poDetails']?.vendor?.paymentCurrency)?.rate || null;
+  }
+
   _getRmbPrice(price: any) {
-    if(this.stAllCurrency && this.stAllCurrency?.content?.length > 0) {
+    if(this.stAllCurrency && this.stAllCurrency?.content?.length > 0 && this._getCurrencyRate()) {
       // return this.projectFormData['poDetails']?.vendor?.paymentCurrency;
-      return price * this.stAllCurrency?.content?.find((currency: any) => currency.currencyCode === this.projectFormData['poDetails']?.vendor?.paymentCurrency)?.rate;
+      return price * this._getCurrencyRate();
     } else {
       return price;
     }
@@ -840,9 +848,24 @@ export class InvoiceManagementFormComponent implements OnInit {
   _getRmbTotal() {
     let tAmt = 0;
     this.detailsInputs?.forEach((d: any) => {
-      let cRmb = (d.poQuantity*d.productPrice) * this.stAllCurrency?.content?.find((currency: any) => currency.currencyCode === this.projectFormData['poDetails']?.vendor?.paymentCurrency)?.rate
+      let cRmb = (d.poQuantity*d.productPrice) * this._getCurrencyRate()
       tAmt = tAmt + cRmb;
     });
     return tAmt;
+  }
+
+  _getFulFillmentAmt() {
+    let fAmt = 0;
+    this.detailsInputs?.forEach((d: any) => {
+      let cRmb = (d.receivedQuantity*d.productPrice) * this._getCurrencyRate()
+      fAmt = fAmt + cRmb;
+    });
+    return fAmt;
+  }
+
+  generateInvoice() {
+    this.invoiceManagementService.generateInvoice(this.paramId).subscribe((res: any) => {
+      this._showToastMsg('success', 'Updated Successfully!')
+    })
   }
 }
