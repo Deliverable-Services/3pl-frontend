@@ -486,7 +486,7 @@ export default {
       fields: {
         vendor: "Vendor",
         destination: "Destination",
-        shippingToDepartment: "Shipping to Department",
+        shippingToDepartment: "Shipping to Location",
         billAddress: "Bill Address",
         shippingAddress: "Shipping Address",
         expectedArrivalDate: "Due Date",

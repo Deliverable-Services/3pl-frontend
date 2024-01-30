@@ -159,3 +159,12 @@ svg.curved-line {
 .break-margin{
   margin-left: 71px;
 }
+
+.set-shipping-method span {
+  border: 1px solid;
+  padding: 4px 62px;
+}
+
+.set-shipping-method:hover {
+  cursor: pointer;
+}

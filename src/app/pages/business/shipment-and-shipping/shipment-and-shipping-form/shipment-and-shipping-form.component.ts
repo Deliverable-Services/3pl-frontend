@@ -25,6 +25,7 @@ export class ShipmentAndShippingFormComponent implements OnInit {
   totalCost: any = "0";
 
   projectFormData: any = {
+    shippingType: "",
     shipToLocation: {
       connectionLocationId: "",
       nodeName: "",
