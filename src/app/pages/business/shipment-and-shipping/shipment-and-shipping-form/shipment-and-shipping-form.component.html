@@ -90,50 +90,22 @@
             }} <span *ngIf="projectFormData.status">&nbsp;({{ projectFormData.id }})</span>
           </div>
           <!-- {{projectFormData | json}} -->
-          <div [ngStyle]="{ display: 'flex', justifyContent: 'space-between' }">
-            <div [ngStyle]="{ width: '46%' }" [ngClass]="{'set-cursor': mode.toLowerCase() === 'edit'}">
-
+          <da-layout-row [daGutter]="[24, 24]" class="invoice-form-row">
+            <da-col-item [daSpan]="12" [daXs]="12" [ngClass]="{'set-cursor': mode.toLowerCase() === 'edit'}">
               <d-form-item>
                 <d-form-label [required]="true" [hasHelp]="false">
                   Shipping Method
                 </d-form-label>
                 <d-form-control>
                   <div class="set-shipping-method">
-                    <span (click)="projectFormData.shippingType === 'SEA'">SEA</span>
+                    <span style="border-right: 0;background:#76B5FF"
+                      (click)="projectFormData.shippingType === 'SEA'">SEA</span>
                     <span (click)="projectFormData.shippingType === 'AIR'">AIR</span>
                   </div>
                 </d-form-control>
               </d-form-item>
-
-              <d-form-item>
-                <d-form-label [required]="true" [hasHelp]="false" [helpTips]="'This is Terms Subject.'">
-                  {{ "form.sAndS.fields.shippingToDepartment" | translate }}
-                </d-form-label>
-                <d-form-control>
-                  <d-select
-                    [ngClass]="{'manage-fields': (mode.toLowerCase() === 'edit' && projectFormData.status?.toLowerCase() !== 'draft')}"
-                    [ngStyle]="{'pointer-events': (mode.toLowerCase() === 'edit' && projectFormData.status?.toLowerCase() !== 'draft') ? 'none' : 'auto', width: '100%'}"
-                    [placeholder]="'form.sAndS.fields.shippingToDepartment' | translate" [appendToBody]="true"
-                    [multiple]="false" [filterKey]="'nodeName'" [options]="connectionLocationList" name="shipToLocation"
-                    (valueChange)="setAddress(projectFormData.shipToLocation.physicalAddress, 'shipToAddress')"
-                    [(ngModel)]="projectFormData.shipToLocation" [dValidateRules]="{
-                      validators: [{ required: true }]
-                    }"></d-select>
-                </d-form-control>
-              </d-form-item>
-
-              <ng-container>
-
-                <div class="input-setting">
-                </div>
-              </ng-container>
-
-
-
-            </div>
-
-            <div [ngStyle]="{ width: '46%' }" [ngClass]="{'set-cursor': mode.toLowerCase() === 'edit'}">
-
+            </da-col-item>
+            <da-col-item [daSpan]="12" [daXs]="12" [ngClass]="{'set-cursor': mode.toLowerCase() === 'edit'}">
               <d-form-item>
                 <d-form-label [required]="true" [hasHelp]="false" [helpTips]="'This is the Credit Day.'">
                   {{ "form.sAndS.fields.vendor" | translate }}
@@ -150,77 +122,79 @@
                     }"></d-select>
                 </d-form-control>
               </d-form-item>
-
+            </da-col-item>
+            <da-col-item [daSpan]="12" [daXs]="12" [ngClass]="{'set-cursor': mode.toLowerCase() === 'edit'}">
+              <d-form-item>
+                <d-form-label [required]="true" [hasHelp]="false" [helpTips]="'This is Terms Subject.'">
+                  {{ "form.sAndS.fields.shippingToDepartment" | translate }}
+                </d-form-label>
+                <d-form-control>
+                  <d-select
+                    [ngClass]="{'manage-fields': (mode.toLowerCase() === 'edit' && projectFormData.status?.toLowerCase() !== 'draft')}"
+                    [ngStyle]="{'pointer-events': (mode.toLowerCase() === 'edit' && projectFormData.status?.toLowerCase() !== 'draft') ? 'none' : 'auto', width: '100%'}"
+                    [placeholder]="'form.sAndS.fields.shippingToDepartment' | translate" [appendToBody]="true"
+                    [multiple]="false" [filterKey]="'nodeName'" [options]="connectionLocationList" name="shipToLocation"
+                    (valueChange)="setAddress(projectFormData.shipToLocation.physicalAddress, 'shipToAddress')"
+                    [(ngModel)]="projectFormData.shipToLocation" [dValidateRules]="{
+                      validators: [{ required: true }]
+                    }"></d-select>
+                </d-form-control>
+              </d-form-item>
+            </da-col-item>
+            <da-col-item [daSpan]="12" [daXs]="12" [ngClass]="{'set-cursor': mode.toLowerCase() === 'edit'}">
               <d-form-item>
                 <d-form-label [hasHelp]="false" [helpTips]="'This is Shipping Address.'">
                   {{'form.sAndS.fields.shippingAddress' | translate}}
                 </d-form-label>
                 <d-form-control>
-                  <input class="manage-fields" style="pointer-events: none"
-                    [(ngModel)]="projectFormData.shipToAddress" dTextInput autocomplete="off" name="shipToAddress"
+                  <input class="manage-fields" style="pointer-events: none" [(ngModel)]="projectFormData.shipToAddress"
+                    dTextInput autocomplete="off" name="shipToAddress"
                     [placeholder]="'form.sAndS.fields.shippingAddress' | translate" />
                 </d-form-control>
               </d-form-item>
-
-              <!-- <ng-container>
-
-                <div class="input-setting">
-                  <d-form-label [required]="true">{{ "form.sAndS.fields.expectedArrivalDate" | translate
-                    }}</d-form-label>
-                  <div style="width: 100%" div class="devui-input-group devui-dropdown-origin"
-                    dActiveFormControl>
-                    <input
-                      class="devui-input devui-form-control" [(ngModel)]="projectFormData.dueDate"
-                      autocomplete="off" placeholder="y-MM-dd" [dValidateRules]="{
-                      validators: [{ required: true }]
-                    }" type="date" [min]="_dateVaidationForToday()" name="dueDate">
-                  </div>
-                </div>
-
-              </ng-container> -->
-
-            </div>
-          </div>
-
-          <div [ngStyle]="{ display: 'flex', justifyContent: 'space-between', width: '100%' }">
-            <div [ngStyle]="{ display: 'flex', width: '100%' }">
+            </da-col-item>
+          </da-layout-row>
+          <da-layout-row [daGutter]="[24, 24]" class="invoice-form-row">
+            <da-col-item [daSpan]="8" [daXs]="8">
               <d-form-item [ngStyle]="{ margin: '20px 20px 20px 0px' }">
                 <d-form-label [required]="true">Recipient Name</d-form-label>
                 <d-form-control>
-                  <input class="set-width"
-                    dTextInput autocomplete="off" name="tel" />
+                  <input class="set-width" dTextInput autocomplete="off" name="tel" />
                 </d-form-control>
               </d-form-item>
-
+            </da-col-item>
+            <da-col-item [daSpan]="8" [daXs]="8">
               <d-form-item [ngStyle]="{ margin: '20px 20px 20px 0px' }">
                 <d-form-label [required]="true">Recipient Contacts</d-form-label>
                 <d-form-control>
-                  <input class="set-width"
-                    dTextInput autocomplete="off" name="tel" />
+                  <input class="set-width" dTextInput autocomplete="off" name="tel" />
                 </d-form-control>
               </d-form-item>
-
+            </da-col-item>
+            <da-col-item [daSpan]="8" [daXs]="8">
               <d-form-item [ngStyle]="{ margin: '20px 20px 20px 0px' }">
                 <d-form-label [required]="true">Recipient Email</d-form-label>
                 <d-form-control>
-                  <input class="set-width"
-                    dTextInput autocomplete="off" name="email" />
+                  <input class="set-width" dTextInput autocomplete="off" name="email" />
                 </d-form-control>
               </d-form-item>
+            </da-col-item>
+            <da-col-item [daSpan]="24" [daXs]="24">
+              <d-form-item>
+                <d-form-label>{{ "form.sAndS.fields.remarks" | translate }}</d-form-label>
+                <d-form-control>
+                  <textarea rows="4"
+                    [ngStyle]="{'pointer-events': (mode.toLowerCase() === 'edit' && projectFormData.status?.toLowerCase() !== 'draft') ? 'none' : 'auto'}"
+                    [ngClass]="{'manage-fields': (mode.toLowerCase() === 'edit' && projectFormData.status?.toLowerCase() !== 'draft')}"
+                    dTextarea resize="vertical" autocomplete="off" name="remarks"
+                    [placeholder]="'form.sAndS.fields.remarks' | translate"
+                    [(ngModel)]="projectFormData.remark"></textarea>
+                </d-form-control>
+              </d-form-item>
+            </da-col-item>
+          </da-layout-row>
 
-            </div>
-          </div>
 
-          <d-form-item>
-            <d-form-label>{{ "form.sAndS.fields.remarks" | translate }}</d-form-label>
-            <d-form-control>
-              <textarea rows="4"
-                [ngStyle]="{'pointer-events': (mode.toLowerCase() === 'edit' && projectFormData.status?.toLowerCase() !== 'draft') ? 'none' : 'auto'}"
-                [ngClass]="{'manage-fields': (mode.toLowerCase() === 'edit' && projectFormData.status?.toLowerCase() !== 'draft')}"
-                dTextarea resize="vertical" autocomplete="off" name="remarks"
-                [placeholder]="'form.sAndS.fields.remarks' | translate" [(ngModel)]="projectFormData.remark"></textarea>
-            </d-form-control>
-          </d-form-item>
 
           <ng-container>
             <div class="da-content-banner-title">
@@ -236,6 +210,42 @@
                   {{ "form.sAndS.popupBtn" | translate }}
                 </d-button>
               </d-form-operation>
+            </div>
+            <div>
+              <div class="add-details-table">
+                <table class="manage-table">
+                  <thead>
+                    <tr class="set-head-botder">
+                      <!-- <span class="head-row"> -->
+                      <th class="manage-table-head"></th>
+                      <th class="manage-table-head">Line No.</th>
+                      <th class="manage-table-head">Product</th>
+                      <th class="manage-table-head">PO Remaining Qty</th>
+                      <th class="manage-table-head">Planned Ship Qty</th>
+
+
+                      <!-- </span> -->
+                    </tr>
+                  </thead>
+
+                  <tbody>
+                    <tr>
+                      <td class="manage-table-content">
+                        <div class="btn-group over-flow-ellipsis">
+                          <d-button icon="icon-edit" bsStyle="text-dark" title="edit"></d-button>
+                          <img src="/assets/minus.svg" />
+                        </div>
+                      </td>
+                      <td class="manage-table-content">1</td>
+                      <td class="manage-table-content">PO000001</td>
+                      <td class="manage-table-content">Flower dress , M , Blue</td>
+                      <td class="manage-table-content">200</td>
+                      <td class="manage-table-content">200</td>
+                    </tr>
+
+                  </tbody>
+                </table>
+              </div>
             </div>
             <ng-container *ngIf="detailsInputs?.length">
               <div *ngIf="projectFormData.status 
