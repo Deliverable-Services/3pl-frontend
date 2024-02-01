@@ -17,6 +17,7 @@ import { ShipmentAndShippingFormModalComponent } from "./shipment-and-shipping-f
 import { PackagesFormModalComponent } from "./packages-form-modal/packages-form-modal.component";
 import { BulkPackFormModalComponent } from "./bulk-pack-form-modal/bulk-pack-form-modal.component";
 import { AddShippingCostModalComponent } from "./add-shipping-cost-modal/add-shipping-cost-modal.component";
+import { EditQtyModalComponent } from "./edit-qty-modal/edit-qty-modal.component";
 
 @NgModule({
   declarations: [
@@ -25,7 +26,8 @@ import { AddShippingCostModalComponent } from "./add-shipping-cost-modal/add-shi
     ShipmentAndShippingFormModalComponent,
     PackagesFormModalComponent,
     BulkPackFormModalComponent,
-    AddShippingCostModalComponent
+    AddShippingCostModalComponent,
+    EditQtyModalComponent
   ],
   imports: [
     CommonModule,

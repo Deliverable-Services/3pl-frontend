@@ -10,6 +10,7 @@ import { ShipmentAndShippingFormModalComponent } from "../shipment-and-shipping-
 import { PackagesFormModalComponent } from "../packages-form-modal/packages-form-modal.component";
 import { BulkPackFormModalComponent } from "../bulk-pack-form-modal/bulk-pack-form-modal.component";
 import { AddShippingCostModalComponent } from "../add-shipping-cost-modal/add-shipping-cost-modal.component";
+import { EditQtyModalComponent } from "../edit-qty-modal/edit-qty-modal.component";
 
 @Component({
   selector: "app-shipment-and-shipping-form",
@@ -36,6 +37,9 @@ export class ShipmentAndShippingFormComponent implements OnInit {
       id: "",
       companyName: "",
       address: "",
+      primaryContactEmail: "",
+      primaryContactName: "",
+      primaryContactPhone1: "",
       creditTermsDto: {
         creditTermsId: "",
       },
@@ -128,6 +132,20 @@ export class ShipmentAndShippingFormComponent implements OnInit {
     content: AddShippingCostModalComponent,
     backdropCloseable: true,
     onClose: () => console.log(""),
+  };
+
+  editQtyConfig = {
+    id: "dialog-service",
+    width: "25%",
+    maxHeight: "650px",
+    content: EditQtyModalComponent,
+    backdropCloseable: true,
+    onClose: () => console.log(""),
+    data: {
+      name: "Tom",
+      age: 10,
+      address: "Chengdu",
+    },
   };
 
   toTypeLabel: string = "Origin To Destination";
@@ -302,6 +320,7 @@ export class ShipmentAndShippingFormComponent implements OnInit {
           this.addedVariantIds.push(poVar);
 
           return {
+            ...d,
             poId: d?.poId,
             variantId: d?.variantId,
             skuNo: d?.skuNo,
@@ -540,6 +559,7 @@ export class ShipmentAndShippingFormComponent implements OnInit {
                 console.log("----------p------------>", p);
 
                 this.detailsInputs.push({
+                  ...p,
                   poId: p?.selectedPoId,
                   poVArId: poVar,
                   poDetailsId: p?.id ? p?.id : p?.poDetailsId,
@@ -1108,6 +1128,7 @@ export class ShipmentAndShippingFormComponent implements OnInit {
       .subscribe((res: any) => {
         this.vendorList = res?.content?.map((v: any) => {
           return {
+            ...v,
             companyName: v.companyName,
             address: v.address,
             id: v.id,
@@ -1221,5 +1242,45 @@ export class ShipmentAndShippingFormComponent implements OnInit {
         this._showDateToast(error.error.detail);
       }
     );
+  }
+
+  checkVendorInfo(event: any) {
+    this.projectFormData.vendor.primaryContactEmail = event.primaryContactEmail;
+    this.projectFormData.vendor.primaryContactName = event.primaryContactName;
+    this.projectFormData.vendor.primaryContactPhone1 = event.primaryContactPhone1;
+  }
+
+  editQty(sDetails: any, index: number) {
+    const results = this.dialogService.open({
+      ...this.editQtyConfig,
+      buttons: [
+        {
+          cssClass: "primary",
+          text: "Update",
+          disabled: false,
+          handler: (variantList: any) => {
+            document.getElementById("createNdUpdateBtn")?.click();
+            results.modalInstance.hide();
+          },
+        },
+        {
+          id: "btn-cancel",
+          cssClass: "common",
+          text: "Cancel",
+          handler: (variantList: any) => {
+            results.modalInstance.hide();
+          },
+        },
+      ],
+      data: {
+        sDetails: {
+          ...sDetails,
+          index: index
+        },
+        vList: (vData: any) => {
+          this.detailsInputs[vData?.index].shippedQuantity = vData?.shippedQuantity; 
+        },
+      },
+    });
   }
 }

@@ -42,7 +42,7 @@ export class ShipmentAndShippingFormModalComponent implements OnInit {
       sortDir: "desc",
     });
     this.data.detailsInputs.forEach((details: any) => {
-      console.log('details', details);
+      // console.log('details', details);
       
       details.selected = true;
       details.selectedPoId = details.poId;
@@ -54,6 +54,7 @@ export class ShipmentAndShippingFormModalComponent implements OnInit {
 
   getPoList() {
     this.purchaseOrderService.getPurchaseOrderList().subscribe((res) => {
+      // console.log(':: :: ', res);
       this.storePoDetails = res?.content?.filter((p: any) => {
         let dInfo = p?.details?.filter((v: any) => {
           let rQty = v?.poQuantity
@@ -64,14 +65,18 @@ export class ShipmentAndShippingFormModalComponent implements OnInit {
             : 0;
           return rQty > 0;
         });
+        // console.log(p.orderStatus, dInfo, this.data.info.vendor.id, p.vendor.id, this.data.info.vendor.id === p.vendor.id);
         return (
           p.orderStatus === "RELEASED" &&
           this.data.info.vendor.id === p.vendor.id &&
-          this.data.info.shipToLocation.connectionLocationId ===
-            p.shipToLocation.connectionLocationId &&
+          // this.data.info.shipToLocation.connectionLocationId ===
+          //   p.shipToLocation.connectionLocationId &&
           dInfo?.length
         );
       });
+
+      // console.log(':: this.storePoDetails :: ', this.storePoDetails)
+
     });
   }
 
@@ -197,7 +202,7 @@ export class ShipmentAndShippingFormModalComponent implements OnInit {
       return `${item.skuNo} ${item.poDetailsId ? item.poDetailsId : item.id}`;
     });
     getSelectedVariants?.forEach((v: any) => {
-      console.log('v',v);
+      // console.log('v',v);
       
       if (fItem.includes(`${v.skuNo} ${v.id}`)) {
         v["selected"] = true;

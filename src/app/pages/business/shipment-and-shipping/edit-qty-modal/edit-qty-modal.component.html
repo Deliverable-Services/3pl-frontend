@@ -1,0 +1,16 @@
+<div class="column-container">
+
+    <div class="content-part">
+        <ul class="first-list">
+            <li>PO No.: <span><input type="text" [value]="data?.sDetails?.selectedPoId || data?.sDetails?.poId" disabled></span></li>
+            <li>Product: <span><input type="text" [value]="data?.sDetails?.style+', '+(data?.sDetails?.color || '-')+', '+(data?.sDetails?.size
+                || '-')" disabled></span></li>
+            <li>PO Remaining Qty <span><input type="text" [value]="data?.sDetails?.remainingQuantity || ''" disabled></span></li>
+        </ul>
+    </div>
+
+    <div class="qty-input">
+        <label class=""><span>*</span>Planned Qty: </label>
+        <input (input)="updateQty($event)" type="number" [value]="data?.sDetails?.shippedQuantity || ''">
+    </div>
+</div>

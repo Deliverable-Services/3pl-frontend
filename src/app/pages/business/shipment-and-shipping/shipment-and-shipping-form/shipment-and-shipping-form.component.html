@@ -53,7 +53,9 @@
                 {{ ("form.common.create") |translate }}
               </d-button>
 
-              <d-button *ngIf="projectFormData.status?.toLowerCase() === 'draft'" [ngStyle]="{ float: 'right' }"
+              <d-button id="createNdUpdateBtn" *ngIf="projectFormData.status?.toLowerCase() === 'draft'
+              || projectFormData.status?.toLowerCase() === 'ready'
+              || projectFormData.status?.toLowerCase() === 'confirmed'" [ngStyle]="{ float: 'right' }"
                 [disabled]="!allowSubmit" dLoading class="mr-element-spacing" [title]="projectForm.errorMessage || ''"
                 circled="true" style="margin-right: 8px" [showLoading]="projectForm.pending" dFormSubmit
                 [dFormSubmitData]="'submit-button'">
@@ -98,9 +100,10 @@
                 </d-form-label>
                 <d-form-control>
                   <div class="set-shipping-method">
-                    <span style="border-right: 0;background:#76B5FF"
-                      (click)="projectFormData.shippingType === 'SEA'">SEA</span>
-                    <span (click)="projectFormData.shippingType === 'AIR'">AIR</span>
+                    <span [ngClass]="{'shipping-method-background': projectFormData.shippingType === 'SEA'}"
+                      (click)="projectFormData.shippingType = 'SEA'">SEA</span>
+                    <span [ngClass]="{'shipping-method-background': projectFormData.shippingType === 'AIR'}" 
+                    (click)="projectFormData.shippingType = 'AIR'">AIR</span>
                   </div>
                 </d-form-control>
               </d-form-item>
@@ -117,7 +120,7 @@
                     [placeholder]="'form.sAndS.fields.vendor' | translate" [appendToBody]="true" [multiple]="false"
                     [filterKey]="'companyName'" [options]="vendorList" name="vendor"
                     [(ngModel)]="projectFormData.vendor"
-                    (valueChange)="setAddress(projectFormData.vendor.address, 'billToAddress')" [dValidateRules]="{
+                    (valueChange)="setAddress(projectFormData.vendor.address, 'billToAddress'); checkVendorInfo($event);" [dValidateRules]="{
                       validators: [{ required: true }]
                     }"></d-select>
                 </d-form-control>
@@ -159,7 +162,10 @@
               <d-form-item [ngStyle]="{ margin: '20px 20px 20px 0px' }">
                 <d-form-label [required]="true">Recipient Name</d-form-label>
                 <d-form-control>
-                  <input class="set-width" dTextInput autocomplete="off" name="tel" />
+                  <input class="set-width" dTextInput autocomplete="off" name="primaryContactName" 
+                  [(ngModel)]="projectFormData.vendor.primaryContactName" [dValidateRules]="{
+                    validators: [{ required: true }]
+                  }"/>
                 </d-form-control>
               </d-form-item>
             </da-col-item>
@@ -167,7 +173,10 @@
               <d-form-item [ngStyle]="{ margin: '20px 20px 20px 0px' }">
                 <d-form-label [required]="true">Recipient Contacts</d-form-label>
                 <d-form-control>
-                  <input class="set-width" dTextInput autocomplete="off" name="tel" />
+                  <input class="set-width" dTextInput autocomplete="off" name="primaryContactPhone1" 
+                  [(ngModel)]="projectFormData.vendor.primaryContactPhone1" [dValidateRules]="{
+                    validators: [{ required: true }]
+                  }"/>
                 </d-form-control>
               </d-form-item>
             </da-col-item>
@@ -175,7 +184,10 @@
               <d-form-item [ngStyle]="{ margin: '20px 20px 20px 0px' }">
                 <d-form-label [required]="true">Recipient Email</d-form-label>
                 <d-form-control>
-                  <input class="set-width" dTextInput autocomplete="off" name="email" />
+                  <input class="set-width" dTextInput autocomplete="off" name="primaryContactEmail" 
+                  [(ngModel)]="projectFormData.vendor.primaryContactEmail" [dValidateRules]="{
+                    validators: [{ required: true }]
+                  }"/>
                 </d-form-control>
               </d-form-item>
             </da-col-item>
@@ -212,46 +224,52 @@
               </d-form-operation>
             </div>
             <div>
-              <div class="add-details-table">
+              <div class="add-details-table" *ngIf="detailsInputs?.length">
                 <table class="manage-table">
                   <thead>
                     <tr class="set-head-botder">
                       <!-- <span class="head-row"> -->
                       <th class="manage-table-head"></th>
                       <th class="manage-table-head">Line No.</th>
+                      <th class="manage-table-head">PO No.</th>
                       <th class="manage-table-head">Product</th>
                       <th class="manage-table-head">PO Remaining Qty</th>
                       <th class="manage-table-head">Planned Ship Qty</th>
-
+                      <th *ngIf="projectFormData.status?.toLowerCase() === 'ready'
+                      || projectFormData.status?.toLowerCase() === 'confirmed'" class="manage-table-head">Packed Qty</th>
+                      <th *ngIf="projectFormData.status?.toLowerCase() === 'confirmed'" class="manage-table-head">Received Qty</th>
 
                       <!-- </span> -->
                     </tr>
                   </thead>
 
                   <tbody>
-                    <tr>
+                    <tr *ngFor="let input of detailsInputs; let i = index">
                       <td class="manage-table-content">
                         <div class="btn-group over-flow-ellipsis">
-                          <d-button icon="icon-edit" bsStyle="text-dark" title="edit"></d-button>
-                          <img src="/assets/minus.svg" />
+                          <d-button (click)="editQty(input, i)" icon="icon-edit" bsStyle="text-dark" title="edit"></d-button>
+                          <img (click)="removeNow(i)" src="/assets/minus.svg" />
                         </div>
                       </td>
-                      <td class="manage-table-content">1</td>
-                      <td class="manage-table-content">PO000001</td>
-                      <td class="manage-table-content">Flower dress , M , Blue</td>
-                      <td class="manage-table-content">200</td>
-                      <td class="manage-table-content">200</td>
+                      <td class="manage-table-content"> {{ input.lineNumber }}</td>
+                      <td class="manage-table-content">{{ input.poId }}</td>
+                      <td class="manage-table-content"> {{ input.style }}, {{ input?.color || '-' }}, {{ input?.size
+                        || '-' }} </td>
+                      <td class="manage-table-content"> {{ input.remainingQuantity }} </td>
+                      <td class="manage-table-content"> {{ input.shippedQuantity }} </td>
+                      <td *ngIf="projectFormData.status?.toLowerCase() === 'ready'
+                      || projectFormData.status?.toLowerCase() === 'confirmed'" class="manage-table-content"> {{ input.totalAddedInPackage }} </td>
+                      <td *ngIf="projectFormData.status?.toLowerCase() === 'confirmed'" class="manage-table-content"> {{ input.receivedQuantity }} </td>
                     </tr>
 
                   </tbody>
                 </table>
               </div>
             </div>
-            <ng-container *ngIf="detailsInputs?.length">
+            <!-- <ng-container *ngIf="detailsInputs?.length">
               <div *ngIf="projectFormData.status 
               && projectFormData.status?.toLowerCase() !== 'ready'
               && projectFormData.status?.toLowerCase() !== 'draft'" class="manage-total-cost">
-                <!-- <d-form-item [ngStyle]="{ margin: '20px 20px 20px 0px' }"> -->
                 <div class="da-content-banner-title">
                   <d-form-label [required]="true">{{"form.sAndS.fields.totalShippingCost" | translate}}</d-form-label>
                 </div>
@@ -261,14 +279,11 @@
                   width: '171px';
                   border: '2px solid';" dTextInput autocomplete="off" [value]="this.totalCost" />
                 </d-form-control>
-                <!-- <d-form-control> -->
                 <d-button [ngStyle]="{ float: 'right' }" class="mr-element-spacing shipping-cost-button" circled="true"
                   style="margin-right: 20px;width: 158px;" (btnClick)="addViewSCost()">
                   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Cost
                   Details&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                 </d-button>
-                <!-- </d-form-control> -->
-                <!-- </d-form-item> -->
               </div>
               <div *ngFor="let input of detailsInputs; let i = index"
                 [ngStyle]="{ display: 'flex', justifyContent: 'space-between' }">
@@ -376,7 +391,7 @@
                 </div>
 
               </div>
-            </ng-container>
+            </ng-container> -->
           </ng-container>
 
           <ng-container *ngIf="mode.toLowerCase() === 'edit' && projectFormData.status?.toLowerCase() !== 'draft'">

@@ -10,8 +10,10 @@ import { PurchaseOrderFormModalComponent } from "../purchase-order-form-modal/pu
 import { PurchaseOrderEditQtyModalComponent } from "../purchase-order-edit-qty-modal/purchase-order-edit-qty-modal.component";
 import { PurchaseOrderShipmentsModalComponent } from "../purchase-order-shipments-modal/purchase-order-shipments-modal.component";
 import { SplitAllocationModalComponent } from "../split-allocation-modal/split-allocation-modal.component";
+import { LinkedInvoiceModalComponent } from "../linked-invoice-modal/linked-invoice-modal.component";
 import { ShippingAddressService } from "src/app/@core/mock/shipping-address.service";
 import { UserManagementService } from "src/app/@core/mock/user-management.service";
+import { CurrencyDataService } from "src/app/@core/mock/currency-data.service";
 
 @Component({
   selector: "app-purchase-order-form",
@@ -26,6 +28,7 @@ export class PurchaseOrderFormComponent implements OnInit {
   vendorList: any[] = [];
   usersList:any[] = [];
   storeSplitDetails:any[] = [];
+  stAllCurrency:any[] = [];
 
   selectedUser:any = {};
 
@@ -156,6 +159,20 @@ export class PurchaseOrderFormComponent implements OnInit {
     },
   };
 
+  linkedInvoiceConfig = {
+    id: "dialog-service",
+    width: "30%",
+    maxHeight: "650px",
+    content: LinkedInvoiceModalComponent,
+    backdropCloseable: true,
+    onClose: () => console.log(""),
+    data: {
+      name: "Tom",
+      age: 10,
+      address: "Chengdu",
+    },
+  };
+
   toTypeLabel: string = "Origin To Destination";
   todayDate: any = new Date();
   addedVariantIds: any = [];
@@ -177,7 +194,8 @@ export class PurchaseOrderFormComponent implements OnInit {
     private router: Router,
     private toastService: ToastService,
     private shippingAddressService: ShippingAddressService,
-    private userManagementService: UserManagementService
+    private userManagementService: UserManagementService,
+    private currencyDataService: CurrencyDataService
   ) {}
 
   ngOnInit(): void {
@@ -195,6 +213,7 @@ export class PurchaseOrderFormComponent implements OnInit {
     if (this.mode === "Edit") {
       this.getPurchaseOrderById(this.paramId);
     }
+    this.currencyDataService.getCurrencyList().subscribe((cList: any) => this.stAllCurrency = cList);
   }
 
   _getShippingAddressList() {
@@ -725,6 +744,32 @@ export class PurchaseOrderFormComponent implements OnInit {
         sDetails: sDetails,
         vList: (vData: any) => {
           this.storeSplitDetails = vData;
+        },
+      },
+    });
+  }
+
+  linkedInvoice(data: any) {
+    const results = this.dialogService.open({
+      ...this.linkedInvoiceConfig,
+      buttons: [
+        {
+          cssClass: "primary",
+          text: "Close",
+          disabled: false,
+          handler: (variantList: any) => {
+            document.getElementById("createNdUpdateBtn")?.click();
+            results.modalInstance.hide();
+          },
+        },
+      ],
+      data: {
+        sDetails: {
+          ...data,
+          stAllCurrency: this.stAllCurrency
+        },
+        vList: (vData: any) => {
+          // this.detailsInputs[vData?.index].plannedQuantity = vData?.plannedQuantity; 
         },
       },
     });

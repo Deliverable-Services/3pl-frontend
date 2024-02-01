@@ -1,0 +1,34 @@
+<div class="column-container">
+    <div class="main-heading">
+        <h1>Linked Invoice Details (<span> {{ data?.sDetails?.id }} </span>)</h1>
+    </div>
+    <div class="content-part">
+        <table>
+            <thead>
+                <tr>
+                    <th>Type</th>
+                    <th>Invoice No.</th>
+                    <th>Amount</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                <tr *ngFor="let invoice of data?.sDetails?.invoices || []">
+                    <td><span class="invoice-mgmt"> {{ invoice.type }} </span></td>
+                    <td><span class="invoice-number"> {{ invoice.id }} </span></td>
+                    <td><span class="invoice-amount">
+                        <input type="text" [disabled]="true" [value]="(invoice.amount * _getCurrencyRate() | number)+' RMB'">
+                    </span></td>
+                    <td><span class="invoice-mgmt"> {{ invoice.status }} </span></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="footer-part">
+        <span>
+            <h1>Paid Amount: {{ _getRmbTotal() | number }} RMB </h1>
+        </span>
+    </div>
+</div>

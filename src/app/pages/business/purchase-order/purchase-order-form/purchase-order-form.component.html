@@ -107,7 +107,7 @@
               ) | translate
               }} <span *ngIf="projectFormData.orderStatus">&nbsp;({{ projectFormData.id }})</span>
             </div>
-            <button class="btn linked-btn">Linked Invoice</button>
+            <button (click)="linkedInvoice(this.projectFormData)" class="btn linked-btn">Linked Invoice</button>
           </div>
           <!-- {{projectFormData | json}} -->
           <div [ngStyle]="{ display: 'flex', justifyContent: 'space-between' }">

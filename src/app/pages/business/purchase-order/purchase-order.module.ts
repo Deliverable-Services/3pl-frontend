@@ -17,6 +17,7 @@ import { PurchaseOrderFormModalComponent } from "./purchase-order-form-modal/pur
 import { PurchaseOrderShipmentsModalComponent } from "./purchase-order-shipments-modal/purchase-order-shipments-modal.component";
 import { PurchaseOrderEditQtyModalComponent } from "./purchase-order-edit-qty-modal/purchase-order-edit-qty-modal.component";
 import { SplitAllocationModalComponent } from "./split-allocation-modal/split-allocation-modal.component";
+import { LinkedInvoiceModalComponent } from "./linked-invoice-modal/linked-invoice-modal.component";
 
 @NgModule({
   declarations: [
@@ -25,7 +26,8 @@ import { SplitAllocationModalComponent } from "./split-allocation-modal/split-al
     PurchaseOrderFormModalComponent,
     PurchaseOrderShipmentsModalComponent,
     PurchaseOrderEditQtyModalComponent,
-    SplitAllocationModalComponent
+    SplitAllocationModalComponent,
+    LinkedInvoiceModalComponent
   ],
   imports: [
     CommonModule,

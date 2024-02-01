@@ -1,0 +1,50 @@
+.main-heading {
+  h1 {
+    font-size: 14px;
+
+    span {
+      color: red;
+    }
+  }
+}
+
+.content-part {
+  table {
+    width: 100%;
+    th {
+      color: grey;
+      text-align: left;
+      font-size: 13px;
+    }
+
+    td {
+      color: #000;
+      font-size: 13px;
+
+      .invoice-number {
+        color: #0073FA;
+        text-decoration: underline;
+      }
+
+      .invoice-amount {
+        input {
+          text-align: right;
+          border: 1px solid #000;
+          border-radius: 4px;
+          padding: 3px;
+          background: #F3F3F3 !important;
+        }
+      }
+    }
+  }
+}
+
+.footer-part {
+  span {
+    float: right;
+
+    h1 {
+      font-size: 14px;
+    }
+  }
+}
