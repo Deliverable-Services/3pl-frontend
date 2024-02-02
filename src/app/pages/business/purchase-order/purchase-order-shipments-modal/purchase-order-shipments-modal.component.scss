@@ -49,7 +49,7 @@ li {
   }
   
   .column-container {
-    display: flex;
+    // display: flex;
     flex-direction: row;
   }
   
@@ -73,22 +73,36 @@ li {
   }
 
   .main-heading {
-    .heading {
-      display: inline;
-      width: 100px;
-      height: 100px;
-      padding: 17px;
-      color: #575D6C;
-      font-family: Inter;
-      font-size: 16px;
-      font-style: normal;
-      font-weight: 700;
-    }
-    .sub-values {
-      margin-top: 20px;
-      span {
-        display: inline;
-        padding: 17px;
+    table {
+      width: 100%;
+      thead tr th {
+        text-align: left;
       }
+
+      tbody tr {
+        .set-ship-no {
+          color: #0073FA;
+          text-decoration: underline;
+        }
+        .set-ship-no:hover {
+          cursor: pointer;
+        }
+        .manage-input {
+          background: #F3F3F3 !important;
+          border: 1px solid #000;
+          border-radius: 4px;
+          padding: 2px 0px 2px 8px;
+        }
+      }
+    }
+  }
+
+  .set-footer {
+    float: right;
+    h1 {
+      font-size: 14px;
+       span {
+        font-weight: 400;
+       }
     }
   }

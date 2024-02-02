@@ -120,7 +120,7 @@
                     [placeholder]="'form.sAndS.fields.vendor' | translate" [appendToBody]="true" [multiple]="false"
                     [filterKey]="'companyName'" [options]="vendorList" name="vendor"
                     [(ngModel)]="projectFormData.vendor"
-                    (valueChange)="setAddress(projectFormData.vendor.address, 'billToAddress'); checkVendorInfo($event);" [dValidateRules]="{
+                    (valueChange)="setAddress(projectFormData.vendor.address, 'shipToAddress'); checkVendorInfo($event);" [dValidateRules]="{
                       validators: [{ required: true }]
                     }"></d-select>
                 </d-form-control>
@@ -137,7 +137,6 @@
                     [ngStyle]="{'pointer-events': (mode.toLowerCase() === 'edit' && projectFormData.status?.toLowerCase() !== 'draft') ? 'none' : 'auto', width: '100%'}"
                     [placeholder]="'form.sAndS.fields.shippingToDepartment' | translate" [appendToBody]="true"
                     [multiple]="false" [filterKey]="'nodeName'" [options]="connectionLocationList" name="shipToLocation"
-                    (valueChange)="setAddress(projectFormData.shipToLocation.physicalAddress, 'shipToAddress')"
                     [(ngModel)]="projectFormData.shipToLocation" [dValidateRules]="{
                       validators: [{ required: true }]
                     }"></d-select>

@@ -1,13 +1,33 @@
 <div class="column-container">
     <div class="main-heading">
-        <span class="heading">Shipment No.</span>
+        <table>
+            <thead>
+                <tr>
+                    <th>Shipment No.</th>
+                    <th>Shipment Qty</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let shipment of shipmentList; let i = index">
+                    <td><span class="set-ship-no">{{ shipment?.shipmentNumber }}</span></td>
+                    <td><input class="manage-input" type="text" disabled [value]="shipment?.shippedQuantity"></td>
+                    <td>{{ shipment?.shipmentStatus }}</td>
+                </tr>
+            </tbody>
+        </table>
+        <!-- <span class="heading">Shipment No.</span>
         <span class="heading">Shipment Qty</span>
-        <span class="heading">Status</span>
+        <span class="heading">Status</span> -->
 
-        <div class="sub-values" *ngFor="let shipment of shipmentList; let i = index">
+        <!-- <div class="sub-values" *ngFor="let shipment of shipmentList; let i = index">
             <span class="value-one">{{ shipment?.shipmentNumber }}</span>
             <span class="value-two"><input type="text" disabled [value]="shipment?.shippedQuantity"></span>
             <span class="value-three">{{ shipment?.shipmentStatus }}</span>
-        </div>
+        </div> -->
+    </div>
+
+    <div class="set-footer">
+        <h1>Total Shipped Qty: <span>{{ totalQty }}</span></h1>
     </div>
 </div>

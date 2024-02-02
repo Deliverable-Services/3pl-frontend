@@ -71,7 +71,7 @@
 
               <d-button *ngIf="mode.toLowerCase() === 'edit' 
               && projectFormData.orderStatus?.toLowerCase() !== 'draft'
-              && projectFormData.orderStatus?.toLowerCase() !== 'released'
+              && projectFormData.orderStatus?.toLowerCase() !== 'accepted'
               && projectFormData.orderStatus?.toLowerCase() !== 'closed'
               && projectFormData.orderStatus?.toLowerCase() !== 'canceled'" bsStyle="danger" class="danger"
                 [ngStyle]="{ float: 'right' }" circled="true" style="margin-right: 8px"
@@ -348,6 +348,8 @@
                       <th class="manage-table-head">EXW Price(RMB)</th>
                       <th class="manage-table-head">Planned Qty</th>
                       <th class="manage-table-head">Split Details</th>
+                      <th *ngIf="projectFormData.orderStatus?.toLowerCase() === 'accepted'
+                      || projectFormData.orderStatus?.toLowerCase() === 'closed'" class="manage-table-head">Shipment Details</th>
                       <!-- </span> -->
                     </tr>
                   </thead>
@@ -378,6 +380,12 @@
                       <td class="manage-table-content">
                         <button (click)="splitAllocation(input, i)" class="manage-split-button">
                           Split Allocation
+                        </button>
+                      </td>
+                      <td *ngIf="projectFormData.orderStatus?.toLowerCase() === 'accepted'
+                      || projectFormData.orderStatus?.toLowerCase() === 'closed'" class="manage-table-content">
+                        <button (click)="shipmentDialog(input.shipments)" class="manage-split-button shipment-details-button">
+                          {{ "form.purchaseOrder.buttons.shipmentDetails" | translate }}
                         </button>
                       </td>
                     </tr>

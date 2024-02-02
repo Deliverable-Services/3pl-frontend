@@ -24,6 +24,7 @@ export class PurchaseOrderShipmentsModalComponent implements OnInit {
     searchType: "match",
   };
   shipmentList:any = [];
+  totalQty: number = 0;
 
   constructor(
     private productsListDataService: ProductsListDataService,
@@ -33,8 +34,9 @@ export class PurchaseOrderShipmentsModalComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.shipmentList = this.data.shipments;
-    console.log('this.data.shipments', this.data);
+    this.shipmentList = this.data.shipments?.shipments;
+    this.totalQty = this.data.shipments?.totalQtyArr?.reduce((partialSum: any, a: any) => partialSum + a, 0);
+    console.log('this.data.shipments', this.data, this.totalQty);
     
   }
 

@@ -638,7 +638,6 @@ export class PurchaseOrderFormComponent implements OnInit {
   }
 
   shipmentDialog(shipments: any) {
-    console.log(":: shipments :: ", shipments);
     const results = this.dialogService.open({
       ...this.shipmentConfig,
       // dialogtype: dialogtype,
@@ -662,7 +661,10 @@ export class PurchaseOrderFormComponent implements OnInit {
         },
       ],
       data: {
-        shipments: shipments,
+        shipments: {
+          shipments: shipments,
+          totalQtyArr: shipments?.map((q:any) => q?.shippedQuantity)
+        },
         vList: (vData: any) => {},
       },
     });
