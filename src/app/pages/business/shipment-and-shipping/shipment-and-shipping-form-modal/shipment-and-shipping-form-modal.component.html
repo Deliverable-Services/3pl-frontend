@@ -1,5 +1,5 @@
 <div class="manage-main-head">
-    <h2>*From Vendor:{{data.info.vendor.companyName}} Ship to: {{data.info.shipToLocation.nodeName}}</h2>
+    <h2>*From Vendor:{{data.info.vendor.companyName}} Ship to: {{data?.info?.shipToLocation?.nodeName}}</h2>
 </div>
 <div class="column-container">
 
@@ -28,11 +28,11 @@
                     <label class="item-label">
                         <span><input type="checkbox" (change)="storeObjectData(v)" [(ngModel)]="v.selected"
                                 [checked]="v.selected"></span>
-                        <span class="sku">{{ v.skuNo }}</span>
-                        <span class="remaining-quantity">Remaining Qty: {{v?.poQuantity ? v?.poQuantity -
+                        <span class="sku">{{ v.skuNo }}-{{v.size}}-{{v.color ? v.color : 'NA'}} - Remaining Qty: {{v?.poQuantity ? v?.poQuantity -
                             v?.lockedQuantity -
                             v?.shippedQuantity +
                             v?.discrepancyQuantity:0}}</span>
+                        <!-- <span class="remaining-quantity"></span> -->
                     </label>
                 </li>
                 
@@ -43,10 +43,10 @@
             <ul class="variant-list" *ngIf="cartItems?.length">
                 <li *ngFor="let cart of cartItems; let i = index" class="variant-item">
                     <label class="set-po-no">
-                        {{ cart.selectedPoId }} :
+                        {{ cart.selectedPoId }} : &nbsp;
                     </label>
                     <label class="sku">
-                        {{ cart.skuNo }}
+                        {{ cart.skuNo }}-{{cart.size}}-{{cart.color ? cart.color : 'NA'}}
                     </label>
                     <span style="margin-left: 20px;">
                         <button (click)="removeFromCart(i)" class="remove-button">Remove</button>
