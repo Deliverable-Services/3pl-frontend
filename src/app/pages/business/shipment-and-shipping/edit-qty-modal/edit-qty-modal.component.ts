@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
 import { ProductsListDataService } from "src/app/@core/mock/products-data.service";
 import { InventoryService } from "src/app/@core/mock/inventory.service";
+import { ToastService } from "ng-devui";
 
 @Component({
   selector: "app-edit-qty-modal",
@@ -26,7 +27,8 @@ export class EditQtyModalComponent {
 
   constructor(
     private productsListDataService: ProductsListDataService,
-    private inventoryService: InventoryService
+    private inventoryService: InventoryService,
+    private toastService: ToastService
   ) {
     this.handler = () => {}; // Initialize the handler with a default empty function
   }
@@ -152,9 +154,20 @@ export class EditQtyModalComponent {
   }
 
   updateQty(event: any) {
+    if(event?.target?.value > parseInt(this.data?.sDetails?.remainingQuantity)) {
+      this._showToastMsg('error', 'Planned Qty cannot be greater than PO Remaining Qty!');
+      return;
+    }
     this.data.vList({
       ...this.data?.sDetails,
       shippedQuantity: event?.target?.value
+    });
+  }
+
+  _showToastMsg(type: string, msg: string) {
+    this.toastService.open({
+      value: [{ severity: type, content: msg }],
+      life: 2000,
     });
   }
 }

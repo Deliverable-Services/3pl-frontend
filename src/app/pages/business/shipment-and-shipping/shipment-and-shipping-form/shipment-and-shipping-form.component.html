@@ -126,7 +126,7 @@
                 </d-form-control>
               </d-form-item>
             </da-col-item>
-            <da-col-item [daSpan]="12" [daXs]="12" [ngClass]="{'set-cursor': mode.toLowerCase() === 'edit'}">
+            <!-- <da-col-item [daSpan]="12" [daXs]="12" [ngClass]="{'set-cursor': mode.toLowerCase() === 'edit'}">
               <d-form-item>
                 <d-form-label [required]="true" [hasHelp]="false" [helpTips]="'This is Terms Subject.'">
                   {{ "form.sAndS.fields.shippingToDepartment" | translate }}
@@ -142,16 +142,25 @@
                     }"></d-select>
                 </d-form-control>
               </d-form-item>
-            </da-col-item>
-            <da-col-item [daSpan]="12" [daXs]="12" [ngClass]="{'set-cursor': mode.toLowerCase() === 'edit'}">
+            </da-col-item> -->
+            <da-col-item [daSpan]="12" [daXs]="12">
               <d-form-item>
                 <d-form-label [hasHelp]="false" [helpTips]="'This is Shipping Address.'">
                   {{'form.sAndS.fields.shippingAddress' | translate}}
                 </d-form-label>
                 <d-form-control>
-                  <input class="manage-fields" style="pointer-events: none" [(ngModel)]="projectFormData.shipToAddress"
+                  <!-- <input class="manage-fields" style="pointer-events: none" [(ngModel)]="projectFormData.shipToAddress"
                     dTextInput autocomplete="off" name="shipToAddress"
-                    [placeholder]="'form.sAndS.fields.shippingAddress' | translate" />
+                    [placeholder]="'form.sAndS.fields.shippingAddress' | translate" /> -->
+                    <d-select
+                    [ngClass]="{'manage-fields': (mode.toLowerCase() === 'edit' && projectFormData.status?.toLowerCase() !== 'draft')}"
+                    [ngStyle]="{'pointer-events': (mode.toLowerCase() === 'edit' && projectFormData.status?.toLowerCase() !== 'draft') ? 'none' : 'auto', width: '100%'}"
+                    [placeholder]="'form.purchaseOrder.fields.shippingToDepartment' | translate" [appendToBody]="true"
+                    (valueChange)="projectFormData.shipToAddress = $event.address"
+                    [multiple]="false" [filterKey]="'market'" [options]="shippingAddressList" name="shipToAddress"
+                    [(ngModel)]="addressInfoFromShipping" [dValidateRules]="{
+                      validators: [{ required: true }]
+                    }"></d-select>
                 </d-form-control>
               </d-form-item>
             </da-col-item>
@@ -228,7 +237,7 @@
                   <thead>
                     <tr class="set-head-botder">
                       <!-- <span class="head-row"> -->
-                      <th class="manage-table-head"></th>
+                      <th *ngIf="mode.toLowerCase() === 'add' || projectFormData.status?.toLowerCase() === 'draft'" class="manage-table-head"></th>
                       <th class="manage-table-head">Line No.</th>
                       <th class="manage-table-head">PO No.</th>
                       <th class="manage-table-head">Product</th>
@@ -244,7 +253,7 @@
 
                   <tbody>
                     <tr *ngFor="let input of detailsInputs; let i = index">
-                      <td class="manage-table-content">
+                      <td *ngIf="mode.toLowerCase() === 'add' || projectFormData.status?.toLowerCase() === 'draft'" class="manage-table-content">
                         <div class="btn-group over-flow-ellipsis">
                           <d-button (click)="editQty(input, i)" icon="icon-edit" bsStyle="text-dark" title="edit"></d-button>
                           <img (click)="removeNow(i)" src="/assets/minus.svg" />
@@ -252,8 +261,7 @@
                       </td>
                       <td class="manage-table-content"> {{ input.lineNumber }}</td>
                       <td class="manage-table-content">{{ input.poId }}</td>
-                      <td class="manage-table-content"> {{ input.style }}, {{ input?.color || '-' }}, {{ input?.size
-                        || '-' }} </td>
+                      <td class="manage-table-content"> {{ input?.skuDescription || '-' }} </td>
                       <td class="manage-table-content"> {{ input.remainingQuantity }} </td>
                       <td class="manage-table-content"> {{ input.shippedQuantity }} </td>
                       <td *ngIf="projectFormData.status?.toLowerCase() === 'ready'

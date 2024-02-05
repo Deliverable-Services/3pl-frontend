@@ -11,6 +11,7 @@ import { PackagesFormModalComponent } from "../packages-form-modal/packages-form
 import { BulkPackFormModalComponent } from "../bulk-pack-form-modal/bulk-pack-form-modal.component";
 import { AddShippingCostModalComponent } from "../add-shipping-cost-modal/add-shipping-cost-modal.component";
 import { EditQtyModalComponent } from "../edit-qty-modal/edit-qty-modal.component";
+import { ShippingAddressService } from "src/app/@core/mock/shipping-address.service";
 
 @Component({
   selector: "app-shipment-and-shipping-form",
@@ -24,15 +25,17 @@ export class ShipmentAndShippingFormComponent implements OnInit {
   modifiedDate? = "";
   vendorList: any[] = [];
   totalCost: any = "0";
+  shippingAddressList:any[] = [];
+  addressInfoFromShipping:any = {};
 
   projectFormData: any = {
     shippingType: "",
-    shipToLocation: {
-      connectionLocationId: "",
-      nodeName: "",
-      nodeType: "",
-      physicalAddress: "",
-    },
+    // shipToLocation: {
+    //   connectionLocationId: "",
+    //   nodeName: "",
+    //   nodeType: "",
+    //   physicalAddress: "",
+    // },
     vendor: {
       id: "",
       companyName: "",
@@ -168,12 +171,14 @@ export class ShipmentAndShippingFormComponent implements OnInit {
     private dialogService: DialogService,
     private router: Router,
     private toastService: ToastService,
-    private purchaseOrderService: PurchaseOrderService
+    private purchaseOrderService: PurchaseOrderService,
+    private shippingAddressService: ShippingAddressService
   ) {}
 
   ngOnInit(): void {
     this.paramId = this.route.snapshot.params["id"];
     this.mode = this.route.snapshot.params["id"] ? "Edit" : "Add";
+    this._getShippingAddressList();
     this.getConnectionLocationList();
     if (this.mode === "Edit") {
       this.getShipmentById(this.paramId);
@@ -187,6 +192,17 @@ export class ShipmentAndShippingFormComponent implements OnInit {
       pageSize: "100",
       sortBy: "id",
       sortDir: "desc",
+    });
+  }
+
+  _getShippingAddressList() {
+    this.shippingAddressService.getList({
+      pageNo: 0,
+      pageSize: 100,
+      sortBy: "",
+      sortDir: "",
+    }).subscribe((sAddress: any) => {
+      this.shippingAddressList = sAddress.content;
     });
   }
 
@@ -286,6 +302,9 @@ export class ShipmentAndShippingFormComponent implements OnInit {
         this.selectedShipment = res;
         this.projectFormData = res;
         console.log("result", res);
+
+        let fetchAddress:any = this.shippingAddressList?.find((s: any) => this.projectFormData.shipToAddress === s.address);
+        this.addressInfoFromShipping = fetchAddress ? fetchAddress:{};
 
         res.costs.forEach((cost: any) => {
           console.log("cost:", cost);

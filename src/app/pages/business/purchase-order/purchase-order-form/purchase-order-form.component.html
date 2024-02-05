@@ -107,7 +107,8 @@
               ) | translate
               }} <span *ngIf="projectFormData.orderStatus">&nbsp;({{ projectFormData.id }})</span>
             </div>
-            <button (click)="linkedInvoice(this.projectFormData)" class="btn linked-btn">Linked Invoice</button>
+            <button *ngIf="projectFormData.orderStatus?.toLowerCase() === 'accepted'
+            || projectFormData.orderStatus?.toLowerCase() === 'closed'" (click)="linkedInvoice(this.projectFormData)" class="btn linked-btn">Linked Invoice</button>
           </div>
           <!-- {{projectFormData | json}} -->
           <div [ngStyle]="{ display: 'flex', justifyContent: 'space-between' }">
@@ -253,9 +254,9 @@
                 </d-form-control>
               </d-form-item>
 
-              <d-form-item [ngStyle]="{ margin: '20px 20px 20px 0px', width: '15%' }">
+              <d-form-item [ngStyle]="{ margin: '20px 100px 20px 0px', width: '15%' }">
               </d-form-item>
-              <d-form-item [ngStyle]="{ margin: '20px 20px 20px 0px', width: '15%' }">
+              <d-form-item [ngStyle]="{ margin: '20px 0px 20px 8px', width: '15%' }">
                 <d-form-label [required]="true">{{ "form.purchaseOrder.fields.expectedDeliveryDate" | translate
                   }}</d-form-label>
                 <d-form-control>
@@ -359,11 +360,11 @@
                       [ngClass]="{'set-child-botder': ((i+1) !== detailsInputs?.length)}">
                       <td class="manage-table-content first-head">
                         <span class="set-image">
-                          <img *ngIf="projectFormData.orderStatus?.toLowerCase() === 'draft'"
+                          <img *ngIf="mode.toLowerCase() === 'add' || projectFormData.orderStatus?.toLowerCase() === 'draft'"
                             (click)="editQty(input, i)" src="assets/draw.png" />
-                          <img *ngIf="projectFormData.orderStatus?.toLowerCase() === 'draft'" (click)="removeNow(i)"
+                          <img *ngIf="mode.toLowerCase() === 'add' || projectFormData.orderStatus?.toLowerCase() === 'draft'" (click)="removeNow(i)"
                             src="assets/minus.png" />
-                          <img (click)="getPurchaseOrderById(paramId)" src="assets/refresh.png" />
+                          <img (click)="paramId ? getPurchaseOrderById(paramId):_showToastMsg('success', 'Updated Successfully')" src="assets/refresh.png" />
                         </span>
                       </td>
                       <td class="manage-table-content"> {{ input.lineNumber }}</td>

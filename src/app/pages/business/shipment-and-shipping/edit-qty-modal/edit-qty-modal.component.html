@@ -3,14 +3,15 @@
     <div class="content-part">
         <ul class="first-list">
             <li>PO No.: <span><input type="text" [value]="data?.sDetails?.selectedPoId || data?.sDetails?.poId" disabled></span></li>
-            <li>Product: <span><input type="text" [value]="data?.sDetails?.style+', '+(data?.sDetails?.color || '-')+', '+(data?.sDetails?.size
-                || '-')" disabled></span></li>
+            <li>Product: <span><input type="text" [value]="(data?.sDetails?.skuDescription || '-')" disabled></span></li>
             <li>PO Remaining Qty <span><input type="text" [value]="data?.sDetails?.remainingQuantity || ''" disabled></span></li>
+
+            <li><span style="color:Red;">*</span>Planned Qty <span><input class="" style="background: none !important;" (input)="updateQty($event)" type="number" [value]="data?.sDetails?.shippedQuantity || ''"></span></li>
         </ul>
     </div>
 
-    <div class="qty-input">
+    <!-- <div class="qty-input">
         <label class=""><span>*</span>Planned Qty: </label>
         <input (input)="updateQty($event)" type="number" [value]="data?.sDetails?.shippedQuantity || ''">
-    </div>
+    </div> -->
 </div>
