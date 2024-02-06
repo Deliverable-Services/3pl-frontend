@@ -17,6 +17,7 @@ export class PurchaseOrderFormModalComponent {
   selectedVariants: any[] = [];
   cartItems: any[] = [];
   exwSgdCost: any;
+  exwLocalCost: any;
   searchWithStyleName: any = {
     keyword: "",
     sort: "asc",
@@ -48,11 +49,13 @@ export class PurchaseOrderFormModalComponent {
         // Store the object's data in the selectedVariants array
         this.selectedVariants.push({
           ...obj,
-          exwSgdCost: this.exwSgdCost
+          exwSgdCost: this.exwSgdCost,
+          exwLocalCost: this.exwLocalCost
         });
         this.cartItems.push({
           ...obj,
-          exwSgdCost: this.exwSgdCost
+          exwSgdCost: this.exwSgdCost,
+          exwLocalCost: this.exwLocalCost
         });
       }
     } else {
@@ -113,6 +116,7 @@ export class PurchaseOrderFormModalComponent {
             variant.fabricComposition = res.fabricComposition;
           });
           this.exwSgdCost = res.exwSgdCost;
+          this.exwLocalCost = res.exwLocalCost;
           this.variantList = res.variants;
           this.getInventory(this.variantList?.map((v: any) => v.sku));
         });

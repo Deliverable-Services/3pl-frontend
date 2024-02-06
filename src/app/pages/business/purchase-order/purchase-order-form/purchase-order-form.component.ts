@@ -602,6 +602,7 @@ export class PurchaseOrderFormComponent implements OnInit {
                   productPrice: null,
                   size: p?.size,
                   exwSgdCost: p.exwSgdCost,
+                  exwLocalCost: p.exwLocalCost,
                   style: p?.style,
                   fabicSwatch: p?.fabicSwatch,
                   fabricComposition: p?.fabricComposition
