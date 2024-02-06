@@ -68,6 +68,7 @@ export class SplitAllocationModalComponent implements OnInit {
   }
 
   _manageSplitSummaryDetails(savedDetails: any) {
+    this.splitSummaryDetails = [];
     savedDetails?.forEach((d: any) => {
       let findIndex = this.splitSummaryDetails.findIndex((split: any) => split?.market?.market === d.market.market);
       // console.log(':: :: ', findIndex);
@@ -212,7 +213,9 @@ export class SplitAllocationModalComponent implements OnInit {
   }
 
   removeRow(index: number) {
-    this.splitDetailsfields.splice(index);
+    // let findIndex = this.splitSummaryDetails?.find((s: any) => s.market.market === this.splitDetailsfields[index]?.market?.market);
+    this.splitDetailsfields.splice(index, 1);
+    // this.splitSummaryDetails.splice(findIndex, 1);
   }
 
   saveCurrentValue() {

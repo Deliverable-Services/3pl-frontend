@@ -134,16 +134,6 @@
               <ng-container>
 
                 <div class="input-setting">
-                  <d-form-item>
-                    <d-form-label [hasHelp]="false" [helpTips]="'This is Bill Address.'">
-                      {{'form.purchaseOrder.fields.billAddress' | translate}}
-                    </d-form-label>
-                    <d-form-control>
-                      <input [(ngModel)]="projectFormData.billToAddress"
-                        style="pointer-events: none; background: #F3F3F3 !important;" dTextInput autocomplete="off"
-                        name="billToAddress" [placeholder]="'form.purchaseOrder.fields.billAddress' | translate" />
-                    </d-form-control>
-                  </d-form-item>
 
                   <!-- <d-form-label>{{ "form.purchaseOrder.fields.expectedDeliveryDate" | translate
                     }}</d-form-label>
@@ -161,7 +151,7 @@
 
             <div [ngStyle]="{ width: '46%' }" [ngClass]="{'set-cursor': mode.toLowerCase() === 'edit'}">
 
-              <d-form-item>
+              <!-- <d-form-item>
                 <d-form-label [required]="true" [hasHelp]="false" [helpTips]="'This is Terms Subject.'">
                   {{ "form.purchaseOrder.fields.shippingToDepartment" | translate }}
                 </d-form-label>
@@ -174,6 +164,17 @@
                     [(ngModel)]="projectFormData.shipToAddress" [dValidateRules]="{
                       validators: [{ required: true }]
                     }"></d-select>
+                </d-form-control>
+              </d-form-item> -->
+
+              <d-form-item>
+                <d-form-label [hasHelp]="false" [helpTips]="'This is Bill Address.'">
+                  {{'form.purchaseOrder.fields.billAddress' | translate}}
+                </d-form-label>
+                <d-form-control>
+                  <input [(ngModel)]="projectFormData.billToAddress"
+                    style="pointer-events: none; background: #F3F3F3 !important;" dTextInput autocomplete="off"
+                    name="billToAddress" [placeholder]="'form.purchaseOrder.fields.billAddress' | translate" />
                 </d-form-control>
               </d-form-item>
 

@@ -145,25 +145,34 @@
             </da-col-item> -->
             <da-col-item [daSpan]="12" [daXs]="12">
               <d-form-item>
-                <d-form-label [hasHelp]="false" [helpTips]="'This is Shipping Address.'">
-                  {{'form.sAndS.fields.shippingAddress' | translate}}
+                <d-form-label [required]="true" [hasHelp]="false" [helpTips]="'This is Terms Subject.'">
+                  {{ "form.sAndS.fields.shippingToDepartment" | translate }}
                 </d-form-label>
                 <d-form-control>
-                  <!-- <input class="manage-fields" style="pointer-events: none" [(ngModel)]="projectFormData.shipToAddress"
-                    dTextInput autocomplete="off" name="shipToAddress"
-                    [placeholder]="'form.sAndS.fields.shippingAddress' | translate" /> -->
-                    <d-select
+                  <d-select
                     [ngClass]="{'manage-fields': (mode.toLowerCase() === 'edit' && projectFormData.status?.toLowerCase() !== 'draft')}"
                     [ngStyle]="{'pointer-events': (mode.toLowerCase() === 'edit' && projectFormData.status?.toLowerCase() !== 'draft') ? 'none' : 'auto', width: '100%'}"
-                    [placeholder]="'form.purchaseOrder.fields.shippingToDepartment' | translate" [appendToBody]="true"
-                    (valueChange)="projectFormData.shipToAddress = $event.address"
-                    [multiple]="false" [filterKey]="'market'" [options]="shippingAddressList" name="shipToAddress"
-                    [(ngModel)]="addressInfoFromShipping" [dValidateRules]="{
+                    [placeholder]="'form.sAndS.fields.shippingToDepartment' | translate" [appendToBody]="true"
+                    [multiple]="false" [filterKey]="'nodeName'" [options]="connectionLocationList" name="shipToLocation"
+                    (valueChange)="projectFormData.shipToAddress = $event.physicalAddress"
+                    [(ngModel)]="projectFormData.shipToLocation" [dValidateRules]="{
                       validators: [{ required: true }]
                     }"></d-select>
                 </d-form-control>
               </d-form-item>
             </da-col-item>
+
+            <da-col-item [daSpan]="12" [daXs]="12">
+              <d-form-item>
+                <d-form-label [hasHelp]="false" [helpTips]="'This is Shipping Address.'">
+                  {{'form.sAndS.fields.shippingAddress' | translate}}
+                </d-form-label>
+                <d-form-control>
+                  <input class="manage-fields" style="pointer-events: none" [(ngModel)]="projectFormData.shipToAddress"
+                    dTextInput autocomplete="off" name="shipToAddress"
+                    [placeholder]="'form.sAndS.fields.shippingAddress' | translate" />
+                </d-form-control>
+              </d-form-item></da-col-item>
           </da-layout-row>
           <da-layout-row [daGutter]="[24, 24]" class="invoice-form-row">
             <da-col-item [daSpan]="8" [daXs]="8">

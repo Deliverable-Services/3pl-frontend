@@ -46,7 +46,7 @@
                         {{ cart.selectedPoId }} : &nbsp;
                     </label>
                     <label class="sku">
-                        {{ cart.skuNo }}-{{cart.size}}-{{cart.color ? cart.color : 'NA'}}
+                        {{ cart.skuDescription }}
                     </label>
                     <span style="margin-left: 20px;">
                         <button (click)="removeFromCart(i)" class="remove-button">Remove</button>

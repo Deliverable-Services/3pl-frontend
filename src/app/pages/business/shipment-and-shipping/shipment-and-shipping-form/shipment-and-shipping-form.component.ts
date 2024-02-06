@@ -30,12 +30,12 @@ export class ShipmentAndShippingFormComponent implements OnInit {
 
   projectFormData: any = {
     shippingType: "",
-    // shipToLocation: {
-    //   connectionLocationId: "",
-    //   nodeName: "",
-    //   nodeType: "",
-    //   physicalAddress: "",
-    // },
+    shipToLocation: {
+      connectionLocationId: "",
+      nodeName: "",
+      nodeType: "",
+      physicalAddress: "",
+    },
     vendor: {
       id: "",
       companyName: "",
@@ -100,7 +100,7 @@ export class ShipmentAndShippingFormComponent implements OnInit {
 
   config = {
     id: "dialog-service",
-    width: "55%",
+    width: "60%",
     maxHeight: "600px",
     title: "Select Produts from PO",
     content: ShipmentAndShippingFormModalComponent,
@@ -301,13 +301,11 @@ export class ShipmentAndShippingFormComponent implements OnInit {
 
         this.selectedShipment = res;
         this.projectFormData = res;
-        console.log("result", res);
-
+        
         let fetchAddress:any = this.shippingAddressList?.find((s: any) => this.projectFormData.shipToAddress === s.address);
         this.addressInfoFromShipping = fetchAddress ? fetchAddress:{};
 
         res.costs.forEach((cost: any) => {
-          console.log("cost:", cost);
           this.totalCost = parseInt(this.totalCost) + parseInt(cost.costPrice);
         });
 
@@ -423,10 +421,10 @@ export class ShipmentAndShippingFormComponent implements OnInit {
         this.shippingOrderService
           .add({
             ...this.projectFormData,
-            // shipToLocation: {
-            //   connectionLocationId:
-            //     this.projectFormData.shipToLocation.connectionLocationId,
-            // },
+            shipToLocation: {
+              connectionLocationId:
+                this.projectFormData.shipToLocation.connectionLocationId,
+            },
             vendor: {
               id: this.projectFormData.vendor.id,
             },
@@ -575,7 +573,7 @@ export class ShipmentAndShippingFormComponent implements OnInit {
                   (input: any) => input.poVArId === poVar
                 )
               ) {
-                console.log("----------p------------>", p);
+                // console.log("----------p------------>", p);
 
                 this.detailsInputs.push({
                   ...p,

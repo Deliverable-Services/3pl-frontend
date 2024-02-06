@@ -68,7 +68,7 @@ export class ShipmentAndShippingFormModalComponent implements OnInit {
         // console.log(p.orderStatus, dInfo, this.data.info.vendor.id, p.vendor.id, this.data.info.vendor.id === p.vendor.id);
         return (
           p.orderStatus === "ACCEPTED" &&
-          // this.data.info.vendor.id === p.vendor.id &&
+          this.data.info.vendor.id === p.vendor.id &&
           // this.data.info.shipToLocation.connectionLocationId ===
           //   p.shipToLocation.connectionLocationId &&
           dInfo?.length

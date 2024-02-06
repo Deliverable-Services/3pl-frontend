@@ -1136,7 +1136,6 @@ export class PurchaseOrderFormComponent implements OnInit {
 
   setAddress(address: string, fValue: string) {
     this.projectFormData[fValue] = address;
-    console.log(':: :: ', address, this.projectFormData.shipToAddress);
   }
 
   _dateVaidationForToday() {
