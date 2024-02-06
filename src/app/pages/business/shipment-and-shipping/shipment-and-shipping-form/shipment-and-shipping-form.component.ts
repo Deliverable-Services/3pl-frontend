@@ -423,10 +423,10 @@ export class ShipmentAndShippingFormComponent implements OnInit {
         this.shippingOrderService
           .add({
             ...this.projectFormData,
-            shipToLocation: {
-              connectionLocationId:
-                this.projectFormData.shipToLocation.connectionLocationId,
-            },
+            // shipToLocation: {
+            //   connectionLocationId:
+            //     this.projectFormData.shipToLocation.connectionLocationId,
+            // },
             vendor: {
               id: this.projectFormData.vendor.id,
             },

@@ -170,6 +170,7 @@ form {
 }
 
 .set-image {
+  overflow: inherit !important;
   img {
     width: 14px;
     margin: 13px 10px 0px;

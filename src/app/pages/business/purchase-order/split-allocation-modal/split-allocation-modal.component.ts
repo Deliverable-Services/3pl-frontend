@@ -61,13 +61,17 @@ export class SplitAllocationModalComponent implements OnInit {
 
       }
     }
-    this._manageSplitSummaryDetails(this.splitDetailsfields);
+    // console.log(':: this.splitDetailsfields :: ', this.splitDetailsfields);
+    if(this.splitDetailsfields[0]?.market && this.splitDetailsfields[0]?.qty) {
+      this._manageSplitSummaryDetails(this.splitDetailsfields);
+    }
   }
 
   _manageSplitSummaryDetails(savedDetails: any) {
     savedDetails?.forEach((d: any) => {
       let findIndex = this.splitSummaryDetails.findIndex((split: any) => split?.market?.market === d.market.market);
-      console.log(':: :: ', findIndex);
+      // console.log(':: :: ', findIndex);
+      console.log(':: d :: ', d);
       if(findIndex === -1) {
         d['childDetails'] = [d];
         this.splitSummaryDetails.push(d);
@@ -78,7 +82,7 @@ export class SplitAllocationModalComponent implements OnInit {
         }
       }
     });
-    console.log(':: :: ', this.splitSummaryDetails);
+    // console.log(':: :: ', this.splitSummaryDetails);
   }
 
   close($event: any) {

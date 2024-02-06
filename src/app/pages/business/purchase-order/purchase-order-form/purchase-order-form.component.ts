@@ -28,7 +28,7 @@ export class PurchaseOrderFormComponent implements OnInit {
   vendorList: any[] = [];
   usersList:any[] = [];
   storeSplitDetails:any[] = [];
-  stAllCurrency:any[] = [];
+  stAllCurrency:any = {};
 
   selectedUser:any = {};
 
@@ -147,7 +147,7 @@ export class PurchaseOrderFormComponent implements OnInit {
 
   splitAllocationConfig = {
     id: "dialog-service",
-    width: "70%",
+    width: "50%",
     maxHeight: "600px",
     content: SplitAllocationModalComponent,
     backdropCloseable: true,
@@ -1161,9 +1161,12 @@ export class PurchaseOrderFormComponent implements OnInit {
   }
 
   setContactDetails(user: any) {
-    console.log(':: :: ', user);
     this.projectFormData.contactUsername = user?.username || '';
     this.projectFormData.contactEmail = user?.email || '';
     this.projectFormData.contactPhone = user?.username || '';
+  }
+
+  _getCurrencyRate() {
+    return this.stAllCurrency?.content?.find((currency: any) => currency.currencyCode === this.projectFormData?.vendor?.paymentCurrency)?.rate || null;
   }
 }
