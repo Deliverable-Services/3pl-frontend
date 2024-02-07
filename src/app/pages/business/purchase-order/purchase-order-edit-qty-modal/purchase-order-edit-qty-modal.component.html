@@ -1,5 +1,6 @@
 <div class="column-container">
-    <div class="main-head">
+
+    <div *ngIf="data?.sDetails?.iamge" class="main-head">
         <img src="http://codeskulptor-demos.commondatastorage.googleapis.com/descent/background.png">
     </div>
 
@@ -15,7 +16,7 @@
             <li>Fabric Content: <span><input type="text" [value]="data?.sDetails?.fabricComposition || ''" disabled></span></li>
             <li>Fabric Swatch: <span><input type="text" [value]="data?.sDetails?.fabicSwatch || ''" disabled></span></li>
             <li>EXW Price(SGD): <span><input type="text" [value]="data?.sDetails?.exwSgdCost || ''" disabled></span></li>
-            <li>EXW Price(RMB): <span><input type="text" [value]="data?.sDetails?.exwRmbCost || ''" disabled></span></li>
+            <li>EXW Price({{ data?.formInfo?.vendor?.paymentCurrency }}): <span><input type="text" [value]="(data?.sDetails?.convertedRate | number) || ''" disabled></span></li>
         </ul>
     </div>
 

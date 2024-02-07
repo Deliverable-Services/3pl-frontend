@@ -257,7 +257,7 @@
 
               <d-form-item [ngStyle]="{ margin: '20px 100px 20px 0px', width: '15%' }">
               </d-form-item>
-              <d-form-item [ngStyle]="{ margin: '20px 0px 20px 8px', width: '15%' }">
+              <d-form-item *ngIf="projectFormData.orderStatus && projectFormData.orderStatus?.toLowerCase() !== 'draft'" [ngStyle]="{ margin: '20px 0px 20px 8px', width: '15%' }">
                 <d-form-label [required]="true">{{ "form.purchaseOrder.fields.expectedDeliveryDate" | translate
                   }}</d-form-label>
                 <d-form-control>
@@ -377,7 +377,7 @@
                       <td class="manage-table-content"><span> {{ input?.fabricComposition || '-' }} </span></td>
                       <td class="manage-table-content"><span> {{ input?.fabicSwatch || '-' }}</span> </td>
                       <td class="manage-table-content"> {{ input?.exwSgdCost }} </td>
-                      <td class="manage-table-content"> {{ input?.exwSgdCost * _getCurrencyRate() }} </td>
+                      <td class="manage-table-content"> {{ input?.exwSgdCost * _getCurrencyRate() | number }} </td>
                       <td class="manage-table-content"> {{ input.plannedQuantity }}</td>
                       <td class="manage-table-content">
                         <button (click)="splitAllocation(input, i)" class="manage-split-button">

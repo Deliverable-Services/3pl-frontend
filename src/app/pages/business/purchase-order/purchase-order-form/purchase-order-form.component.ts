@@ -29,10 +29,13 @@ export class PurchaseOrderFormComponent implements OnInit {
   usersList: any[] = [];
   storeSplitDetails: any[] = [];
   stAllCurrency: any = {};
+  stSpIndex: any = {};
+  allowSplitUpdate: boolean = false;
 
   selectedUser: any = {};
 
   allowtoSubmit: boolean = false;
+  totalProductQty: number = 0;
   projectFormData: any = {
     contactEmail: "",
     contactPhone: "",
@@ -503,6 +506,10 @@ export class PurchaseOrderFormComponent implements OnInit {
           .subscribe(
             (res) => {
               this._showToast(res);
+              if(this.allowSplitUpdate) {
+                this.updateSplitInfo(res.details);
+                this.allowSplitUpdate = false;
+              }
             },
             (error) => {
               this._showDateToast(error.error.detail);
@@ -721,8 +728,10 @@ export class PurchaseOrderFormComponent implements OnInit {
       data: {
         sDetails: {
           ...sDetails,
+          convertedRate: sDetails?.exwSgdCost * this._getCurrencyRate(),
           index: index,
         },
+        formInfo: this.projectFormData,
         vList: (vData: any) => {
           this.detailsInputs[vData?.index].plannedQuantity =
             vData?.plannedQuantity;
@@ -732,7 +741,8 @@ export class PurchaseOrderFormComponent implements OnInit {
   }
 
   splitAllocation(sDetails: any, index: number) {
-    let stSpDetails = sDetails;
+    this.stSpIndex = index;
+    let sstSpDetails = sDetails;
     const results = this.dialogService.open({
       ...this.splitAllocationConfig,
       buttons: [
@@ -745,29 +755,10 @@ export class PurchaseOrderFormComponent implements OnInit {
               this._showError("Please fix error before submit");
               return;
             }
-            let stObj: any[] = [];
-            let obj: any = {};
-            let checkIfAllFilled = this.storeSplitDetails?.filter(
-              (split: any) => !split.market || !split.qty
-            );
-            this.storeSplitDetails?.forEach((splitInfo: any) => {
-              let key = splitInfo.market.id;
-              obj[key] = parseInt(splitInfo.qty);
-              // stObj.push(obj);
-            });
-
-            this.purchaseOrderService
-              .splitManagement(stSpDetails.id, obj)
-              .subscribe((res: any) => {
-                checkIfAllFilled?.length === 0
-                  ? results.modalInstance.hide()
-                  : null;
-                this._showToastMsg(
-                  "success",
-                  "Split Allocation Updated Successfully!"
-                );
-                this.getPurchaseOrderById(this.paramId);
-              });
+            this.allowSplitUpdate = true;
+            this.detailsInputs[index].plannedQuantity = this.totalProductQty;
+            document.getElementById("createNdUpdateBtn")?.click();
+            results.modalInstance.hide();
           },
         },
         {
@@ -787,6 +778,9 @@ export class PurchaseOrderFormComponent implements OnInit {
         },
         allowtoSubmit: (allow: boolean) => {
           this.allowtoSubmit = allow;
+        },
+        updateTotalQty: (tQty: number) => {
+          this.totalProductQty = tQty;
         },
       },
     });
@@ -1222,5 +1216,25 @@ export class PurchaseOrderFormComponent implements OnInit {
     // Extract the rate from the matching currency, or default to null if not found
     const currencyRate = matchingCurrency?.rate || null;
     return currencyRate;
+  }
+
+  updateSplitInfo(details: any) {
+    let stObj: any[] = [];
+    let obj: any = {};
+    let checkIfAllFilled = this.storeSplitDetails?.filter(
+      (split: any) => !split.market || !split.qty
+    );
+    this.storeSplitDetails?.forEach((splitInfo: any) => {
+      let key = splitInfo.market.id;
+      obj[key] = parseInt(splitInfo.qty);
+      // stObj.push(obj);
+    });
+
+    this.purchaseOrderService
+      .splitManagement(details[this.stSpIndex].id, obj)
+      .subscribe((res: any) => {
+        this._showToastMsg("success", "Split Allocation Updated Successfully!");
+        this.getPurchaseOrderById(this.paramId);
+      });
   }
 }

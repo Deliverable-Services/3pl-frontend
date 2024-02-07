@@ -137,6 +137,7 @@ export class SplitAllocationModalComponent implements OnInit {
     } else {
       this.data.allowtoSubmit(true);
     }
+    this.data.updateTotalQty(this.totalQty);
     console.log("this.splitSummaryDetails", this.splitSummaryDetails);
   }
 
