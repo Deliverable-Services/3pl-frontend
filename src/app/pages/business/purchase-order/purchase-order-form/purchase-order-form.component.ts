@@ -26,11 +26,11 @@ export class PurchaseOrderFormComponent implements OnInit {
   createdDate? = "";
   modifiedDate? = "";
   vendorList: any[] = [];
-  usersList:any[] = [];
-  storeSplitDetails:any[] = [];
-  stAllCurrency:any = {};
+  usersList: any[] = [];
+  storeSplitDetails: any[] = [];
+  stAllCurrency: any = {};
 
-  selectedUser:any = {};
+  selectedUser: any = {};
 
   projectFormData: any = {
     contactEmail: "",
@@ -46,6 +46,7 @@ export class PurchaseOrderFormComponent implements OnInit {
       id: "",
       companyName: "",
       address: "",
+      paymentCurrency: "",
       creditTermsDto: {
         creditTermsId: "",
       },
@@ -209,36 +210,50 @@ export class PurchaseOrderFormComponent implements OnInit {
     // this.splitAllocation('as');
 
     this._getShippingAddressList();
-    this._getUserList();
+    
     if (this.mode === "Edit") {
       this.getPurchaseOrderById(this.paramId);
+    }else{
+      this._getUserList();
     }
-    this.currencyDataService.getCurrencyList().subscribe((cList: any) => this.stAllCurrency = cList);
+    
+    this.currencyDataService
+      .getCurrencyList()
+      .subscribe((cList: any) => (this.stAllCurrency = cList));
   }
 
   _getShippingAddressList() {
-    this.shippingAddressService.getList({
-      pageNo: 0,
-      pageSize: 100,
-      sortBy: "",
-      sortDir: "",
-    }).subscribe((sAddress: any) => {
-      this.shippingAddressList = sAddress.content;
-    });
+    this.shippingAddressService
+      .getList({
+        pageNo: 0,
+        pageSize: 100,
+        sortBy: "",
+        sortDir: "",
+      })
+      .subscribe((sAddress: any) => {
+        this.shippingAddressList = sAddress.content;
+      });
   }
 
   _getUserList() {
-    this.userManagementService.getList(undefined, {
-      pageNo: "",
-      pageSize: 100,
-      sortBy: "",
-      sortDir: "",
-    }).subscribe((users: any) => {
-      this.usersList = users?.content || [];
-      if(this.usersList?.length) {
-        this.selectedUser = this.usersList.find((user: any) => user.username === this.projectFormData.contactUsername);
-      }
-    })
+    this.userManagementService
+      .getList(undefined, {
+        pageNo: "",
+        pageSize: 100,
+        sortBy: "",
+        sortDir: "",
+      })
+      .subscribe((users: any) => {
+        console.log('this.projectFormData.contactUsername',this.projectFormData.contactUsername);
+        
+        this.usersList = users?.content || [];
+        if (this.usersList?.length) {
+          this.selectedUser = this.usersList.find(
+            (user: any) =>
+              user.username === this.projectFormData.contactUsername
+          );
+        }
+      });
   }
 
   getConnectionLocationList() {
@@ -304,6 +319,8 @@ export class PurchaseOrderFormComponent implements OnInit {
   getPurchaseOrderById(id: string) {
     this.purchaseOrderService.getById(id).subscribe(
       (res) => {
+        console.log("Purchase order received", res);
+
         // if (res?.status?.toLowerCase() !== "draft") {
         //   this.expectedDeliveryDateDisabled = true;
         //   this.expectedArrivalDateDisabled = true;
@@ -361,6 +378,8 @@ export class PurchaseOrderFormComponent implements OnInit {
           let sVal = parseInt(b.lineNumber);
           return fVal > sVal ? 1 : fVal < sVal ? -1 : 0;
         });
+
+        this._getUserList();
 
         // console.log(':: :: ', this.projectFormData)
       },
@@ -605,7 +624,7 @@ export class PurchaseOrderFormComponent implements OnInit {
                   exwLocalCost: p.exwLocalCost,
                   style: p?.style,
                   fabicSwatch: p?.fabicSwatch,
-                  fabricComposition: p?.fabricComposition
+                  fabricComposition: p?.fabricComposition,
                 });
 
                 // Add the variantId to the addedVariantIds array
@@ -664,7 +683,7 @@ export class PurchaseOrderFormComponent implements OnInit {
       data: {
         shipments: {
           shipments: shipments,
-          totalQtyArr: shipments?.map((q:any) => q?.shippedQuantity)
+          totalQtyArr: shipments?.map((q: any) => q?.shippedQuantity),
         },
         vList: (vData: any) => {},
       },
@@ -698,10 +717,11 @@ export class PurchaseOrderFormComponent implements OnInit {
       data: {
         sDetails: {
           ...sDetails,
-          index: index
+          index: index,
         },
         vList: (vData: any) => {
-          this.detailsInputs[vData?.index].plannedQuantity = vData?.plannedQuantity; 
+          this.detailsInputs[vData?.index].plannedQuantity =
+            vData?.plannedQuantity;
         },
       },
     });
@@ -717,20 +737,29 @@ export class PurchaseOrderFormComponent implements OnInit {
           text: "Update",
           disabled: false,
           handler: (variantList: any) => {
-            let stObj:any[] = [];
-            let obj:any = {};
-            let checkIfAllFilled = this.storeSplitDetails?.filter((split: any) => (!split.market || !split.qty));
-            this.storeSplitDetails?.forEach((splitInfo:any) => {
+            let stObj: any[] = [];
+            let obj: any = {};
+            let checkIfAllFilled = this.storeSplitDetails?.filter(
+              (split: any) => !split.market || !split.qty
+            );
+            this.storeSplitDetails?.forEach((splitInfo: any) => {
               let key = splitInfo.market.id;
               obj[key] = splitInfo.qty;
               // stObj.push(obj);
             });
 
-            this.purchaseOrderService.splitManagement(stSpDetails.id, obj).subscribe((res: any) => {
-              checkIfAllFilled?.length === 0 ? results.modalInstance.hide():null;
-              this._showToastMsg('success', 'Split Allocation Updated Successfully!');
-              this.getPurchaseOrderById(this.paramId);
-            })
+            this.purchaseOrderService
+              .splitManagement(stSpDetails.id, obj)
+              .subscribe((res: any) => {
+                checkIfAllFilled?.length === 0
+                  ? results.modalInstance.hide()
+                  : null;
+                this._showToastMsg(
+                  "success",
+                  "Split Allocation Updated Successfully!"
+                );
+                this.getPurchaseOrderById(this.paramId);
+              });
           },
         },
         {
@@ -769,10 +798,10 @@ export class PurchaseOrderFormComponent implements OnInit {
       data: {
         sDetails: {
           ...data,
-          stAllCurrency: this.stAllCurrency
+          stAllCurrency: this.stAllCurrency,
         },
         vList: (vData: any) => {
-          // this.detailsInputs[vData?.index].plannedQuantity = vData?.plannedQuantity; 
+          // this.detailsInputs[vData?.index].plannedQuantity = vData?.plannedQuantity;
         },
       },
     });
@@ -1125,6 +1154,7 @@ export class PurchaseOrderFormComponent implements OnInit {
           return {
             companyName: v.companyName,
             address: v.address,
+            paymentCurrency: v.paymentCurrency,
             id: v.id,
             creditTermsDto: {
               creditTermsId: v.creditTermsDto.creditTermsId,
@@ -1161,12 +1191,25 @@ export class PurchaseOrderFormComponent implements OnInit {
   }
 
   setContactDetails(user: any) {
-    this.projectFormData.contactUsername = user?.username || '';
-    this.projectFormData.contactEmail = user?.email || '';
-    this.projectFormData.contactPhone = user?.username || '';
+    this.projectFormData.contactUsername = user?.username || "";
+    this.projectFormData.contactEmail = user?.email || "";
+    this.projectFormData.contactPhone = user?.username || "";
   }
 
   _getCurrencyRate() {
-    return this.stAllCurrency?.content?.find((currency: any) => currency.currencyCode === this.projectFormData?.vendor?.paymentCurrency)?.rate || null;
+    // Access the list of all currencies
+    const allCurrencies = this.stAllCurrency?.content;
+
+    // Retrieve the payment currency code from the vendor in project form data
+    const paymentCurrencyCode = this.projectFormData?.vendor?.paymentCurrency;
+
+    // Find the currency with the matching currency code
+    const matchingCurrency = allCurrencies?.find(
+      (currency: any) => currency.currencyCode === paymentCurrencyCode
+    );
+
+    // Extract the rate from the matching currency, or default to null if not found
+    const currencyRate = matchingCurrency?.rate || null;
+    return currencyRate;
   }
 }

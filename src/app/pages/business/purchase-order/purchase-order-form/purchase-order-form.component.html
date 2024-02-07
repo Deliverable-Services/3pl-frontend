@@ -339,7 +339,7 @@
                       <!-- <span class="head-row"> -->
                       <th class="manage-table-head first-head"></th>
                       <th class="manage-table-head">Line No.</th>
-                      <th class="manage-table-head">Image</th>
+                      <!-- <th class="manage-table-head">Image</th> -->
                       <th class="manage-table-head">SKU</th>
                       <th class="manage-table-head">Style Name</th>
                       <th class="manage-table-head">Colour</th>
@@ -347,7 +347,7 @@
                       <th class="manage-table-head">Fabric Content</th>
                       <th class="manage-table-head">Fabrice Swatch</th>
                       <th class="manage-table-head">EXW Price(SGD)</th>
-                      <th class="manage-table-head">EXW Price(RMB)</th>
+                      <th class="manage-table-head">EXW Price({{projectFormData?.vendor?.paymentCurrency}})</th>
                       <th class="manage-table-head">Planned Qty</th>
                       <th class="manage-table-head">Split Details</th>
                       <th *ngIf="projectFormData.orderStatus?.toLowerCase() === 'accepted'
@@ -369,7 +369,7 @@
                         </span>
                       </td>
                       <td class="manage-table-content"> {{ input.lineNumber }}</td>
-                      <td class="manage-table-content"> {{ input?.iamge || '-' }}</td>
+                      <!-- <td class="manage-table-content"> {{ input?.iamge || '-' }}</td> -->
                       <td class="manage-table-content"><span> {{ input?.skuNo || '-' }} </span></td>
                       <td class="manage-table-content"><span> {{ input?.style || '-' }}</span></td>
                       <td class="manage-table-content"> {{ input?.color || '-' }} </td>
@@ -377,7 +377,7 @@
                       <td class="manage-table-content"><span> {{ input?.fabricComposition || '-' }} </span></td>
                       <td class="manage-table-content"><span> {{ input?.fabicSwatch || '-' }}</span> </td>
                       <td class="manage-table-content"> {{ input?.exwSgdCost }} </td>
-                      <td class="manage-table-content"> {{ input?.exwLocalCost * _getCurrencyRate() }} </td>
+                      <td class="manage-table-content"> {{ input?.exwSgdCost * _getCurrencyRate() }} </td>
                       <td class="manage-table-content"> {{ input.plannedQuantity }}</td>
                       <td class="manage-table-content">
                         <button (click)="splitAllocation(input, i)" class="manage-split-button">

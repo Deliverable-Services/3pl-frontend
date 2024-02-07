@@ -1,7 +1,8 @@
 <div class="column-container">
 
   <div class="main-head">
-    <h1>{{ data?.sDetails?.style || '-' }} - {{ data?.sDetails?.size || '-' }} - {{ data?.sDetails?.color || '-' }} ; Planned Qty : {{ data?.sDetails?.plannedQuantity || '-'  }}</h1>
+    <h1>{{ replaceUnderscores(data?.sDetails?.skuDescription) }} ; Planned Qty : {{ data?.sDetails?.plannedQuantity ||
+      '-' }}</h1>
   </div>
 
   <div class="left-section">
@@ -61,8 +62,8 @@
         <ng-container *ngFor="let summary of splitSummaryDetails; let ind = index">
           <tr class="parent-row">
             <td> {{ summary.market.market }} </td>
-            <td class="set-mrgn">400</td>
-            <td class="set-mrgn">80%
+            <td class="set-mrgn">{{summary.locationTotalQty ? summary.locationTotalQty : 0}}</td>
+            <td class="set-mrgn">{{summary.locationTotalQty ? ((summary.locationTotalQty / totalQty) * 100).toFixed(2) : 0}}%
               <span class="manage-toggle">
                 <img *ngIf="childCaseIds.indexOf(ind) === -1" (click)="manageToggle(ind)" src="assets/down-key.png" />
                 <img *ngIf="childCaseIds.indexOf(ind) > -1" (click)="manageToggle(ind)" src="assets/up-key.png" />
@@ -71,10 +72,13 @@
           </tr>
 
           <ng-container *ngIf="childCaseIds.indexOf(ind) > -1">
-            <tr *ngFor="let summaryDetails of summary.childDetails; let nInd = index" class="child-row">
+            <tr *ngFor="let summaryDetails of summary.childMarket; let nInd = index" class="child-row">
               <td> {{ summaryDetails.market.locationName }} </td>
-              <td class="set-mrgn">400</td>
-              <td class="set-mrgn">80%</td>
+              <td class="set-mrgn">{{summaryDetails?.qty}}</td>
+              <td class="set-mrgn">{{(
+                (summaryDetails?.qty / summary.locationTotalQty) *
+                100
+                ).toFixed(2)}}%</td>
             </tr>
           </ng-container>
           <!-- <tr class="child-row">

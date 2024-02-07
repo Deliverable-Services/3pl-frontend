@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
 import { ProductsListDataService } from "src/app/@core/mock/products-data.service";
 import { InventoryService } from "src/app/@core/mock/inventory.service";
-
+import { ToastService } from "ng-devui";
 @Component({
   selector: "app-split-allocation-modal",
   templateUrl: "./split-allocation-modal.component.html",
@@ -13,13 +13,12 @@ export class SplitAllocationModalComponent implements OnInit {
   @Output() modalClosed = new EventEmitter<any>();
 
   stShippingAddressInfo: any[] = [];
-  splitDetailsfields: any[] = [
-    { market: '', qty: '' }
-  ];
+  splitDetailsfields: any[] = [{ market: "", qty: "" }];
   filteredData: any[] = [];
   variantList: any[] = [];
   selectedVariants: any[] = [];
   cartItems: any[] = [];
+  totalQty = 0;
   exwSgdCost: any;
   searchWithStyleName: any = {
     keyword: "",
@@ -27,63 +26,114 @@ export class SplitAllocationModalComponent implements OnInit {
     columnName: "styleName",
     searchType: "match",
   };
-  splitSummaryDetails:any[] = [];
-  childCaseIds:any[] = [];
+  splitSummaryDetails: any[] = [];
+  childCaseIds: any[] = [];
 
   constructor(
     private productsListDataService: ProductsListDataService,
-    private inventoryService: InventoryService
+    private inventoryService: InventoryService,
+    private toastService: ToastService
   ) {
     this.handler = () => {}; // Initialize the handler with a default empty function
   }
 
   ngOnInit(): void {
+    console.log("this.data?.sDetails", this.data?.sDetails);
+
     let stSplitDetails = this.data?.sDetails?.splitAddress;
 
-    if(stSplitDetails && Object.keys(stSplitDetails).length) { this.splitDetailsfields = []; }
+    if (stSplitDetails && Object.keys(stSplitDetails).length) {
+      this.splitDetailsfields = [];
+    }
 
-    this.stShippingAddressInfo = this.data?.shippingAddressList?.map((sAddress: any) => {
-      return {
-        ...sAddress,
-        keyToUse: sAddress.market+' - '+sAddress.locationName
+    this.stShippingAddressInfo = this.data?.shippingAddressList?.map(
+      (sAddress: any) => {
+        return {
+          ...sAddress,
+          keyToUse: sAddress.market + " - " + sAddress.locationName,
+        };
       }
-    })
+    );
 
     for (const key in stSplitDetails) {
       if (stSplitDetails.hasOwnProperty(key)) {
-        
-        let findSplitAddress = this.data?.shippingAddressList?.find((address: any) => address.id === key);
-        findSplitAddress['keyToUse'] = findSplitAddress.market+' - '+findSplitAddress.locationName;
-
-        this.splitDetailsfields.push(
-          { market: findSplitAddress, qty: stSplitDetails[key] }
+        let findSplitAddress = this.data?.shippingAddressList?.find(
+          (address: any) => address.id === key
         );
+        findSplitAddress["keyToUse"] =
+          findSplitAddress.market + " - " + findSplitAddress.locationName;
 
+        this.splitDetailsfields.push({
+          market: findSplitAddress,
+          qty: stSplitDetails[key],
+        });
       }
     }
     // console.log(':: this.splitDetailsfields :: ', this.splitDetailsfields);
-    if(this.splitDetailsfields[0]?.market && this.splitDetailsfields[0]?.qty) {
+    if (this.splitDetailsfields[0]?.market && this.splitDetailsfields[0]?.qty) {
       this._manageSplitSummaryDetails(this.splitDetailsfields);
     }
   }
 
   _manageSplitSummaryDetails(savedDetails: any) {
     this.splitSummaryDetails = [];
+
+    // Create a map to store details by market for quicker access
+    const marketDetailsMap = new Map<string, any>();
+
     savedDetails?.forEach((d: any) => {
-      let findIndex = this.splitSummaryDetails.findIndex((split: any) => split?.market?.market === d.market.market);
-      // console.log(':: :: ', findIndex);
-      console.log(':: d :: ', d);
-      if(findIndex === -1) {
-        d['childDetails'] = [d];
-        this.splitSummaryDetails.push(d);
+      const marketKey = d?.market?.market;
+
+      if (!marketKey) return; // Skip if market key is not available
+
+      if (!marketDetailsMap.has(marketKey)) {
+        // If market details are not already present, initialize and add
+        d.totalQty = this.data?.sDetails?.plannedQuantity || 0; // Set totalQty
+        d.childMarket = [d]; // Initialize childMarket array
+        marketDetailsMap.set(marketKey, d); // Add to map for future reference
+        this.splitSummaryDetails.push(d); // Add to splitSummaryDetails
       } else {
-        let lcDetails = this.splitSummaryDetails[findIndex]?.childDetails?.findIndex((child: any) => child?.market?.locationName === d?.market?.locationName);
-        if(lcDetails === -1) {
-          this.splitSummaryDetails[findIndex]?.childDetails?.push(d);
+        // If market details are already present, update childMarket
+        const existingMarketDetails = marketDetailsMap.get(marketKey);
+        if (existingMarketDetails) {
+          // Check if the same market and location already exist in childMarket
+          const alreadyExists = existingMarketDetails.childMarket.some(
+            (child: any) => {
+              return (
+                child.market.locationName === d.market.locationName &&
+                child.market.market === d.market.market
+              );
+            }
+          );
+          if (!alreadyExists) {
+            d.childMarket = null;
+            existingMarketDetails.childMarket.push(d); // Add to childMarket array
+          } else {
+            this.showToast("Market with this location already exist");
+          }
         }
       }
     });
-    // console.log(':: :: ', this.splitSummaryDetails);
+    let tQty =0;
+    this.splitSummaryDetails.forEach((details: any) => {
+      let locationTotalQty = 0;
+      details?.childMarket?.forEach((market: any) => {
+        locationTotalQty += parseInt(market?.qty);
+      });
+      if (locationTotalQty > 0) {
+        details.locationTotalQty = locationTotalQty;
+        tQty += locationTotalQty; 
+        details.totalPercentage = (
+          (locationTotalQty / this.data?.sDetails?.plannedQuantity) *
+          100
+        ).toFixed(2);
+      }
+    });
+    this.totalQty = tQty;
+    if(tQty > this.data?.sDetails?.plannedQuantity){
+      this.showToast("Qty Exced Max Planned Qty")
+    }
+    console.log("this.splitSummaryDetails", this.splitSummaryDetails);
   }
 
   close($event: any) {
@@ -103,11 +153,11 @@ export class SplitAllocationModalComponent implements OnInit {
         // Store the object's data in the selectedVariants array
         this.selectedVariants.push({
           ...obj,
-          exwSgdCost: this.exwSgdCost
+          exwSgdCost: this.exwSgdCost,
         });
         this.cartItems.push({
           ...obj,
-          exwSgdCost: this.exwSgdCost
+          exwSgdCost: this.exwSgdCost,
         });
       }
     } else {
@@ -130,7 +180,6 @@ export class SplitAllocationModalComponent implements OnInit {
       removedItem.selected = false; // Deselect the item
       this.cartItems.splice(index, 1);
       this.selectedVariants.splice(index, 1);
-      
     }
   }
 
@@ -189,9 +238,9 @@ export class SplitAllocationModalComponent implements OnInit {
       this.variantList.forEach((v: any) => {
         const foundItem = res.content.find((item: any) => item.sku === v.sku);
         const checked = this.cartItems.find((item: any) => item.sku === v.sku);
-        if(checked){
+        if (checked) {
           v.itemAlreadySelected = true;
-        }else{
+        } else {
           v.itemAlreadySelected = false;
         }
         v.custName = `${v.sku}`;
@@ -207,9 +256,7 @@ export class SplitAllocationModalComponent implements OnInit {
   }
 
   addMore() {
-    this.splitDetailsfields.push(
-      { market: '', qty: '' }
-    );
+    this.splitDetailsfields.push({ market: "", qty: "" });
   }
 
   removeRow(index: number) {
@@ -225,6 +272,24 @@ export class SplitAllocationModalComponent implements OnInit {
 
   manageToggle(index: number) {
     let getIndex = this.childCaseIds.findIndex((n: number) => n === index);
-    getIndex === -1 ? this.childCaseIds.push(index):this.childCaseIds.splice(index, 1);
+    getIndex === -1
+      ? this.childCaseIds.push(index)
+      : this.childCaseIds.splice(index, 1);
+  }
+
+  replaceUnderscores(name: string) {
+    return name?.replace(/_/g, " - ");
+  }
+
+  showToast(msg: string) {
+    this.toastService.open({
+      value: [
+        {
+          severity: "error",
+          content: msg,
+        },
+      ],
+      life: 2000,
+    });
   }
 }

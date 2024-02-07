@@ -460,7 +460,7 @@ export class ProductsFormComponent implements OnInit {
       });
       if (!isNaN(this.productsFormData.exwLocalCost)) {
         this.productsFormData.exwSgdCost = Number(
-          (this.productsFormData.exwLocalCost * this.currencyRate).toFixed(2)
+          (this.productsFormData.exwLocalCost / this.currencyRate).toFixed(2)
         );
       }
     }
