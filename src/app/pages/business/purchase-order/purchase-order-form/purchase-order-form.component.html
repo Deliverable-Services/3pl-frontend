@@ -292,7 +292,7 @@
 
                 <d-form-operation *ngIf="projectFormData.orderStatus?.toLowerCase() !== 'draft'">
                   <d-button
-                    *ngIf="(projectFormData.orderStatus?.toLowerCase() === 'open' || projectFormData.orderStatus?.toLowerCase() === 'released') && projectFormData.sampleStatus?.toLowerCase() === 'open'"
+                    *ngIf="projectFormData.orderStatus?.toLowerCase() === 'open'  && projectFormData.sampleStatus?.toLowerCase() === 'open'"
                     [ngStyle]="{ float: 'right' }" class="mr-element-spacing" circled="true" style="margin-right: 8px"
                     (btnClick)="confirmDialog('ready')">
                     {{ "form.purchaseOrder.buttons.ready" | translate }}

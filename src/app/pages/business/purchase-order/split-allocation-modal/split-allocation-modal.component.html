@@ -1,7 +1,7 @@
 <div class="column-container">
 
   <div class="main-head">
-    <h1>{{ replaceUnderscores(data?.sDetails?.skuDescription) }} ; Planned Qty : {{ data?.sDetails?.plannedQuantity ||
+    <h1>{{ replaceUnderscores(data?.sDetails?.skuDescription) }} ; Planned Qty : {{ totalQty ||
       '-' }}</h1>
   </div>
 
@@ -34,7 +34,7 @@
           <d-form-label [required]="true" [hasHelp]="false"> Qty </d-form-label>
           <d-form-control>
             <input dTextInput (input)="saveCurrentValue()" autocomplete="off" [name]="'qty-'+sDetails.qty"
-              [(ngModel)]="sDetails.qty" [placeholder]="'form.shippingAddress.fields.market' | translate" />
+              [(ngModel)]="sDetails.qty"  (keypress)="numberOnly($event)" [placeholder]="'form.shippingAddress.fields.market' | translate" />
           </d-form-control>
         </d-form-item>
 
@@ -63,7 +63,7 @@
           <tr class="parent-row">
             <td> {{ summary.market.market }} </td>
             <td class="set-mrgn">{{summary.locationTotalQty ? summary.locationTotalQty : 0}}</td>
-            <td class="set-mrgn">{{summary.locationTotalQty ? ((summary.locationTotalQty / totalQty) * 100).toFixed(2) : 0}}%
+            <td class="set-mrgn">{{summary.locationTotalQty > 0 ? ((summary.locationTotalQty / totalQty) * 100).toFixed(2) : 0}}%
               <span class="manage-toggle">
                 <img *ngIf="childCaseIds.indexOf(ind) === -1" (click)="manageToggle(ind)" src="assets/down-key.png" />
                 <img *ngIf="childCaseIds.indexOf(ind) > -1" (click)="manageToggle(ind)" src="assets/up-key.png" />
@@ -75,10 +75,10 @@
             <tr *ngFor="let summaryDetails of summary.childMarket; let nInd = index" class="child-row">
               <td> {{ summaryDetails.market.locationName }} </td>
               <td class="set-mrgn">{{summaryDetails?.qty}}</td>
-              <td class="set-mrgn">{{(
+              <td class="set-mrgn">{{ summaryDetails?.qty > 0 ? (
                 (summaryDetails?.qty / summary.locationTotalQty) *
                 100
-                ).toFixed(2)}}%</td>
+                ).toFixed(2) : 0}}%</td>
             </tr>
           </ng-container>
           <!-- <tr class="child-row">

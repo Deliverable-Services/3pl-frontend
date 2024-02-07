@@ -211,13 +211,13 @@ export class PurchaseOrderFormComponent implements OnInit {
     // this.splitAllocation('as');
 
     this._getShippingAddressList();
-    
+
     if (this.mode === "Edit") {
       this.getPurchaseOrderById(this.paramId);
-    }else{
+    } else {
       this._getUserList();
     }
-    
+
     this.currencyDataService
       .getCurrencyList()
       .subscribe((cList: any) => (this.stAllCurrency = cList));
@@ -245,8 +245,11 @@ export class PurchaseOrderFormComponent implements OnInit {
         sortDir: "",
       })
       .subscribe((users: any) => {
-        console.log('this.projectFormData.contactUsername',this.projectFormData.contactUsername);
-        
+        console.log(
+          "this.projectFormData.contactUsername",
+          this.projectFormData.contactUsername
+        );
+
         this.usersList = users?.content || [];
         if (this.usersList?.length) {
           this.selectedUser = this.usersList.find(
@@ -738,7 +741,10 @@ export class PurchaseOrderFormComponent implements OnInit {
           text: "Update",
           disabled: false,
           handler: (variantList: any) => {
-            if(this.allowtoSubmit === false) return;
+            if (this.allowtoSubmit === false) {
+              this._showError("Please fix error before submit");
+              return;
+            }
             let stObj: any[] = [];
             let obj: any = {};
             let checkIfAllFilled = this.storeSplitDetails?.filter(
@@ -746,7 +752,7 @@ export class PurchaseOrderFormComponent implements OnInit {
             );
             this.storeSplitDetails?.forEach((splitInfo: any) => {
               let key = splitInfo.market.id;
-              obj[key] = splitInfo.qty;
+              obj[key] = parseInt(splitInfo.qty);
               // stObj.push(obj);
             });
 
@@ -781,7 +787,7 @@ export class PurchaseOrderFormComponent implements OnInit {
         },
         allowtoSubmit: (allow: boolean) => {
           this.allowtoSubmit = allow;
-        }
+        },
       },
     });
   }

@@ -88,7 +88,7 @@ export class SplitAllocationModalComponent implements OnInit {
 
       if (!marketDetailsMap.has(marketKey)) {
         // If market details are not already present, initialize and add
-        d.totalQty = this.data?.sDetails?.plannedQuantity || 0; // Set totalQty
+        d.totalQty = this.totalQty; // Set totalQty
         d.childMarket = [d]; // Initialize childMarket array
         marketDetailsMap.set(marketKey, d); // Add to map for future reference
         this.splitSummaryDetails.push(d); // Add to splitSummaryDetails
@@ -109,6 +109,7 @@ export class SplitAllocationModalComponent implements OnInit {
             d.childMarket = null;
             existingMarketDetails.childMarket.push(d); // Add to childMarket array
           } else {
+            this.data.allowtoSubmit(false);
             this.showToast("Market with this location already exist");
           }
         }
@@ -124,13 +125,13 @@ export class SplitAllocationModalComponent implements OnInit {
         details.locationTotalQty = locationTotalQty;
         tQty += locationTotalQty; 
         details.totalPercentage = (
-          (locationTotalQty / this.data?.sDetails?.plannedQuantity) *
+          (locationTotalQty / this.totalQty) *
           100
         ).toFixed(2);
       }
     });
     this.totalQty = tQty;
-    if(tQty > this.data?.sDetails?.plannedQuantity) {
+    if(tQty > this.totalQty) {
       this.data.allowtoSubmit(false);
       this.showToast("Qty Exced Max Planned Qty")
     } else {
@@ -259,7 +260,7 @@ export class SplitAllocationModalComponent implements OnInit {
   }
 
   addMore() {
-    this.splitDetailsfields.push({ market: "", qty: "" });
+    this.splitDetailsfields.push({ market: "", qty: "0" });
   }
 
   removeRow(index: number) {
@@ -294,5 +295,15 @@ export class SplitAllocationModalComponent implements OnInit {
       ],
       life: 2000,
     });
+  }
+
+  numberOnly(event: any) {
+    const charCode = event.which ? event.which : event.keyCode;
+    // Allow numbers (0-9) and the full stop (decimal point)
+    if ((charCode >= 48 && charCode <= 57) || charCode === 46) {
+      return true;
+    } else {
+      return false;
+    }
   }
 }
