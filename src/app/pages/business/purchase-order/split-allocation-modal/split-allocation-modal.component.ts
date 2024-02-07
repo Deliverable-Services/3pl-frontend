@@ -130,8 +130,11 @@ export class SplitAllocationModalComponent implements OnInit {
       }
     });
     this.totalQty = tQty;
-    if(tQty > this.data?.sDetails?.plannedQuantity){
+    if(tQty > this.data?.sDetails?.plannedQuantity) {
+      this.data.allowtoSubmit(false);
       this.showToast("Qty Exced Max Planned Qty")
+    } else {
+      this.data.allowtoSubmit(true);
     }
     console.log("this.splitSummaryDetails", this.splitSummaryDetails);
   }

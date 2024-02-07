@@ -32,6 +32,7 @@ export class PurchaseOrderFormComponent implements OnInit {
 
   selectedUser: any = {};
 
+  allowtoSubmit: boolean = false;
   projectFormData: any = {
     contactEmail: "",
     contactPhone: "",
@@ -737,6 +738,7 @@ export class PurchaseOrderFormComponent implements OnInit {
           text: "Update",
           disabled: false,
           handler: (variantList: any) => {
+            if(this.allowtoSubmit === false) return;
             let stObj: any[] = [];
             let obj: any = {};
             let checkIfAllFilled = this.storeSplitDetails?.filter(
@@ -777,6 +779,9 @@ export class PurchaseOrderFormComponent implements OnInit {
         vList: (vData: any) => {
           this.storeSplitDetails = vData;
         },
+        allowtoSubmit: (allow: boolean) => {
+          this.allowtoSubmit = allow;
+        }
       },
     });
   }
