@@ -383,7 +383,7 @@
                       <td class="manage-table-content"><span> {{ input?.fabricComposition || '-' }} </span></td>
                       <td class="manage-table-content"><span> {{ input?.fabicSwatch || '-' }}</span> </td>
                       <td class="manage-table-content"> {{ input?.exwSgdCost }} </td>
-                      <td class="manage-table-content"> {{ input?.exwSgdCost * _getCurrencyRate() | number }} </td>
+                      <td class="manage-table-content"> {{ input?.exwSgdCost * _getCurrencyRate() | number : '1.2-2' }} </td>
                       <td class="manage-table-content"> {{ input.plannedQuantity }}</td>
                       <td class="manage-table-content">
                         <button (click)="splitAllocation(input, i)" class="manage-split-button">

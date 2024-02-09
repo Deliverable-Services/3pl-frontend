@@ -751,6 +751,11 @@ export class PurchaseOrderFormComponent implements OnInit {
           text: "Update",
           disabled: false,
           handler: (variantList: any) => {
+            if(this.projectFormData.orderStatus?.toLowerCase() === 'accepted'
+            || this.projectFormData.orderStatus?.toLowerCase() === 'closed') {
+              results.modalInstance.hide();
+              return;
+            }
             if (this.allowtoSubmit === false) {
               this._showError("Please fix error before submit");
               return;
@@ -772,6 +777,7 @@ export class PurchaseOrderFormComponent implements OnInit {
       ],
       data: {
         shippingAddressList: this.shippingAddressList,
+        currentInfo: this.projectFormData,
         sDetails: sDetails,
         vList: (vData: any) => {
           this.storeSplitDetails = vData;

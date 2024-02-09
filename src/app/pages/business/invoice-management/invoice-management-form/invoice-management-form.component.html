@@ -453,11 +453,11 @@
 
               <div class="manage-bottom-right" *ngIf="projectFormData.type?.toLowerCase() === 'final'">
                 <div class="bottom-main-line">
-                  <p>Billed Amount : {{ projectFormData.amount*_getCurrencyRate() | number }} RMB</p>
+                  <p>Billed Amount : {{ projectFormData.amount*_getCurrencyRate() | number : '1.2-2'}} RMB</p>
                   <button (click)="openInvoiceDetails()" type="button"> Invoice Details </button>
                 </div>
                 <div class="manage-bottom-two">
-                  <p>Fulfillment Amount : {{ _getFulFillmentAmt() | number }} RMB</p>
+                  <p>Fulfillment Amount : {{ _getFulFillmentAmt() | number : '1.2-2'}} RMB</p>
                   <span># Calculation based on ratio of received qty and planned qty</span>
                 </div>
 
@@ -479,7 +479,7 @@
             </da-col-item>
             <da-col-item [daSpan]="16" [daXs]="16">
               <div style="text-align: right;">
-                <p><b>PO Total Amount (RMB) : </b> {{ _getRmbTotal() | number }} </p>
+                <p><b>PO Total Amount (RMB) : </b> {{ _getRmbTotal() | number : '1.2-2'}} </p>
               </div>
             </da-col-item>
           </da-layout-row>

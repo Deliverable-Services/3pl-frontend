@@ -27,12 +27,12 @@
     <div class="bottom-content">
         <span>
             <h1> Total PO Amount: </h1>
-            <p> {{ data.moreInfo.tPoAmt | number }} RMB</p>
+            <p> {{ data.moreInfo.tPoAmt | number : '1.2-2'}} RMB</p>
         </span>
         <br>
         <span>
             <h1> Fulfillment Amount: </h1>
-            <p> {{ data.moreInfo.fulFillAmt | number }} RMB</p>
+            <p> {{ data.moreInfo.fulFillAmt | number : '1.2-2'}} RMB</p>
         </span>
     </div>
 </div>

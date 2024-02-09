@@ -75,3 +75,9 @@
     }
   }
 }
+
+.lock-split-allocation {
+  pointer-events: none;
+  cursor: not-allowed;
+  opacity: 0.5;
+}

@@ -1,4 +1,4 @@
-<div class="column-container">
+<div class="column-container" [ngClass]="{ 'lock-split-allocation': (data?.currentInfo?.orderStatus?.toLowerCase() === 'accepted' || data?.currentInfo?.orderStatus?.toLowerCase() === 'closed') }">
 
   <div class="main-head">
     <h1>{{ replaceUnderscores(data?.sDetails?.skuDescription) }} ; Planned Qty : {{ totalQty ||
