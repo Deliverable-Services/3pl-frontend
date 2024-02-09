@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
+import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from "@angular/core";
 import { ProductsListDataService } from "src/app/@core/mock/products-data.service";
 import { InventoryService } from "src/app/@core/mock/inventory.service";
 
@@ -11,6 +11,8 @@ export class PurchaseOrderEditQtyModalComponent {
   @Input() data: any;
   @Input() handler: Function;
   @Output() modalClosed = new EventEmitter<any>();
+  @ViewChild('plannedQtyInput') plannedQtyInput: any;
+
 
   filteredData: any[] = [];
   variantList: any[] = [];
@@ -29,6 +31,10 @@ export class PurchaseOrderEditQtyModalComponent {
     private inventoryService: InventoryService
   ) {
     this.handler = () => {}; // Initialize the handler with a default empty function
+  }
+
+  ngAfterViewInit() {
+    this.plannedQtyInput.nativeElement.focus();
   }
 
   close($event: any) {

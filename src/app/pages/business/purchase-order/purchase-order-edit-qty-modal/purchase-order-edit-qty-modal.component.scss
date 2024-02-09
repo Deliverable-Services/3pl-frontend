@@ -12,19 +12,26 @@
     font-size: 12px;
     font-weight: bold;
     line-height: 35px;
-    margin-left: 40px;
+    margin-top: 30px;
+    padding: 0 50px;
 
     li {
       line-height: 44px;
       color: #000;
+      display: flex;
+      white-space: nowrap;
+      gap: 5px;
+      align-items: center;
+      span {
+        width: 100%;
+      }
       span input {
         // color: #F00;
         border: 1px solid;
         border-radius: 5px;
         line-height: 23px;
-        float: right;
-        margin: 2% 20% 0% 0%;
-        background: #F3F3F3 !important;
+        background: #f3f3f3 !important;
+        width: 100%;
       }
     }
   }
@@ -38,10 +45,13 @@
 }
 
 .qty-input {
-  display: inline-block;
-  margin: 10px 0px;
-  width: 100%;
+  display: flex;
+  margin: 10px auto;
+  width: 50%;
   text-align: center;
+  white-space: nowrap;
+  align-items: center;
+  gap: 5px;
 
   label {
     font-weight: bold;
@@ -52,7 +62,7 @@
   }
 
   input {
-    width: 50%;
+    width: 100px;
     border: 1px solid;
     border-radius: 5px;
     line-height: 23px;
@@ -68,6 +78,5 @@
   span {
     display: flex;
     height: 30px;
-    margin: 6px;
   }
 }

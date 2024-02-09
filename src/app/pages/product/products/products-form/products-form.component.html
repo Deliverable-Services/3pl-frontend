@@ -119,7 +119,7 @@
                         validators: [{ required: true }]
                       }" /> -->
                   <d-select [disabled]="isFormDisabled(productsFormData.status)" [ngStyle]="{ width: '100%' }"
-                    (ngModelChange)="updateCompanyExwPrice()" placeholder="Select a Currency" [scrollHight]="'300px'"
+                    (valueChange)="updateCompanyExwPrice()" placeholder="Select a Currency" [scrollHight]="'300px'"
                     [filterKey]="'currencyCode'" [appendToBody]="true" [options]="currencyList" name="exwLocalCurrency"
                     [isSearch]="true" [(ngModel)]="productsFormData.exwLocalCurrency" [dValidateRules]="{
                       validators: [{ required: true }]

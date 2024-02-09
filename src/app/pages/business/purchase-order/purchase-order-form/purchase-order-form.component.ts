@@ -1002,6 +1002,10 @@ export class PurchaseOrderFormComponent implements OnInit {
 
   removeNow(rowIndex: number) {
     this.detailsInputs?.splice(rowIndex, 1);
+    this.detailsInputs.forEach((row:any,index:number) => {
+      console.log('row',index);
+      row.lineNumber = index +1;
+    })
     this.addedVariantIds?.splice(rowIndex, 1);
   }
 

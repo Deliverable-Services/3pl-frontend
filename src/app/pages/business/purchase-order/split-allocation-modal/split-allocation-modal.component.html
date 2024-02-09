@@ -65,8 +65,8 @@
             <td class="set-mrgn">{{summary.locationTotalQty ? summary.locationTotalQty : 0}}</td>
             <td class="set-mrgn">{{summary.locationTotalQty > 0 ? ((summary.locationTotalQty / totalQty) * 100).toFixed(2) : 0}}%
               <span class="manage-toggle">
-                <img *ngIf="childCaseIds.indexOf(ind) === -1" (click)="manageToggle(ind)" src="assets/down-key.png" />
-                <img *ngIf="childCaseIds.indexOf(ind) > -1" (click)="manageToggle(ind)" src="assets/up-key.png" />
+                <img *ngIf="!childCaseIds.includes(ind)" (click)="manageToggle(ind)" src="assets/down-key.png" />
+                <img *ngIf="childCaseIds.includes(ind)" (click)="manageToggle(ind)" src="assets/up-key.png" />
               </span>
             </td>
           </tr>

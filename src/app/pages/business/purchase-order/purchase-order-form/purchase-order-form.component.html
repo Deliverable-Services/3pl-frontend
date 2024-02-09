@@ -108,7 +108,8 @@
               }} <span *ngIf="projectFormData.orderStatus">&nbsp;({{ projectFormData.id }})</span>
             </div>
             <button *ngIf="projectFormData.orderStatus?.toLowerCase() === 'accepted'
-            || projectFormData.orderStatus?.toLowerCase() === 'closed'" (click)="linkedInvoice(this.projectFormData)" class="btn linked-btn">Linked Invoice</button>
+            || projectFormData.orderStatus?.toLowerCase() === 'closed'" (click)="linkedInvoice(this.projectFormData)"
+              class="btn linked-btn">Linked Invoice</button>
           </div>
           <!-- {{projectFormData | json}} -->
           <div [ngStyle]="{ display: 'flex', justifyContent: 'space-between' }">
@@ -257,7 +258,8 @@
 
               <d-form-item [ngStyle]="{ margin: '20px 100px 20px 0px', width: '15%' }">
               </d-form-item>
-              <d-form-item *ngIf="projectFormData.orderStatus && projectFormData.orderStatus?.toLowerCase() !== 'draft'" [ngStyle]="{ margin: '20px 0px 20px 8px', width: '15%' }">
+              <d-form-item *ngIf="projectFormData.orderStatus && projectFormData.orderStatus?.toLowerCase() !== 'draft'"
+                [ngStyle]="{ margin: '20px 0px 20px 8px', width: '15%' }">
                 <d-form-label [required]="true">{{ "form.purchaseOrder.fields.expectedDeliveryDate" | translate
                   }}</d-form-label>
                 <d-form-control>
@@ -290,9 +292,8 @@
               </div>
               <div [ngStyle]="{ width: '100%' }">
 
-                <d-form-operation *ngIf="projectFormData.orderStatus?.toLowerCase() !== 'draft'">
-                  <d-button
-                    *ngIf="projectFormData.orderStatus?.toLowerCase() === 'open'  && projectFormData.sampleStatus?.toLowerCase() === 'open'"
+                <d-form-operation *ngIf="projectFormData.orderStatus?.toLowerCase() !== 'draft' && mode !== 'Add'">
+                  <d-button *ngIf="projectFormData.sampleStatus?.toLowerCase() === 'open'"
                     [ngStyle]="{ float: 'right' }" class="mr-element-spacing" circled="true" style="margin-right: 8px"
                     (btnClick)="confirmDialog('ready')">
                     {{ "form.purchaseOrder.buttons.ready" | translate }}
@@ -351,7 +352,8 @@
                       <th class="manage-table-head">Planned Qty</th>
                       <th class="manage-table-head">Split Details</th>
                       <th *ngIf="projectFormData.orderStatus?.toLowerCase() === 'accepted'
-                      || projectFormData.orderStatus?.toLowerCase() === 'closed'" class="manage-table-head">Shipment Details</th>
+                      || projectFormData.orderStatus?.toLowerCase() === 'closed'" class="manage-table-head">Shipment
+                        Details</th>
                       <!-- </span> -->
                     </tr>
                   </thead>
@@ -361,11 +363,15 @@
                       [ngClass]="{'set-child-botder': ((i+1) !== detailsInputs?.length)}">
                       <td class="manage-table-content first-head">
                         <span class="set-image">
-                          <img *ngIf="mode.toLowerCase() === 'add' || projectFormData.orderStatus?.toLowerCase() === 'draft'"
+                          <img
+                            *ngIf="mode.toLowerCase() === 'add' || projectFormData.orderStatus?.toLowerCase() === 'draft'"
                             (click)="editQty(input, i)" src="assets/draw.png" />
-                          <img *ngIf="mode.toLowerCase() === 'add' || projectFormData.orderStatus?.toLowerCase() === 'draft'" (click)="removeNow(i)"
-                            src="assets/minus.png" />
-                          <img (click)="paramId ? getPurchaseOrderById(paramId):_showToastMsg('success', 'Updated Successfully')" src="assets/refresh.png" />
+                          <img
+                            *ngIf="mode.toLowerCase() === 'add' || projectFormData.orderStatus?.toLowerCase() === 'draft'"
+                            (click)="removeNow(i)" src="assets/minus.png" />
+                          <img
+                            (click)="paramId ? getPurchaseOrderById(paramId):_showToastMsg('success', 'Updated Successfully')"
+                            src="assets/refresh.png" />
                         </span>
                       </td>
                       <td class="manage-table-content"> {{ input.lineNumber }}</td>
@@ -386,7 +392,8 @@
                       </td>
                       <td *ngIf="projectFormData.orderStatus?.toLowerCase() === 'accepted'
                       || projectFormData.orderStatus?.toLowerCase() === 'closed'" class="manage-table-content">
-                        <button (click)="shipmentDialog(input.shipments)" class="manage-split-button shipment-details-button">
+                        <button (click)="shipmentDialog(input.shipments)"
+                          class="manage-split-button shipment-details-button">
                           {{ "form.purchaseOrder.buttons.shipmentDetails" | translate }}
                         </button>
                       </td>
@@ -530,10 +537,13 @@
               </div> -->
             </ng-container>
 
-            <div [ngStyle]="{ width: '100%' }">
-              <label style="float: right; margin: 5px 16px;" *ngIf="projectFormData.orderStatus">
-                <b>{{ "form.purchaseOrder.fields.totalProductPrice" | translate }}: </b> {{_checkTotalPrice()}}
-                SGD</label>
+            <div class="total-price" [ngStyle]="{ width: '100%' }">
+              <label style="margin: 5px 16px;" *ngIf="projectFormData.orderStatus">
+                <b>{{ "form.purchaseOrder.fields.totalProductPrice" | translate }} (SGD) : </b> {{_checkTotalPrice()}}
+              </label>
+              <label style="margin: 5px 16px;" *ngIf="projectFormData.orderStatus">
+                <b>{{ "form.purchaseOrder.fields.totalProductPrice" | translate }} ({{projectFormData?.vendor?.paymentCurrency}}) : </b> {{_checkTotalPrice()  * _getCurrencyRate()}}
+              </label>
             </div>
           </ng-container>
         </form>

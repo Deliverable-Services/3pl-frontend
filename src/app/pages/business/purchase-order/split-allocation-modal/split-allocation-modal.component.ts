@@ -265,8 +265,12 @@ export class SplitAllocationModalComponent implements OnInit {
   }
 
   removeRow(index: number) {
-    // let findIndex = this.splitSummaryDetails?.find((s: any) => s.market.market === this.splitDetailsfields[index]?.market?.market);
+    console.log('removing row',index);
+    
+    // let findIndex = thi.splitSummaryDetails?.find((s: any) => s.market.market === this.splitDetailsfields[index]?.market?.market);
     this.splitDetailsfields.splice(index, 1);
+    this.splitSummaryDetails.splice(index, 1);
+    this._manageSplitSummaryDetails(this.splitDetailsfields);
     // this.splitSummaryDetails.splice(findIndex, 1);
   }
 
@@ -276,12 +280,12 @@ export class SplitAllocationModalComponent implements OnInit {
   }
 
   manageToggle(index: number) {
-    let getIndex = this.childCaseIds.findIndex((n: number) => n === index);
-    getIndex === -1
-      ? this.childCaseIds.push(index)
-      : this.childCaseIds.splice(index, 1);
+    if (!this.childCaseIds.includes(index)) {
+      this.childCaseIds.push(index);
+    } else {
+      this.childCaseIds.splice(this.childCaseIds.indexOf(index), 1);
+    }
   }
-
   replaceUnderscores(name: string) {
     return name?.replace(/_/g, " - ");
   }

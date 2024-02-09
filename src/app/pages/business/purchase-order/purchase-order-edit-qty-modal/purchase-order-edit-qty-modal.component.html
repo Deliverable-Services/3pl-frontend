@@ -9,8 +9,8 @@
             <li>SKU: <span><input type="text" [value]="data?.sDetails?.skuNo || ''" disabled></span></li>
             <li>Style Name: <span><input type="text" [value]="data?.sDetails?.style || ''" disabled></span></li>
             <li class="manage-specific-li">
-                Colour: <span><input class="w-50" [value]="data?.sDetails?.color || ''" width="50%" type="text" disabled></span>
-                Size: <span><input class="w-50" [value]="data?.sDetails?.size || ''" type="text" disabled></span>
+                Colour: <span><input  [value]="data?.sDetails?.color || ''"  type="text" disabled></span>
+                Size: <span><input  [value]="data?.sDetails?.size || ''" type="text" disabled></span>
             </li>
             <!-- <li>Size: <span><input type="text" disabled></span></li> -->
             <li>Fabric Content: <span><input type="text" [value]="data?.sDetails?.fabricComposition || ''" disabled></span></li>
@@ -22,6 +22,6 @@
 
     <div class="qty-input">
         <label class=""><span>*</span>Planned Qty: </label>
-        <input (input)="updateQty($event)" type="number" [value]="data?.sDetails?.plannedQuantity || ''">
+        <input width="50%" #plannedQtyInput  (input)="updateQty($event)" type="number" [value]="data?.sDetails?.plannedQuantity || ''" [autofocus]>
     </div>
 </div>
